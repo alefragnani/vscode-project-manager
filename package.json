@@ -1,0 +1,52 @@
+{
+	"name": "project-manager",
+	"description": "Easily switch between projects",
+	"version": "0.0.1",
+	"publisher": "alefragnani",
+	"engines": {
+		"vscode": "*"
+	},
+	"activationEvents": [
+		"command:projectManager.saveProject",
+		"command:projectManager.listProjects"
+	],
+	"main": "./out/extension",
+	"contributes": {
+		"commands": [
+		{
+			"command": "projectManager.saveProject",
+			"title": "Project Manager: Save Project"
+		},
+		{
+			"command": "projectManager.listProjects",
+			"title": "Project Manager: List Projects"
+		}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Project Manager Configuration",
+			"properties": {
+				"projectManager.projects": {
+					"type": "string",
+					"default": "",
+					"description": "The list of projects"
+				}
+			}
+		},
+		"keybindings": [
+			{
+				"command": "projectManager.listProjects",
+				"key": "shift+alt+p",
+				"mac": "cmd+alt+p",
+				"when": "editorTextFocus"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+	},
+	"devDependencies": {
+		"vscode": "*"
+	}
+}

@@ -1,0 +1,38 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'compile' ]
+2 info using npm@2.11.2
+3 info using node@v0.12.6
+4 verbose run-script [ 'precompile', 'compile', 'postcompile' ]
+5 info precompile project-manager@0.0.1
+6 info compile project-manager@0.0.1
+7 verbose unsafe-perm in lifecycle true
+8 info project-manager@0.0.1 Failed to exec compile script
+9 verbose stack Error: project-manager@0.0.1 compile: `node ./node_modules/vscode/bin/compile -watch -p ./`
+9 verbose stack Exit status 3221226505
+9 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:213:16)
+9 verbose stack     at EventEmitter.emit (events.js:110:17)
+9 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:24:14)
+9 verbose stack     at ChildProcess.emit (events.js:110:17)
+9 verbose stack     at maybeClose (child_process.js:1015:16)
+9 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
+10 verbose pkgid project-manager@0.0.1
+11 verbose cwd c:\Users\Alessandro\Documents\vso\project-manager
+12 error Windows_NT 6.3.9600
+13 error argv "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "compile"
+14 error node v0.12.6
+15 error npm  v2.11.2
+16 error code ELIFECYCLE
+17 error project-manager@0.0.1 compile: `node ./node_modules/vscode/bin/compile -watch -p ./`
+17 error Exit status 3221226505
+18 error Failed at the project-manager@0.0.1 compile script 'node ./node_modules/vscode/bin/compile -watch -p ./'.
+18 error This is most likely a problem with the project-manager package,
+18 error not with npm itself.
+18 error Tell the author that this fails on your system:
+18 error     node ./node_modules/vscode/bin/compile -watch -p ./
+18 error You can get their info via:
+18 error     npm owner ls project-manager
+18 error There is likely additional logging output above.
+19 verbose exit [ 1, true ]
