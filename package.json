@@ -26,10 +26,11 @@
 			"type": "object",
 			"title": "Project Manager Configuration",
 			"properties": {
-				"projectManager.projects": {
+				"projectManager.sortList": {
 					"type": "string",
-					"default": "",
-					"description": "The list of projects"
+					"default": "Name",
+					"description": "List the projects sorted by Project Name",
+					"enum": ["Saved", "Name", "Path"]
 				}
 			}
 		},
