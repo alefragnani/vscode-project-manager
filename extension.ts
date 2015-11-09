@@ -13,22 +13,14 @@ export function activate() {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "project-manager" is now active!'); 
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	// vscode.commands.registerCommand('extension.sayHello', () => {
-	// 	// The code you place here will be executed every time your command is executed
-
-	// 	// Display a message box to the user
-	// 	vscode.window.showInformationMessage('Hello World!');
-	// });
 	
+	// Save the Projects
 	vscode.commands.registerCommand('projectManager.saveProject', () => {
 		// The code you place here will be executed every time your command is executed
 
 		// Display a message box to the user
 		//vscode.window.showInformationMessage('SAVE PROJECT');
-		var wpath = vscode.workspace.getPath();
+		var wpath = vscode.workspace.rootPath;
 		console.log("vscode.workspace.getPath: " + wpath);
 		//var folder = path.dirname(wpath);
 		wpath = wpath.substr(wpath.lastIndexOf("\\") + 1);
@@ -37,12 +29,13 @@ export function activate() {
 		// ask the PROJECT NAME (suggest the )
 		var ibo = <vscode.InputBoxOptions>{
 			prompt: "Enter the Project Name",
-			placeHolder: wpath//"Noname"
+			placeHolder: "Noname",
+			value: wpath
 		}
 
 		vscode.window.showInputBox(ibo).then(projectName => {
 			console.log("Project Name: " + projectName);
-			var path = vscode.workspace.getPath();
+			var path = vscode.workspace.rootPath;
 			
 			// update the projects
 			var projectFile = "projects.json";
@@ -58,12 +51,47 @@ export function activate() {
 			// 		return matches
 			// 	}
 			// }, []); 
-			if (items.indexOf({ label: projectName }) < 0) {
-				items.push({ label: projectName, description: path });
+			var found: boolean = false;
+			for (var i = 0; i < items.length; i++) {
+				var element = items[i];
+				if (element.label == projectName) {
+					found = true;	
+				}				
 			}
+			if (!found) {
+				items.push({ label: projectName, description: path });
+				fs.writeFileSync(projectFile, JSON.stringify(items));
+				vscode.window.showInformationMessage('Project saved!');	
+			} else {
+				var optionUpdate = <vscode.MessageItem>{
+					title: "Update"
+				};
+				var optionCancel = <vscode.MessageItem>{
+					title: "Cancel"
+				};
+				
+				vscode.window.showInformationMessage('Project already exists!', optionUpdate, optionCancel).then(option => {
+					if (option.title == "Update") {
+						for (var i = 0; i < items.length; i++) {
+							if (items[i].label == projectName) {
+								items[i].description = path;
+								fs.writeFileSync(projectFile, JSON.stringify(items));
+								vscode.window.showInformationMessage('Project saved!');	
+								return;	
+							}				
+						}
+					} else {
+						return;
+					}	
+				});
+			}			
+			
+			// if (items.indexOf({ label: projectName }) < 0) {
+			// 	items.push({ label: projectName, description: path });
+			// }
 
-			fs.writeFileSync(projectFile, JSON.stringify(items));
-			vscode.window.showInformationMessage('Project saved!');	
+			// fs.writeFileSync(projectFile, JSON.stringify(items));
+			// vscode.window.showInformationMessage('Project saved!');	
 			
 			// save the state memento
 			// let memento = vscode.extensions.getStateMemento('projectManager', true);
@@ -82,45 +110,40 @@ export function activate() {
 	});
 
 
-	// function sortByLabel(a, b: any):  {
-	// 	return a.label < b.label;
-	// }
-
+	// List the Projects and allow the user to pick (select) one of them to activate
 	vscode.commands.registerCommand('projectManager.listProjects', () => {
 		// The code you place here will be executed every time your command is executed
 
-		// Display a message box to the user
-		//vscode.window.showInformationMessage('LIST PROJECTS');
 		var projectFile = "projects.json";
 		var items = []
 		if (fs.existsSync(projectFile)) {
 			items = JSON.parse(fs.readFileSync(projectFile).toString());
 		}
-
+		
+		var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList');
+		console.log(" sortlist: " + sortList);
+		
 		// sorted
-		var itemsSorted = [] = items.sort((n1, n2) => {
-			if (n1.label > n2.label) {
-				return 1;
-			}
-
-			if (n1.label < n2.label) {
-				return -1;
-			}
-
-			return 0;
-		});
+		//var itemsSorted = [];
+		//if (sortList == "Name") {
+			var itemsSorted = [] = items.sort((n1, n2) => {
+				if (n1.label > n2.label) {
+					return 1;
+				}
+	
+				if (n1.label < n2.label) {
+					return -1;
+				}
+	
+				return 0;
+			});
+		//};
 				
 		//var items = [];
 		//items.push({ label: "First Project", description: "C:\\coisa\\x" });
 		//items.push({ label: "Second Project", description: "D:\\NADA\\sdfsdf" });
 
 		vscode.window.showQuickPick(itemsSorted).then(selection => {
-			if (selection.label == "First Project") {
-				console.log(" primeiro ");
-			} else {
-				console.log(" outro ");
-			}
-
 			console.log("description: " + selection.description);			
 			
 			// 			var app = "c:\\program files\\microsoft vs code\\code.exe"
@@ -132,13 +155,14 @@ export function activate() {
 			// //		    exec "start \"build cmd\" " + cmdline, cwd: folder
 			// 			child_process.exec(cmdline);
 
-			vscode.commands.executeCommand("workbench.action.files.openFolder", selection.description);
-
+			vscode.commands.executeCommand("workbench.action.files.openFolder", selection.description).then(ok => {
+				console.log(".then: ");
+			});
 		});
 
 		//fs.writeFileSync(projectFile, JSON.stringify(items));
 	});
-	
+		
 	
 	// function readOptions(): Settings {
 	//     var CONFIGFILE = ".vscode\\spellMD.json";

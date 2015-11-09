@@ -4,11 +4,11 @@
 	"version": "0.0.1",
 	"publisher": "alefragnani",
 	"engines": {
-		"vscode": "*"
+		"vscode": "0.10.x"
 	},
 	"activationEvents": [
-		"command:projectManager.saveProject",
-		"command:projectManager.listProjects"
+		"onCommand:projectManager.saveProject",
+		"onCommand:projectManager.listProjects"
 	],
 	"main": "./out/extension",
 	"contributes": {
@@ -48,6 +48,6 @@
 		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
 	},
 	"devDependencies": {
-		"vscode": "*"
+		"vscode": "next"
 	}
 }
