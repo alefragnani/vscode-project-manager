@@ -1,10 +1,26 @@
 {
 	"name": "project-manager",
+	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
 	"version": "0.0.1",
 	"publisher": "alefragnani",
+	"galleryBanner": {
+		"color": "#0000FF",
+		"theme": "dark"
+	},
 	"engines": {
 		"vscode": "0.10.x"
+	},
+	"categories": [
+		"Other"	
+	],
+	"homepage": "https://github.com/alefragnani/vscode-project-manager/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/alefragnani/vscode-project-manager.git"
+	},
+	"bugs": {
+		"url": "https://github.com/alefragnani/vscode-project-manager/issues"
 	},
 	"activationEvents": [
 		"onCommand:projectManager.saveProject",
