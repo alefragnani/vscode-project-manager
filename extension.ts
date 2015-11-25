@@ -4,6 +4,8 @@ import * as vscode from 'vscode';
 import fs = require('fs');
 import path = require('path');
 import {exec} from 'child_process';
+import {execFile} from 'child_process';
+//import {WindowsManager} from 'windows';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -35,6 +37,11 @@ export function activate() {
 
 		vscode.window.showInputBox(ibo).then(projectName => {
 			console.log("Project Name: " + projectName);
+			
+			if (typeof projectName == 'undefined') {
+				return;
+			}
+			
 			var path = vscode.workspace.rootPath;
 			
 			// update the projects
@@ -44,13 +51,6 @@ export function activate() {
 				items = JSON.parse(fs.readFileSync(projectFile).toString());
 			}
 			
-			// items.reduce(function (matches, item) {
-			// 	if (item.label == projectName) {
-			// 		return matches.concat(item);
-			// 	} else {
-			// 		return matches
-			// 	}
-			// }, []); 
 			var found: boolean = false;
 			for (var i = 0; i < items.length; i++) {
 				var element = items[i];
@@ -85,25 +85,6 @@ export function activate() {
 					}
 				});
 			}			
-			
-			// if (items.indexOf({ label: projectName }) < 0) {
-			// 	items.push({ label: projectName, description: path });
-			// }
-
-			// fs.writeFileSync(projectFile, JSON.stringify(items));
-			// vscode.window.showInformationMessage('Project saved!');	
-			
-			// save the state memento
-			// let memento = vscode.extensions.getStateMemento('projectManager', true);
-			// memento.getValue('projects').then(value => {
-			// 	console.log('My Configuration is: ', value);
-				
-			// 	// le em formato ARRAY
-				
-			// 	// sava em formato ARRAY
-			// 	memento.setValue('projects', projectName);
-			// });
-			// memento.setValue('projects', projectName);
 		});
 
 
@@ -123,23 +104,6 @@ export function activate() {
 		var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList');
 		console.log(" sortlist: " + sortList);
 		
-		// // sorted
-		// //var itemsSorted = [];
-		// //if (sortList == "Name") {
-		// 	var itemsSorted = [] = items.sort((n1, n2) => {
-		// 		if (n1.label > n2.label) {
-		// 			return 1;
-		// 		}
-	
-		// 		if (n1.label < n2.label) {
-		// 			return -1;
-		// 		}
-	
-		// 		return 0;
-		// 	});
-		// //};
-		
-		
 		var itemsSorted = [];
 		if (sortList == "Name") {
 			itemsSorted = getSortedByName(items);
@@ -147,13 +111,24 @@ export function activate() {
 			itemsSorted = getSortedByPath(items);
 		}; 
 		
-				
-		//var items = [];
-		//items.push({ label: "First Project", description: "C:\\coisa\\x" });
-		//items.push({ label: "Second Project", description: "D:\\NADA\\sdfsdf" });
-
 		vscode.window.showQuickPick(itemsSorted).then(selection => {
-			console.log("description: " + selection.description);			
+			console.log("description: " + selection.description);	
+			
+			// 
+			let projectPath = selection.description;
+			let codePath = vscode.workspace.getConfiguration('projectManager').get('codePath', 'none');
+			if (codePath == 'none') {
+				vscode.window.showErrorMessage('No Code.exe path defined. Fix it in User Settings (projectManager.codePath)');
+				return;				
+			} else {
+				let replaceable = codePath.split('\\');
+				codePath = replaceable.join('\\\\');
+				console.log('new codePath=' + codePath);
+				
+				replaceable = selection.description.split('\\');
+				projectPath = replaceable.join('\\\\');
+				console.log('new projectPath=' + projectPath);
+			}		
 			
 			// var app = "c:\\program files\\microsoft vs code\\code.exe"
 			// var args = selection.description;
@@ -168,21 +143,29 @@ export function activate() {
 			// // child_process.execFile("c:\\program files\\microsoft vs code\\codeaa.exe", ["C:\Users\Alessandro\Documents\vso\duplicate-lines"]);
 			//, folder);
 			//exec('start \"open ui\" "C:\\Program Files\\Microsoft VS Code\\Code.exe" ', 
-			exec('start \"open ui\" "C:\\Program Files\\Winmerge\\WinMergeU.exe" "C:\\Program Files\\Winmerge\\File.txt"', 
+			
+			
+			//exec('start \"open ui\" "' + codePath + '" "' + projectPath + '"');
+			exec('cmd /c "' + codePath + '" ' + projectPath);
+			//execFile(codePath, [projectPath]);
+			
+			
+			
+			
+			//??? exec('start \"open ui\" "C:\\Program Files\\Winmerge\\WinMergeU.exe" "C:\\Program Files\\Winmerge\\File.txt"', 
 				// exec('start \"open ui\" "C:\\Program Files\\Winmerge\\WinMergeU.exe" "C:\\Program Files\\Winmerge\\File.txt"', 
 				// exec('start \"open ui\" ' + cmdline, {
 				// 	cwd: 'C:\\Users\\Alessandro\\Documents\\vso\\Bookmarks\\'
 				// }, 
-				function(error, stdout, stderr) {
-					if (error !== null) {
-						console.log('exec error: ' + error);
-					}
-				});
+				// function(error, stdout, stderr) {
+				// 	if (error !== null) {
+				// 		console.log('exec error: ' + error);
+				// 	}
+				// });
 			//vscode.commands.executeCommand("workbench.action.files.openFolder", selection.description).then(ok => {
 			//	console.log(".then: ");
 			//});
 		});
-		//fs.writeFileSync(projectFile, JSON.stringify(items));
 	});
 
 	function getSortedByName(items: any[]): any[] {
@@ -214,39 +197,4 @@ export function activate() {
 		});
 		return itemsSorted;
 	}
-		
-	
-	// function readOptions(): Settings {
-	//     var CONFIGFILE = ".vscode\\spellMD.json";
-	// 	var cfg: any = readJsonFile(CONFIGFILE);
-
-	//     function readJsonFile(file): any {
-	//         try {
-	//             cfg = JSON.parse(fs.readFileSync(file).toString());
-	//         }
-	//         catch (err) {
-	//             cfg = JSON.parse('{\
-	// 				"version": "0.1.0", \
-	// 				"ignoreWordsList": [], \
-	// 				"replaceRegExp": ["/\\\\]\\\\(([^\\\\)]+)\\\\)/g"], \
-	// 				"mistakeTypeToStatus": { \
-	// 					"Spelling": "Warning", \
-	// 					"Passive Voice": "Info", \
-	// 					"Complex Expression": "Warning",\
-	// 					"Hyphen Required": "Warning"\
-	// 				}\
-	// 			}');
-	//         }
-	// 		return cfg;
-	//     }
-
-	// 	return {
-	// 			enable: true,
-	// 			ignoreWordsList: cfg.ignoreWordsList,
-	// 			mistakeTypeToStatus: cfg.mistakeTypeToStatus,
-	// 			replaceRegExp: cfg.replaceRegExp
-	// 	}
-	// }
-
-	
 }

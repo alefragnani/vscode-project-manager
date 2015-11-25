@@ -9,7 +9,7 @@
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "0.10.x"
+		"vscode": "^0.10.1"
 	},
 	"categories": [
 		"Other"	
@@ -47,6 +47,11 @@
 					"default": "Name",
 					"description": "List the projects sorted by Project Name",
 					"enum": ["Saved", "Name", "Path"]
+				},
+				"projectManager.codePath": {
+					"type": "string",
+					"default": "none",
+					"description": "Indicate the path where Code.exe is located"
 				}
 			}
 		},
@@ -64,6 +69,7 @@
 		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
 	},
 	"devDependencies": {
-		"vscode": "next"
+		"vscode": "0.10.x",
+		"typescript": "^1.6.2"
 	}
 }
