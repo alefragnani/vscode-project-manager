@@ -42,10 +42,10 @@ export function activate() {
 				return;
 			}
 			
-			var path = vscode.workspace.rootPath;
+			var rootPath = vscode.workspace.rootPath;
 			
 			// update the projects
-			var projectFile = "projects.json";
+			var projectFile = path.join(__dirname, "projects.json");//"projects.json";
 			var items = []
 			if (fs.existsSync(projectFile)) {
 				items = JSON.parse(fs.readFileSync(projectFile).toString());
@@ -59,7 +59,7 @@ export function activate() {
 				}
 			}
 			if (!found) {
-				items.push({ label: projectName, description: path });
+				items.push({ label: projectName, description: rootPath });
 				fs.writeFileSync(projectFile, JSON.stringify(items));
 				vscode.window.showInformationMessage('Project saved!');
 			} else {
@@ -74,7 +74,7 @@ export function activate() {
 					if (option.title == "Update") {
 						for (var i = 0; i < items.length; i++) {
 							if (items[i].label == projectName) {
-								items[i].description = path;
+								items[i].description = rootPath;
 								fs.writeFileSync(projectFile, JSON.stringify(items));
 								vscode.window.showInformationMessage('Project saved!');
 								return;
@@ -112,6 +112,11 @@ export function activate() {
 		}; 
 		
 		vscode.window.showQuickPick(itemsSorted).then(selection => {
+			
+			if (typeof selection == 'undefined') {
+				return;
+			}
+			
 			console.log("description: " + selection.description);	
 			
 			// 
