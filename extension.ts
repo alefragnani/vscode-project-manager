@@ -4,8 +4,6 @@ import * as vscode from 'vscode';
 import fs = require('fs');
 import path = require('path');
 import {exec} from 'child_process';
-import {execFile} from 'child_process';
-//import {WindowsManager} from 'windows';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -21,12 +19,8 @@ export function activate() {
 		// The code you place here will be executed every time your command is executed
 
 		// Display a message box to the user
-		//vscode.window.showInformationMessage('SAVE PROJECT');
 		var wpath = vscode.workspace.rootPath;
-		console.log("vscode.workspace.getPath: " + wpath);
-		//var folder = path.dirname(wpath);
 		wpath = wpath.substr(wpath.lastIndexOf("\\") + 1);
-		console.log(" folder: " + wpath);
 		
 		// ask the PROJECT NAME (suggest the )
 		var ibo = <vscode.InputBoxOptions>{
@@ -45,7 +39,7 @@ export function activate() {
 			var rootPath = vscode.workspace.rootPath;
 			
 			// update the projects
-			var projectFile = path.join(__dirname, "projects.json");//"projects.json";
+			var projectFile = path.join(__dirname, "projects.json");
 			var items = []
 			if (fs.existsSync(projectFile)) {
 				items = JSON.parse(fs.readFileSync(projectFile).toString());
@@ -71,6 +65,11 @@ export function activate() {
 				};
 
 				vscode.window.showInformationMessage('Project already exists!', optionUpdate, optionCancel).then(option => {
+                    // nothing selected
+                    if (typeof option == 'undefined') {
+                        return;
+                    }                    
+                    
 					if (option.title == "Update") {
 						for (var i = 0; i < items.length; i++) {
 							if (items[i].label == projectName) {
@@ -99,10 +98,12 @@ export function activate() {
 		var items = []
 		if (fs.existsSync(projectFile)) {
 			items = JSON.parse(fs.readFileSync(projectFile).toString());
-		}
+		} else {
+            vscode.window.showInformationMessage('No projects saved yet!');
+            return;
+        }
 
 		var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList');
-		console.log(" sortlist: " + sortList);
 		
 		var itemsSorted = [];
 		if (sortList == "Name") {
@@ -117,9 +118,7 @@ export function activate() {
 				return;
 			}
 			
-			console.log("description: " + selection.description);	
 			
-			// 
 			let projectPath = selection.description;
             let replaceable = selection.description.split('\\');
 			projectPath = replaceable.join('\\\\');
