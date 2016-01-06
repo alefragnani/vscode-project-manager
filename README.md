@@ -15,7 +15,7 @@ Manage your projects right inside Visual Studio Code. Easily access and switch b
 
 You can save the current project in the manager at any time. You just need to type a name. It even suggest you _automatically_ :)
 
-![Toggle](images/project-manager-save.png)
+![Save](images/project-manager-save.png)
 
 ## Available settings
 
@@ -28,6 +28,8 @@ You can save the current project in the manager at any time. You just need to ty
 ```
     "projectManager.sortList": "Name"
 ```
+
+![List](images/project-manager-list-sort-by-name.png)
 
 ## TODO List
 
