@@ -121,55 +121,9 @@ export function activate() {
 			
 			// 
 			let projectPath = selection.description;
-			let codePath = vscode.workspace.getConfiguration('projectManager').get('codePath', 'none');
-			if (codePath == 'none') {
-				vscode.window.showErrorMessage('No Code.exe path defined. Fix it in User Settings (projectManager.codePath)');
-				return;				
-			} else {
-				let replaceable = codePath.split('\\');
-				codePath = replaceable.join('\\\\');
-				console.log('new codePath=' + codePath);
-				
-				replaceable = selection.description.split('\\');
-				projectPath = replaceable.join('\\\\');
-				console.log('new projectPath=' + projectPath);
-			}		
-			
-			// var app = "c:\\program files\\microsoft vs code\\code.exe"
-			// var args = selection.description;
-			// // var cmdline = "\"" + app + "\" \"" + args + "\""; 
-			// // var cmdline = "start \"code cmd\" "  + cmdline
-			// //console.log(" cmdline: " + cmdline);
-			// //var cmdline = "\"${app}\" /P\"${args}\" "
-			// var cmdline = '\"' + app + '\" \"' + args + '\"';
-			// //exec "start \"build cmd\" " + cmdline, cwd: folder
-			// var folder = args;//path.dirname(args);
-			// cmdline = '"C:\\Program Files\\Microsoft VS Code\\Code.exe" "C:\\Users\\Alessandro\\Documents\\vso\\Bookmarks\\"';
-			// // child_process.execFile("c:\\program files\\microsoft vs code\\codeaa.exe", ["C:\Users\Alessandro\Documents\vso\duplicate-lines"]);
-			//, folder);
-			//exec('start \"open ui\" "C:\\Program Files\\Microsoft VS Code\\Code.exe" ', 
-			
-			
-			//exec('start \"open ui\" "' + codePath + '" "' + projectPath + '"');
-			exec('cmd /c "' + codePath + '" ' + projectPath);
-			//execFile(codePath, [projectPath]);
-			
-			
-			
-			
-			//??? exec('start \"open ui\" "C:\\Program Files\\Winmerge\\WinMergeU.exe" "C:\\Program Files\\Winmerge\\File.txt"', 
-				// exec('start \"open ui\" "C:\\Program Files\\Winmerge\\WinMergeU.exe" "C:\\Program Files\\Winmerge\\File.txt"', 
-				// exec('start \"open ui\" ' + cmdline, {
-				// 	cwd: 'C:\\Users\\Alessandro\\Documents\\vso\\Bookmarks\\'
-				// }, 
-				// function(error, stdout, stderr) {
-				// 	if (error !== null) {
-				// 		console.log('exec error: ' + error);
-				// 	}
-				// });
-			//vscode.commands.executeCommand("workbench.action.files.openFolder", selection.description).then(ok => {
-			//	console.log(".then: ");
-			//});
+            let replaceable = selection.description.split('\\');
+			projectPath = replaceable.join('\\\\');
+            exec("code " + projectPath);
 		});
 	});
 

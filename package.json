@@ -47,11 +47,6 @@
 					"default": "Name",
 					"description": "List the projects sorted by Project Name",
 					"enum": ["Saved", "Name", "Path"]
-				},
-				"projectManager.codePath": {
-					"type": "string",
-					"default": "none",
-					"description": "Indicate the path where Code.exe is located"
 				}
 			}
 		},
