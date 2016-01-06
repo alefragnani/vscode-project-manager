@@ -1,14 +1,41 @@
-# README
-## This is the README for your extension "project-manager" 
--------------------
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+# Functionality
 
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
+Manage your projects right inside Visual Studio Code. Easily access and switch between projects.
 
-### For more information
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+# Usage
 
-** Enjoy!**
+## Available commands
+
+* **Project Manager: List Projects** List all saved projects and pick one
+* **Project Manager: Save Project** Save the current project in the manager
+
+![Commands](images/project-manager-commands.png)
+
+### Save Project
+
+You can save the current project in the manager at any time. You just need to type a name. It even suggest you _automatically_ :)
+
+![Toggle](images/project-manager-save.png)
+
+## Available settings
+
+* Allow you to choose the sorting of the projects in **List Projects** command. You can choose:
+
+    * **Saved**: The order that you saved the projects
+    * **Name**: The name that you typed for the project
+    * **Path**: The full path of the project
+
+```
+    "projectManager.sortList": "Name"
+```
+
+## TODO List
+
+Here are some ideas that will be added soon:
+
+* **Indicate Code path:** Allow to indicate the full path of `Code app`, in the case that code is not in `PATH`
+* **Don't open another Code instance:** Instead of opening another **Code** instance, just switch the current
+
+## Participate
+
+If you have any idea, feel free to create issues and pull requests

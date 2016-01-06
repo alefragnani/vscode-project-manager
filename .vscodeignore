@@ -1,7 +1,8 @@
 .vscode/**
 typings/**
+issues/**
 **/*.ts
 **/*.map
 .gitignore
 tsconfig.json
-vsc-extension-quickstart.md
+out/projects.json

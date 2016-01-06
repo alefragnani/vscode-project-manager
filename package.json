@@ -2,18 +2,19 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
-		"color": "#0000FF",
+		"color": "#000000",
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^0.10.1"
+		"vscode": "0.10.x"
 	},
 	"categories": [
 		"Other"	
 	],
+    "icon": "images/icon.png",
 	"homepage": "https://github.com/alefragnani/vscode-project-manager/blob/master/README.md",
 	"repository": {
 		"type": "git",

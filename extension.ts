@@ -38,8 +38,9 @@ export function activate() {
 			
 			var rootPath = vscode.workspace.rootPath;
 			
-			// update the projects
-			var projectFile = path.join(__dirname, "projects.json");
+			// var projectFile = path.join(__dirname, "projects.json");
+            let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
+			var projectFile = path.join(appdata, "Code/User/projects.json");
 			var items = []
 			if (fs.existsSync(projectFile)) {
 				items = JSON.parse(fs.readFileSync(projectFile).toString());
@@ -94,7 +95,9 @@ export function activate() {
 	vscode.commands.registerCommand('projectManager.listProjects', () => {
 		// The code you place here will be executed every time your command is executed
 
-		var projectFile = path.join(__dirname, "projects.json");
+		// var projectFile = path.join(__dirname, "projects.json");
+        let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
+		var projectFile = path.join(appdata, "Code/User/projects.json");
 		var items = []
 		if (fs.existsSync(projectFile)) {
 			items = JSON.parse(fs.readFileSync(projectFile).toString());
