@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -47,8 +47,18 @@
 				"projectManager.sortList": {
 					"type": "string",
 					"default": "Name",
-					"description": "List the projects sorted by Project Name",
+					"description": "List the projects sorted by...",
 					"enum": ["Saved", "Name", "Path"]
+				},
+				"projectManager.codePath": {
+					"type": "string",
+					"default": "none",
+					"description": "Indicate the full Code app path"
+				},
+				"projectManager.openInNewWindow": {
+					"type": "boolean",
+					"default": true,
+					"description": "Indicate if the project will be opened using a New Window"
 				}
 			}
 		},

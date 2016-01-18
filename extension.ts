@@ -119,13 +119,30 @@ export function activate() {
 			
 			if (typeof selection == 'undefined') {
 				return;
-			}
+			}			
 			
-			
+			// code path
+			let codePath = vscode.workspace.getConfiguration('projectManager').get('codePath', 'none');
+			if (codePath == 'none') {
+				codePath = "Code";	
+			} else {
+				let replaceable = codePath.split('\\');
+				codePath = replaceable.join('\\\\');
+                codePath = "\"" + codePath + "\"";
+			}		    
+
+			// project path
 			let projectPath = selection.description;
             let replaceable = selection.description.split('\\');
 			projectPath = replaceable.join('\\\\');
-            exec("code " + projectPath);
+            projectPath = "\"" + projectPath + "\"";
+            //exec("code " + projectPath);
+            
+            let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
+            let reuseCmdOption: string = openInNewWindow ? "" : " -r";
+			//exec("\"" + codePath + "\" " + projectPath + reuseCmdOption);
+			exec(codePath + " " + projectPath + reuseCmdOption);
+
 		});
 	});
 
