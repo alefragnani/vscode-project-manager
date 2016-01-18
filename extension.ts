@@ -126,19 +126,16 @@ export function activate() {
 			if (codePath == 'none') {
 				codePath = "Code";	
 			} else {
-				let replaceable = codePath.split('\\');
-				codePath = replaceable.join('\\\\');
-                codePath = surroundByDoubleQuotes(codePath);
+                codePath = normalizePath(codePath);
 			}		    
 
 			// project path
 			let projectPath = selection.description;
-            let replaceable = selection.description.split('\\');
-			projectPath = replaceable.join('\\\\');
-            projectPath = surroundByDoubleQuotes(projectPath);
+            projectPath = normalizePath(projectPath);
             
             let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
             let reuseCmdOption: string = openInNewWindow ? "" : " -r";
+            
 			exec(codePath + " " + projectPath + reuseCmdOption);
 		});
 	});
@@ -175,5 +172,13 @@ export function activate() {
     
     function surroundByDoubleQuotes(path: string): string {
         return "\"" + path + "\""
+    }
+    
+    function normalizePath(path: string): string {
+        let normalizedPath: string = path;
+        let replaceable = normalizedPath.split('\\');
+        normalizedPath = replaceable.join('\\\\');
+        normalizedPath = surroundByDoubleQuotes(normalizedPath);
+        return normalizedPath;
     }
 }

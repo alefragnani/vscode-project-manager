@@ -1,6 +1,6 @@
 # Functionality
 
-Manage your projects right inside Visual Studio Code. Easily access and switch between projects.
+Manage your projects right inside Visual Studio Code. Easily access and switch between them.
 
 # Usage
 
@@ -19,7 +19,7 @@ You can save the current project in the manager at any time. You just need to ty
 
 ## Available settings
 
-* Allow you to choose the sorting of the projects in **List Projects** command. You can choose:
+* Allow you to choose how the projects are sorted in **List Projects** command. You can choose:
 
     * **Saved**: The order that you saved the projects
     * **Name**: The name that you typed for the project
@@ -31,12 +31,41 @@ You can save the current project in the manager at any time. You just need to ty
 
 ![List](images/project-manager-list-sort-by-name.png)
 
+> _new in version 0.3.0_  
+
+* Indicate Code path (useful if not in `PATH`)
+```
+    "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
+```
+
+* Open a New Window when you choose a project, or just switch the current _(default is `true`)_
+```
+    "projectManager.openInNewWindow": true
+```
+
 ## TODO List
 
 Here are some ideas that will be added soon:
 
-* **Indicate Code path:** Allow to indicate the full path of `Code app`, in the case that code is not in `PATH`
-* **Don't open another Code instance:** Instead of opening another **Code** instance, just switch the current
+* ~~**Indicate Code path:** Allow to indicate the full path of `Code app`, in the case that code is not in `PATH`~~
+* ~~**Don't open another Code instance:** Instead of opening another **Code** instance, just switch the current~~
+* **Remove Project:** Remove projects that you no longer needs
+
+# Changelog
+
+## Version 0.3.0
+
+* **New:** Indicate Code path
+* **New:** Open a New Window when you choose a project, or just switch the current
+* **Fix:** Spaces in Project Path (issue [#3](https://github.com/alefragnani/vscode-project-manager/issues/3))
+
+## Version 0.2.0
+
+* License updated
+
+## Version 0.1.1
+
+* Initial release
 
 ## Participate
 
