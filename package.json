@@ -58,7 +58,7 @@
 				"projectManager.openInNewWindow": {
 					"type": "boolean",
 					"default": true,
-					"description": "Indicate if the project will be opened using a New Window"
+					"description": "Should the project be opened using a New Window?"
 				}
 			}
 		},
