@@ -8,6 +8,7 @@ Manage your projects right inside Visual Studio Code. Easily access and switch b
 
 * **Project Manager: List Projects** List all saved projects and pick one
 * **Project Manager: Save Project** Save the current project in the manager
+* **Project Manager: Edit Project** Edit the project list (projects.json) directly inside **Code**
 
 ![Commands](images/project-manager-commands.png)
 
@@ -49,9 +50,13 @@ Here are some ideas that will be added soon:
 
 * ~~**Indicate Code path:** Allow to indicate the full path of `Code app`, in the case that code is not in `PATH`~~
 * ~~**Don't open another Code instance:** Instead of opening another **Code** instance, just switch the current~~
-* **Remove Project:** Remove projects that you no longer needs
+* ~~**Remove Project:** Remove projects that you no longer needs~~
 
 # Changelog
+
+## Version 0.4.0
+
+* **New:** Edit Projects
 
 ## Version 0.3.0
 

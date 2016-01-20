@@ -43,7 +43,11 @@ export function activate() {
 			var projectFile = path.join(appdata, "Code/User/projects.json");
 			var items = []
 			if (fs.existsSync(projectFile)) {
-				items = JSON.parse(fs.readFileSync(projectFile).toString());
+                items = loadProjects(projectFile);            
+                if (items == null) {
+                    return;
+                } 
+				//items = JSON.parse(fs.readFileSync(projectFile).toString());
 			}
 			
 			var found: boolean = false;
@@ -99,8 +103,17 @@ export function activate() {
         let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
 		var projectFile = path.join(appdata, "Code/User/projects.json");
 		var items = []
-		if (fs.existsSync(projectFile)) {
-			items = JSON.parse(fs.readFileSync(projectFile).toString());
+		if (fs.existsSync(projectFile)) {      
+            items = loadProjects(projectFile);            
+            if (items == null) {
+                return;
+            }      
+            // try {
+            //     items = JSON.parse(fs.readFileSync(projectFile).toString());                
+            // } catch (error) {
+            //     vscode.window.showErrorMessage('Error loading projects.json file. Error message: ' + error.toString());
+            //     return;
+            // }
 		} else {
             vscode.window.showInformationMessage('No projects saved yet!');
             return;
@@ -139,6 +152,17 @@ export function activate() {
 			exec(codePath + " " + projectPath + reuseCmdOption);
 		});
 	});
+    
+    
+    vscode.commands.registerCommand('projectManager.editProjects', () => {
+        let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
+		var projectFile = path.join(appdata, "Code/User/projects.json");
+
+        vscode.workspace.openTextDocument(projectFile).then(doc => {
+			vscode.window.showTextDocument(doc);
+		});
+    });
+    
 
 	function getSortedByName(items: any[]): any[] {
 		var itemsSorted = [] = items.sort((n1, n2) => {
@@ -180,5 +204,16 @@ export function activate() {
         normalizedPath = replaceable.join('\\\\');
         normalizedPath = surroundByDoubleQuotes(normalizedPath);
         return normalizedPath;
+    }
+    
+    function loadProjects(projectFile: string): any[] {
+        var items = [];
+        try {
+            items = JSON.parse(fs.readFileSync(projectFile).toString());
+            return items;                
+        } catch (error) {
+            vscode.window.showErrorMessage('Error loading projects.json file. Error message: ' + error.toString());
+            return null;
+        }
     }
 }
