@@ -33,7 +33,7 @@ You can save the current project in the manager at any time. You just need to ty
 
 > _new in version 0.3.0_  
 
-* Indicate Code path (useful if not in `PATH`)
+* Indicate Code path (useful if not in `PATH` and if switching projects does not work when Code is opened from Start Menu / Taskbar)
 ```
     "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
 ```
@@ -52,6 +52,11 @@ Here are some ideas that will be added soon:
 * **Remove Project:** Remove projects that you no longer needs
 
 # Changelog
+
+## Version 0.3.1
+
+* **Fix:** Switching projects not working properly (issue [#5](https://github.com/alefragnani/vscode-project-manager/issues/5))
+
 
 ## Version 0.3.0
 
