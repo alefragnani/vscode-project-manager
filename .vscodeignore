@@ -6,3 +6,4 @@ issues/**
 .gitignore
 tsconfig.json
 out/projects.json
+npm-debug.log
