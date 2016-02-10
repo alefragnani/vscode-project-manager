@@ -59,7 +59,7 @@ export function activate() {
             }
             if (!found) {
                 items.push({ label: projectName, description: rootPath });
-                fs.writeFileSync(projectFile, JSON.stringify(items));
+                fs.writeFileSync(projectFile, JSON.stringify(items, null, "\t"));
                 vscode.window.showInformationMessage('Project saved!');
             } else {
                 var optionUpdate = <vscode.MessageItem>{
@@ -79,7 +79,7 @@ export function activate() {
                         for (var i = 0; i < items.length; i++) {
                             if (items[i].label == projectName) {
                                 items[i].description = rootPath;
-                                fs.writeFileSync(projectFile, JSON.stringify(items));
+                                fs.writeFileSync(projectFile, JSON.stringify(items, null, "\t"));
                                 vscode.window.showInformationMessage('Project saved!');
                                 return;
                             }
