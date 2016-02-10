@@ -71,8 +71,7 @@
 			{
 				"command": "projectManager.listProjects",
 				"key": "shift+alt+p",
-				"mac": "cmd+alt+p",
-				"when": "editorTextFocus"
+				"mac": "cmd+alt+p"
 			}
 		]
 	},
