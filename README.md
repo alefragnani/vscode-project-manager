@@ -70,9 +70,14 @@ For easier customization of your project list, you can edit the `projects.json` 
 
 # Changelog
 
+## Version 0.5.0
+
+* **New:** The `projects.json` file is now formatted (Thanks to @cuth [PR #6](https://github.com/alefragnani/vscode-project-manager/pull/6))
+* **Fix:** The `List Projects` keybinding was not working property (issue [#8](https://github.com/alefragnani/vscode-project-manager/issues/8)) 
+
 ## Version 0.4.0
 
-* **New:** Edit Projects
+* **New Command:** Edit Projects
 
 ## Version 0.3.1
 
@@ -80,8 +85,8 @@ For easier customization of your project list, you can edit the `projects.json` 
 
 ## Version 0.3.0
 
-* **New:** Indicate Code path
-* **New:** Open a New Window when you choose a project, or just switch the current
+* **New Setting:** Indicate Code path
+* **New Setting:** Open a New Window when you choose a project, or just switch the current
 * **Fix:** Spaces in Project Path (issue [#3](https://github.com/alefragnani/vscode-project-manager/issues/3))
 
 ## Version 0.2.0
