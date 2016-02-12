@@ -145,7 +145,7 @@ export function activate() {
             let reuseCmdOption: string = openInNewWindow ? "" : " -r";
 
             if (process.platform == 'darwin') {
-              exec('open' + ' -b ' + codePath + " " + projectPath + reuseCmdOption);
+              exec("open" + " -b " + codePath + " " + projectPath + reuseCmdOption);
             } else {
               exec(codePath + " " + projectPath + reuseCmdOption);
             }
