@@ -58,17 +58,33 @@ For easier customization of your project list, you can edit the `projects.json` 
 
 > _new in version 0.3.0_  
 
-* Indicate Code path (useful if not in `PATH` and if switching projects does not work when Code is opened from Start Menu / Taskbar)
+* Indicate Code path (useful if not in `PATH` and if switching projects does not work when Code is opened from Start Menu / Taskbar)  
+Windows :
 ```
     "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
 ```
+Mac OS X:  
+```
+    for VSCode Stable build
+    "projectManager.codePath": "com.microsoft.VSCode"
+    
+    or
+    
+    for VSCode Insiders build
+    "projectManager.codePath": "com.microsoft.VSCodeInsiders"
+```
 
-* Open a New Window when you choose a project, or just switch the current _(default is `true`)_
+* Open a New Window when you choose a project, or just switch the current _(default is `true`)_  
+Mac OS X will work only `true`.
 ```
     "projectManager.openInNewWindow": true
 ```
 
 # Changelog
+
+## Version 0.x.x
+
+* **Fix:** Interim fix for Project switching does not work (issue [#7](https://github.com/alefragnani/vscode-project-manager/issues/7))
 
 ## Version 0.4.0
 
