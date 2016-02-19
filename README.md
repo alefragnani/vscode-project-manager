@@ -44,11 +44,13 @@ For easier customization of your project list, you can edit the `projects.json` 
 
 ## Available settings
 
-* Allow you to choose how the projects are sorted in **List Projects** command. You can choose:
+#### Sort the Project List
 
-    * **Saved**: The order that you saved the projects
-    * **Name**: The name that you typed for the project
-    * **Path**: The full path of the project
+Allow you to choose how the projects are sorted in **List Projects** command. You can choose:
+
+* **Saved**: The order that you saved the projects
+* **Name**: The name that you typed for the project
+* **Path**: The full path of the project
 
 ```
     "projectManager.sortList": "Name"
@@ -58,17 +60,49 @@ For easier customization of your project list, you can edit the `projects.json` 
 
 > _new in version 0.3.0_  
 
-* Indicate Code path (useful if not in `PATH` and if switching projects does not work when Code is opened from Start Menu / Taskbar)
+#### Indicate Code path
+
+Use this if switching projects is not working:
+
+* In **Windows**, simply define the `Code.cmd` path  
+
 ```
+    // For Windows, use:
     "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
 ```
 
-* Open a New Window when you choose a project, or just switch the current _(default is `true`)_
+* In **Mac OS X**, first try the same **Windows** approach. If you don't have success, try defining the combination below: 
+
+```
+    // Define to use the alternative approach
+    "projectManager.useAlternativeMacOSXPath": "true"
+
+    // Then, define the 'Application Name', depending of the channel that you are using
+    // - For Code Stable Build, use this:
+    "projectManager.codePath": "com.microsoft.VSCode"
+
+    // - For Code Insider Build, use this:
+    "projectManager.codePath": "com.microsoft.VSCodeInsiders"
+    
+```
+
+#### Open a New Window
+
+Define if you want to open a New Window or just switch the current 
+_(default is `true`)_  
+
 ```
     "projectManager.openInNewWindow": true
 ```
 
+* In Mac OS X, it has no effect _(for now)_, working as `true`.
+
+
 # Changelog
+
+## Version 0.5.1
+
+* **Fix:** Interim fix for project switching not working in Mac OS X (issue [#7](https://github.com/alefragnani/vscode-project-manager/issues/7) - Thanks to @satokaz)
 
 ## Version 0.5.0
 

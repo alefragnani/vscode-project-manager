@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -64,6 +64,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Should the project be opened using a New Window?"
+				},
+				"projectManager.useAlternativeMacOSXPath": {
+					"type": "boolean",
+					"default": false,
+					"description": "Should use the alternative approach in Mac OS X?"
 				}
 			}
 		},

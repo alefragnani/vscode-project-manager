@@ -144,7 +144,12 @@ export function activate() {
             let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
             let reuseCmdOption: string = openInNewWindow ? "" : " -r";
 
-            exec(codePath + " " + projectPath + reuseCmdOption);
+            let useAlternativeMacOSXPath: boolean = vscode.workspace.getConfiguration('projectManager').get('useAlternativeMacOSXPath', false);
+            if (useAlternativeMacOSXPath && (process.platform == 'darwin')) {
+                exec("open" + " -b " + codePath + " " + projectPath + reuseCmdOption);
+            } else {
+                exec(codePath + " " + projectPath + reuseCmdOption);
+            }
         });
     });
 
