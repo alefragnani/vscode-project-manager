@@ -201,11 +201,19 @@ export function activate() {
     function surroundByDoubleQuotes(path: string): string {
         return "\"" + path + "\""
     }
+    
+    function pathIsUNC(path:string) {
+      return path.indexOf('\\\\') == 0;
+    }
 
     function normalizePath(path: string): string {
         let normalizedPath: string = path;
-        let replaceable = normalizedPath.split('\\');
-        normalizedPath = replaceable.join('\\\\');
+        
+        if (!pathIsUNC(normalizedPath)) {
+          let replaceable = normalizedPath.split('\\');
+          normalizedPath = replaceable.join('\\\\');
+        }
+        
         normalizedPath = surroundByDoubleQuotes(normalizedPath);
         return normalizedPath;
     }
