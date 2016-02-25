@@ -100,6 +100,10 @@ _(default is `true`)_
 
 # Changelog
 
+## Version 0.5.2
+
+* **Fix:** Project switch not working for network folders (UNC Notation) (issue [#10](https://github.com/alefragnani/vscode-project-manager/issues/10))
+
 ## Version 0.5.1
 
 * **Fix:** Interim fix for project switching not working in Mac OS X (issue [#7](https://github.com/alefragnani/vscode-project-manager/issues/7) - Thanks to @satokaz)
@@ -115,7 +119,7 @@ _(default is `true`)_
 
 ## Version 0.3.1
 
-* **Fix:** Switching projects not working properly (issue [#5](https://github.com/alefragnani/vscode-project-manager/issues/5))
+* **Fix:** Project switch not working properly (issue [#5](https://github.com/alefragnani/vscode-project-manager/issues/5))
 
 ## Version 0.3.0
 
