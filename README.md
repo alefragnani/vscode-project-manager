@@ -53,7 +53,7 @@ Allow you to choose how the projects are sorted in **List Projects** command. Yo
 * **Path**: The full path of the project
 
 ```
-    "projectManager.sortList": "Name"
+"projectManager.sortList": "Name"
 ```
 
 ![List](images/project-manager-list-sort-by-name.png)
@@ -67,36 +67,38 @@ Use this if switching projects is not working:
 * In **Windows**, simply define the `Code.cmd` path  
 
 ```
-    // For Windows, use:
-    "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
+// For Windows, use:
+"projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
 ```
 
-* In **Mac OS X**, first try the same **Windows** approach. If you don't have success, try defining the combination below: 
+* In **Mac OS X**, first try the same **Windows** approach. 
 
 ```
-    // Define to use the alternative approach
-    "projectManager.useAlternativeMacOSXPath": "true"
+// For OS X, use:
+"projectManager.codePath": "/Applications/Visual\ Studio\ Code.app"
+```
 
-    // Then, define the 'Application Name', depending of the channel that you are using
-    // - For Code Stable Build, use this:
-    "projectManager.codePath": "com.microsoft.VSCode"
+* If you don't have success, try defining the combination below: 
 
-    // - For Code Insider Build, use this:
-    "projectManager.codePath": "com.microsoft.VSCodeInsiders"
-    
+```
+// Define to use the alternative approach
+"projectManager.useAlternativeMacOSXPath": "true"
+
+// - For Code Stable Build, use this:
+"projectManager.codePath": "com.microsoft.VSCode"
+
+// - For Code Insider Build, use this:
+"projectManager.codePath": "com.microsoft.VSCodeInsiders"
 ```
 
 #### Open a New Window
 
 Define if you want to open a New Window or just switch the current 
-_(default is `true`)_  
+_(default is `true`)_ . In Mac OS X, it has no effect _(for now)_, working as `true`.
 
 ```
-    "projectManager.openInNewWindow": true
+"projectManager.openInNewWindow": true
 ```
-
-* In Mac OS X, it has no effect _(for now)_, working as `true`.
-
 
 # Changelog
 
