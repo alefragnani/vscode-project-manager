@@ -20,7 +20,11 @@ export function activate() {
 
         // Display a message box to the user
         var wpath = vscode.workspace.rootPath;
-        wpath = wpath.substr(wpath.lastIndexOf("\\") + 1);
+        if (process.platform == 'win32') {
+            wpath = wpath.substr(wpath.lastIndexOf("\\") + 1);
+        } else {
+            wpath = wpath.substr(wpath.lastIndexOf("/") + 1);
+        }
 		
         // ask the PROJECT NAME (suggest the )
         var ibo = <vscode.InputBoxOptions>{
