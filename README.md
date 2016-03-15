@@ -71,18 +71,15 @@ Use this if switching projects is not working:
     "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
 ```
 
-* In **Mac OS X**, first try the same **Windows** approach. If you don't have success, try defining the combination below: 
+* In **Mac OS X**, first make sure `code` is in the PATH. `>Shell Command: Install 'code' command in PATH`.
 
 ```
-    // Define to use the alternative approach
-    "projectManager.useAlternativeMacOSXPath": "true"
-
-    // Then, define the 'Application Name', depending of the channel that you are using
+    // Define the 'Application Name', depending of the channel that you are using
     // - For Code Stable Build, use this:
-    "projectManager.codePath": "com.microsoft.VSCode"
+    "projectManager.codePath": "code"
 
     // - For Code Insider Build, use this:
-    "projectManager.codePath": "com.microsoft.VSCodeInsiders"
+    "projectManager.codePath": "code-insiders"
     
 ```
 
@@ -95,10 +92,11 @@ _(default is `true`)_
     "projectManager.openInNewWindow": true
 ```
 
-* In Mac OS X, it has no effect _(for now)_, working as `true`.
-
-
 # Changelog
+
+## Version 0.5.4
+
+* **Fix:** Updated instructions for Mac OS X after Code February Release (issue [#14](https://github.com/alefragnani/vscode-project-manager/issues/14) - Thanks to @satokaz, @janmarek and @csholmq)
 
 ## Version 0.5.3
 
