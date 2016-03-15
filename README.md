@@ -94,6 +94,10 @@ _(default is `true`)_
 
 # Changelog
 
+## Version 0.5.4
+
+* **Fix:** Updated instructions for Mac OS X after Code February Release (issue [#14](https://github.com/alefragnani/vscode-project-manager/issues/14) - Thanks to @satokaz, @janmarek and @csholmq)
+
 ## Version 0.5.3
 
 * **Fix:** Save Project was using the whole path (issue [#12](https://github.com/alefragnani/vscode-project-manager/issues/12))
