@@ -12,7 +12,17 @@ export function activate() {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "project-manager" is now active!'); 
-
+    
+    // 
+    let projectFile: string;
+    let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
+    projectFile = path.join(appdata, "Code/User/projects.json");
+    
+    // in linux, it may not work with /var/local, then try to use /home/myuser/.config
+    if ((process.platform == 'linux') && (!fs.existsSync(projectFile))) {
+        let os = require('os');
+        projectFile = path.join(os.homedir(), '.config/Code/User/projects.json');
+    }
 	
     // Save the Projects
     vscode.commands.registerCommand('projectManager.saveProject', () => {
@@ -41,17 +51,12 @@ export function activate() {
             }
 
             var rootPath = vscode.workspace.rootPath;
-			
-            // var projectFile = path.join(__dirname, "projects.json");
-            let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
-            var projectFile = path.join(appdata, "Code/User/projects.json");
             var items = []
             if (fs.existsSync(projectFile)) {
                 items = loadProjects(projectFile);
                 if (items == null) {
                     return;
                 } 
-                //items = JSON.parse(fs.readFileSync(projectFile).toString());
             }
 
             var found: boolean = false;
@@ -101,18 +106,12 @@ export function activate() {
 
     // List the Projects and allow the user to pick (select) one of them to activate
     vscode.commands.registerCommand('projectManager.listProjects', () => {
-        // The code you place here will be executed every time your command is executed
-
-        // var projectFile = path.join(__dirname, "projects.json");
-        let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
-        var projectFile = path.join(appdata, "Code/User/projects.json");
         var items = []
         if (fs.existsSync(projectFile)) {
             items = loadProjects(projectFile);
             if (items == null) {
                 return;
             }      
-            //     items = JSON.parse(fs.readFileSync(projectFile).toString());                
         } else {
             vscode.window.showInformationMessage('No projects saved yet!');
             return;
@@ -159,9 +158,6 @@ export function activate() {
 
 
     vscode.commands.registerCommand('projectManager.editProjects', () => {
-        let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
-        var projectFile = path.join(appdata, "Code/User/projects.json");
-
         if (fs.existsSync(projectFile)) {
             vscode.workspace.openTextDocument(projectFile).then(doc => {
                 vscode.window.showTextDocument(doc);
@@ -222,10 +218,10 @@ export function activate() {
         return normalizedPath;
     }
 
-    function loadProjects(projectFile: string): any[] {
+    function loadProjects(file: string): any[] {
         var items = [];
         try {
-            items = JSON.parse(fs.readFileSync(projectFile).toString());
+            items = JSON.parse(fs.readFileSync(file).toString());
             return items;
         } catch (error) {
             var optionOpenFile = <vscode.MessageItem>{

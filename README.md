@@ -2,6 +2,52 @@
 
 Manage your projects right inside Visual Studio Code. Easily access and switch between them.
 
+# Installation
+
+Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
+
+After that, you must configure the `projectManager.codePath` setting. 
+
+> This is a specially necessary if you are running Mac OS X or Linux.
+
+## Windows  
+
+Just define the path to the right **Code** build:
+
+```
+    // - For Code Stable Build, use this:
+    "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
+    
+    // - For Code Insider Build, use this:
+    "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code Insiders\\Bin\\Code-insiders.cmd"
+```
+
+## Mac OS X
+
+First make sure `code` is in the PATH. `>Shell Command: Install 'code' command in PATH`. After that, just define the right **Code** build:
+
+```
+    // - For Code Stable Build, use this:
+    "projectManager.codePath": "code"
+
+    // - For Code Insider Build, use this:
+    "projectManager.codePath": "code-insiders"
+```
+
+## Linux
+
+You must use the **Package Installers**, instead of the **zip**, since it installs the necessary shell interface. After that, just define the right **Code** build:
+
+```
+    // - For Code Stable Build, use this:
+    "projectManager.codePath": "code"
+
+    // - For Code Insider Build, use this:
+    "projectManager.codePath": "code-insiders"
+```
+
+> The **Package Installers** will be available in March release, so until now, the extension is not fully supported in Linux.
+
 # Usage
 
 ## Available commands
@@ -62,26 +108,7 @@ Allow you to choose how the projects are sorted in **List Projects** command. Yo
 
 #### Indicate Code path
 
-Use this if switching projects is not working:
-
-* In **Windows**, simply define the `Code.cmd` path  
-
-```
-    // For Windows, use:
-    "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
-```
-
-* In **Mac OS X**, first make sure `code` is in the PATH. `>Shell Command: Install 'code' command in PATH`.
-
-```
-    // Define the 'Application Name', depending of the channel that you are using
-    // - For Code Stable Build, use this:
-    "projectManager.codePath": "code"
-
-    // - For Code Insider Build, use this:
-    "projectManager.codePath": "code-insiders"
-    
-```
+As described in the installation steps, you must use this to define the path to the **Code** app.
 
 #### Open a New Window
 
@@ -93,6 +120,11 @@ _(default is `true`)_
 ```
 
 # Changelog
+
+## Version 0.5.5
+
+* **Fix:** Saving projects not working in Linux (issue [#16](https://github.com/alefragnani/vscode-project-manager/issues/16)
+* Readme updated to better explain how to install and configure the extension
 
 ## Version 0.5.4
 

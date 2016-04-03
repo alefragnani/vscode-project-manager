@@ -2,14 +2,14 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.5.4",
+	"version": "0.5.5",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "0.10.x"
+		"vscode": "^0.10.7"
 	},
 	"categories": [
 		"Other"	
@@ -82,10 +82,11 @@
 	},
 	"scripts": {
 		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install"
 	},
 	"devDependencies": {
-		"vscode": "0.10.x",
+		"vscode": "^0.11.x",
 		"typescript": "^1.6.2"
 	}
 }
