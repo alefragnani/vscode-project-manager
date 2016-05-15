@@ -16,11 +16,13 @@ Just define the path to the right **Code** build:
 
 ```
     // - For Code Stable Build, use this:
-    "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code\\Bin\\Code.cmd"
+    "projectManager.codePath": "C:\\Program Files (x86)\\Microsoft VS Code\\Bin\\Code.cmd"
     
     // - For Code Insider Build, use this:
-    "projectManager.codePath": "C:\\Program Files\\Microsoft VS Code Insiders\\Bin\\Code-insiders.cmd"
+    "projectManager.codePath": "C:\\Program Files (x86)\\Microsoft VS Code Insiders\\Bin\\Code-insiders.cmd"
 ```
+
+> If you are using a 32bits Windows, **Code** is installed in `C:\\Program Files\\...`
 
 ## Mac OS X
 

@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.5.5",
+	"version": "0.5.6",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
