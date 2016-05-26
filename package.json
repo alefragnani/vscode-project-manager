@@ -2,14 +2,14 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.5.6",
+	"version": "0.6.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^0.10.7"
+		"vscode": "^1.1.0"
 	},
 	"categories": [
 		"Other"	
@@ -55,20 +55,10 @@
 					"description": "List the projects sorted by...",
 					"enum": ["Saved", "Name", "Path"]
 				},
-				"projectManager.codePath": {
-					"type": "string",
-					"default": "none",
-					"description": "Indicate the full Code app path"
-				},
 				"projectManager.openInNewWindow": {
 					"type": "boolean",
 					"default": true,
 					"description": "Should the project be opened using a New Window?"
-				},
-				"projectManager.useAlternativeMacOSXPath": {
-					"type": "boolean",
-					"default": false,
-					"description": "Should use the alternative approach in Mac OS X?"
 				}
 			}
 		},

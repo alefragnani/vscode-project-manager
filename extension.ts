@@ -11,7 +11,7 @@ export function activate() {
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "project-manager" is now active!'); 
+    //console.log('Congratulations, your extension "project-manager" is now active!'); 
     
     // 
     let projectFile: string;
@@ -132,27 +132,16 @@ export function activate() {
                 return;
             }			
 			
-            // code path
-            let codePath = vscode.workspace.getConfiguration('projectManager').get('codePath', 'none');
-            if (codePath == 'none') {
-                codePath = "Code";
-            } else {
-                codePath = normalizePath(codePath);
-            }		    
-
             // project path
             let projectPath = selection.description;
             projectPath = normalizePath(projectPath);
 
             let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
-            let reuseCmdOption: string = openInNewWindow ? "" : " -r";
-
-            let useAlternativeMacOSXPath: boolean = vscode.workspace.getConfiguration('projectManager').get('useAlternativeMacOSXPath', false);
-            if (useAlternativeMacOSXPath && (process.platform == 'darwin')) {
-                exec("open" + " -b " + codePath + " " + projectPath + reuseCmdOption);
-            } else {
-                exec(codePath + " " + projectPath + reuseCmdOption);
-            }
+            let uri: vscode.Uri = vscode.Uri.file(projectPath) 
+            vscode.commands.executeCommand('vscode.openFolder', uri, openInNewWindow) 
+                .then(
+                    value => ( {} ),  //done 
+                    value => vscode.window.showInformationMessage('Could not open the project!') ); 
         });
     });
 
@@ -197,10 +186,6 @@ export function activate() {
         });
         return itemsSorted;
     }
-
-    function surroundByDoubleQuotes(path: string): string {
-        return "\"" + path + "\""
-    }
     
     function pathIsUNC(path:string) {
       return path.indexOf('\\\\') == 0;
@@ -214,7 +199,6 @@ export function activate() {
           normalizedPath = replaceable.join('\\\\');
         }
         
-        normalizedPath = surroundByDoubleQuotes(normalizedPath);
         return normalizedPath;
     }
 

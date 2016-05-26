@@ -6,50 +6,6 @@ Manage your projects right inside Visual Studio Code. Easily access and switch b
 
 Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
 
-After that, you must configure the `projectManager.codePath` setting. 
-
-> This is a specially necessary if you are running Mac OS X or Linux.
-
-## Windows  
-
-Just define the path to the right **Code** build:
-
-```
-    // - For Code Stable Build, use this:
-    "projectManager.codePath": "C:\\Program Files (x86)\\Microsoft VS Code\\Bin\\Code.cmd"
-    
-    // - For Code Insider Build, use this:
-    "projectManager.codePath": "C:\\Program Files (x86)\\Microsoft VS Code Insiders\\Bin\\Code-insiders.cmd"
-```
-
-> If you are using a 32bits Windows, **Code** is installed in `C:\\Program Files\\...`
-
-## Mac OS X
-
-First make sure `code` is in the PATH. `>Shell Command: Install 'code' command in PATH`. After that, just define the right **Code** build:
-
-```
-    // - For Code Stable Build, use this:
-    "projectManager.codePath": "code"
-
-    // - For Code Insider Build, use this:
-    "projectManager.codePath": "code-insiders"
-```
-
-## Linux
-
-You must use the **Package Installers**, instead of the **zip**, since it installs the necessary shell interface. After that, just define the right **Code** build:
-
-```
-    // - For Code Stable Build, use this:
-    "projectManager.codePath": "code"
-
-    // - For Code Insider Build, use this:
-    "projectManager.codePath": "code-insiders"
-```
-
-> The **Package Installers** will be available in March release, so until now, the extension is not fully supported in Linux.
-
 # Usage
 
 ## Available commands
@@ -65,8 +21,6 @@ You must use the **Package Installers**, instead of the **zip**, since it instal
 You can save the current project in the manager at any time. You just need to type a name. It even suggest you _automatically_ :)
 
 ![Save](images/project-manager-save.png)
-
- > _new in version 0.4.0_ 
  
 ### Edit Projects
 
@@ -89,7 +43,6 @@ For easier customization of your project list, you can edit the `projects.json` 
 
 ![Corrupted](images/project-manager-edit-corrupted-projectsJson.png)
 
-
 ## Available settings
 
 #### Sort the Project List
@@ -106,12 +59,6 @@ Allow you to choose how the projects are sorted in **List Projects** command. Yo
 
 ![List](images/project-manager-list-sort-by-name.png)
 
-> _new in version 0.3.0_  
-
-#### Indicate Code path
-
-As described in the installation steps, you must use this to define the path to the **Code** app.
-
 #### Open a New Window
 
 Define if you want to open a New Window or just switch the current 
@@ -122,6 +69,12 @@ _(default is `true`)_
 ```
 
 # Changelog
+
+## Version 0.6.0
+
+* **New:** Use new native API for opening folders _(requires VSCode 1.1.0 or higher)_
+* **Fix:** Click or enter in project list does not work (Linux / Mac) (issue [#27](https://github.com/alefragnani/vscode-project-manager/issues/27))
+* **Removed Settings:** The `projectManager.codePath` and `projectManager.useAlternativeMacOSXPath` where removed because are not necessary anymore.
 
 ## Version 0.5.5
 
