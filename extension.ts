@@ -102,11 +102,16 @@ export function activate() {
 
 
     });
-
+    
+    function removeRootPath(items:any[]): any[] {
+        return items.filter(value => value.description.toString().toLowerCase() != vscode.workspace.rootPath.toLowerCase());
+    }
+    
 
     // List the Projects and allow the user to pick (select) one of them to activate
     vscode.commands.registerCommand('projectManager.listProjects', () => {
-        var items = []
+        let items = []
+        let itemsToShow = [];
         if (fs.existsSync(projectFile)) {
             items = loadProjects(projectFile);
             if (items == null) {
@@ -117,13 +122,15 @@ export function activate() {
             return;
         }
 
+        itemsToShow = removeRootPath(items);
+
         var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList');
 
         var itemsSorted = [];
         if (sortList == "Name") {
-            itemsSorted = getSortedByName(items);
+            itemsSorted = getSortedByName(itemsToShow);
         } else {
-            itemsSorted = getSortedByPath(items);
+            itemsSorted = getSortedByPath(itemsToShow);
         };
 
         vscode.window.showQuickPick(itemsSorted).then(selection => {

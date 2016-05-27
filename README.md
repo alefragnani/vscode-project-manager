@@ -70,6 +70,10 @@ _(default is `true`)_
 
 # Changelog
 
+## Version 0.7.0
+
+* **New:** Don't show the current folder/project in the list (issue [#28]()https://github.com/alefragnani/vscode-project-manager/issues/28)
+
 ## Version 0.6.0
 
 * **New:** Use new native API for opening folders _(requires VSCode 1.1.0 or higher)_
