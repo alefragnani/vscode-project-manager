@@ -170,7 +170,7 @@ export function activate() {
                         vscode.commands.executeCommand('projectManager.editProjects');
                     } else { // Update Project
                         let itemsFiltered = [];
-                        itemsFiltered = items.filter(value => value.label.toString().toLowerCase() != selection.label.toLowerCase());
+                        itemsFiltered = items.filter(value => value.description.toString().toLowerCase() != selection.description.toLowerCase());
                         fs.writeFileSync(projectFile, JSON.stringify(itemsFiltered, null, "\t"));
                         return;
                     }
