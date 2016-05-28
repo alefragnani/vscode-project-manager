@@ -107,11 +107,23 @@ export function activate() {
         return items.filter(value => value.description.toString().toLowerCase() != vscode.workspace.rootPath.toLowerCase());
     }
     
-
+    function indicateInvalidPaths(items:any[]): any[] {
+        for (var index = 0; index < items.length; index++) {
+            var element = items[index];
+            
+            if (!fs.existsSync(element.description.toString()) ) {
+                items[index].detail = '$(circle-slash) Path does not exists';
+            }
+        }
+        
+        return items;
+    }
+    
     // List the Projects and allow the user to pick (select) one of them to activate
     vscode.commands.registerCommand('projectManager.listProjects', () => {
-        let items = []
+        let items = [];
         let itemsToShow = [];
+        
         if (fs.existsSync(projectFile)) {
             items = loadProjects(projectFile);
             if (items == null) {
@@ -121,8 +133,9 @@ export function activate() {
             vscode.window.showInformationMessage('No projects saved yet!');
             return;
         }
-
+        
         itemsToShow = removeRootPath(items);
+        itemsToShow = indicateInvalidPaths(itemsToShow)
 
         var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList');
 
@@ -138,17 +151,42 @@ export function activate() {
             if (typeof selection == 'undefined') {
                 return;
             }			
-			
-            // project path
-            let projectPath = selection.description;
-            projectPath = normalizePath(projectPath);
+            
+            if (!fs.existsSync(selection.description.toString())) {
+                var optionUpdateProject = <vscode.MessageItem>{
+                    title: "Update Project"
+                };
+                var optionDeleteProject = <vscode.MessageItem>{
+                    title: "Delete Project"
+                };
 
-            let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
-            let uri: vscode.Uri = vscode.Uri.file(projectPath) 
-            vscode.commands.executeCommand('vscode.openFolder', uri, openInNewWindow) 
-                .then(
-                    value => ( {} ),  //done 
-                    value => vscode.window.showInformationMessage('Could not open the project!') ); 
+                vscode.window.showErrorMessage('The project has an invalid path. What would you like to do?', optionUpdateProject, optionDeleteProject).then(option => {
+                    // nothing selected
+                    if (typeof option == 'undefined') {
+                        return;
+                    }
+
+                    if (option.title == "Update Project") {
+                        vscode.commands.executeCommand('projectManager.editProjects');
+                    } else { // Update Project
+                        let itemsFiltered = [];
+                        itemsFiltered = items.filter(value => value.label.toString().toLowerCase() != selection.label.toLowerCase());
+                        fs.writeFileSync(projectFile, JSON.stringify(itemsFiltered, null, "\t"));
+                        return;
+                    }
+                }); 
+            } else {
+                // project path
+                let projectPath = selection.description;
+                projectPath = normalizePath(projectPath);
+
+                let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
+                let uri: vscode.Uri = vscode.Uri.file(projectPath) 
+                vscode.commands.executeCommand('vscode.openFolder', uri, openInNewWindow) 
+                    .then(
+                        value => ( {} ),  //done 
+                        value => vscode.window.showInformationMessage('Could not open the project!') ); 
+            }
         });
     });
 

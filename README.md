@@ -72,7 +72,8 @@ _(default is `true`)_
 
 ## Version 0.7.0
 
-* **New:** Don't show the current folder/project in the list (issue [#28]()https://github.com/alefragnani/vscode-project-manager/issues/28)
+* **New:** Don't show the current folder/project in the project list (issue [#28](https://github.com/alefragnani/vscode-project-manager/issues/28))
+* **New:** Indicate _invalid paths_ in the project list (issue [#30](https://github.com/alefragnani/vscode-project-manager/issues/30))
 
 ## Version 0.6.0
 
