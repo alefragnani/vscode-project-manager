@@ -104,7 +104,11 @@ export function activate() {
     });
     
     function removeRootPath(items:any[]): any[] {
-        return items.filter(value => value.description.toString().toLowerCase() != vscode.workspace.rootPath.toLowerCase());
+        if (!vscode.workspace.rootPath) {
+            return items;
+        } else {
+            return items.filter(value => value.description.toString().toLowerCase() != vscode.workspace.rootPath.toLowerCase());
+        }
     }
     
     function indicateInvalidPaths(items:any[]): any[] {

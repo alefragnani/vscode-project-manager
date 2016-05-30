@@ -70,6 +70,10 @@ _(default is `true`)_
 
 # Changelog
 
+## Version 0.7.1
+
+* **Fix:** List Projects command failed when no folder is open (issue [#32](https://github.com/alefragnani/vscode-project-manager/issues/32))
+
 ## Version 0.7.0
 
 * **New:** Don't show the current folder/project in the project list (issue [#28](https://github.com/alefragnani/vscode-project-manager/issues/28))
