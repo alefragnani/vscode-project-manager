@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import fs = require('fs');
 import path = require('path');
 import {exec} from 'child_process';
+const untildify = require('untildify');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -114,8 +115,9 @@ export function activate() {
     function indicateInvalidPaths(items:any[]): any[] {
         for (var index = 0; index < items.length; index++) {
             var element = items[index];
+            const resolvedSelectionPath = untildify(element.description.toString());
             
-            if (!fs.existsSync(element.description.toString()) ) {
+            if (!fs.existsSync(resolvedSelectionPath)) {
                 items[index].detail = '$(circle-slash) Path does not exists';
             }
         }
@@ -155,8 +157,9 @@ export function activate() {
             if (typeof selection == 'undefined') {
                 return;
             }			
-            
-            if (!fs.existsSync(selection.description.toString())) {
+            const resolvedSelectionPath = untildify(selection.description.toString());
+
+            if (!fs.existsSync(resolvedSelectionPath)) {
                 var optionUpdateProject = <vscode.MessageItem>{
                     title: "Update Project"
                 };
@@ -182,7 +185,7 @@ export function activate() {
             } else {
                 // project path
                 let projectPath = selection.description;
-                projectPath = normalizePath(projectPath);
+                projectPath = untildify(normalizePath(projectPath));
 
                 let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
                 let uri: vscode.Uri = vscode.Uri.file(projectPath) 
