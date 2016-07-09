@@ -3,7 +3,11 @@
 import * as vscode from 'vscode';
 import fs = require('fs');
 import path = require('path');
+import os = require('os');
 import {exec} from 'child_process';
+
+const homeDir = os.homedir();
+const homePathVariable = '$home';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -20,8 +24,7 @@ export function activate() {
     
     // in linux, it may not work with /var/local, then try to use /home/myuser/.config
     if ((process.platform == 'linux') && (!fs.existsSync(projectFile))) {
-        let os = require('os');
-        projectFile = path.join(os.homedir(), '.config/Code/User/projects.json');
+        projectFile = path.join(homeDir, '.config/Code/User/projects.json');
     }
 	
     // Save the Projects
@@ -50,7 +53,8 @@ export function activate() {
                 return;
             }
 
-            var rootPath = vscode.workspace.rootPath;
+            var rootPath = compactHomePath(vscode.workspace.rootPath);
+
             var items = []
             if (fs.existsSync(projectFile)) {
                 items = loadProjects(projectFile);
@@ -66,6 +70,7 @@ export function activate() {
                     found = true;
                 }
             }
+
             if (!found) {
                 items.push({ label: projectName, description: rootPath });
                 fs.writeFileSync(projectFile, JSON.stringify(items, null, "\t"));
@@ -138,8 +143,9 @@ export function activate() {
             return;
         }
         
-        itemsToShow = removeRootPath(items);
-        itemsToShow = indicateInvalidPaths(itemsToShow)
+        itemsToShow = expandHomePaths(items);
+        itemsToShow = removeRootPath(itemsToShow);
+        itemsToShow = indicateInvalidPaths(itemsToShow);
 
         var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList');
 
@@ -238,6 +244,37 @@ export function activate() {
     
     function pathIsUNC(path:string) {
       return path.indexOf('\\\\') == 0;
+    }
+
+    /**
+     * If the project path is in the user's home directory then store the home directory as a
+     * parameter. This will help in situations when the user works with the same projects on 
+     * different machines, under different user names. 
+     */
+    function compactHomePath(path: string) {
+        if (path.indexOf(homeDir) === 0) {
+            return path.replace(homeDir, homePathVariable);
+        }
+
+        return path;
+    }
+
+    /**
+     * Expand $home parameter from path to real os home path
+     */
+    function expandHomePath(path: string) {
+        if (path.indexOf(homePathVariable) === 0) {
+            return path.replace(homePathVariable, homeDir);
+        }
+
+        return path;
+    }
+    
+    function expandHomePaths(items: any[]) {
+        return items.map(item => {
+            item.description = expandHomePath(item.description);
+            return item;
+        });
     }
 
     function normalizePath(path: string): string {
