@@ -30,14 +30,21 @@ For easier customization of your project list, you can edit the `projects.json` 
 [
     {
         "label": "Pascal MI",
-        "description": "c:\\Users\\Alessandro\\Documents\\GitHub\\pascal-menu-insight"
+        "description": "c:\\PascalProjects\\pascal-menu-insight"
     },
     {
         "label": "Bookmarks",
-        "description": "c:\\Users\\Alessandro\\Documents\\vso\\vscode-bookmarks"
+        "description": "$home\\Documents\\GitHub\\vscode-bookmarks"
+    },
+    {
+        "label": "Numbered Bookmarks",
+        "description": "$home\\Documents\\GitHub\\vscode-numbered-bookmarks"
     }
 ]
 ```
+> _new in version 0.8.0_
+
+If you sync your projects between different machines, you can now use a special variable `$home`. It will be replaced by the HOME folder from the current machine when the projects are listed.
 
 > Be sure that the JSON file is well-formed. Otherwise, **Project Manager** will not be able to open it, and an error message like this should appear. In this case, you should use the `Open File` button to fix it.
 
@@ -69,6 +76,10 @@ _(default is `true`)_
 ```
 
 # Changelog
+
+## Version 0.8.0
+
+* **New:** Support `$home` variable in project paths (kudos to @efidiles)
 
 ## Version 0.7.1
 
