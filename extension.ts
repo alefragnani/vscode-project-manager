@@ -147,14 +147,23 @@ export function activate() {
         itemsToShow = removeRootPath(itemsToShow);
         itemsToShow = indicateInvalidPaths(itemsToShow);
 
-        var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList');
+        var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList', 'Name');
 
         var itemsSorted = [];
-        if (sortList == "Name") {
-            itemsSorted = getSortedByName(itemsToShow);
-        } else {
-            itemsSorted = getSortedByPath(itemsToShow);
-        };
+        
+        switch (sortList) {
+            case 'Path':
+                itemsSorted = getSortedByPath(itemsToShow); 
+                break;
+        
+            case 'Saved': 
+                itemsSorted = itemsToShow;
+                break;
+                
+            default:
+                itemsSorted = getSortedByName(itemsToShow);
+                break;
+        }
 
         vscode.window.showQuickPick(itemsSorted).then(selection => {
 

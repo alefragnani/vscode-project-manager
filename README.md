@@ -77,6 +77,10 @@ _(default is `true`)_
 
 # Changelog
 
+## Version 0.8.1
+
+* **Fix:** Sort by _Saved_ not available (issue [#37](https://github.com/alefragnani/vscode-project-manager/issues/37))
+
 ## Version 0.8.0
 
 * **New:** Support `$home` variable in project paths (kudos to @efidiles)
