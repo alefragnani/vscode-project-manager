@@ -75,7 +75,21 @@ _(default is `true`)_
     "projectManager.openInNewWindow": true
 ```
 
+#### Projects Location
+
+Indicates an alternative location where the `projects.json` file is stored. Usefull if you want to _share_ projects between **Stable** and **Insider**.
+
+```
+    "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
+```
+
 # Changelog
+
+## Version 0.8.2
+
+* **New:** The extension now supports **VSCode Insiders** version and has its own `projects.json` file. Use the **new setting** if you want to have **Stable** and **Insider** versions sharing the project list. 
+* **Fix:** Not working on machines with _only_ **VSCode Insider** version installed (issue [#22](https://github.com/alefragnani/vscode-project-manager/issues/22))
+* **New Setting:** Indicates an alternative location where the `projects.json` file is located
 
 ## Version 0.8.1
 

@@ -8,25 +8,12 @@ import {exec} from 'child_process';
 
 const homeDir = os.homedir();
 const homePathVariable = '$home';
+const PROJECTS_FILE = 'projects.json';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate() { 
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    //console.log('Congratulations, your extension "project-manager" is now active!'); 
-    
-    // 
-    let projectFile: string;
-    let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
-    projectFile = path.join(appdata, "Code/User/projects.json");
-    
-    // in linux, it may not work with /var/local, then try to use /home/myuser/.config
-    if ((process.platform == 'linux') && (!fs.existsSync(projectFile))) {
-        projectFile = path.join(homeDir, '.config/Code/User/projects.json');
-    }
-	
     // Save the Projects
     vscode.commands.registerCommand('projectManager.saveProject', () => {
         // The code you place here will be executed every time your command is executed
@@ -56,8 +43,8 @@ export function activate() {
             var rootPath = compactHomePath(vscode.workspace.rootPath);
 
             var items = []
-            if (fs.existsSync(projectFile)) {
-                items = loadProjects(projectFile);
+            if (fs.existsSync(getProjectFilePath())) {
+                items = loadProjects(getProjectFilePath());
                 if (items == null) {
                     return;
                 } 
@@ -73,7 +60,7 @@ export function activate() {
 
             if (!found) {
                 items.push({ label: projectName, description: rootPath });
-                fs.writeFileSync(projectFile, JSON.stringify(items, null, "\t"));
+                fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                 vscode.window.showInformationMessage('Project saved!');
             } else {
                 var optionUpdate = <vscode.MessageItem>{
@@ -93,7 +80,7 @@ export function activate() {
                         for (var i = 0; i < items.length; i++) {
                             if (items[i].label == projectName) {
                                 items[i].description = rootPath;
-                                fs.writeFileSync(projectFile, JSON.stringify(items, null, "\t"));
+                                fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                                 vscode.window.showInformationMessage('Project saved!');
                                 return;
                             }
@@ -133,8 +120,8 @@ export function activate() {
         let items = [];
         let itemsToShow = [];
         
-        if (fs.existsSync(projectFile)) {
-            items = loadProjects(projectFile);
+        if (fs.existsSync(getProjectFilePath())) {
+            items = loadProjects(getProjectFilePath());
             if (items == null) {
                 return;
             }      
@@ -190,7 +177,7 @@ export function activate() {
                     } else { // Update Project
                         let itemsFiltered = [];
                         itemsFiltered = items.filter(value => value.description.toString().toLowerCase() != selection.description.toLowerCase());
-                        fs.writeFileSync(projectFile, JSON.stringify(itemsFiltered, null, "\t"));
+                        fs.writeFileSync(getProjectFilePath(), JSON.stringify(itemsFiltered, null, "\t"));
                         return;
                     }
                 }); 
@@ -211,8 +198,8 @@ export function activate() {
 
 
     vscode.commands.registerCommand('projectManager.editProjects', () => {
-        if (fs.existsSync(projectFile)) {
-            vscode.workspace.openTextDocument(projectFile).then(doc => {
+        if (fs.existsSync(getProjectFilePath())) {
+            vscode.workspace.openTextDocument(getProjectFilePath()).then(doc => {
                 vscode.window.showTextDocument(doc);
             });
         } else {
@@ -320,5 +307,31 @@ export function activate() {
             });
             return null;
         }
+    }
+
+    function getChannelPath(): string {
+        if (vscode.env.appName.indexOf('Insiders') > 0) {
+            return 'Code - Insiders';
+        } else {
+            return 'Code';
+        }
+    }
+
+    function getProjectFilePath() {
+        let projectFile: string;
+        let projectsLocation: string = vscode.workspace.getConfiguration('projectManager').get<string>('projectsLocation');
+        if (projectsLocation != '') {
+            projectFile = path.join(projectsLocation, PROJECTS_FILE);
+        } else {
+            let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
+            let channelPath: string = getChannelPath();
+            let linuxPath: string = '';
+            // in linux, it may not work with /var/local, then try to use /home/myuser/.config
+            if ((process.platform == 'linux') && (!fs.existsSync(projectFile))) {
+                linuxPath = '.config/';
+            }
+            projectFile = path.join(appdata, linuxPath, channelPath, 'User', PROJECTS_FILE);        
+        }
+        return projectFile;
     }
 }

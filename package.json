@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.8.1",
+	"version": "0.8.2",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -59,6 +59,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Should the project be opened using a New Window?"
+				},
+				"projectManager.projectsLocation": {
+					"type": "string",
+					"default": "",
+					"description": "Indicates an alternative location where the `projects.json` file is stored"
 				}
 			}
 		},
