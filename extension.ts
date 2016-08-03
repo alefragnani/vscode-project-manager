@@ -328,6 +328,7 @@ export function activate() {
             let linuxPath: string = '';
             // in linux, it may not work with /var/local, then try to use /home/myuser/.config
             if ((process.platform == 'linux') && (!fs.existsSync(projectFile))) {
+                appdata = homeDir;
                 linuxPath = '.config/';
             }
             projectFile = path.join(appdata, linuxPath, channelPath, 'User', PROJECTS_FILE);        
