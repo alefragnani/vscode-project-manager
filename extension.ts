@@ -325,13 +325,12 @@ export function activate() {
         } else {
             let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
             let channelPath: string = getChannelPath();
-            let linuxPath: string = '';
+            projectFile = path.join(appdata, channelPath, 'User', PROJECTS_FILE);        
             // in linux, it may not work with /var/local, then try to use /home/myuser/.config
             if ((process.platform == 'linux') && (!fs.existsSync(projectFile))) {
-                linuxPath = '.config/';
+                projectFile = path.join(homeDir, '.config/', channelPath, 'User', PROJECTS_FILE);       
             }
-            projectFile = path.join(appdata, linuxPath, channelPath, 'User', PROJECTS_FILE);        
         }
         return projectFile;
     }
-}
+} 

@@ -85,6 +85,10 @@ Indicates an alternative location where the `projects.json` file is stored. Usef
 
 # Changelog
 
+## Version 0.8.3
+
+* **Fix:** Linux support broken (issue [#39](https://github.com/alefragnani/vscode-project-manager/issues/39))
+
 ## Version 0.8.2
 
 * **New:** The extension now supports **VSCode Insiders** version and has its own `projects.json` file. Use the **new setting** if you want to have **Stable** and **Insider** versions sharing the project list. 
