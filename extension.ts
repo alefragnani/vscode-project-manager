@@ -108,7 +108,7 @@ export function activate() {
             var element = items[index];
             
             if (!fs.existsSync(element.description.toString()) ) {
-                items[index].detail = '$(circle-slash) Path does not exists';
+                items[index].detail = '$(circle-slash) Path does not exist';
             }
         }
         
