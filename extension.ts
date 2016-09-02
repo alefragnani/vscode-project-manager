@@ -6,14 +6,20 @@ import path = require('path');
 import os = require('os');
 import {exec} from 'child_process';
 
+import stack = require('./stack');
+
 const homeDir = os.homedir();
 const homePathVariable = '$home';
 const PROJECTS_FILE = 'projects.json';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate() { 
-
+export function activate(context: vscode.ExtensionContext) { 
+    
+    let projectsStored: string = context.globalState.get<string>('recent', '');
+    let aStack: stack.StringStack = new stack.StringStack();
+    aStack.fromString(projectsStored);
+    
     // Save the Projects
     vscode.commands.registerCommand('projectManager.saveProject', () => {
         // The code you place here will be executed every time your command is executed
@@ -34,7 +40,7 @@ export function activate() {
         }
 
         vscode.window.showInputBox(ibo).then(projectName => {
-            console.log("Project Name: " + projectName);
+            //console.log("Project Name: " + projectName);
 
             if (typeof projectName == 'undefined') {
                 return;
@@ -59,6 +65,8 @@ export function activate() {
             }
 
             if (!found) {
+                aStack.push(projectName);
+                context.globalState.update('recent', aStack.toString());
                 items.push({ label: projectName, description: rootPath });
                 fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                 vscode.window.showInformationMessage('Project saved!');
@@ -80,6 +88,8 @@ export function activate() {
                         for (var i = 0; i < items.length; i++) {
                             if (items[i].label == projectName) {
                                 items[i].description = rootPath;
+                                aStack.push(projectName);
+                                context.globalState.update('recent', aStack.toString());
                                 fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                                 vscode.window.showInformationMessage('Project saved!');
                                 return;
@@ -147,6 +157,10 @@ export function activate() {
                 itemsSorted = itemsToShow;
                 break;
                 
+            case 'Recent':
+                itemsSorted = getSortedByRecent(itemsToShow);
+                break;
+                
             default:
                 itemsSorted = getSortedByName(itemsToShow);
                 break;
@@ -185,9 +199,14 @@ export function activate() {
                 // project path
                 let projectPath = selection.description;
                 projectPath = normalizePath(projectPath);
+                
+                // update MRU               
+                aStack.push(selection.label);
+                context.globalState.update('recent', aStack.toString()); 
+                //console.log(aStack.toString());
 
                 let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
-                let uri: vscode.Uri = vscode.Uri.file(projectPath) 
+                let uri: vscode.Uri = vscode.Uri.file(projectPath); 
                 vscode.commands.executeCommand('vscode.openFolder', uri, openInNewWindow) 
                     .then(
                         value => ( {} ),  //done 
@@ -236,6 +255,36 @@ export function activate() {
             return 0;
         });
         return itemsSorted;
+    }
+    
+    function getSortedByRecent(items: any[]): any[] {
+        
+        if (aStack.length() == 0) {
+            return items;
+        }
+        
+        let idx: number;        
+        let loadedProjects = items;
+        
+        for (let index = 0; index < aStack.length(); index++) {
+            let element: string = aStack.getItem(index);
+            
+            let found: number = -1;
+            for (let i = 0; i < loadedProjects.length; i++) {
+                let itemElement = loadedProjects[i];
+                if (itemElement.label == element) {
+                    found = i;
+                    break;
+                }
+            }
+            
+            if (found > -1) {
+                let removedProject = loadedProjects.splice(found, 1);
+                loadedProjects.unshift(removedProject[0]);
+            }
+        }
+        
+        return loadedProjects;
     }
     
     function pathIsUNC(path:string) {
