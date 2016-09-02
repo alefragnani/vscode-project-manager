@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.8.3",
+	"version": "0.9.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -14,6 +14,11 @@
 	"categories": [
 		"Other"	
 	],
+    "keywords": [
+        "project",
+        "folder",
+        "switch"
+    ],
     "icon": "images/icon.png",
     "license": "SEE LICENSE IN LICENSE.md",
 	"homepage": "https://github.com/alefragnani/vscode-project-manager/blob/master/README.md",
@@ -53,7 +58,7 @@
 					"type": "string",
 					"default": "Name",
 					"description": "List the projects sorted by...",
-					"enum": ["Saved", "Name", "Path"]
+					"enum": ["Saved", "Name", "Path", "Recent"]
 				},
 				"projectManager.openInNewWindow": {
 					"type": "boolean",

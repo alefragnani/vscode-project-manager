@@ -59,6 +59,7 @@ Allow you to choose how the projects are sorted in **List Projects** command. Yo
 * **Saved**: The order that you saved the projects
 * **Name**: The name that you typed for the project
 * **Path**: The full path of the project
+* **Recent**: The recently used projects
 
 ```
     "projectManager.sortList": "Name"
@@ -84,6 +85,10 @@ Indicates an alternative location where the `projects.json` file is stored. Usef
 ```
 
 # Changelog
+
+## Version 0.9.0
+
+* **New:** Added another **Sort** option (`Recent`)
 
 ## Version 0.8.3
 
