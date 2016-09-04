@@ -31,11 +31,16 @@ export function activate(context: vscode.ExtensionContext) {
         } else {
             wpath = wpath.substr(wpath.lastIndexOf("/") + 1);
         }
+
+        // Issue #42 - Temporary Fix for Insider version
+        if (vscode.env.appName.indexOf('Insiders') > 0) {
+            wpath = ''
+        }
 		
         // ask the PROJECT NAME (suggest the )
         var ibo = <vscode.InputBoxOptions>{
             prompt: "Project Name",
-            placeHolder: "Noname",
+            placeHolder: "Type a name for your project",
             value: wpath
         }
 
@@ -43,6 +48,12 @@ export function activate(context: vscode.ExtensionContext) {
             //console.log("Project Name: " + projectName);
 
             if (typeof projectName == 'undefined') {
+                return;
+            }
+
+            // 'empty'
+            if (projectName == '') {
+                vscode.window.showWarningMessage('You must define a name for the project.');
                 return;
             }
 

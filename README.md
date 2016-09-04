@@ -21,6 +21,8 @@ Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
 You can save the current project in the manager at any time. You just need to type a name. It even suggest you _automatically_ :)
 
 ![Save](images/project-manager-save.png)
+
+> There is an issue in VSCode Insider 1.5 that prevents the _project name suggestion_, so it will be turned off temporarily
  
 ### Edit Projects
 
@@ -85,6 +87,10 @@ Indicates an alternative location where the `projects.json` file is stored. Usef
 ```
 
 # Changelog
+
+## Version 0.9.1
+
+* **Fix:** Saving projects with no name (_Insider_ release) (issue [#42](https://github.com/alefragnani/vscode-project-manager/issues/42))
 
 ## Version 0.9.0
 
