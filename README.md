@@ -22,7 +22,7 @@ You can save the current project in the manager at any time. You just need to ty
 
 ![Save](images/project-manager-save.png)
 
-> There is an issue in VSCode Insider 1.5 that prevents the _project name suggestion_, so it will be turned off temporarily
+> There is an [issue](https://github.com/Microsoft/vscode/issues/11503) in VSCode 1.5 that prevents the _project's name suggestion_, so it will be turned off temporarily
  
 ### Edit Projects
 
@@ -87,6 +87,10 @@ Indicates an alternative location where the `projects.json` file is stored. Usef
 ```
 
 # Changelog
+
+## Version 0.9.2
+
+* **Fix:** Interim fix for project's name suggestion not working (also in _Stable_ release) (issue [#51](https://github.com/alefragnani/vscode-project-manager/issues/51))
 
 ## Version 0.9.1
 

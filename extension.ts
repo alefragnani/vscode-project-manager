@@ -33,9 +33,10 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         // Issue #42 - Temporary Fix for Insider version
-        if (vscode.env.appName.indexOf('Insiders') > 0) {
-            wpath = ''
-        }
+        // Issue #51 - Temporary Fix for Stable version too :(
+        //if (vscode.env.appName.indexOf('Insiders') > 0) {
+            wpath = '';
+        //}
 		
         // ask the PROJECT NAME (suggest the )
         var ibo = <vscode.InputBoxOptions>{
