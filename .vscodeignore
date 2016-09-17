@@ -7,3 +7,5 @@ issues/**
 tsconfig.json
 out/projects.json
 npm-debug.log
+out/test/**
+test/**
