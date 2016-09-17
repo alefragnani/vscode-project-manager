@@ -57,7 +57,7 @@
 				"projectManager.sortList": {
 					"type": "string",
 					"default": "Name",
-					"description": "List the projects sorted by...",
+					"description": "List the projects sorted by...(Saved, Name, Path or Recent)",
 					"enum": ["Saved", "Name", "Path", "Recent"]
 				},
 				"projectManager.openInNewWindow": {
