@@ -11,7 +11,8 @@ Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
 ## Available commands
 
 * **Project Manager: Edit Project** Edit the project list (`projects.json` file) directly inside **Code**
-* **Project Manager: List Projects** List all saved projects and pick one
+* **Project Manager: List Projects to Open** List all saved projects and pick one
+* **Project Manager: List Projects to Open in New Window** List all saved projects and pick one to be opened in New Window
 * **Project Manager: Save Project** Save the current project in the manager
 
 ![Commands](images/project-manager-commands.png)
@@ -52,6 +53,14 @@ If you sync your projects between different machines, you can now use a special 
 
 ![Corrupted](images/project-manager-edit-corrupted-projectsJson.png)
 
+### List Projects to Open
+
+Shows your projects and select one to open. Depending on `projectManager.openInNewWindow` setting, it will replace the current VS Code instance, or open a new one.
+
+### List Projects to Open in New Window
+
+Just like **List Projects** but always opening in New Window.
+
 ## Available settings
 
 #### Sort the Project List
@@ -87,6 +96,12 @@ Indicates an alternative location where the `projects.json` file is stored. Usef
 ```
 
 # Changelog
+
+## Version 0.10.0
+
+* **New Command:** List Projects to Open in New Window
+* **Renamed Command:** List Projects to Open
+* **New:** Comment for `sortList` setting now shows available options (issue [#53](https://github.com/alefragnani/vscode-project-manager/issues/52))
 
 ## Version 0.9.2
 

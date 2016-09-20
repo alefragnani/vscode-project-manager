@@ -20,8 +20,15 @@ export function activate(context: vscode.ExtensionContext) {
     let aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(projectsStored);
     
-    // Save the Projects
-    vscode.commands.registerCommand('projectManager.saveProject', () => {
+    // register commands
+    vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
+    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false));
+    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true));
+    vscode.commands.registerCommand('projectManager.editProjects', () => editProjects());
+    
+    // function commands
+    
+    function saveProject() {
         // The code you place here will be executed every time your command is executed
 
         // Display a message box to the user
@@ -115,30 +122,10 @@ export function activate(context: vscode.ExtensionContext) {
         });
 
 
-    });
+    };
+      
     
-    function removeRootPath(items:any[]): any[] {
-        if (!vscode.workspace.rootPath) {
-            return items;
-        } else {
-            return items.filter(value => value.description.toString().toLowerCase() != vscode.workspace.rootPath.toLowerCase());
-        }
-    }
-    
-    function indicateInvalidPaths(items:any[]): any[] {
-        for (var index = 0; index < items.length; index++) {
-            var element = items[index];
-            
-            if (!fs.existsSync(element.description.toString()) ) {
-                items[index].detail = '$(circle-slash) Path does not exist';
-            }
-        }
-        
-        return items;
-    }
-    
-    // List the Projects and allow the user to pick (select) one of them to activate
-    vscode.commands.registerCommand('projectManager.listProjects', () => {
+    function listProjects(forceNewWindow: boolean) {
         let items = [];
         let itemsToShow = [];
         
@@ -215,20 +202,18 @@ export function activate(context: vscode.ExtensionContext) {
                 // update MRU               
                 aStack.push(selection.label);
                 context.globalState.update('recent', aStack.toString()); 
-                //console.log(aStack.toString());
 
                 let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
                 let uri: vscode.Uri = vscode.Uri.file(projectPath); 
-                vscode.commands.executeCommand('vscode.openFolder', uri, openInNewWindow) 
+                vscode.commands.executeCommand('vscode.openFolder', uri, openInNewWindow || forceNewWindow) 
                     .then(
                         value => ( {} ),  //done 
                         value => vscode.window.showInformationMessage('Could not open the project!') ); 
             }
         });
-    });
-
-
-    vscode.commands.registerCommand('projectManager.editProjects', () => {
+    };
+    
+    function editProjects() {
         if (fs.existsSync(getProjectFilePath())) {
             vscode.workspace.openTextDocument(getProjectFilePath()).then(doc => {
                 vscode.window.showTextDocument(doc);
@@ -236,7 +221,7 @@ export function activate(context: vscode.ExtensionContext) {
         } else {
             vscode.window.showInformationMessage('No projects saved yet!');
         }
-    });
+    };
 
 
     function getSortedByName(items: any[]): any[] {
@@ -298,6 +283,27 @@ export function activate(context: vscode.ExtensionContext) {
         
         return loadedProjects;
     }
+    
+    function removeRootPath(items:any[]): any[] {
+        if (!vscode.workspace.rootPath) {
+            return items;
+        } else {
+            return items.filter(value => value.description.toString().toLowerCase() != vscode.workspace.rootPath.toLowerCase());
+        }
+    }
+    
+    function indicateInvalidPaths(items:any[]): any[] {
+        for (var index = 0; index < items.length; index++) {
+            var element = items[index];
+            
+            if (!fs.existsSync(element.description.toString()) ) {
+                items[index].detail = '$(circle-slash) Path does not exist';
+            }
+        }
+        
+        return items;
+    }
+    
     
     function pathIsUNC(path:string) {
       return path.indexOf('\\\\') == 0;
