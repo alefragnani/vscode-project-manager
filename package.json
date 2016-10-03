@@ -30,10 +30,7 @@
 		"url": "https://github.com/alefragnani/vscode-project-manager/issues"
 	},
 	"activationEvents": [
-		"onCommand:projectManager.saveProject",
-		"onCommand:projectManager.listProjects",
-		"onCommand:projectManager.listProjectsNewWindow",
-		"onCommand:projectManager.editProjects"
+		"*"
 	],
 	"main": "./out/extension",
 	"contributes": {
