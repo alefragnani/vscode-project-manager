@@ -19,15 +19,51 @@ export function activate(context: vscode.ExtensionContext) {
     let projectsStored: string = context.globalState.get<string>('recent', '');
     let aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(projectsStored);
+    showStatusBar();
     
     // register commands
     vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
     vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false));
     vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true));
     vscode.commands.registerCommand('projectManager.editProjects', () => editProjects());
-    
+
+    function showStatusBar(projectName?: string) {
+
+        let statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+        // if we have a projectName, we don't need to search. 
+        if (projectName) {
+            statusItem.text = projectName;
+            statusItem.show();
+            return;
+        }
+
+        let currentProjectPath = compactHomePath(vscode.workspace.rootPath);
+
+        let items = []
+        if (fs.existsSync(getProjectFilePath())) {
+            items = loadProjects(getProjectFilePath());
+            if (items == null) {
+                return;
+            }
+        }
+
+        let foundProjectLabel: string = null;
+        for (let i = 0; i < items.length; i++) {
+            let element = items[i];
+            if (element.description == currentProjectPath) {
+                foundProjectLabel = element.label;
+            }
+        }
+
+        if (foundProjectLabel) {
+            statusItem.text = foundProjectLabel;
+            statusItem.show();
+        }
+    };
+
+
     // function commands
-    
+
     function saveProject() {
         // The code you place here will be executed every time your command is executed
 
@@ -89,6 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
                 items.push({ label: projectName, description: rootPath });
                 fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                 vscode.window.showInformationMessage('Project saved!');
+                showStatusBar(projectName);
             } else {
                 var optionUpdate = <vscode.MessageItem>{
                     title: "Update"
@@ -111,6 +148,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 context.globalState.update('recent', aStack.toString());
                                 fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                                 vscode.window.showInformationMessage('Project saved!');
+                                showStatusBar(projectName);
                                 return;
                             }
                         }
