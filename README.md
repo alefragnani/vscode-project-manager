@@ -95,7 +95,36 @@ Indicates an alternative location where the `projects.json` file is stored. Usef
     "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
+#### VS Code Projects
+
+Indicates a list of folders where it should look for VS Code projects. It will know that it is a VS Code project if it finds a `.vscode` folder. You can have as many folders you want in this list:
+
+```json
+    "projectManager.vscode.baseFolders": [
+        "c:\\VSCodeProjects\\code",
+        "d:\\MoreVSCodeProjects\\code-testing"
+    ]
+```
+
+To customize how _deep_ to look for VS Code projects or folders to be _ignored_ you have two additional settings:
+
+```json
+    "projectManager.vscode.ignoredFolders": [
+        "node_modules", 
+        "out", 
+        "typings", 
+        "test"
+    ],
+    "projectManager.vscode.maxDepthRecursion": 4
+```
+ 
+
 # Changelog
+
+## Version 0.11.0
+
+* **New:** Also list _VS Code_ projects
+* **New Setting:** VS Code projects support (`baseFolders`, `maxDepthRecursion` and `ignoredFolders`)
 
 ## Version 0.10.0
 

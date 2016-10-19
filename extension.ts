@@ -7,10 +7,24 @@ import os = require('os');
 import {exec} from 'child_process';
 
 import stack = require('./stack');
+import {VisualStudioCodeLocator} from './vscodeLocator';
+import {ProjectsSorter} from './sorter';
 
 const homeDir = os.homedir();
 const homePathVariable = '$home';
 const PROJECTS_FILE = 'projects.json';
+
+// vscode projects support
+const MERGE_PROJECTS: boolean = true;
+
+const enum ProjectsSource {
+    Projects,
+    VSCode/*,
+    Git,
+    Hg,
+    SVN*/
+}
+export interface ProjectsSourceSet extends Array<ProjectsSource>{};
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -19,18 +33,25 @@ export function activate(context: vscode.ExtensionContext) {
     let projectsStored: string = context.globalState.get<string>('recent', '');
     let aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(projectsStored);
-    
+
     // register commands
     vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
-    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false));
-    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true));
     vscode.commands.registerCommand('projectManager.editProjects', () => editProjects());
-    
+    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode]));
+    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode]));
+
     // function commands
+    function editProjects() {
+        if (fs.existsSync(getProjectFilePath())) {
+            vscode.workspace.openTextDocument(getProjectFilePath()).then(doc => {
+                vscode.window.showTextDocument(doc);
+            });
+        } else {
+            vscode.window.showInformationMessage('No projects saved yet!');
+        }
+    };
     
     function saveProject() {
-        // The code you place here will be executed every time your command is executed
-
         // Display a message box to the user
         var wpath = vscode.workspace.rootPath;
         if (process.platform == 'win32') {
@@ -53,8 +74,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         vscode.window.showInputBox(ibo).then(projectName => {
-            //console.log("Project Name: " + projectName);
-
             if (typeof projectName == 'undefined') {
                 return;
             }
@@ -123,11 +142,60 @@ export function activate(context: vscode.ExtensionContext) {
 
 
     };
+    
+
+    function sortProjectList(items): any[] {
+        let itemsToShow = expandHomePaths(items);
+        itemsToShow = removeRootPath(itemsToShow);
+        itemsToShow = indicateInvalidPaths(itemsToShow);
+        let sortList = vscode.workspace.getConfiguration('projectManager').get('sortList', 'Name');
+        let newItemsSorted = ProjectsSorter.SortItemsByCriteria(itemsToShow, sortList, aStack);
+        return newItemsSorted;
+    }
+    
+    function getProjects(itemsSorted: any[], sources: ProjectsSourceSet): Promise<{}> {
+
+        return new Promise((resolve, reject) => {
+
+            if (sources.indexOf(ProjectsSource.Projects) == -1) {
+                resolve([]);
+            } else {
+                resolve(itemsSorted);
+            }
+            
+        });     
+    }  
+
+    function getVSCodeProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
+
+        return new Promise((resolve, reject) => {
+            
+            let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
+            vscLocator.locateProjects(vscode.workspace.getConfiguration('projectManager').get('vscode.baseFolders'))
+                .then((dirList) => {           
+                    let newItems = [];
+                    newItems = dirList.map(item => {
+                        return {
+                            "label": item.name,
+                            "description": item.fullPath
+                        };
+                    });
+
+                    if (merge) {
+                        let unifiedList = newItems.concat(itemsSorted);
+                        resolve(unifiedList);
+                    } else {
+                        resolve(newItems);
+                    }
+                });                        
+        });     
+    }
+
+
       
     
-    function listProjects(forceNewWindow: boolean) {
+    function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
-        let itemsToShow = [];
         
         if (fs.existsSync(getProjectFilePath())) {
             items = loadProjects(getProjectFilePath());
@@ -138,40 +206,21 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('No projects saved yet!');
             return;
         }
-        
-        itemsToShow = expandHomePaths(items);
-        itemsToShow = removeRootPath(itemsToShow);
-        itemsToShow = indicateInvalidPaths(itemsToShow);
 
-        var sortList = vscode.workspace.getConfiguration('projectManager').get('sortList', 'Name');
-
-        var itemsSorted = [];
-        
-        switch (sortList) {
-            case 'Path':
-                itemsSorted = getSortedByPath(itemsToShow); 
-                break;
-        
-            case 'Saved': 
-                itemsSorted = itemsToShow;
-                break;
-                
-            case 'Recent':
-                itemsSorted = getSortedByRecent(itemsToShow);
-                break;
-                
-            default:
-                itemsSorted = getSortedByName(itemsToShow);
-                break;
+        function onRejectListProjects(reason) {
+            vscode.window.showInformationMessage('Error loading projects: ${reason}');
         }
 
-        vscode.window.showQuickPick(itemsSorted).then(selection => {
-
-            if (typeof selection == 'undefined') {
+        
+        // promisses
+        function onResolve(selected) {
+            if (!selected) {
                 return;
-            }			
+            }
             
-            if (!fs.existsSync(selection.description.toString())) {
+           // vscode.window.showInformationMessage(selected.label);
+        
+            if (!fs.existsSync(selected.description.toString())) {
                 var optionUpdateProject = <vscode.MessageItem>{
                     title: "Update Project"
                 };
@@ -189,18 +238,18 @@ export function activate(context: vscode.ExtensionContext) {
                         vscode.commands.executeCommand('projectManager.editProjects');
                     } else { // Update Project
                         let itemsFiltered = [];
-                        itemsFiltered = items.filter(value => value.description.toString().toLowerCase() != selection.description.toLowerCase());
+                        itemsFiltered = items.filter(value => value.description.toString().toLowerCase() != selected.description.toLowerCase());
                         fs.writeFileSync(getProjectFilePath(), JSON.stringify(itemsFiltered, null, "\t"));
                         return;
                     }
                 }); 
             } else {
                 // project path
-                let projectPath = selection.description;
+                let projectPath = selected.description;
                 projectPath = normalizePath(projectPath);
                 
                 // update MRU               
-                aStack.push(selection.label);
+                aStack.push(selected.label);
                 context.globalState.update('recent', aStack.toString()); 
 
                 let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
@@ -210,80 +259,42 @@ export function activate(context: vscode.ExtensionContext) {
                         value => ( {} ),  //done 
                         value => vscode.window.showInformationMessage('Could not open the project!') ); 
             }
-        });
-    };
-    
-    function editProjects() {
-        if (fs.existsSync(getProjectFilePath())) {
-            vscode.workspace.openTextDocument(getProjectFilePath()).then(doc => {
-                vscode.window.showTextDocument(doc);
-            });
-        } else {
-            vscode.window.showInformationMessage('No projects saved yet!');
         }
-    };
 
-
-    function getSortedByName(items: any[]): any[] {
-        var itemsSorted = [] = items.sort((n1, n2) => {
-            if (n1.label > n2.label) {
-                return 1;
-            }
-
-            if (n1.label < n2.label) {
-                return -1;
-            }
-
-            return 0;
-        });
-        return itemsSorted;
-    }
-
-    function getSortedByPath(items: any[]): any[] {
-        var itemsSorted = [] = items.sort((n1, n2) => {
-            if (n1.description > n2.description) {
-                return 1;
-            }
-
-            if (n1.description < n2.description) {
-                return -1;
-            }
-
-            return 0;
-        });
-        return itemsSorted;
-    }
-    
-    function getSortedByRecent(items: any[]): any[] {
         
-        if (aStack.length() == 0) {
-            return items;
-        }
+        let options = <vscode.QuickPickOptions>{
+            placeHolder: 'Loading Projects (pick one to open)',
+            matchOnDescription: true,
+            matchOnDetail: true
+        };
         
-        let idx: number;        
-        let loadedProjects = items;
-        
-        for (let index = 0; index < aStack.length(); index++) {
-            let element: string = aStack.getItem(index);
-            
-            let found: number = -1;
-            for (let i = 0; i < loadedProjects.length; i++) {
-                let itemElement = loadedProjects[i];
-                if (itemElement.label == element) {
-                    found = i;
-                    break;
+       
+        let getProjectsPromise = getProjects(items, sources) 
+            .then((folders) => {
+
+                // not in SET
+                if (sources.indexOf(ProjectsSource.VSCode) == -1) {
+                    return folders;
                 }
-            }
-            
-            if (found > -1) {
-                let removedProject = loadedProjects.splice(found, 1);
-                loadedProjects.unshift(removedProject[0]);
-            }
-        }
-        
-        return loadedProjects;
-    }
+
+                // has PROJECTS and is NOT MERGED - always merge
+                // if ((sources.indexOf(ProjectsSource.Projects) > -1)  && (!<boolean>vscode.workspace.getConfiguration('projectManager').get('vscode.mergeProjects', true))) {
+                //     return folders;
+                // }
+
+                // Ok, can have VSCode
+                let merge: boolean = MERGE_PROJECTS;// vscode.workspace.getConfiguration('projectManager').get('vscode.mergeProjects', true);
+                return getVSCodeProjects(<any[]>folders, merge);
+            }) 
+            .then((folders) => { // sort
+                return sortProjectList(folders);
+            });
+
+        vscode.window.showQuickPick(getProjectsPromise, options)
+            .then(onResolve, onRejectListProjects);      
+    };
     
+   
     function removeRootPath(items:any[]): any[] {
         if (!vscode.workspace.rootPath) {
             return items;

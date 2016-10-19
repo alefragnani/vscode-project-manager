@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.10.0",
+	"version": "0.11.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -17,7 +17,8 @@
     "keywords": [
         "project",
         "folder",
-        "switch"
+        "switch",
+        "manage"
     ],
     "icon": "images/icon.png",
     "license": "SEE LICENSE IN LICENSE.md",
@@ -74,6 +75,21 @@
 					"type": "string",
 					"default": "",
 					"description": "Indicates an alternative location where the `projects.json` file is stored"
+				},
+				"projectManager.vscode.baseFolders": {
+					"type": "array",
+					"default": [],
+					"description": "Indicates the base folders to search for VSCode projects"
+				},
+				"projectManager.vscode.ignoredFolders": {
+					"type": "array",
+					"default": ["node_modules", "out", "typings", "test"],
+					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+				},
+				"projectManager.vscode.maxDepthRecursion": {
+					"type": "integer",
+					"default": 4,
+					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
 				}
 			}
 		},
@@ -93,5 +109,8 @@
 	"devDependencies": {
 		"vscode": "^0.11.x",
 		"typescript": "^1.6.2"
+	},
+	"dependencies": {
+		"walker": "^1.0.7"
 	}
 }
