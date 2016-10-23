@@ -12,7 +12,7 @@
 		"vscode": "^1.1.0"
 	},
 	"categories": [
-		"Other"	
+		"Other"
 	],
     "keywords": [
         "project",
@@ -31,10 +31,7 @@
 		"url": "https://github.com/alefragnani/vscode-project-manager/issues"
 	},
 	"activationEvents": [
-		"onCommand:projectManager.saveProject",
-		"onCommand:projectManager.listProjects",
-		"onCommand:projectManager.listProjectsNewWindow",
-		"onCommand:projectManager.editProjects"
+    "*"
 	],
 	"main": "./out/extension",
 	"contributes": {
@@ -60,6 +57,11 @@
 			"type": "object",
 			"title": "Project Manager Configuration",
 			"properties": {
+        "projectManager.showProjectNameInStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "do you need to display the project name in the status bar ?"
+        },
 				"projectManager.sortList": {
 					"type": "string",
 					"default": "Name",
