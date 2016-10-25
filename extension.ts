@@ -28,11 +28,12 @@ export interface ProjectsSourceSet extends Array<ProjectsSource>{};
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) { 
-    
+export function activate(context: vscode.ExtensionContext) {
+
     let projectsStored: string = context.globalState.get<string>('recent', '');
     let aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(projectsStored);
+    showStatusBar();
 
     // register commands
     vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
@@ -41,6 +42,46 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode]));
 
     // function commands
+    function showStatusBar(projectName?: string) {
+          let showStatusConfig = vscode.workspace.getConfiguration('projectManager').get('showProjectNameInStatusBar');
+          let currentProjectPath = vscode.workspace.rootPath;
+
+          if (!showStatusConfig || !currentProjectPath) {return ;}
+
+
+	        let statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+          statusItem.text = '$(file-directory) ';
+	        // if we have a projectName, we don't need to search.
+	        if (projectName) {
+	            statusItem.text += projectName;
+	            statusItem.show();
+	            return;
+	        }
+
+	        currentProjectPath = compactHomePath(currentProjectPath);
+
+	        let items = []
+	        if (fs.existsSync(getProjectFilePath())) {
+	            items = loadProjects(getProjectFilePath());
+	            if (items == null) {
+	                return;
+	            }
+	        }
+
+	        let foundProjectLabel: string = null;
+	        for (let i = 0; i < items.length;i++) {
+	            let element = items[i];
+	            if (element.description.toString().toLowerCase() == currentProjectPath.toString().toLowerCase()) {
+	                foundProjectLabel = element.label;
+	            }
+	        }
+
+	        if (foundProjectLabel) {
+	            statusItem.text += foundProjectLabel;
+	            statusItem.show();
+	        }
+	    };
+
     function editProjects() {
         if (fs.existsSync(getProjectFilePath())) {
             vscode.workspace.openTextDocument(getProjectFilePath()).then(doc => {
@@ -50,7 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('No projects saved yet!');
         }
     };
-    
+
     function saveProject() {
         // Display a message box to the user
         var wpath = vscode.workspace.rootPath;
@@ -65,7 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
         //if (vscode.env.appName.indexOf('Insiders') > 0) {
             wpath = '';
         //}
-		
+
         // ask the PROJECT NAME (suggest the )
         var ibo = <vscode.InputBoxOptions>{
             prompt: "Project Name",
@@ -91,7 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
                 items = loadProjects(getProjectFilePath());
                 if (items == null) {
                     return;
-                } 
+                }
             }
 
             var found: boolean = false;
@@ -108,6 +149,7 @@ export function activate(context: vscode.ExtensionContext) {
                 items.push({ label: projectName, description: rootPath });
                 fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                 vscode.window.showInformationMessage('Project saved!');
+                showStatusBar(projectName);
             } else {
                 var optionUpdate = <vscode.MessageItem>{
                     title: "Update"
@@ -130,6 +172,7 @@ export function activate(context: vscode.ExtensionContext) {
                                 context.globalState.update('recent', aStack.toString());
                                 fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                                 vscode.window.showInformationMessage('Project saved!');
+                                showStatusBar(projectName);
                                 return;
                             }
                         }
@@ -142,7 +185,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 
     };
-    
 
     function sortProjectList(items): any[] {
         let itemsToShow = expandHomePaths(items);
@@ -152,7 +194,7 @@ export function activate(context: vscode.ExtensionContext) {
         let newItemsSorted = ProjectsSorter.SortItemsByCriteria(itemsToShow, sortList, aStack);
         return newItemsSorted;
     }
-    
+
     function getProjects(itemsSorted: any[], sources: ProjectsSourceSet): Promise<{}> {
 
         return new Promise((resolve, reject) => {
@@ -162,17 +204,17 @@ export function activate(context: vscode.ExtensionContext) {
             } else {
                 resolve(itemsSorted);
             }
-            
-        });     
-    }  
+
+        });
+    }
 
     function getVSCodeProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
 
         return new Promise((resolve, reject) => {
-            
+
             let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
             vscLocator.locateProjects(vscode.workspace.getConfiguration('projectManager').get('vscode.baseFolders'))
-                .then((dirList) => {           
+                .then((dirList) => {
                     let newItems = [];
                     newItems = dirList.map(item => {
                         return {
@@ -187,21 +229,18 @@ export function activate(context: vscode.ExtensionContext) {
                     } else {
                         resolve(newItems);
                     }
-                });                        
-        });     
+                });
+        });
     }
 
-
-      
-    
     function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
-        
+
         if (fs.existsSync(getProjectFilePath())) {
             items = loadProjects(getProjectFilePath());
             if (items == null) {
                 return;
-            }      
+            }
         } else {
             vscode.window.showInformationMessage('No projects saved yet!');
             return;
@@ -211,15 +250,15 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('Error loading projects: ${reason}');
         }
 
-        
+
         // promisses
         function onResolve(selected) {
             if (!selected) {
                 return;
             }
-            
+
            // vscode.window.showInformationMessage(selected.label);
-        
+
             if (!fs.existsSync(selected.description.toString())) {
                 var optionUpdateProject = <vscode.MessageItem>{
                     title: "Update Project"
@@ -242,34 +281,34 @@ export function activate(context: vscode.ExtensionContext) {
                         fs.writeFileSync(getProjectFilePath(), JSON.stringify(itemsFiltered, null, "\t"));
                         return;
                     }
-                }); 
+                });
             } else {
                 // project path
                 let projectPath = selected.description;
                 projectPath = normalizePath(projectPath);
-                
-                // update MRU               
+
+                // update MRU
                 aStack.push(selected.label);
-                context.globalState.update('recent', aStack.toString()); 
+                context.globalState.update('recent', aStack.toString());
 
                 let openInNewWindow: boolean = vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true);
-                let uri: vscode.Uri = vscode.Uri.file(projectPath); 
-                vscode.commands.executeCommand('vscode.openFolder', uri, openInNewWindow || forceNewWindow) 
+                let uri: vscode.Uri = vscode.Uri.file(projectPath);
+                vscode.commands.executeCommand('vscode.openFolder', uri, openInNewWindow || forceNewWindow)
                     .then(
-                        value => ( {} ),  //done 
-                        value => vscode.window.showInformationMessage('Could not open the project!') ); 
+                        value => ( {} ),  //done
+                        value => vscode.window.showInformationMessage('Could not open the project!') );
             }
         }
 
-        
+
         let options = <vscode.QuickPickOptions>{
             placeHolder: 'Loading Projects (pick one to open)',
             matchOnDescription: true,
             matchOnDetail: true
         };
-        
-       
-        let getProjectsPromise = getProjects(items, sources) 
+
+
+        let getProjectsPromise = getProjects(items, sources)
             .then((folders) => {
 
                 // not in SET
@@ -285,16 +324,15 @@ export function activate(context: vscode.ExtensionContext) {
                 // Ok, can have VSCode
                 let merge: boolean = MERGE_PROJECTS;// vscode.workspace.getConfiguration('projectManager').get('vscode.mergeProjects', true);
                 return getVSCodeProjects(<any[]>folders, merge);
-            }) 
+            })
             .then((folders) => { // sort
                 return sortProjectList(folders);
             });
 
         vscode.window.showQuickPick(getProjectsPromise, options)
-            .then(onResolve, onRejectListProjects);      
+            .then(onResolve, onRejectListProjects);
     };
-    
-   
+
     function removeRootPath(items:any[]): any[] {
         if (!vscode.workspace.rootPath) {
             return items;
@@ -302,28 +340,27 @@ export function activate(context: vscode.ExtensionContext) {
             return items.filter(value => value.description.toString().toLowerCase() != vscode.workspace.rootPath.toLowerCase());
         }
     }
-    
+
     function indicateInvalidPaths(items:any[]): any[] {
         for (var index = 0; index < items.length; index++) {
             var element = items[index];
-            
+
             if (!fs.existsSync(element.description.toString()) ) {
                 items[index].detail = '$(circle-slash) Path does not exist';
             }
         }
-        
+
         return items;
     }
-    
-    
+
     function pathIsUNC(path:string) {
       return path.indexOf('\\\\') == 0;
     }
 
     /**
      * If the project path is in the user's home directory then store the home directory as a
-     * parameter. This will help in situations when the user works with the same projects on 
-     * different machines, under different user names. 
+     * parameter. This will help in situations when the user works with the same projects on
+     * different machines, under different user names.
      */
     function compactHomePath(path: string) {
         if (path.indexOf(homeDir) === 0) {
@@ -343,7 +380,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         return path;
     }
-    
+
     function expandHomePaths(items: any[]) {
         return items.map(item => {
             item.description = expandHomePath(item.description);
@@ -353,12 +390,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     function normalizePath(path: string): string {
         let normalizedPath: string = path;
-        
+
         if (!pathIsUNC(normalizedPath)) {
           let replaceable = normalizedPath.split('\\');
           normalizedPath = replaceable.join('\\\\');
         }
-        
+
         return normalizedPath;
     }
 
@@ -403,12 +440,12 @@ export function activate(context: vscode.ExtensionContext) {
         } else {
             let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
             let channelPath: string = getChannelPath();
-            projectFile = path.join(appdata, channelPath, 'User', PROJECTS_FILE);        
+            projectFile = path.join(appdata, channelPath, 'User', PROJECTS_FILE);
             // in linux, it may not work with /var/local, then try to use /home/myuser/.config
             if ((process.platform == 'linux') && (!fs.existsSync(projectFile))) {
-                projectFile = path.join(homeDir, '.config/', channelPath, 'User', PROJECTS_FILE);       
+                projectFile = path.join(homeDir, '.config/', channelPath, 'User', PROJECTS_FILE);
             }
         }
         return projectFile;
     }
-} 
+}
