@@ -71,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
 	        let foundProjectLabel: string = null;
 	        for (let i = 0; i < items.length;i++) {
 	            let element = items[i];
-	            if (element.description.toString().toLowerCase() == currentProjectPath.toString().toLowerCase()) {
+	            if (expandHomePath(element.description.toString()).toLowerCase() == currentProjectPath.toString().toLowerCase()) {
 	                foundProjectLabel = element.label;
 	            }
 	        }

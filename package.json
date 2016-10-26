@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.11.0",
+	"version": "0.12.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -60,7 +60,7 @@
 				"projectManager.showProjectNameInStatusBar": {
 					"type": "boolean",
 					"default": true,
-					"description": "do you need to display the project name in the status bar ?"
+					"description": "Should display the project name in the Status Bar?"
 				},
 				"projectManager.sortList": {
 					"type": "string",

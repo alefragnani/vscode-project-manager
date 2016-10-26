@@ -117,9 +117,25 @@ To customize how _deep_ to look for VS Code projects or folders to be _ignored_ 
     ],
     "projectManager.vscode.maxDepthRecursion": 4
 ```
- 
+
+#### Display Project Name in Status Bar
+
+> _new in version 0.12.0_
+
+You have the option to display the _Project Name_ in the Status Bar, so you can easily detect in which project you are.
+
+```json 
+    "projectManager.showProjectNameInStatusBar": true
+```
+
+![Save](images/project-manager-statusbar.png) 
 
 # Changelog
+
+## Version 0.12.0
+
+* **New:** Display the _Project Name_ in the Status Bar
+* **New Setting:** Display the _Project Name_ in the Status Bar (kudos to @BonDoQ)
 
 ## Version 0.11.0
 
