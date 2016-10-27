@@ -134,8 +134,8 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 
 ## Version 0.12.0
 
-* **New:** Display the _Project Name_ in the Status Bar
-* **New Setting:** Display the _Project Name_ in the Status Bar (kudos to @BonDoQ)
+* **New:** Display the _Project Name_ in the Status Bar (kudos to @BonDoQ)
+* **New Setting:** Display the _Project Name_ in the Status Bar 
 
 ## Version 0.11.0
 
