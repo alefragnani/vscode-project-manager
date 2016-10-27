@@ -50,7 +50,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 	        let statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-          statusItem.text = '$(file-directory) ';
+            statusItem.text = '$(file-directory) ';
+            statusItem.tooltip = currentProjectPath;
+            if (vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true)) {
+                statusItem.command = 'projectManager.listProjectsNewWindow'
+            } else {                
+                statusItem.command = 'projectManager.listProjects'
+            }           
 	        // if we have a projectName, we don't need to search.
 	        if (projectName) {
 	            statusItem.text += projectName;
