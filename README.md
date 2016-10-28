@@ -45,8 +45,6 @@ For easier customization of your project list, you can edit the `projects.json` 
     }
 ]
 ```
-> _new in version 0.8.0_
-
 If you sync your projects between different machines, you can now use a special variable `$home`. It will be replaced by the HOME folder from the current machine when the projects are listed.
 
 > Be sure that the JSON file is well-formed. Otherwise, **Project Manager** will not be able to open it, and an error message like this should appear. In this case, you should use the `Open File` button to fix it.
@@ -136,6 +134,7 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 
 * **New:** Display the _Project Name_ in the Status Bar (kudos to @BonDoQ)
 * **New Setting:** Display the _Project Name_ in the Status Bar 
+* **New:** Improved message when there is project saved yet (issue [#57](https://github.com/alefragnani/vscode-project-manager/issues/57))
 
 ## Version 0.11.0
 
@@ -146,7 +145,7 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 
 * **New Command:** List Projects to Open in New Window
 * **Renamed Command:** List Projects to Open
-* **New:** Comment for `sortList` setting now shows available options (issue [#53](https://github.com/alefragnani/vscode-project-manager/issues/52))
+* **New:** Comment for `sortList` setting now shows available options (issue [#52](https://github.com/alefragnani/vscode-project-manager/issues/52))
 
 ## Version 0.9.2
 
