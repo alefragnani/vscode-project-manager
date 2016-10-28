@@ -50,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
             var optionEditProject = <vscode.MessageItem>{
                 title: "Yes, edit manually"
             };
-            vscode.window.showErrorMessage('No projects saved yet! You should open a folder and use Save Project. Do you really want to edit manually? ', optionEditProject).then(option => {
+            vscode.window.showErrorMessage('No projects saved yet! You should open a folder and use Save Project instead. Do you really want to edit manually? ', optionEditProject).then(option => {
                 // nothing selected
                 if (typeof option == 'undefined') {
                     return;
