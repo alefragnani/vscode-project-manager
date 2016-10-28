@@ -94,7 +94,24 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showTextDocument(doc);
             });
         } else {
-            vscode.window.showInformationMessage('No projects saved yet!');
+            var optionEditProject = <vscode.MessageItem>{
+                title: "Yes, edit manually"
+            };
+            vscode.window.showErrorMessage('No projects saved yet! You should open a folder and use Save Project instead. Do you really want to edit manually? ', optionEditProject).then(option => {
+                // nothing selected
+                if (typeof option == 'undefined') {
+                    return;
+                }
+
+                if (option.title == "Yes, edit manually") {
+                    var items = [];
+                    items.push({ label: 'Project Name', description: 'Project Path' });
+                    fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
+                    vscode.commands.executeCommand('projectManager.editProjects');
+                } else {
+                    return;
+                }
+            });
         }
     };
 
