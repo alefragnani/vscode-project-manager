@@ -54,17 +54,15 @@ export function activate(context: vscode.ExtensionContext) {
             statusItem.tooltip = currentProjectPath;
             if (vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true)) {
                 statusItem.command = 'projectManager.listProjectsNewWindow'
-            } else {                
+            } else {
                 statusItem.command = 'projectManager.listProjects'
-            }           
+            }
 	        // if we have a projectName, we don't need to search.
 	        if (projectName) {
 	            statusItem.text += projectName;
 	            statusItem.show();
 	            return;
 	        }
-
-	        currentProjectPath = compactHomePath(currentProjectPath);
 
 	        let items = []
 	        if (fs.existsSync(getProjectFilePath())) {
