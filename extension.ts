@@ -326,8 +326,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         let options = <vscode.QuickPickOptions>{
             placeHolder: 'Loading Projects (pick one to open)',
-            matchOnDescription: true,
-            matchOnDetail: true
+            matchOnDescription: false,
+            matchOnDetail: false
         };
 
 

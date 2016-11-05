@@ -130,6 +130,10 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 
 # Changelog
 
+## Version 0.12.1
+
+**Fix:** The `path` should not be relevant while filtering projects (issue [#67](https://github.com/alefragnani/vscode-project-manager/issues/67))
+
 ## Version 0.12.0
 
 * **New:** Display the _Project Name_ in the Status Bar (kudos to @BonDoQ)
