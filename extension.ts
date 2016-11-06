@@ -33,6 +33,8 @@ export function activate(context: vscode.ExtensionContext) {
     let projectsStored: string = context.globalState.get<string>('recent', '');
     let aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(projectsStored);
+    
+    let statusItem: vscode.StatusBarItem;
     showStatusBar();
 
     // register commands
@@ -49,7 +51,9 @@ export function activate(context: vscode.ExtensionContext) {
           if (!showStatusConfig || !currentProjectPath) {return ;}
 
 
-	        let statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+	        if (!statusItem) {
+                statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+            }
             statusItem.text = '$(file-directory) ';
             statusItem.tooltip = currentProjectPath;
             if (vscode.workspace.getConfiguration('projectManager').get('openInNewWindow', true)) {
