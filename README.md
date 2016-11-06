@@ -130,9 +130,13 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 
 # Changelog
 
+## Version 0.12.2
+
+* **Fix:** Saving a project with a new name was duplicating the Status Bar (issue [#69](https://github.com/alefragnani/vscode-project-manager/issues/69))
+
 ## Version 0.12.1
 
-**Fix:** The `path` should not be relevant while filtering projects (issue [#67](https://github.com/alefragnani/vscode-project-manager/issues/67))
+* **Fix:** The `path` should not be relevant while filtering projects (issue [#67](https://github.com/alefragnani/vscode-project-manager/issues/67))
 
 ## Version 0.12.0
 
