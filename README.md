@@ -51,6 +51,9 @@ For easier customization of your project list, you can edit the `projects.json` 
     }
 ]
 ```
+
+> For now, only `name` and `rootPath` are usefull. The `paths` and `group` fields are there to be used in the future by two new features: [Support multiple folders in the same project](https://github.com/alefragnani/vscode-project-manager/issues/46) and [Contextual Structure for Projects](https://github.com/alefragnani/vscode-project-manager/issues/50) . 
+
 If you sync your projects between different machines, you can now use a special variable `$home`. It will be replaced by the HOME folder from the current machine when the projects are listed.
 
 > Be sure that the JSON file is well-formed. Otherwise, **Project Manager** will not be able to open it, and an error message like this should appear. In this case, you should use the `Open File` button to fix it.
