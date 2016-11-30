@@ -37,7 +37,13 @@ export class ProjectStorage {
     }
     
     /**
-     * push
+     * Adds a project to the list
+     * 
+     * @param `name` The [Project Name](#Project.name)
+     * @param `rootPath` The [Project Rooth Path](#Project.rootPath)
+     * @param `rootPath` The [Project Group](#Project.group)
+     *
+     * @return `void`
      */
     public push(name: string, rootPath: string, group: string): void {
         this.projectList.push(new ProjectItem(name, rootPath));
@@ -45,7 +51,11 @@ export class ProjectStorage {
     }
     
     /**
-     * pop
+     * Removes a project to the list
+     * 
+     * @param `name` The [Project Name](#Project.name)
+     *
+     * @return The [Project](#Project) that was removed
      */
     public pop(name: string): Project {
         for (var index = 0; index < this.projectList.length; index++) {
@@ -57,7 +67,12 @@ export class ProjectStorage {
     }
 
     /**
-     * addPath
+     * Adds another `path` to a project
+     * 
+     * @param `name` The [Project Name](#Project.name)
+     * @param `path` The [Project Path](#Project.paths)
+     *
+     * @return `void`
      */
     public addPath(name: string, path: string): void {
         for (let index = 0; index < this.projectList.length; index++) {
@@ -69,7 +84,12 @@ export class ProjectStorage {
     }
 
     /**
-     * addPath
+     * Updates the `rootPath` of a project
+     * 
+     * @param `name` The [Project Name](#Project.name)
+     * @param `name` The [Project Root Path](#Project.rootPath)
+     *
+     * @return `void`
      */
     public updateRootPath(name: string, path: string): void {
         for (let index = 0; index < this.projectList.length; index++) {
@@ -81,7 +101,12 @@ export class ProjectStorage {
     }
 
     /**
-     * removePath
+     * Removes a `path` from a project
+     * 
+     * @param `name` The [Project Name](#Project.name)
+     * @param `path` The [Project Path](#Project.paths)
+     *
+     * @return `void`
      */
     public removePath(name: string, path: string): void {
         for (let index = 0; index < this.projectList.length; index++) {
@@ -101,7 +126,11 @@ export class ProjectStorage {
     }
 
     /**
-     * exists
+     * Checks if exists a project with a given `name`
+     * 
+     * @param `name` The [Project Name](#Project.name) to search for projects
+     *
+     * @return `true` or `false`
      */
     public exists(name: string): boolean {
         let found: boolean = false;
@@ -117,7 +146,11 @@ export class ProjectStorage {
     
 
     /**
-     * exists
+     * Checks if exists a project with a given `rootPath`
+     * 
+     * @param `rootPath` The path to search for projects
+     *
+     * @return A [Project](#Project) with the given `rootPath`
      */
     public existsWithRootPath(rootPath: string): Project {
         for (let i = 0; i < this.projectList.length; i++) {
@@ -129,15 +162,25 @@ export class ProjectStorage {
     }
     
     /**
-     * length
+     * Returns the number of projects stored in `projects.json`
+     * 
+     * > The _dynamic projects_ like VSCode and Git aren't present
+     *
+     * @return The number of projects
      */
     public length(): number {
         return this.projectList.length;        
     }
 
+    /**
+     * Loads the `projects.json` file
+     *
+     * @return A `string` containing the _Error Message_ in case something goes wrong. An **empty string** if everything is ok.
+     */
     public load(/*file: string*/): string {
         let items = [];
 
+        // missing file (new install)
         if (!fs.existsSync(this.filename)) {
             this.projectList = items as ProjectList;
             return "";
@@ -165,13 +208,19 @@ export class ProjectStorage {
     }
 
     /**
-     * save
+     * Saves the `projects.json` file to disk
+     * 
+     * @return `void`
      */
-    public save(/*file: string*/) {
-        fs.writeFileSync(this.filename/* + '.new.json'*/, JSON.stringify(this.projectList, null, "\t"));
+    public save() {
+        fs.writeFileSync(this.filename, JSON.stringify(this.projectList, null, "\t"));
     }
     
-    
+    /**
+     * Maps the projects to be used by a `showQuickPick`
+     * 
+     * @return A list of projects `{[label, description]}` to be used on a `showQuickPick`
+     */    
     public map(): any {
         let newItems = this.projectList.map(item => {
             return {
