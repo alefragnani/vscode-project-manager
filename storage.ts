@@ -208,6 +208,25 @@ export class ProjectStorage {
     }
 
     /**
+     * Reloads the `projects.json` file. 
+     * 
+     * > Using a forced _reload_ instead of a _watcher_ 
+     *
+     * @return `void`
+     */
+    public reload() {
+        let items = [];
+
+        // missing file (new install)
+        if (!fs.existsSync(this.filename)) {
+            this.projectList = items as ProjectList;
+        } else {
+            items = JSON.parse(fs.readFileSync(this.filename).toString());
+            this.projectList = items as ProjectList;
+        }
+    }
+
+    /**
      * Saves the `projects.json` file to disk
      * 
      * @return `void`
