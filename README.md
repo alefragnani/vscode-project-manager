@@ -32,16 +32,22 @@ For easier customization of your project list, you can edit the `projects.json` 
 ```json
 [
     {
-        "label": "Pascal MI",
-        "description": "c:\\PascalProjects\\pascal-menu-insight"
+        "name": "Pascal MI",
+        "rootPath": "c:\\PascalProjects\\pascal-menu-insight",
+        "paths": [],
+        "group": ""
     },
     {
-        "label": "Bookmarks",
-        "description": "$home\\Documents\\GitHub\\vscode-bookmarks"
+        "name": "Bookmarks",
+        "rootPath": "$home\\Documents\\GitHub\\vscode-bookmarks",
+        "paths": [],
+        "group": ""
     },
     {
-        "label": "Numbered Bookmarks",
-        "description": "$home\\Documents\\GitHub\\vscode-numbered-bookmarks"
+        "name": "Numbered Bookmarks",
+        "rootPath": "$home\\Documents\\GitHub\\vscode-numbered-bookmarks",
+        "paths": [],
+        "group": ""
     }
 ]
 ```
@@ -129,6 +135,10 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 ![Save](images/project-manager-statusbar.png) 
 
 # Changelog
+
+## Version 0.13.0
+
+* **Internal:** `projects.json` file has been refactored to support upcoming features 
 
 ## Version 0.12.2
 
@@ -258,4 +268,4 @@ If you have any idea, feel free to create issues and pull requests
 
 ---
 
-[![Paypal Donations](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) if you enjoy using this extension :-)
+[![Paypal Donations](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) a :coffee: if you enjoy using this extension :thumbsup:
