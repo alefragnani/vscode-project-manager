@@ -92,6 +92,21 @@
 					"type": "integer",
 					"default": 4,
 					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+				},
+				"projectManager.git.baseFolders": {
+					"type": "array",
+					"default": [],
+					"description": "Indicates the base folders to search for Git projects"
+				},
+				"projectManager.git.ignoredFolders": {
+					"type": "array",
+					"default": ["node_modules", "out", "typings", "test"],
+					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+				},
+				"projectManager.git.maxDepthRecursion": {
+					"type": "integer",
+					"default": 4,
+					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
 				}
 			}
 		},

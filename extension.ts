@@ -8,6 +8,7 @@ import {exec} from 'child_process';
 
 import stack = require('./stack');
 import {VisualStudioCodeLocator} from './vscodeLocator';
+import {GitLocator} from './gitLocator';
 import {ProjectsSorter} from './sorter';
 
 const homeDir = os.homedir();
@@ -19,8 +20,8 @@ const MERGE_PROJECTS: boolean = true;
 
 const enum ProjectsSource {
     Projects,
-    VSCode/*,
-    Git,
+    VSCode,
+    Git/*,
     Hg,
     SVN*/
 }
@@ -40,8 +41,8 @@ export function activate(context: vscode.ExtensionContext) {
     // register commands
     vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
     vscode.commands.registerCommand('projectManager.editProjects', () => editProjects());
-    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode]));
-    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode]));
+    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git]));
+    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git]));
 
     // function commands
     function showStatusBar(projectName?: string) {
@@ -257,6 +258,32 @@ export function activate(context: vscode.ExtensionContext) {
                 });
         });
     }
+    
+    function getGitProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
+
+        return new Promise((resolve, reject) => {
+
+            let gitLocator: GitLocator = new GitLocator();
+            gitLocator.locateProjects(vscode.workspace.getConfiguration('projectManager').get('git.baseFolders'))
+                .then((dirList) => {
+                    let newItems = [];
+                    newItems = dirList.map(item => {
+                        return {
+                            "label": path.basename(item.fullPath),
+                            "description": item.fullPath,
+                            "detail": '$(mark-github) ' + item.name
+                        };
+                    });
+
+                    if (merge) {
+                        let unifiedList = newItems.concat(itemsSorted);
+                        resolve(unifiedList);
+                    } else {
+                        resolve(newItems);
+                    }
+                });
+        });
+    }
 
     function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
@@ -350,6 +377,13 @@ export function activate(context: vscode.ExtensionContext) {
                 let merge: boolean = MERGE_PROJECTS;// vscode.workspace.getConfiguration('projectManager').get('vscode.mergeProjects', true);
                 return getVSCodeProjects(<any[]>folders, merge);
             })
+            .then((folders) => {
+                if (sources.indexOf(ProjectsSource.Git) == -1) {
+                    return folders;
+                }
+                let merge: boolean = MERGE_PROJECTS;
+                return getGitProjects(<any[]>folders, merge);
+            })
             .then((folders) => { // sort
                 return sortProjectList(folders);
             });
@@ -370,7 +404,7 @@ export function activate(context: vscode.ExtensionContext) {
         for (var index = 0; index < items.length; index++) {
             var element = items[index];
 
-            if (!fs.existsSync(element.description.toString()) ) {
+            if (!element.detail && (!fs.existsSync(element.description.toString()) )) {
                 items[index].detail = '$(circle-slash) Path does not exist';
             }
         }
