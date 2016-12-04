@@ -16,17 +16,18 @@ export class GitLocator extends AbstractLocator {
     }
 
     public decideProjectName(projectPath: string): string {
-        var stdout = cp.execSync('git remote show origin -n', { cwd: projectPath, encoding: 'utf8' });
-        if (stdout.indexOf('Fetch URL:') === -1)
-            return;
+        return path.basename(projectPath);
+        // var stdout = cp.execSync('git remote show origin -n', { cwd: projectPath, encoding: 'utf8' });
+        // if (stdout.indexOf('Fetch URL:') === -1)
+        //     return;
 
-        var arr = stdout.split('\n');
-        for (var i = 0; i < arr.length; i++) {
-            var line = arr[i];
-            var repoPath = 'Fetch URL: ';
-            var idx = line.indexOf(repoPath);
-            if (idx > -1)
-                return line.trim().replace(repoPath, '');
-        }
+        // var arr = stdout.split('\n');
+        // for (var i = 0; i < arr.length; i++) {
+        //     var line = arr[i];
+        //     var repoPath = 'Fetch URL: ';
+        //     var idx = line.indexOf(repoPath);
+        //     if (idx > -1)
+        //         return line.trim().replace(repoPath, '');
+        // }
     }
 }

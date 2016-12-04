@@ -244,7 +244,7 @@ export function activate(context: vscode.ExtensionContext) {
                     let newItems = [];
                     newItems = dirList.map(item => {
                         return {
-                            "label": '$(file-directory) ' + item.name,
+                            "label": '$(file-code) ' + item.name,
                             "description": item.fullPath
                         };
                     });
@@ -269,9 +269,11 @@ export function activate(context: vscode.ExtensionContext) {
                     let newItems = [];
                     newItems = dirList.map(item => {
                         return {
-                            "label": '$(mark-github) ' + path.basename(item.fullPath),
-                            "description": item.fullPath,
-                            "detail": item.name
+                            "label": '$(git-branch) ' + item.name,
+                            "description": item.fullPath
+                            // "label": '$(mark-github) ' + path.basename(item.fullPath),
+                            // "description": item.fullPath,
+                            // "detail": item.name
                         };
                     });
 
