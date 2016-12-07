@@ -18,7 +18,8 @@
         "project",
         "folder",
         "switch",
-        "manage"
+        "manage",
+		"git"
     ],
     "icon": "images/icon.png",
     "license": "SEE LICENSE IN LICENSE.md",

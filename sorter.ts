@@ -4,11 +4,12 @@ export class ProjectsSorter {
     
     public static getSortedByName(items: any[]): any[] {
         var itemsSorted = [] = items.sort((n1, n2) => {
-            if (n1.label > n2.label) {
+            // ignore octicons
+            if (n1.label.replace(/\$\(\w*(-)*\w*\)\s/, '') > n2.label.replace(/\$\(\w*(-)*\w*\)\s/, '')) {
                 return 1;
             }
 
-            if (n1.label < n2.label) {
+            if (n1.label.replace(/\$\(\w*(-)*\w*\)\s/, '') < n2.label.replace(/\$\(\w*(-)*\w*\)\s/, '')) {
                 return -1;
             }
 

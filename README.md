@@ -22,8 +22,6 @@ Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
 You can save the current project in the manager at any time. You just need to type a name. It even suggest you _automatically_ :)
 
 ![Save](images/project-manager-save.png)
-
-> There is an [issue](https://github.com/Microsoft/vscode/issues/11503) in VSCode 1.5 that prevents the _project's name suggestion_, so it will be turned off temporarily
  
 ### Edit Projects
 
@@ -96,15 +94,17 @@ _(default is `true`)_
 
 #### Projects Location
 
-Indicates an alternative location where the `projects.json` file is stored. Usefull if you want to _share_ projects between **Stable** and **Insider**.
+Indicates an _alternative_ location where the `projects.json` file is stored. Usefull if you want to _share_ projects between **Stable** and **Insider**.
 
 ```
     "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
-#### VS Code Projects
+#### Automatic Detection of Projects
 
-Indicates a list of folders where it should look for VS Code projects. It will know that it is a VS Code project if it finds a `.vscode` folder. You can have as many folders you want in this list:
+You can make the extension to automatically detect **VSCode** and **Git** projects. For this, you just have to indicate a list of folders where each kind of project is located.
+
+#### VSCode
 
 ```json
     "projectManager.vscode.baseFolders": [
@@ -113,7 +113,18 @@ Indicates a list of folders where it should look for VS Code projects. It will k
     ]
 ```
 
-To customize how _deep_ to look for VS Code projects or folders to be _ignored_ you have two additional settings:
+#### Git
+
+```json
+    "projectManager.git.baseFolders": [
+        "c:\\GitProjects\\code",
+        "d:\\MoreGitProjects\\code-testing"
+    ]
+```
+
+To customize how _deep_ to look projects or folders to be _ignored_ you have two additional settings:
+
+#### VSCode
 
 ```json
     "projectManager.vscode.ignoredFolders": [
@@ -123,6 +134,18 @@ To customize how _deep_ to look for VS Code projects or folders to be _ignored_ 
         "test"
     ],
     "projectManager.vscode.maxDepthRecursion": 4
+```
+
+#### Git
+
+```json
+    "projectManager.git.ignoredFolders": [
+        "node_modules", 
+        "out", 
+        "typings", 
+        "test"
+    ],
+    "projectManager.git.maxDepthRecursion": 4
 ```
 
 #### Display Project Name in Status Bar
@@ -141,6 +164,8 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 
 ## Version 0.13.0
 
+* **New:** Also list _Git_ projects
+* **New Setting:** Git projects support (`baseFolders`, `maxDepthRecursion` and `ignoredFolders`)
 * **Internal:** `projects.json` file has been refactored to support upcoming features 
 
 ## Version 0.12.2
