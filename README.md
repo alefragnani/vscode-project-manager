@@ -2,6 +2,8 @@
 
 Manage your projects right inside Visual Studio Code. Easily access and switch between them.
 
+You can define your own **Favorite** projects, and auto-detect **VSCode** projects and **Git** repositories.
+
 # Installation
 
 Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
@@ -53,7 +55,7 @@ For easier customization of your project list, you can edit the `projects.json` 
 
 > For now, only `name` and `rootPath` are usefull. The `paths` and `group` fields are there to be used in the future by two new features: [Support multiple folders in the same project](https://github.com/alefragnani/vscode-project-manager/issues/46) and [Contextual Structure for Projects](https://github.com/alefragnani/vscode-project-manager/issues/50) . 
 
-If you sync your projects between different machines, you can now use a special variable `$home`. It will be replaced by the HOME folder from the current machine when the projects are listed.
+You can use a special variable called `$home` while defining any `path`. It's useful if you sync your projects between different machines, because it will be replaced by the HOME folder.  
 
 > Be sure that the JSON file is well-formed. Otherwise, **Project Manager** will not be able to open it, and an error message like this should appear. In this case, you should use the `Open File` button to fix it.
 
@@ -95,7 +97,7 @@ _(default is `true`)_
 
 #### Projects Location
 
-Indicates an _alternative_ location where the `projects.json` file is stored. Usefull if you want to _share_ projects between **Stable** and **Insider**.
+If you intend to _share_ projects between  **Stable** and **Insider** installations, or if you store your settings in different locations (cloud services), you can indicate an _alternative_ location for the `projects.json` file.
 
 ```
     "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
@@ -149,6 +151,16 @@ To customize how _deep_ to look projects or folders to be _ignored_ you have two
     "projectManager.git.maxDepthRecursion": 4
 ```
 
+#### Cache Automatically Detected Projects
+
+> _new in version 0.13.0_
+
+By default, the automatically detected projects (VSCode and Git) are cached. If you don't want this for any reason, just turn it off.
+
+```json 
+    "projectManager.cacheProjectsBetweenSessions": false
+```
+
 #### Display Project Name in Status Bar
 
 > _new in version 0.12.0_
@@ -160,16 +172,6 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 ```
 
 ![Save](images/project-manager-statusbar.png) 
-
-#### Cache Automatically Detected Projects
-
-> _new in version 0.13.0_
-
-By default, the automatically detected projects (VSCode and Git) are cached. If you don't want this for any reason, just turn it off.
-
-```json 
-    "projectManager.cacheProjectsBetweenSessions": false
-```
 
 # Changelog
 
