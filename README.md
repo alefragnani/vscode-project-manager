@@ -105,7 +105,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 #### Automatic Detection of Projects
 
-You can make the extension to automatically detect **VSCode** and **Git** projects. For this, you just have to indicate a list of folders where each kind of project is located.
+You can have automatic detection of **VSCode** ![git-branch](images/ico_file_code.png) and **Git** ![git-branch](images/ico_git_branch.png) projects. For this, you just have to indicate a list of folders where each kind of project is located.
 
 #### VSCode
 
