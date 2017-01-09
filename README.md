@@ -13,6 +13,7 @@ Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
 * **Project Manager: Edit Project** Edit the project list (`projects.json` file) directly inside **Code**
 * **Project Manager: List Projects to Open** List all saved projects and pick one
 * **Project Manager: List Projects to Open in New Window** List all saved projects and pick one to be opened in New Window
+* **Project Manager: Refresh Projects** Refresh the cached projects (VSCode and Git)
 * **Project Manager: Save Project** Save the current project in the manager
 
 ![Commands](images/project-manager-commands.png)
@@ -160,12 +161,24 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 
 ![Save](images/project-manager-statusbar.png) 
 
+#### Cache Automatically Detected Projects
+
+> _new in version 0.13.0_
+
+By default, the automatically detected projects (VSCode and Git) are cached. If you don't want this for any reason, just turn it off.
+
+```json 
+    "projectManager.cacheProjectsBetweenSessions": false
+```
+
 # Changelog
 
 ## Version 0.13.0
 
 * **New:** Also list _Git_ projects
 * **New Setting:** Git projects support (`baseFolders`, `maxDepthRecursion` and `ignoredFolders`)
+* **New Setting:** Cache VSCode and Git projects found
+* **New Command:** Refresh Projects
 * **Internal:** `projects.json` file has been refactored to support upcoming features 
 
 ## Version 0.12.2
