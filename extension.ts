@@ -70,6 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // register commands
     vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
+    vscode.commands.registerCommand('projectManager.refreshProjects', () => refreshProjects());
     vscode.commands.registerCommand('projectManager.editProjects', () => editProjects());
     vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git]));
     vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git]));
@@ -115,8 +116,16 @@ export function activate(context: vscode.ExtensionContext) {
 	            statusItem.text += foundProject.name;
 	            statusItem.show();
 	        }
-	    };
+	};
 
+    
+    function refreshProjects() {
+        vscLocator.refreshProjects();
+        gitLocator.refreshProjects();
+        vscode.window.showInformationMessage('Projects refreshed!');
+    };
+    
+    
     function editProjects() {
         if (fs.existsSync(getProjectFilePath())) {
             vscode.workspace.openTextDocument(getProjectFilePath()).then(doc => {

@@ -52,6 +52,10 @@
 		{
 			"command": "projectManager.editProjects",
 			"title": "Project Manager: Edit Projects"
+		},
+		{
+			"command": "projectManager.refreshProjects",
+			"title": "Project Manager: Refresh Projects"
 		}
 		],
 		"configuration": {

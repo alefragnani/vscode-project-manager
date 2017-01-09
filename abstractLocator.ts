@@ -2,6 +2,10 @@ let walker = require('walker');
 let path = require('path');
 let fs = require('fs');
 let vscode = require('vscode');
+let os = require('os');
+
+const homeDir = os.homedir();
+const CACHE_FILE = 'projects_cache_';
 
 export interface DirInfo {
     fullPath: string;
@@ -48,6 +52,12 @@ export abstract class AbstractLocator {
     public setAlreadyLocated(al: boolean): void {
         if (this.useCachedRepos) {
             this.alreadyLocated = al;
+            if (this.alreadyLocated) {
+                let cacheFile: string = this.getCacheFile();
+                fs.writeFileSync(cacheFile, JSON.stringify(this.dirList, null, "\t"), {
+                    encoding: 'utf8'
+                });
+            }
         }
     }
 
@@ -62,6 +72,12 @@ export abstract class AbstractLocator {
         this.useCachedRepos = vscode.workspace.getConfiguration('projectManager').get('cacheRepos', true);
         if (!this.useCachedRepos) {
             this.clearDirList();
+        } else {
+            let cacheFile: string = this.getCacheFile();
+            if (fs.existsSync(cacheFile)) {
+                this.dirList = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
+                this.setAlreadyLocated(true);
+            }
         }
     }
 
@@ -140,5 +156,33 @@ export abstract class AbstractLocator {
 
     public handleError(err) {
         console.log('Error walker:', err);
+    }
+
+    private getChannelPath(): string {
+        if (vscode.env.appName.indexOf('Insiders') > 0) {
+            return 'Code - Insiders';
+        } else {
+            return 'Code';
+        }
+    }   
+
+    private getCacheFile() {
+        let cacheFile: string;
+        let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
+        let channelPath: string = this.getChannelPath();
+        cacheFile = path.join(appdata, channelPath, 'User', CACHE_FILE + this.getKind() + '.json');
+        if ((process.platform == 'linux') && (!fs.existsSync(cacheFile))) {
+            cacheFile = path.join(homeDir, '.config/', channelPath, 'User', CACHE_FILE + this.getKind() + '.json');
+        }
+        return cacheFile;
+    }
+
+    public refreshProjects(): void {
+        this.clearDirList();
+        let cacheFile: string = this.getCacheFile();
+        if (fs.existsSync(cacheFile)) {
+            fs.unlinkSync(cacheFile);
+        }
+        this.setAlreadyLocated(false);
     }
 }
