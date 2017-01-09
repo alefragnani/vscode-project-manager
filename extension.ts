@@ -28,6 +28,10 @@ const enum ProjectsSource {
 }
 export interface ProjectsSourceSet extends Array<ProjectsSource>{};
 
+let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
+let gitLocator: GitLocator = new GitLocator();
+
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -39,6 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
     // load the projects
     let projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
     let errorLoading: string = projectStorage.load();
+
     
     // how to handle now, since the extension starts 'at load'?
     if (errorLoading != "") {
@@ -259,7 +264,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         return new Promise((resolve, reject) => {
 
-            let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
+            //let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
             vscLocator.locateProjects(vscode.workspace.getConfiguration('projectManager').get('vscode.baseFolders'))
                 .then((dirList) => {
                     let newItems = [];
@@ -284,7 +289,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         return new Promise((resolve, reject) => {
 
-            let gitLocator: GitLocator = new GitLocator();
+            //let gitLocator: GitLocator = new GitLocator();
             gitLocator.locateProjects(vscode.workspace.getConfiguration('projectManager').get('git.baseFolders'))
                 .then((dirList) => {
                     let newItems = [];

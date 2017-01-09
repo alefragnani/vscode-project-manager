@@ -108,6 +108,11 @@
 					"type": "integer",
 					"default": 4,
 					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+				},
+				"projectManager.cacheRepos": {
+					"type": "boolean",
+					"default": true,
+					"description": "Indicates if must cache the repos"
 				}
 			}
 		},
