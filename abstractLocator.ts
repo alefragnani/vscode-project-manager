@@ -18,13 +18,13 @@ export abstract class AbstractLocator {
     public dirList: DirList = <DirList>[];
     private maxDepth: number;
     private ignoredFolders: string[];
-    private useCachedRepos: boolean;
+    private useCachedProjects: boolean;
     private alreadyLocated: boolean;
 
     constructor() {
         this.maxDepth = -1;
         this.ignoredFolders = [];
-        this.useCachedRepos = true;
+        this.useCachedProjects = true;
         this.alreadyLocated = false;
     }
 
@@ -46,11 +46,11 @@ export abstract class AbstractLocator {
     }
 
     public isAlreadyLocated(): boolean {
-        return this.useCachedRepos && this.alreadyLocated;
+        return this.useCachedProjects && this.alreadyLocated;
     }
 
     public setAlreadyLocated(al: boolean): void {
-        if (this.useCachedRepos) {
+        if (this.useCachedProjects) {
             this.alreadyLocated = al;
             if (this.alreadyLocated) {
                 let cacheFile: string = this.getCacheFile();
@@ -69,8 +69,8 @@ export abstract class AbstractLocator {
 
         this.ignoredFolders = vscode.workspace.getConfiguration('projectManager').get(kind + '.ignoredFolders', []);
         this.maxDepth = vscode.workspace.getConfiguration('projectManager').get(kind + '.maxDepthRecursion', -1);
-        this.useCachedRepos = vscode.workspace.getConfiguration('projectManager').get('cacheRepos', true);
-        if (!this.useCachedRepos) {
+        this.useCachedProjects = vscode.workspace.getConfiguration('projectManager').get('cacheProjectsBetweenSessions', true);
+        if (!this.useCachedProjects) {
             this.clearDirList();
         } else {
             let cacheFile: string = this.getCacheFile();
