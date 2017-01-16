@@ -5,14 +5,14 @@ let vscode = require('vscode');
 const cp = require('child_process');
 import {AbstractLocator, DirInfo, DirList} from './abstractLocator';
 
-export class GitLocator extends AbstractLocator {
+export class SvnLocator extends AbstractLocator {
 
     public getKind(): string {
-        return 'git';
+        return 'svn';
     }
 
     public isRepoDir(projectPath: string) {
-        return fs.existsSync(path.join(projectPath, '.git', 'config'));
+        return fs.existsSync(path.join(projectPath, '.svn', 'pristine'));
     }
 
     public decideProjectName(projectPath: string): string {

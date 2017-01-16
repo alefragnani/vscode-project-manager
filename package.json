@@ -113,10 +113,25 @@
 					"default": 4,
 					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
 				},
+				"projectManager.svn.baseFolders": {
+					"type": "array",
+					"default": [],
+					"description": "Indicates the base folders to search for SVN projects"
+				},
+				"projectManager.svn.ignoredFolders": {
+					"type": "array",
+					"default": ["node_modules", "out", "typings", "test"],
+					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+				},
+				"projectManager.svn.maxDepthRecursion": {
+					"type": "integer",
+					"default": 4,
+					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+				},
 				"projectManager.cacheProjectsBetweenSessions": {
 					"type": "boolean",
 					"default": true,
-					"description": "Should cache the VSCode and Git projects found?"
+					"description": "Should cache the VSCode, Git and SVN projects found?"
 				}
 			}
 		},

@@ -2,7 +2,7 @@
 
 Manage your projects right inside Visual Studio Code. Easily access and switch between them.
 
-You can define your own **Favorite** projects, and auto-detect **VSCode** projects and **Git** repositories.
+You can define your own **Favorite** projects, and auto-detect **VSCode** projects, **Git** and **SVN** repositories.
 
 # Installation
 
@@ -15,7 +15,7 @@ Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
 * **Project Manager: Edit Project** Edit the project list (`projects.json` file) directly inside **Code**
 * **Project Manager: List Projects to Open** List all saved projects and pick one
 * **Project Manager: List Projects to Open in New Window** List all saved projects and pick one to be opened in New Window
-* **Project Manager: Refresh Projects** Refresh the cached projects (VSCode and Git)
+* **Project Manager: Refresh Projects** Refresh the cached projects (VSCode, Git and SVN)
 * **Project Manager: Save Project** Save the current project in the manager
 
 ![Commands](images/project-manager-commands.png)
@@ -105,7 +105,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 #### Automatic Detection of Projects
 
-You can have automatic detection of **VSCode** ![git-branch](images/ico_file_code.png) and **Git** ![git-branch](images/ico_git_branch.png) projects. For this, you just have to indicate a list of folders where each kind of project is located.
+You can have automatic detection of **VSCode** ![vscode](images/ico_file_code.png) **Git** ![git](images/ico_git_branch.png) and **SVN** ![svn](images/ico_svn.png) projects. For this, you just have to indicate a list of folders where each kind of project is located.
 
 #### VSCode
 
@@ -122,6 +122,15 @@ You can have automatic detection of **VSCode** ![git-branch](images/ico_file_cod
     "projectManager.git.baseFolders": [
         "c:\\GitProjects\\code",
         "d:\\MoreGitProjects\\code-testing"
+    ]
+```
+
+#### SVN
+
+```json
+    "projectManager.svn.baseFolders": [
+        "c:\\SVNProjects\\code",
+        "d:\\MoreSVNProjects\\code-testing"
     ]
 ```
 
@@ -151,11 +160,23 @@ To customize how _deep_ to look projects or folders to be _ignored_ you have two
     "projectManager.git.maxDepthRecursion": 4
 ```
 
+#### SVN
+
+```json
+    "projectManager.svn.ignoredFolders": [
+        "node_modules", 
+        "out", 
+        "typings", 
+        "test"
+    ],
+    "projectManager.svn.maxDepthRecursion": 4
+```
+
 #### Cache Automatically Detected Projects
 
 > _new in version 0.13.0_
 
-By default, the automatically detected projects (VSCode and Git) are cached. If you don't want this for any reason, just turn it off.
+By default, the automatically detected projects (VSCode, Git and SVN) are cached. If you don't want this for any reason, just turn it off.
 
 ```json 
     "projectManager.cacheProjectsBetweenSessions": false
@@ -177,9 +198,9 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 
 ## Version 0.13.0
 
-* **New:** Also list _Git_ projects
-* **New Setting:** Git projects support (`baseFolders`, `maxDepthRecursion` and `ignoredFolders`)
-* **New Setting:** Cache VSCode and Git projects found
+* **New:** Also list _Git_ and _SVN_ projects
+* **New Setting:** Git and SVN projects support (`baseFolders`, `maxDepthRecursion` and `ignoredFolders`)
+* **New Setting:** Cache VSCode, Git and SVN projects found
 * **New Command:** Refresh Projects
 * **Internal:** `projects.json` file has been refactored to support upcoming features 
 

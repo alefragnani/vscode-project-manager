@@ -9,6 +9,7 @@ import {exec} from 'child_process';
 import stack = require('./stack');
 import {VisualStudioCodeLocator} from './vscodeLocator';
 import {GitLocator} from './gitLocator';
+import {SvnLocator} from './svnLocator';
 import {ProjectsSorter} from './sorter';
 import {Project, ProjectList, ProjectStorage} from './storage';
 
@@ -22,14 +23,15 @@ const MERGE_PROJECTS: boolean = true;
 const enum ProjectsSource {
     Projects,
     VSCode,
-    Git/*,
-    Hg,
-    SVN*/
+    Git,
+    Svn/*,
+    Hg*/
 }
 export interface ProjectsSourceSet extends Array<ProjectsSource>{};
 
 let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
 let gitLocator: GitLocator = new GitLocator();
+let svnLocator: SvnLocator = new SvnLocator();
 
 
 // this method is called when your extension is activated
@@ -72,8 +74,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
     vscode.commands.registerCommand('projectManager.refreshProjects', () => refreshProjects());
     vscode.commands.registerCommand('projectManager.editProjects', () => editProjects());
-    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git]));
-    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git]));
+    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
+    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
 
     // function commands
     function showStatusBar(projectName?: string) {
@@ -122,6 +124,7 @@ export function activate(context: vscode.ExtensionContext) {
     function refreshProjects() {
         vscLocator.refreshProjects();
         gitLocator.refreshProjects();
+        svnLocator.refreshProjects();
         vscode.window.showInformationMessage('The projects has been refreshed!');
     };
     
@@ -321,6 +324,33 @@ export function activate(context: vscode.ExtensionContext) {
                 });
         });
     }
+    
+    function getSvnProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
+
+        return new Promise((resolve, reject) => {
+
+            svnLocator.locateProjects(vscode.workspace.getConfiguration('projectManager').get('svn.baseFolders'))
+                .then((dirList) => {
+                    let newItems = [];
+                    newItems = dirList.map(item => {
+                        return {
+                            "label": '$(zap) ' + item.name,
+                            "description": item.fullPath
+                            // "label": '$(mark-github) ' + path.basename(item.fullPath),
+                            // "description": item.fullPath,
+                            // "detail": item.name
+                        };
+                    });
+
+                    if (merge) {
+                        let unifiedList = newItems.concat(itemsSorted);
+                        resolve(unifiedList);
+                    } else {
+                        resolve(newItems);
+                    }
+                });
+        });
+    }
 
     function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
@@ -425,6 +455,13 @@ export function activate(context: vscode.ExtensionContext) {
                 }
                 let merge: boolean = MERGE_PROJECTS;
                 return getGitProjects(<any[]>folders, merge);
+            })
+            .then((folders) => {
+                if (sources.indexOf(ProjectsSource.Svn) == -1) {
+                    return folders;
+                }
+                let merge: boolean = MERGE_PROJECTS;
+                return getSvnProjects(<any[]>folders, merge);
             })
             .then((folders) => { // sort
                 return sortProjectList(folders);
