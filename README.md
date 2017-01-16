@@ -107,8 +107,6 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 You can have automatic detection of **VSCode** ![vscode](images/ico_file_code.png) **Git** ![git](images/ico_git_branch.png) and **SVN** ![svn](images/ico_svn.png) projects. For this, you just have to indicate a list of folders where each kind of project is located.
 
-#### VSCode
-
 ```json
     "projectManager.vscode.baseFolders": [
         "c:\\VSCodeProjects\\code",
@@ -116,27 +114,9 @@ You can have automatic detection of **VSCode** ![vscode](images/ico_file_code.pn
     ]
 ```
 
-#### Git
-
-```json
-    "projectManager.git.baseFolders": [
-        "c:\\GitProjects\\code",
-        "d:\\MoreGitProjects\\code-testing"
-    ]
-```
-
-#### SVN
-
-```json
-    "projectManager.svn.baseFolders": [
-        "c:\\SVNProjects\\code",
-        "d:\\MoreSVNProjects\\code-testing"
-    ]
-```
+> Git and SVN has similar settings (`projectManager.git.baseFolders` and `projectManager.svn.baseFolders` respectively)
 
 To customize how _deep_ to look projects or folders to be _ignored_ you have two additional settings:
-
-#### VSCode
 
 ```json
     "projectManager.vscode.ignoredFolders": [
@@ -148,29 +128,7 @@ To customize how _deep_ to look projects or folders to be _ignored_ you have two
     "projectManager.vscode.maxDepthRecursion": 4
 ```
 
-#### Git
-
-```json
-    "projectManager.git.ignoredFolders": [
-        "node_modules", 
-        "out", 
-        "typings", 
-        "test"
-    ],
-    "projectManager.git.maxDepthRecursion": 4
-```
-
-#### SVN
-
-```json
-    "projectManager.svn.ignoredFolders": [
-        "node_modules", 
-        "out", 
-        "typings", 
-        "test"
-    ],
-    "projectManager.svn.maxDepthRecursion": 4
-```
+> Git and SVN also has similar settings (`projectManager.git.ignoredFolders`, `projectManager.git.maxDepthRecursion`, `projectManager.svn.ignoredFolders` and `projectManager.svn.maxDepthRecursion`  respectively)
 
 #### Cache Automatically Detected Projects
 
