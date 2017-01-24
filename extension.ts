@@ -41,12 +41,12 @@ export function activate(context: vscode.ExtensionContext) {
     let recentProjects: string = context.globalState.get<string>('recent', '');
     let aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(recentProjects);
-    
+
     // load the projects
     let projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
     let errorLoading: string = projectStorage.load();
 
-    
+
     // how to handle now, since the extension starts 'at load'?
     if (errorLoading != "") {
         var optionOpenFile = <vscode.MessageItem>{
@@ -65,8 +65,8 @@ export function activate(context: vscode.ExtensionContext) {
             }
         });
         return null;
-    } 
-    
+    }
+
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
 
@@ -113,22 +113,22 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            let foundProject: Project = projectStorage.existsWithRootPath(currentProjectPath); 
+            let foundProject: Project = projectStorage.existsWithRootPath(currentProjectPath);
             if (foundProject) {
 	            statusItem.text += foundProject.name;
 	            statusItem.show();
 	        }
 	};
 
-    
+
     function refreshProjects() {
         vscLocator.refreshProjects();
         gitLocator.refreshProjects();
         svnLocator.refreshProjects();
         vscode.window.showInformationMessage('The projects has been refreshed!');
     };
-    
-    
+
+
     function editProjects() {
         if (fs.existsSync(getProjectFilePath())) {
             vscode.workspace.openTextDocument(getProjectFilePath()).then(doc => {
@@ -296,7 +296,7 @@ export function activate(context: vscode.ExtensionContext) {
                 });
         });
     }
-    
+
     function getGitProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
 
         return new Promise((resolve, reject) => {
@@ -324,7 +324,7 @@ export function activate(context: vscode.ExtensionContext) {
                 });
         });
     }
-    
+
     function getSvnProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
 
         return new Promise((resolve, reject) => {
@@ -362,10 +362,10 @@ export function activate(context: vscode.ExtensionContext) {
         //         return;
         //     }
         // } else {
-        if (projectStorage.length() == 0) {
-            vscode.window.showInformationMessage('No projects saved yet!');
-            return;
-        }
+        // if (projectStorage.length() == 0) {
+        //     vscode.window.showInformationMessage('No projects saved yet!');
+        //     return;
+        // }
         items = projectStorage.map();
 
         function onRejectListProjects(reason) {
@@ -432,7 +432,7 @@ export function activate(context: vscode.ExtensionContext) {
         };
 
 
-        let getProjectsPromise = getProjects(items, sources)
+        getProjects(items, sources)
             .then((folders) => {
 
                 // not in SET
@@ -464,11 +464,15 @@ export function activate(context: vscode.ExtensionContext) {
                 return getSvnProjects(<any[]>folders, merge);
             })
             .then((folders) => { // sort
-                return sortProjectList(folders);
+                if ((<any[]>folders).length == 0) {
+                    vscode.window.showInformationMessage('No projects saved yet!');
+                    return;
+                }
+                else {
+                    vscode.window.showQuickPick(sortProjectList(folders), options)
+                        .then(onResolve, onRejectListProjects);
+                }
             });
-
-        vscode.window.showQuickPick(getProjectsPromise, options)
-            .then(onResolve, onRejectListProjects);
     };
 
     function removeRootPath(items:any[]): any[] {
