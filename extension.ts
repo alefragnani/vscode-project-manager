@@ -125,7 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscLocator.refreshProjects();
         gitLocator.refreshProjects();
         svnLocator.refreshProjects();
-        vscode.window.showInformationMessage('The projects has been refreshed!');
+        vscode.window.showInformationMessage('The projects have been refreshed!');
     };
     
     
