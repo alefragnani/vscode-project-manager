@@ -1,0 +1,31 @@
+{
+	"extends": [
+		"tslint:recommended"
+	],
+	"rules": {
+		"no-unused-expression": true,
+		"no-duplicate-variable": true,
+		"no-duplicate-key": true,
+		"no-unused-variable": true,
+		"no-trailing-whitespace": false,
+		"interface-name": [
+			false
+		],
+		"eofline": false,
+		"curly": true,
+		"class-name": true,
+		"semicolon": ["always"],
+		"triple-equals": true,
+		"arrow-parens": false,
+		"no-console": [
+			"error"
+		],
+		"trailing-comma": [
+			false
+		],
+		"object-literal-sort-keys": false,
+		"max-classes-per-file": [
+		  false	
+		]
+	}
+}

@@ -1,11 +1,11 @@
-let walker = require('walker');
-let path = require('path');
-let fs = require('fs');
-let vscode = require('vscode');
-let os = require('os');
+let walker = require("walker");
+import path = require("path");
+import fs = require("fs");
+import vscode = require("vscode");
+import os = require("os");
 
 const homeDir = os.homedir();
-const CACHE_FILE = 'projects_cache_';
+const CACHE_FILE = "projects_cache_";
 
 export interface DirInfo {
     fullPath: string;
@@ -15,7 +15,7 @@ export interface DirList extends Array<DirInfo> { };
 
 export abstract class AbstractLocator {
 
-    public dirList: DirList = <DirList>[];
+    public dirList: DirList = <DirList> [];
     private maxDepth: number;
     private ignoredFolders: string[];
     private useCachedProjects: boolean;
@@ -31,7 +31,6 @@ export abstract class AbstractLocator {
     public abstract getKind(): string;
     public abstract decideProjectName(projectPath: string): string;
     public abstract isRepoDir(projectPath: string): boolean;
-
 
     public getPathDepth(s) {
         return s.split(path.sep).length;
@@ -54,9 +53,7 @@ export abstract class AbstractLocator {
             this.alreadyLocated = al;
             if (this.alreadyLocated) {
                 let cacheFile: string = this.getCacheFile();
-                fs.writeFileSync(cacheFile, JSON.stringify(this.dirList, null, "\t"), {
-                    encoding: 'utf8'
-                });
+                fs.writeFileSync(cacheFile, JSON.stringify(this.dirList, null, "\t"), { encoding: "utf8" });
             }
         }
     }
@@ -67,15 +64,15 @@ export abstract class AbstractLocator {
 
     public initializeCfg(kind: string) {
 
-        this.ignoredFolders = vscode.workspace.getConfiguration('projectManager').get(kind + '.ignoredFolders', []);
-        this.maxDepth = vscode.workspace.getConfiguration('projectManager').get(kind + '.maxDepthRecursion', -1);
-        this.useCachedProjects = vscode.workspace.getConfiguration('projectManager').get('cacheProjectsBetweenSessions', true);
+        this.ignoredFolders = vscode.workspace.getConfiguration("projectManager").get(kind + ".ignoredFolders", []);
+        this.maxDepth = vscode.workspace.getConfiguration("projectManager").get(kind + ".maxDepthRecursion", -1);
+        this.useCachedProjects = vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true);
         if (!this.useCachedProjects) {
             this.clearDirList();
         } else {
             let cacheFile: string = this.getCacheFile();
             if (fs.existsSync(cacheFile)) {
-                this.dirList = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
+                this.dirList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
                 this.setAlreadyLocated(true);
             }
         }
@@ -85,39 +82,39 @@ export abstract class AbstractLocator {
 
         return new Promise<DirList>((resolve, reject) => {
 
-            if (projectsDirList.length == 0) {
-                resolve(<DirList>[]);
+            if (projectsDirList.length === 0) {
+                resolve(<DirList> []);
                 return;
             }
 
             this.initializeCfg(this.getKind());
             if (this.isAlreadyLocated()) {
-                resolve(this.dirList)
+                resolve(this.dirList);
                 return;
             }
 
-            var promises = [];
+            let promises = [];
             this.clearDirList();
 
             projectsDirList.forEach((projectBasePath) => {
                 if (!fs.existsSync(projectBasePath)) {
-                    vscode.window.setStatusBarMessage('Directory ' + projectBasePath + ' does not exists.', 1500);
+                    vscode.window.setStatusBarMessage("Directory " + projectBasePath + " does not exists.", 1500);
 
                     return;
                 }
 
-                var depth = this.getPathDepth(projectBasePath);
+                let depth = this.getPathDepth(projectBasePath);
 
-                var promise = new Promise((resolve, reject) => {
+                let promise = new Promise((resolve, reject) => {
                     try {
                         walker(projectBasePath)
                             .filterDir((dir, stat) => {
                                 return !(this.isFolderIgnored(path.basename(dir)) ||
                                     this.isMaxDeptReached(this.getPathDepth(dir), depth));
                             })
-                            .on('dir', this.processDirectory)
-                            .on('error', this.handleError)
-                            .on('end', () => {
+                            .on("dir", this.processDirectory)
+                            .on("error", this.handleError)
+                            .on("end", () => {
                                 resolve();
                             });
                     } catch (error) {
@@ -130,20 +127,18 @@ export abstract class AbstractLocator {
 
             Promise.all(promises)
                 .then(() => {
-                    vscode.window.setStatusBarMessage('Searching folders completed', 1500);
+                    vscode.window.setStatusBarMessage("Searching folders completed", 1500);
                     this.setAlreadyLocated(true);
                     resolve(this.dirList);
                 })
-                .catch(error => { vscode.window.showErrorMessage('Error while loading projects.'); });
+                .catch(error => { vscode.window.showErrorMessage("Error while loading projects."); });
         });
     }
-
 
     public addToList(projectPath: string, projectName: string = null) {
         this.dirList.push({
             fullPath: projectPath,
-            name: projectName === null ? path.basename(projectPath) : projectName
-        });
+            name: projectName === null ? path.basename(projectPath) : projectName });
         return;
     }
 
@@ -155,28 +150,9 @@ export abstract class AbstractLocator {
     }
 
     public handleError(err) {
-        console.log('Error walker:', err);
+        console.log("Error walker:", err);
     }
-
-    private getChannelPath(): string {
-        if (vscode.env.appName.indexOf('Insiders') > 0) {
-            return 'Code - Insiders';
-        } else {
-            return 'Code';
-        }
-    }   
-
-    private getCacheFile() {
-        let cacheFile: string;
-        let appdata = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : '/var/local');
-        let channelPath: string = this.getChannelPath();
-        cacheFile = path.join(appdata, channelPath, 'User', CACHE_FILE + this.getKind() + '.json');
-        if ((process.platform == 'linux') && (!fs.existsSync(cacheFile))) {
-            cacheFile = path.join(homeDir, '.config/', channelPath, 'User', CACHE_FILE + this.getKind() + '.json');
-        }
-        return cacheFile;
-    }
-
+    
     public refreshProjects(): void {
         this.clearDirList();
         let cacheFile: string = this.getCacheFile();
@@ -185,4 +161,24 @@ export abstract class AbstractLocator {
         }
         this.setAlreadyLocated(false);
     }
+
+    private getChannelPath(): string {
+        if (vscode.env.appName.indexOf("Insiders") > 0) {
+            return "Code - Insiders";
+        } else {
+            return "Code";
+        }
+    }   
+
+    private getCacheFile() {
+        let cacheFile: string;
+        let appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
+        let channelPath: string = this.getChannelPath();
+        cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.getKind() + ".json");
+        if ((process.platform === "linux") && (!fs.existsSync(cacheFile))) {
+            cacheFile = path.join(homeDir, ".config/", channelPath, "User", CACHE_FILE + this.getKind() + ".json");
+        }
+        return cacheFile;
+    }
+
 }
