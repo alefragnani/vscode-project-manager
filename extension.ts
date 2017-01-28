@@ -46,6 +46,13 @@ export function activate(context: vscode.ExtensionContext) {
     let projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
     let errorLoading: string = projectStorage.load();
 
+    // register commands (here, because it needs to be used right below if an invalid JSON is present)
+    vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
+    vscode.commands.registerCommand('projectManager.refreshProjects', () => refreshProjects());
+    vscode.commands.registerCommand('projectManager.editProjects', () => editProjects());
+    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
+    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
+
 
     // how to handle now, since the extension starts 'at load'?
     if (errorLoading != "") {
@@ -69,13 +76,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
-
-    // register commands
-    vscode.commands.registerCommand('projectManager.saveProject', () => saveProject());
-    vscode.commands.registerCommand('projectManager.refreshProjects', () => refreshProjects());
-    vscode.commands.registerCommand('projectManager.editProjects', () => editProjects());
-    vscode.commands.registerCommand('projectManager.listProjects', () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
-    vscode.commands.registerCommand('projectManager.listProjectsNewWindow', () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
 
     // function commands
     function showStatusBar(projectName?: string) {
