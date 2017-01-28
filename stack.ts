@@ -6,7 +6,7 @@ export class StringStack {
      * fromString
      */
     public fromString(input: string) {
-        if (input != '') {
+        if (input !== "") {
             this.stack = JSON.parse(input);
         }
     }
@@ -48,13 +48,13 @@ export class StringStack {
      */
     public getItem(index: number): string {
         if (index < 0) {
-            return '';            
+            return "";            
         }
         
         if (this.stack.length === 0) {
-            return '';            
+            return "";            
         }
         
-        return this.stack[index];;
+        return this.stack[index];
     }
 }
