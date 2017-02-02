@@ -1,3 +1,7 @@
+## Version 0.13.2
+
+* **Fix:** Status Bar not working for newly saved projects in macOS and Linux (issue [#84](https://github.com/alefragnani/vscode-project-manager/issues/84))
+
 ## Version 0.13.1
 
 * **Fix:** Invalid `projects.json` file causing erros (issue [#82](https://github.com/alefragnani/vscode-project-manager/issues/82))
