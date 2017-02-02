@@ -23,7 +23,7 @@ const enum ProjectsSource {
     Projects,
     VSCode,
     Git,
-    Svn 
+    Svn
 }
 
 export interface ProjectsSourceSet extends Array<ProjectsSource> {};
@@ -91,7 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
         } else {
             statusItem.command = "projectManager.listProjects";
         }
-        
+
         // if we have a projectName, we don't need to search.
         if (projectName) {
             statusItem.text += projectName;
@@ -103,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        let foundProject: Project = projectStorage.existsWithRootPath(currentProjectPath);
+        let foundProject: Project = projectStorage.existsWithRootPath(compactHomePath(currentProjectPath));
         if (foundProject) {
             statusItem.text += foundProject.name;
             statusItem.show();
