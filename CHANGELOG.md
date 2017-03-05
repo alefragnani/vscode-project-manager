@@ -1,3 +1,7 @@
+## Version 0.13.3
+
+* **Fix:** Extension loading delay (Thanks to @Gama11 [PR #97](https://github.com/alefragnani/vscode-project-manager/pull/97))
+
 ## Version 0.13.2
 
 * **Fix:** Status Bar not working for newly saved projects in macOS and Linux (issue [#84](https://github.com/alefragnani/vscode-project-manager/issues/84))
