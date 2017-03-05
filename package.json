@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.13.2",
+	"version": "0.13.3",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -32,7 +32,12 @@
 		"url": "https://github.com/alefragnani/vscode-project-manager/issues"
 	},
 	"activationEvents": [
-		"*"
+		"*",
+		"onCommand:projectManager.saveProject",
+		"onCommand:projectManager.listProjects",
+		"onCommand:projectManager.listProjectsNewWindow",
+		"onCommand:projectManager.editProjects",
+		"onCommand:projectManager.refreshProjects"
 	],
 	"main": "./out/extension",
 	"contributes": {
