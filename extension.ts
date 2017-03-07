@@ -383,7 +383,7 @@ export function activate(context: vscode.ExtensionContext) {
                         // let itemsFiltered = [];
                         // itemsFiltered = items.filter(value => value.description.toString().toLowerCase() != selected.description.toLowerCase());
                         // fs.writeFileSync(getProjectFilePath(), JSON.stringify(itemsFiltered, null, "\t"));
-                        projectStorage.pop(selected);
+                        projectStorage.pop(selected.label);
                         projectStorage.save();
                         return;
                     }
