@@ -1,3 +1,7 @@
+## Version 0.13.4
+
+* **Fix:** `Delete Project` wasn't working (Thanks to @mlewand [PR #100](https://github.com/alefragnani/vscode-project-manager/pull/100))
+
 ## Version 0.13.3
 
 * **Fix:** Extension loading delay (Thanks to @Gama11 [PR #97](https://github.com/alefragnani/vscode-project-manager/pull/97))
