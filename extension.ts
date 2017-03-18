@@ -258,12 +258,24 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
+    // Filters out any newDirectories entries that are present in knownDirectories.
+    function filterKnownDirectories(knownDirectories: any[], newDirectories: any[]): Promise<any[]> {
+        if (knownDirectories) {
+            newDirectories = newDirectories.filter(item => 
+                !knownDirectories.some(sortedItem => 
+                    expandHomePath(sortedItem.description).toLowerCase() === expandHomePath(item.fullPath).toLowerCase()));
+        }
+
+        return Promise.resolve( newDirectories );
+    };
+
     function getVSCodeProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
 
         return new Promise((resolve, reject) => {
 
             vscLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("vscode.baseFolders"))
-                .then((dirList) => {
+                .then(filterKnownDirectories.bind(this, merge ? itemsSorted : []))
+                .then((dirList: any[]) => {
                     let newItems = [];
                     newItems = dirList.map(item => {
                         return {
@@ -287,7 +299,8 @@ export function activate(context: vscode.ExtensionContext) {
         return new Promise((resolve, reject) => {
 
             gitLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("git.baseFolders"))
-                .then((dirList) => {
+                .then(filterKnownDirectories.bind(this, merge ? itemsSorted : []))
+                .then((dirList: any[]) => {
                     let newItems = [];
                     newItems = dirList.map(item => {
                         return {
@@ -314,7 +327,8 @@ export function activate(context: vscode.ExtensionContext) {
         return new Promise((resolve, reject) => {
 
             svnLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("svn.baseFolders"))
-                .then((dirList) => {
+                .then(filterKnownDirectories.bind(this, merge ? itemsSorted : []))
+                .then((dirList: any[]) => {
                     let newItems = [];
                     newItems = dirList.map(item => {
                         return {
