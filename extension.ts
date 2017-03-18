@@ -261,7 +261,9 @@ export function activate(context: vscode.ExtensionContext) {
     // Filters out any newDirectories entries that are present in knownDirectories.
     function filterKnownDirectories(knownDirectories: any[], newDirectories: any[]): Promise<any[]> {
         if (knownDirectories) {
-            newDirectories = newDirectories.filter(item => !knownDirectories.some(sortedItem => sortedItem.label === item.name));
+            newDirectories = newDirectories.filter(item => 
+                !knownDirectories.some(sortedItem => 
+                    expandHomePath(sortedItem.description).toLowerCase() === expandHomePath(item.fullPath).toLowerCase()));
         }
 
         return Promise.resolve( newDirectories );
