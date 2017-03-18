@@ -26,6 +26,9 @@
 		"object-literal-sort-keys": false,
 		"max-classes-per-file": [
 		  false	
+		],
+		"max-line-length": [
+			false
 		]
 	}
 }

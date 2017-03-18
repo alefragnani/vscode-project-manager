@@ -1,3 +1,7 @@
+## Version 0.13.5
+
+* **Fix:** Duplicate projects being listed (Thanks to @mlewand [PR #101](https://github.com/alefragnani/vscode-project-manager/pull/101))
+
 ## Version 0.13.4
 
 * **Fix:** `Delete Project` wasn't working (Thanks to @mlewand [PR #100](https://github.com/alefragnani/vscode-project-manager/pull/100))
