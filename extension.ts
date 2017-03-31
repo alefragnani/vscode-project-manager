@@ -6,11 +6,11 @@ import path = require("path");
 import os = require("os");
 
 import stack = require("./stack");
-import {GitLocator} from "./gitLocator";
-import {ProjectsSorter} from "./sorter";
-import {Project, ProjectStorage} from "./storage";
-import {SvnLocator} from "./svnLocator";
-import {VisualStudioCodeLocator} from "./vscodeLocator";
+import { GitLocator } from "./gitLocator";
+import { ProjectsSorter } from "./sorter";
+import { Project, ProjectStorage } from "./storage";
+import { SvnLocator } from "./svnLocator";
+import { VisualStudioCodeLocator } from "./vscodeLocator";
 
 const homeDir = os.homedir();
 const homePathVariable = "$home";
@@ -26,7 +26,7 @@ const enum ProjectsSource {
     Svn
 }
 
-export interface ProjectsSourceSet extends Array<ProjectsSource> {};
+export interface ProjectsSourceSet extends Array<ProjectsSource> { };
 
 let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
 let gitLocator: GitLocator = new GitLocator();
@@ -42,7 +42,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     // load the projects
     let projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
-    let errorLoading: string = projectStorage.load();
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
@@ -51,24 +50,27 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
 
-    // how to handle now, since the extension starts 'at load'?
-    if (errorLoading !== "") {
-        let optionOpenFile = <vscode.MessageItem> {
-            title: "Open File"
-        };
-        vscode.window.showErrorMessage("Error loading projects.json file. Message: " + errorLoading, optionOpenFile).then(option => {
-            // nothing selected
-            if (typeof option === "undefined") {
-                return;
-            }
+    function refreshProjectsWhenListCommand() {
+        let errorLoading: string = projectStorage.load();
+        // how to handle now, since the extension starts 'at load'?
+        if (errorLoading !== "") {
+            let optionOpenFile = <vscode.MessageItem>{
+                title: "Open File"
+            };
+            vscode.window.showErrorMessage("Error loading projects.json file. Message: " + errorLoading, optionOpenFile).then(option => {
+                // nothing selected
+                if (typeof option === "undefined") {
+                    return;
+                }
 
-            if (option.title === "Open File") {
-                vscode.commands.executeCommand("projectManager.editProjects");
-            } else {
-                return;
-            }
-        });
-        return null;
+                if (option.title === "Open File") {
+                    vscode.commands.executeCommand("projectManager.editProjects");
+                } else {
+                    return;
+                }
+            });
+            return null;
+        }
     }
 
     let statusItem: vscode.StatusBarItem;
@@ -123,7 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showTextDocument(doc);
             });
         } else {
-            let optionEditProject = <vscode.MessageItem> {
+            let optionEditProject = <vscode.MessageItem>{
                 title: "Yes, edit manually"
             };
             vscode.window.showErrorMessage("No projects saved yet! You should open a folder and use Save Project instead. Do you really want to edit manually? ", optionEditProject).then(option => {
@@ -156,7 +158,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         // ask the PROJECT NAME (suggest the )
-        let ibo = <vscode.InputBoxOptions> {
+        let ibo = <vscode.InputBoxOptions>{
             prompt: "Project Name",
             placeHolder: "Type a name for your project",
             value: wpath
@@ -201,10 +203,10 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage("Project saved!");
                 showStatusBar(projectName);
             } else {
-                let optionUpdate = <vscode.MessageItem> {
+                let optionUpdate = <vscode.MessageItem>{
                     title: "Update"
                 };
-                let optionCancel = <vscode.MessageItem> {
+                let optionCancel = <vscode.MessageItem>{
                     title: "Cancel"
                 };
 
@@ -218,14 +220,14 @@ export function activate(context: vscode.ExtensionContext) {
                         // for (var i = 0; i < items.length; i++) {
                         //     if (items[i].label == projectName) {
                         //         items[i].description = rootPath;
-                                aStack.push(projectName);
-                                context.globalState.update("recent", aStack.toString());
-                                projectStorage.updateRootPath(projectName, rootPath);
-                                projectStorage.save();
-//                                fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
-                                vscode.window.showInformationMessage("Project saved!");
-                                showStatusBar(projectName);
-                                return;
+                        aStack.push(projectName);
+                        context.globalState.update("recent", aStack.toString());
+                        projectStorage.updateRootPath(projectName, rootPath);
+                        projectStorage.save();
+                        //                                fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
+                        vscode.window.showInformationMessage("Project saved!");
+                        showStatusBar(projectName);
+                        return;
                         //     }
                         // }
                     } else {
@@ -261,12 +263,12 @@ export function activate(context: vscode.ExtensionContext) {
     // Filters out any newDirectories entries that are present in knownDirectories.
     function filterKnownDirectories(knownDirectories: any[], newDirectories: any[]): Promise<any[]> {
         if (knownDirectories) {
-            newDirectories = newDirectories.filter(item => 
-                !knownDirectories.some(sortedItem => 
+            newDirectories = newDirectories.filter(item =>
+                !knownDirectories.some(sortedItem =>
                     expandHomePath(sortedItem.description).toLowerCase() === expandHomePath(item.fullPath).toLowerCase()));
         }
 
-        return Promise.resolve( newDirectories );
+        return Promise.resolve(newDirectories);
     };
 
     function getVSCodeProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
@@ -352,7 +354,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
-
+        refreshProjectsWhenListCommand();
         // if (fs.existsSync(getProjectFilePath())) {
         //     items = loadProjects(getProjectFilePath());
         //     if (items == null) {
@@ -375,13 +377,13 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-           // vscode.window.showInformationMessage(selected.label);
+            // vscode.window.showInformationMessage(selected.label);
 
             if (!fs.existsSync(selected.description.toString())) {
-                let optionUpdateProject = <vscode.MessageItem> {
+                let optionUpdateProject = <vscode.MessageItem>{
                     title: "Update Project"
                 };
-                let optionDeleteProject = <vscode.MessageItem> {
+                let optionDeleteProject = <vscode.MessageItem>{
                     title: "Delete Project"
                 };
 
@@ -415,12 +417,12 @@ export function activate(context: vscode.ExtensionContext) {
                 let uri: vscode.Uri = vscode.Uri.file(projectPath);
                 vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow || forceNewWindow)
                     .then(
-                        value => ( {} ),  // done
-                        value => vscode.window.showInformationMessage("Could not open the project!") );
+                    value => ({}),  // done
+                    value => vscode.window.showInformationMessage("Could not open the project!"));
             }
         }
 
-        let options = <vscode.QuickPickOptions> {
+        let options = <vscode.QuickPickOptions>{
             matchOnDescription: false,
             matchOnDetail: false,
             placeHolder: "Loading Projects (pick one to open)"
@@ -441,24 +443,24 @@ export function activate(context: vscode.ExtensionContext) {
 
                 // Ok, can have VSCode
                 let merge: boolean = MERGE_PROJECTS; // vscode.workspace.getConfiguration('projectManager').get('vscode.mergeProjects', true);
-                return getVSCodeProjects(<any[]> folders, merge);
+                return getVSCodeProjects(<any[]>folders, merge);
             })
             .then((folders) => {
                 if (sources.indexOf(ProjectsSource.Git) === -1) {
                     return folders;
                 }
                 let merge: boolean = MERGE_PROJECTS;
-                return getGitProjects(<any[]> folders, merge);
+                return getGitProjects(<any[]>folders, merge);
             })
             .then((folders) => {
                 if (sources.indexOf(ProjectsSource.Svn) === -1) {
                     return folders;
                 }
                 let merge: boolean = MERGE_PROJECTS;
-                return getSvnProjects(<any[]> folders, merge);
+                return getSvnProjects(<any[]>folders, merge);
             })
             .then((folders) => { // sort
-                if ((<any[]> folders).length === 0) {
+                if ((<any[]>folders).length === 0) {
                     vscode.window.showInformationMessage("No projects saved yet!");
                     return;
                 } else {
@@ -481,7 +483,7 @@ export function activate(context: vscode.ExtensionContext) {
         for (let element of items) {
             // let element = items[index];
 
-            if (!element.detail && (!fs.existsSync(element.description.toString()) )) {
+            if (!element.detail && (!fs.existsSync(element.description.toString()))) {
                 // items[index].detail = "$(circle-slash) Path does not exist";
                 element.detail = "$(circle-slash) Path does not exist";
             }
@@ -491,7 +493,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function pathIsUNC(path: string) {
-      return path.indexOf("\\\\") === 0;
+        return path.indexOf("\\\\") === 0;
     }
 
     /**
@@ -529,8 +531,8 @@ export function activate(context: vscode.ExtensionContext) {
         let normalizedPath: string = path;
 
         if (!pathIsUNC(normalizedPath)) {
-          let replaceable = normalizedPath.split("\\");
-          normalizedPath = replaceable.join("\\\\");
+            let replaceable = normalizedPath.split("\\");
+            normalizedPath = replaceable.join("\\\\");
         }
 
         return normalizedPath;
