@@ -195,7 +195,6 @@ export class ProjectStorage {
 
         try {
             items = JSON.parse(fs.readFileSync(this.filename).toString());
-
             // OLD format
             if ((items.length > 0) && (items[0].label)) {
                 // for (let index = 0; index < items.length; index++) {
@@ -211,6 +210,7 @@ export class ProjectStorage {
             }
             return "";
         } catch (error) {
+            console.log(error);
             return error.toString();
         }
     }

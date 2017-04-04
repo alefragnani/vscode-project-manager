@@ -11,6 +11,7 @@ import { ProjectsSorter } from "./sorter";
 import { Project, ProjectStorage } from "./storage";
 import { SvnLocator } from "./svnLocator";
 import { VisualStudioCodeLocator } from "./vscodeLocator";
+const chokidar = require('chokidar');
 
 const homeDir = os.homedir();
 const homePathVariable = "$home";
@@ -36,6 +37,11 @@ let svnLocator: SvnLocator = new SvnLocator();
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
+    const watcher = chokidar.watch(getProjectFilePath(), {
+        awaitWriteFinish: {
+            stabilityThreshold: 0
+        }
+    });
     let recentProjects: string = context.globalState.get<string>("recent", "");
     let aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(recentProjects);
@@ -49,29 +55,10 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
-
-    function refreshProjectsWhenListCommand() {
-        let errorLoading: string = projectStorage.load();
-        // how to handle now, since the extension starts 'at load'?
-        if (errorLoading !== "") {
-            let optionOpenFile = <vscode.MessageItem>{
-                title: "Open File"
-            };
-            vscode.window.showErrorMessage("Error loading projects.json file. Message: " + errorLoading, optionOpenFile).then(option => {
-                // nothing selected
-                if (typeof option === "undefined") {
-                    return;
-                }
-
-                if (option.title === "Open File") {
-                    vscode.commands.executeCommand("projectManager.editProjects");
-                } else {
-                    return;
-                }
-            });
-            return null;
-        }
-    }
+    loadProjectsFile();
+    watcher.on('change', () => {
+        loadProjectsFile();
+    })
 
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
@@ -354,7 +341,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
-        refreshProjectsWhenListCommand();
         // if (fs.existsSync(getProjectFilePath())) {
         //     items = loadProjects(getProjectFilePath());
         //     if (items == null) {
@@ -568,6 +554,29 @@ export function activate(context: vscode.ExtensionContext) {
             return "Code - Insiders";
         } else {
             return "Code";
+        }
+    }
+
+    function loadProjectsFile() {
+        let errorLoading: string = projectStorage.load();
+        // how to handle now, since the extension starts 'at load'?
+        if (errorLoading !== "") {
+            let optionOpenFile = <vscode.MessageItem>{
+                title: "Open File"
+            };
+            vscode.window.showErrorMessage("Error loading projects.json file. Message: " + errorLoading, optionOpenFile).then(option => {
+                // nothing selected
+                if (typeof option === "undefined") {
+                    return;
+                }
+
+                if (option.title === "Open File") {
+                    vscode.commands.executeCommand("projectManager.editProjects");
+                } else {
+                    return;
+                }
+            });
+            return null;
         }
     }
 
