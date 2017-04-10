@@ -11,7 +11,6 @@ import { ProjectsSorter } from "./sorter";
 import { Project, ProjectStorage } from "./storage";
 import { SvnLocator } from "./svnLocator";
 import { VisualStudioCodeLocator } from "./vscodeLocator";
-const chokidar = require('chokidar');
 
 const homeDir = os.homedir();
 const homePathVariable = "$home";
@@ -37,11 +36,6 @@ let svnLocator: SvnLocator = new SvnLocator();
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-    const watcher = chokidar.watch(getProjectFilePath(), {
-        awaitWriteFinish: {
-            stabilityThreshold: 0
-        }
-    });
     let recentProjects: string = context.globalState.get<string>("recent", "");
     let aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(recentProjects);
@@ -56,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     loadProjectsFile();
-    watcher.on('change', () => {
+    fs.watchFile(getProjectFilePath(),{interval:100}, (prev,next)=>{
         loadProjectsFile();
     })
 
