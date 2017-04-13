@@ -1,3 +1,7 @@
+## Version 0.14.0
+
+* **New:** Projects now detect _external changes_ to update cache (Thanks to @likun7981 [PR #107](https://github.com/alefragnani/vscode-project-manager/pull/107))
+
 ## Version 0.13.5
 
 * **Fix:** Duplicate projects being listed (Thanks to @mlewand [PR #101](https://github.com/alefragnani/vscode-project-manager/pull/101))
