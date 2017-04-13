@@ -14,15 +14,15 @@
 	"categories": [
 		"Other"
 	],
-    "keywords": [
-        "project",
-        "folder",
-        "switch",
-        "manage",
+	"keywords": [
+		"project",
+		"folder",
+		"switch",
+		"manage",
 		"git"
-    ],
-    "icon": "images/icon.png",
-    "license": "SEE LICENSE IN LICENSE.md",
+	],
+	"icon": "images/icon.png",
+	"license": "SEE LICENSE IN LICENSE.md",
 	"homepage": "https://github.com/alefragnani/vscode-project-manager/blob/master/README.md",
 	"repository": {
 		"type": "git",
@@ -42,26 +42,26 @@
 	"main": "./out/extension",
 	"contributes": {
 		"commands": [
-		{
-			"command": "projectManager.saveProject",
-			"title": "Project Manager: Save Project"
-		},
-		{
-			"command": "projectManager.listProjects",
-			"title": "Project Manager: List Projects to Open"
-		},
-		{
-			"command": "projectManager.listProjectsNewWindow",
-			"title": "Project Manager: List Projects to Open in New Window"
-		},
-		{
-			"command": "projectManager.editProjects",
-			"title": "Project Manager: Edit Projects"
-		},
-		{
-			"command": "projectManager.refreshProjects",
-			"title": "Project Manager: Refresh Projects"
-		}
+			{
+				"command": "projectManager.saveProject",
+				"title": "Project Manager: Save Project"
+			},
+			{
+				"command": "projectManager.listProjects",
+				"title": "Project Manager: List Projects to Open"
+			},
+			{
+				"command": "projectManager.listProjectsNewWindow",
+				"title": "Project Manager: List Projects to Open in New Window"
+			},
+			{
+				"command": "projectManager.editProjects",
+				"title": "Project Manager: Edit Projects"
+			},
+			{
+				"command": "projectManager.refreshProjects",
+				"title": "Project Manager: Refresh Projects"
+			}
 		],
 		"configuration": {
 			"type": "object",
@@ -76,7 +76,12 @@
 					"type": "string",
 					"default": "Name",
 					"description": "List the projects sorted by...(Saved, Name, Path or Recent)",
-					"enum": ["Saved", "Name", "Path", "Recent"]
+					"enum": [
+						"Saved",
+						"Name",
+						"Path",
+						"Recent"
+					]
 				},
 				"projectManager.openInNewWindow": {
 					"type": "boolean",
@@ -95,7 +100,12 @@
 				},
 				"projectManager.vscode.ignoredFolders": {
 					"type": "array",
-					"default": ["node_modules", "out", "typings", "test"],
+					"default": [
+						"node_modules",
+						"out",
+						"typings",
+						"test"
+					],
 					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
 				},
 				"projectManager.vscode.maxDepthRecursion": {
@@ -110,7 +120,12 @@
 				},
 				"projectManager.git.ignoredFolders": {
 					"type": "array",
-					"default": ["node_modules", "out", "typings", "test"],
+					"default": [
+						"node_modules",
+						"out",
+						"typings",
+						"test"
+					],
 					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
 				},
 				"projectManager.git.maxDepthRecursion": {
@@ -125,7 +140,12 @@
 				},
 				"projectManager.svn.ignoredFolders": {
 					"type": "array",
-					"default": ["node_modules", "out", "typings", "test"],
+					"default": [
+						"node_modules",
+						"out",
+						"typings",
+						"test"
+					],
 					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
 				},
 				"projectManager.svn.maxDepthRecursion": {
@@ -151,11 +171,11 @@
 	"scripts": {
 		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
 		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install"
+		"postinstall": "node ./node_modules/vscode/bin/install"
 	},
 	"devDependencies": {
-		"vscode": "^0.11.x",
-		"typescript": "^1.6.2"
+		"typescript": "^1.6.2",
+		"vscode": "^0.11.x"
 	},
 	"dependencies": {
 		"walker": "^1.0.7"
