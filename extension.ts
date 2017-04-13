@@ -50,9 +50,9 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     loadProjectsFile();
-    fs.watchFile(getProjectFilePath(),{interval:100}, (prev,next)=>{
+    fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
-    })
+    });
 
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
@@ -91,14 +91,14 @@ export function activate(context: vscode.ExtensionContext) {
             statusItem.text += foundProject.name;
             statusItem.show();
         }
-    };
+    }
 
     function refreshProjects() {
         vscLocator.refreshProjects();
         gitLocator.refreshProjects();
         svnLocator.refreshProjects();
         vscode.window.showInformationMessage("The projects have been refreshed!");
-    };
+    }
 
     function editProjects() {
         if (fs.existsSync(getProjectFilePath())) {
@@ -106,7 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showTextDocument(doc);
             });
         } else {
-            let optionEditProject = <vscode.MessageItem>{
+            let optionEditProject = <vscode.MessageItem> {
                 title: "Yes, edit manually"
             };
             vscode.window.showErrorMessage("No projects saved yet! You should open a folder and use Save Project instead. Do you really want to edit manually? ", optionEditProject).then(option => {
@@ -127,7 +127,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             });
         }
-    };
+    }
 
     function saveProject() {
         // Display a message box to the user
@@ -139,7 +139,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         // ask the PROJECT NAME (suggest the )
-        let ibo = <vscode.InputBoxOptions>{
+        let ibo = <vscode.InputBoxOptions> {
             prompt: "Project Name",
             placeHolder: "Type a name for your project",
             value: wpath
@@ -184,10 +184,10 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage("Project saved!");
                 showStatusBar(projectName);
             } else {
-                let optionUpdate = <vscode.MessageItem>{
+                let optionUpdate = <vscode.MessageItem> {
                     title: "Update"
                 };
-                let optionCancel = <vscode.MessageItem>{
+                let optionCancel = <vscode.MessageItem> {
                     title: "Cancel"
                 };
 
@@ -217,7 +217,7 @@ export function activate(context: vscode.ExtensionContext) {
                 });
             }
         });
-    };
+    }
 
     function sortProjectList(items): any[] {
         let itemsToShow = expandHomePaths(items);
@@ -250,7 +250,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         return Promise.resolve(newDirectories);
-    };
+    }
 
     function getVSCodeProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
 
@@ -360,10 +360,10 @@ export function activate(context: vscode.ExtensionContext) {
             // vscode.window.showInformationMessage(selected.label);
 
             if (!fs.existsSync(selected.description.toString())) {
-                let optionUpdateProject = <vscode.MessageItem>{
+                let optionUpdateProject = <vscode.MessageItem> {
                     title: "Update Project"
                 };
-                let optionDeleteProject = <vscode.MessageItem>{
+                let optionDeleteProject = <vscode.MessageItem> {
                     title: "Delete Project"
                 };
 
@@ -402,7 +402,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
 
-        let options = <vscode.QuickPickOptions>{
+        let options = <vscode.QuickPickOptions> {
             matchOnDescription: false,
             matchOnDetail: false,
             placeHolder: "Loading Projects (pick one to open)"
@@ -423,24 +423,24 @@ export function activate(context: vscode.ExtensionContext) {
 
                 // Ok, can have VSCode
                 let merge: boolean = MERGE_PROJECTS; // vscode.workspace.getConfiguration('projectManager').get('vscode.mergeProjects', true);
-                return getVSCodeProjects(<any[]>folders, merge);
+                return getVSCodeProjects(<any[]> folders, merge);
             })
             .then((folders) => {
                 if (sources.indexOf(ProjectsSource.Git) === -1) {
                     return folders;
                 }
                 let merge: boolean = MERGE_PROJECTS;
-                return getGitProjects(<any[]>folders, merge);
+                return getGitProjects(<any[]> folders, merge);
             })
             .then((folders) => {
                 if (sources.indexOf(ProjectsSource.Svn) === -1) {
                     return folders;
                 }
                 let merge: boolean = MERGE_PROJECTS;
-                return getSvnProjects(<any[]>folders, merge);
+                return getSvnProjects(<any[]> folders, merge);
             })
             .then((folders) => { // sort
-                if ((<any[]>folders).length === 0) {
+                if ((<any[]> folders).length === 0) {
                     vscode.window.showInformationMessage("No projects saved yet!");
                     return;
                 } else {
@@ -448,7 +448,7 @@ export function activate(context: vscode.ExtensionContext) {
                         .then(onResolve, onRejectListProjects);
                 }
             });
-    };
+    }
 
     function removeRootPath(items: any[]): any[] {
         if (!vscode.workspace.rootPath) {
@@ -555,7 +555,7 @@ export function activate(context: vscode.ExtensionContext) {
         let errorLoading: string = projectStorage.load();
         // how to handle now, since the extension starts 'at load'?
         if (errorLoading !== "") {
-            let optionOpenFile = <vscode.MessageItem>{
+            let optionOpenFile = <vscode.MessageItem> {
                 title: "Open File"
             };
             vscode.window.showErrorMessage("Error loading projects.json file. Message: " + errorLoading, optionOpenFile).then(option => {
