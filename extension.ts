@@ -54,6 +54,11 @@ export function activate(context: vscode.ExtensionContext) {
         loadProjectsFile();
     });
 
+    //
+    vscode.workspace.onDidChangeConfiguration(cfg => {
+       refreshProjects(false);
+    });
+
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
 
@@ -93,11 +98,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function refreshProjects() {
+    function refreshProjects(showMessage?: boolean) {
         vscLocator.refreshProjects();
         gitLocator.refreshProjects();
         svnLocator.refreshProjects();
-        vscode.window.showInformationMessage("The projects have been refreshed!");
+
+        if (showMessage) {
+            vscode.window.showInformationMessage("The projects have been refreshed!");
+        }
     }
 
     function editProjects() {
