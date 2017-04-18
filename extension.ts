@@ -55,9 +55,9 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     //
-    vscode.workspace.onDidChangeConfiguration(cfg => {
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
        refreshProjects(false);
-    });
+    }));
 
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
