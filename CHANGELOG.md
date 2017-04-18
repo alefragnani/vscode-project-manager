@@ -1,3 +1,7 @@
+## Version 0.15.0
+
+* **New:** Projects now detect _configuration changes_ to update Git/VSCode/SVN caches (issue [#110](https://github.com/alefragnani/vscode-project-manager/issues/110))
+
 ## Version 0.14.0
 
 * **New:** Projects now detect _external changes_ to update cache (Thanks to @likun7981 [PR #107](https://github.com/alefragnani/vscode-project-manager/pull/107))
