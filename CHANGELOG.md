@@ -1,3 +1,7 @@
+## Version 0.15.1
+
+* **New:** Avoid _unnecessary_ cache delete when no `baseFolder` setting is changed in `User Settings` (issue [#111](https://github.com/alefragnani/vscode-project-manager/issues/111))
+
 ## Version 0.15.0
 
 * **New:** Projects now detect _configuration changes_ to update Git/VSCode/SVN caches (issue [#110](https://github.com/alefragnani/vscode-project-manager/issues/110))
