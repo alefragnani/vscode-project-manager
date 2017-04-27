@@ -54,14 +54,14 @@ export function activate(context: vscode.ExtensionContext) {
         loadProjectsFile();
     });
 
-    //
+    
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
-       refreshProjects(false);
+       refreshProjectsOnChangeConfiguration();
     }));
 
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
-
+    
     // function commands
     function showStatusBar(projectName?: string) {
         let showStatusConfig = vscode.workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
@@ -98,14 +98,50 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function refreshProjects(showMessage?: boolean) {
+    function arraysAreEquals(array1, array2): boolean {
+        if (!array1 || !array2) {
+            return false;
+        }
+
+        if (array1.length !== array2.length) {
+            return false;
+        }
+
+        for (let i = 0, l = array1.length; i < l; i++) {
+            if (array1[i] instanceof Array && array2[i] instanceof Array) {
+                if (!array1[i].equals(array2[i])) {
+                    return false;       
+                }
+            } else {
+                if (array1[i] !== array2[i]) { 
+                    return false;   
+                }
+            }           
+        }       
+        return true;
+    }
+
+    function refreshProjectsOnChangeConfiguration() {
+        let config = [];
+        config = vscode.workspace.getConfiguration("projectManager").get<string[]>("vscode.baseFolders");
+        if (!arraysAreEquals(vscLocator.getBaseFolders(), config)) {
+            vscLocator.refreshProjects();
+        }
+        config = vscode.workspace.getConfiguration("projectManager").get<string[]>("git.baseFolders");
+        if (!arraysAreEquals(gitLocator.getBaseFolders(), config)) {
+            gitLocator.refreshProjects();
+        }
+        config = vscode.workspace.getConfiguration("projectManager").get<string[]>("svn.baseFolders");
+        if (!arraysAreEquals(svnLocator.getBaseFolders(), config)) {
+            svnLocator.refreshProjects();
+        }
+    }
+
+    function refreshProjects() {
         vscLocator.refreshProjects();
         gitLocator.refreshProjects();
         svnLocator.refreshProjects();
-
-        if (showMessage) {
-            vscode.window.showInformationMessage("The projects have been refreshed!");
-        }
+        vscode.window.showInformationMessage("The projects have been refreshed!");
     }
 
     function editProjects() {

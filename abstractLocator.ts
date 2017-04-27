@@ -20,17 +20,30 @@ export abstract class AbstractLocator {
     private ignoredFolders: string[];
     private useCachedProjects: boolean;
     private alreadyLocated: boolean;
+    private baseFolders: string[];
 
     constructor() {
         this.maxDepth = -1;
         this.ignoredFolders = [];
         this.useCachedProjects = true;
         this.alreadyLocated = false;
+        this.baseFolders = [];
+
+        //
+        this.ignoredFolders = vscode.workspace.getConfiguration("projectManager").get(this.getKind() + ".ignoredFolders", []);
+        this.maxDepth = vscode.workspace.getConfiguration("projectManager").get(this.getKind() + ".maxDepthRecursion", -1);
+        this.useCachedProjects = vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true);
+        this.baseFolders = vscode.workspace.getConfiguration("projectManager").get<string[]>(this.getKind() + ".baseFolders");
+        
     }
 
     public abstract getKind(): string;
     public abstract decideProjectName(projectPath: string): string;
     public abstract isRepoDir(projectPath: string): boolean;
+
+    public getBaseFolders(): string[] {
+        return this.baseFolders;
+    }
 
     public getPathDepth(s) {
         return s.split(path.sep).length;
@@ -64,9 +77,9 @@ export abstract class AbstractLocator {
 
     public initializeCfg(kind: string) {
 
-        this.ignoredFolders = vscode.workspace.getConfiguration("projectManager").get(kind + ".ignoredFolders", []);
-        this.maxDepth = vscode.workspace.getConfiguration("projectManager").get(kind + ".maxDepthRecursion", -1);
-        this.useCachedProjects = vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true);
+        // this.ignoredFolders = vscode.workspace.getConfiguration("projectManager").get(kind + ".ignoredFolders", []);
+        // this.maxDepth = vscode.workspace.getConfiguration("projectManager").get(kind + ".maxDepthRecursion", -1);
+        // this.useCachedProjects = vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true);
         if (!this.useCachedProjects) {
             this.clearDirList();
         } else {
@@ -79,6 +92,8 @@ export abstract class AbstractLocator {
     }
 
     public locateProjects(projectsDirList) {
+
+        this.baseFolders = projectsDirList.slice();
 
         return new Promise<DirList>((resolve, reject) => {
 
