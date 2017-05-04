@@ -3,17 +3,18 @@
 import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
-import os = require("os");
+// import os = require("os");
 
 import stack = require("./stack");
 import { GitLocator } from "./gitLocator";
+import { homeDir, PathUtils } from "./PathUtils";
 import { ProjectsSorter } from "./sorter";
 import { Project, ProjectStorage } from "./storage";
 import { SvnLocator } from "./svnLocator";
 import { VisualStudioCodeLocator } from "./vscodeLocator";
 
-const homeDir = os.homedir();
-const homePathVariable = "$home";
+// const homeDir = os.homedir();
+// const homePathVariable = "$home";
 const PROJECTS_FILE = "projects.json";
 
 // vscode projects support
@@ -54,7 +55,6 @@ export function activate(context: vscode.ExtensionContext) {
         loadProjectsFile();
     });
 
-    
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
        refreshProjectsOnChangeConfiguration();
     }));
@@ -91,7 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        let foundProject: Project = projectStorage.existsWithRootPath(compactHomePath(currentProjectPath));
+        let foundProject: Project = projectStorage.existsWithRootPath(PathUtils.compactHomePath(currentProjectPath));
         if (foundProject) {
             statusItem.text += foundProject.name;
             statusItem.show();
@@ -200,31 +200,13 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            let rootPath = compactHomePath(vscode.workspace.rootPath);
-
-            // var items = []
-            // if (fs.existsSync(getProjectFilePath())) {
-            //     items = loadProjects(getProjectFilePath());
-            //     if (items == null) {
-            //         return;
-            //     }
-            // }
-
-            // var found: boolean = false;
-            // for (var i = 0; i < items.length; i++) {
-            //     var element = items[i];
-            //     if (element.label == projectName) {
-            //         found = true;
-            //     }
-            // }
+            let rootPath = PathUtils.compactHomePath(vscode.workspace.rootPath);
 
             if (!projectStorage.exists(projectName)) {
                 aStack.push(projectName);
                 context.globalState.update("recent", aStack.toString());
                 projectStorage.push(projectName, rootPath, "");
                 projectStorage.save();
-                // items.push({ label: projectName, description: rootPath });
-                // fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                 vscode.window.showInformationMessage("Project saved!");
                 showStatusBar(projectName);
             } else {
@@ -242,19 +224,13 @@ export function activate(context: vscode.ExtensionContext) {
                     }
 
                     if (option.title === "Update") {
-                        // for (var i = 0; i < items.length; i++) {
-                        //     if (items[i].label == projectName) {
-                        //         items[i].description = rootPath;
                         aStack.push(projectName);
                         context.globalState.update("recent", aStack.toString());
                         projectStorage.updateRootPath(projectName, rootPath);
                         projectStorage.save();
-                        //                                fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                         vscode.window.showInformationMessage("Project saved!");
                         showStatusBar(projectName);
                         return;
-                        //     }
-                        // }
                     } else {
                         return;
                     }
@@ -264,7 +240,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function sortProjectList(items): any[] {
-        let itemsToShow = expandHomePaths(items);
+        let itemsToShow = PathUtils.expandHomePaths(items);
         itemsToShow = removeRootPath(itemsToShow);
         itemsToShow = indicateInvalidPaths(itemsToShow);
         let sortList = vscode.workspace.getConfiguration("projectManager").get("sortList", "Name");
@@ -290,7 +266,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (knownDirectories) {
             newDirectories = newDirectories.filter(item =>
                 !knownDirectories.some(sortedItem =>
-                    expandHomePath(sortedItem.description).toLowerCase() === expandHomePath(item.fullPath).toLowerCase()));
+                    PathUtils.expandHomePath(sortedItem.description).toLowerCase() === PathUtils.expandHomePath(item.fullPath).toLowerCase()));
         }
 
         return Promise.resolve(newDirectories);
@@ -379,16 +355,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
-        // if (fs.existsSync(getProjectFilePath())) {
-        //     items = loadProjects(getProjectFilePath());
-        //     if (items == null) {
-        //         return;
-        //     }
-        // } else {
-        // if (projectStorage.length() == 0) {
-        //     vscode.window.showInformationMessage('No projects saved yet!');
-        //     return;
-        // }
         items = projectStorage.map();
 
         function onRejectListProjects(reason) {
@@ -400,8 +366,6 @@ export function activate(context: vscode.ExtensionContext) {
             if (!selected) {
                 return;
             }
-
-            // vscode.window.showInformationMessage(selected.label);
 
             if (!fs.existsSync(selected.description.toString())) {
                 let optionUpdateProject = <vscode.MessageItem> {
@@ -420,9 +384,6 @@ export function activate(context: vscode.ExtensionContext) {
                     if (option.title === "Update Project") {
                         vscode.commands.executeCommand("projectManager.editProjects");
                     } else { // Update Project
-                        // let itemsFiltered = [];
-                        // itemsFiltered = items.filter(value => value.description.toString().toLowerCase() != selected.description.toLowerCase());
-                        // fs.writeFileSync(getProjectFilePath(), JSON.stringify(itemsFiltered, null, "\t"));
                         projectStorage.pop(selected.label);
                         projectStorage.save();
                         return;
@@ -516,76 +477,51 @@ export function activate(context: vscode.ExtensionContext) {
         return items;
     }
 
-    function pathIsUNC(path: string) {
-        return path.indexOf("\\\\") === 0;
-    }
+    // function pathIsUNC(path: string) {
+    //     return path.indexOf("\\\\") === 0;
+    // }
 
-    /**
-     * If the project path is in the user's home directory then store the home directory as a
-     * parameter. This will help in situations when the user works with the same projects on
-     * different machines, under different user names.
-     */
-    function compactHomePath(path: string) {
-        if (path.indexOf(homeDir) === 0) {
-            return path.replace(homeDir, homePathVariable);
-        }
+    // /**
+    //  * If the project path is in the user's home directory then store the home directory as a
+    //  * parameter. This will help in situations when the user works with the same projects on
+    //  * different machines, under different user names.
+    //  */
+    // function compactHomePath(path: string) {
+    //     if (path.indexOf(homeDir) === 0) {
+    //         return path.replace(homeDir, homePathVariable);
+    //     }
 
-        return path;
-    }
+    //     return path;
+    // }
 
-    /**
-     * Expand $home parameter from path to real os home path
-     */
-    function expandHomePath(path: string) {
-        if (path.indexOf(homePathVariable) === 0) {
-            return path.replace(homePathVariable, homeDir);
-        }
+    // /**
+    //  * Expand $home parameter from path to real os home path
+    //  */
+    // function expandHomePath(path: string) {
+    //     if (path.indexOf(homePathVariable) === 0) {
+    //         return path.replace(homePathVariable, homeDir);
+    //     }
 
-        return path;
-    }
+    //     return path;
+    // }
 
-    function expandHomePaths(items: any[]) {
-        return items.map(item => {
-            item.description = expandHomePath(item.description);
-            return item;
-        });
-    }
+    // function expandHomePaths(items: any[]) {
+    //     return items.map(item => {
+    //         item.description = expandHomePath(item.description);
+    //         return item;
+    //     });
+    // }
 
     function normalizePath(path: string): string {
         let normalizedPath: string = path;
 
-        if (!pathIsUNC(normalizedPath)) {
+        if (!PathUtils.pathIsUNC(normalizedPath)) {
             let replaceable = normalizedPath.split("\\");
             normalizedPath = replaceable.join("\\\\");
         }
 
         return normalizedPath;
     }
-
-    // function loadProjects(file: string): any[] {
-    //     var items = [];
-    //     try {
-    //         items = JSON.parse(fs.readFileSync(file).toString());
-    //         return items;
-    //     } catch (error) {
-    //         var optionOpenFile = <vscode.MessageItem>{
-    //             title: "Open File"
-    //         };
-    //         vscode.window.showErrorMessage('Error loading projects.json file. Message: ' + error.toString(), optionOpenFile).then(option => {
-    //             // nothing selected
-    //             if (typeof option == 'undefined') {
-    //                 return;
-    //             }
-
-    //             if (option.title == "Open File") {
-    //                 vscode.commands.executeCommand('projectManager.editProjects');
-    //             } else {
-    //                 return;
-    //             }
-    //         });
-    //         return null;
-    //     }
-    // }
 
     function getChannelPath(): string {
         if (vscode.env.appName.indexOf("Insiders") > 0) {
