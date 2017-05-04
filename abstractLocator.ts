@@ -2,10 +2,10 @@ let walker = require("walker");
 import path = require("path");
 import fs = require("fs");
 import vscode = require("vscode");
-import os = require("os");
-import { PathUtils } from "./PathUtils";
+// import os = require("os");
+import { homeDir, PathUtils } from "./PathUtils";
 
-const homeDir = os.homedir();
+// const homeDir = os.homedir();
 const CACHE_FILE = "projects_cache_";
 
 export interface DirInfo {
