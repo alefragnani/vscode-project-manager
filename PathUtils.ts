@@ -9,6 +9,11 @@ export const homePathVariable = "$home";
 
 export class PathUtils {
 
+    /**
+     * Indicates if a path is a UNC path
+     * 
+     * @param path The path to check
+     */    
     public static pathIsUNC(path: string) {
         return path.indexOf("\\\\") === 0;
     }
@@ -28,6 +33,8 @@ export class PathUtils {
 
     /**
      * Expand $home parameter from path to real os home path
+     * 
+     * @param path The path to expand
      */
     public static expandHomePath(path: string) {
         if (path.indexOf(homePathVariable) === 0) {
@@ -37,6 +44,11 @@ export class PathUtils {
         return path;
     }
 
+    /**
+     * Expand $home parameter from path to real os home path
+     * 
+     * @param items The array of items <QuickPickItem> to expand
+     */
     public static expandHomePaths(items: any[]) {
         return items.map(item => {
             item.description = this.expandHomePath(item.description);
