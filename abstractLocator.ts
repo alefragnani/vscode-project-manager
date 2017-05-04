@@ -3,6 +3,7 @@ import path = require("path");
 import fs = require("fs");
 import vscode = require("vscode");
 import os = require("os");
+import { PathUtils } from "./PathUtils";
 
 const homeDir = os.homedir();
 const CACHE_FILE = "projects_cache_";
@@ -112,17 +113,18 @@ export abstract class AbstractLocator {
             this.clearDirList();
 
             projectsDirList.forEach((projectBasePath) => {
-                if (!fs.existsSync(projectBasePath)) {
-                    vscode.window.setStatusBarMessage("Directory " + projectBasePath + " does not exists.", 1500);
+                let expandedBasePath: string = PathUtils.expandHomePath(projectBasePath);
+                if (!fs.existsSync(expandedBasePath)) {
+                    vscode.window.setStatusBarMessage("Directory " + expandedBasePath + " does not exists.", 1500);
 
                     return;
                 }
 
-                let depth = this.getPathDepth(projectBasePath);
+                let depth = this.getPathDepth(expandedBasePath);
 
                 let promise = new Promise((resolve, reject) => {
                     try {
-                        walker(projectBasePath)
+                        walker(expandedBasePath)
                             .filterDir((dir, stat) => {
                                 return !(this.isFolderIgnored(path.basename(dir)) ||
                                     this.isMaxDeptReached(this.getPathDepth(dir), depth));
