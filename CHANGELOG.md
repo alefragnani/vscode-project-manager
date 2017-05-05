@@ -1,3 +1,7 @@
+## Version 0.16.0
+
+* **New:** Support cross platform path definitions also in VSCode, Git and SVN Projects (issue [#88](https://github.com/alefragnani/vscode-project-manager/issues/88))
+
 ## Version 0.15.1
 
 * **New:** Avoid _unnecessary_ cache delete when no `baseFolder` setting is changed in `User Settings` (issue [#111](https://github.com/alefragnani/vscode-project-manager/issues/111))

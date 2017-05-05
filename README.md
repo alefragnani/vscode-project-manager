@@ -110,7 +110,8 @@ You can have automatic detection of **VSCode** ![vscode](images/ico_file_code.pn
 ```json
     "projectManager.vscode.baseFolders": [
         "c:\\VSCodeProjects\\code",
-        "d:\\MoreVSCodeProjects\\code-testing"
+        "d:\\MoreVSCodeProjects\\code-testing",
+        "$home\\personal-coding"
     ]
 ```
 
@@ -132,8 +133,6 @@ To customize how _deep_ to look projects or folders to be _ignored_ you have two
 
 #### Cache Automatically Detected Projects
 
-> _new in version 0.13.0_
-
 By default, the automatically detected projects (VSCode, Git and SVN) are cached. If you don't want this for any reason, just turn it off.
 
 ```json 
@@ -141,8 +140,6 @@ By default, the automatically detected projects (VSCode, Git and SVN) are cached
 ```
 
 #### Display Project Name in Status Bar
-
-> _new in version 0.12.0_
 
 You have the option to display the _Project Name_ in the Status Bar, so you can easily detect in which project you are.
 
