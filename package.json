@@ -83,6 +83,11 @@
 						"Recent"
 					]
 				},
+				"projectManager.groupList": {
+					"type": "boolean",
+					"default": false,
+					"description": "List the projects grouped by...(Favorites, VSCode, Git and SVN)"
+				},
 				"projectManager.projectsLocation": {
 					"type": "string",
 					"default": "",

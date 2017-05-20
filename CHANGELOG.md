@@ -1,6 +1,7 @@
 ## Version 0.17.0
 
 * **Removed Setting:** The `projectManager.openInNewWindow` setting was removed, since you already have `List Projects to Open in New Window` command.
+* **New:** Support grouping projects by type in `List Projects...` commands.
 
 ## Version 0.16.0
 

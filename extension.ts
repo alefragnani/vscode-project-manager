@@ -283,8 +283,12 @@ export function activate(context: vscode.ExtensionContext) {
                         };
                     });
 
+                    if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
+                        newItems = sortProjectList(newItems);
+                    }
+
                     if (merge) {
-                        let unifiedList = newItems.concat(itemsSorted);
+                        let unifiedList = itemsSorted.concat(newItems);
                         resolve(unifiedList);
                     } else {
                         resolve(newItems);
@@ -311,8 +315,12 @@ export function activate(context: vscode.ExtensionContext) {
                         };
                     });
 
+                    if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
+                        newItems = sortProjectList(newItems);
+                    }
+
                     if (merge) {
-                        let unifiedList = newItems.concat(itemsSorted);
+                        let unifiedList = itemsSorted.concat(newItems);
                         resolve(unifiedList);
                     } else {
                         resolve(newItems);
@@ -339,8 +347,12 @@ export function activate(context: vscode.ExtensionContext) {
                         };
                     });
 
+                    if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
+                        newItems = sortProjectList(newItems);
+                    }
+
                     if (merge) {
-                        let unifiedList = newItems.concat(itemsSorted);
+                        let unifiedList = itemsSorted.concat(newItems);
                         resolve(unifiedList);
                     } else {
                         resolve(newItems);
@@ -352,6 +364,11 @@ export function activate(context: vscode.ExtensionContext) {
     function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
         items = projectStorage.map();
+
+        let groupList: boolean = vscode.workspace.getConfiguration("projectManager").get("groupList", false);
+        if (groupList) {
+            items = sortProjectList(items);
+        }
 
         function onRejectListProjects(reason) {
             vscode.window.showInformationMessage("Error loading projects: ${reason}");
@@ -444,8 +461,13 @@ export function activate(context: vscode.ExtensionContext) {
                     vscode.window.showInformationMessage("No projects saved yet!");
                     return;
                 } else {
-                    vscode.window.showQuickPick(sortProjectList(folders), options)
-                        .then(onResolve, onRejectListProjects);
+                    if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
+                        vscode.window.showQuickPick(<any[]> folders, options)
+                            .then(onResolve, onRejectListProjects);
+                    } else {
+                        vscode.window.showQuickPick(sortProjectList(folders), options)
+                            .then(onResolve, onRejectListProjects);
+                    }
                 }
             });
     }
