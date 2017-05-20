@@ -244,6 +244,14 @@ export function activate(context: vscode.ExtensionContext) {
         return newItemsSorted;
     }
 
+    function sortGroupedList(items): any[] {
+        if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
+            return sortProjectList(items);
+        } else {
+            return items;
+        }
+    }
+
     function getProjects(itemsSorted: any[], sources: ProjectsSourceSet): Promise<{}> {
 
         return new Promise((resolve, reject) => {
@@ -283,9 +291,7 @@ export function activate(context: vscode.ExtensionContext) {
                         };
                     });
 
-                    if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
-                        newItems = sortProjectList(newItems);
-                    }
+                    newItems = sortGroupedList(newItems);
 
                     if (merge) {
                         let unifiedList = itemsSorted.concat(newItems);
@@ -309,15 +315,10 @@ export function activate(context: vscode.ExtensionContext) {
                         return {
                             label: "$(git-branch) " + item.name,
                             description: item.fullPath
-                            // "label": '$(mark-github) ' + path.basename(item.fullPath),
-                            // "description": item.fullPath,
-                            // "detail": item.name
                         };
                     });
 
-                    if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
-                        newItems = sortProjectList(newItems);
-                    }
+                    newItems = sortGroupedList(newItems);
 
                     if (merge) {
                         let unifiedList = itemsSorted.concat(newItems);
@@ -341,15 +342,10 @@ export function activate(context: vscode.ExtensionContext) {
                         return {
                             label: "$(zap) " + item.name,
                             description: item.fullPath
-                            // "label": '$(mark-github) ' + path.basename(item.fullPath),
-                            // "description": item.fullPath,
-                            // "detail": item.name
                         };
                     });
 
-                    if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
-                        newItems = sortProjectList(newItems);
-                    }
+                    newItems = sortGroupedList(newItems);
 
                     if (merge) {
                         let unifiedList = itemsSorted.concat(newItems);
@@ -364,11 +360,7 @@ export function activate(context: vscode.ExtensionContext) {
     function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
         let items = [];
         items = projectStorage.map();
-
-        let groupList: boolean = vscode.workspace.getConfiguration("projectManager").get("groupList", false);
-        if (groupList) {
-            items = sortProjectList(items);
-        }
+        items = sortGroupedList(items);
 
         function onRejectListProjects(reason) {
             vscode.window.showInformationMessage("Error loading projects: ${reason}");
