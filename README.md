@@ -63,7 +63,7 @@ You can use a special variable called `$home` while defining any `path`. It's us
 
 ### List Projects to Open
 
-Shows your projects and select one to open. Depending on `projectManager.openInNewWindow` setting, it will replace the current VS Code instance, or open a new one.
+Shows your projects and select one to open.
 
 ### List Projects to Open in New Window
 
@@ -85,15 +85,6 @@ Allow you to choose how the projects are sorted in **List Projects** command. Yo
 ```
 
 ![List](images/project-manager-list-sort-by-name.png)
-
-#### Open a New Window
-
-Define if you want to open a New Window or just switch the current 
-_(default is `true`)_  
-
-```
-    "projectManager.openInNewWindow": true
-```
 
 #### Projects Location
 

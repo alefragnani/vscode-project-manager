@@ -74,11 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
         statusItem.text = "$(file-directory) ";
         statusItem.tooltip = currentProjectPath;
-        if (vscode.workspace.getConfiguration("projectManager").get("openInNewWindow", true)) {
-            statusItem.command = "projectManager.listProjectsNewWindow";
-        } else {
-            statusItem.command = "projectManager.listProjects";
-        }
+        statusItem.command = "projectManager.listProjects";
 
         // if we have a projectName, we don't need to search.
         if (projectName) {
@@ -398,9 +394,8 @@ export function activate(context: vscode.ExtensionContext) {
                 aStack.push(selected.label);
                 context.globalState.update("recent", aStack.toString());
 
-                let openInNewWindow: boolean = vscode.workspace.getConfiguration("projectManager").get("openInNewWindow", true);
                 let uri: vscode.Uri = vscode.Uri.file(projectPath);
-                vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow || forceNewWindow)
+                vscode.commands.executeCommand("vscode.openFolder", uri, forceNewWindow)
                     .then(
                     value => ({}),  // done
                     value => vscode.window.showInformationMessage("Could not open the project!"));

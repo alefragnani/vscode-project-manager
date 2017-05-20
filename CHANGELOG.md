@@ -1,3 +1,7 @@
+## Version 0.17.0
+
+* **Removed Setting:** The `projectManager.openInNewWindow` setting was removed, since you already have `List Projects to Open in New Window` command.
+
 ## Version 0.16.0
 
 * **New:** Support cross platform path definitions also in VSCode, Git and SVN Projects (issue [#88](https://github.com/alefragnani/vscode-project-manager/issues/88))

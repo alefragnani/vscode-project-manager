@@ -83,11 +83,6 @@
 						"Recent"
 					]
 				},
-				"projectManager.openInNewWindow": {
-					"type": "boolean",
-					"default": true,
-					"description": "Should the project be opened using a New Window?"
-				},
 				"projectManager.projectsLocation": {
 					"type": "string",
 					"default": "",
