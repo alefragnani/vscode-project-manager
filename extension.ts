@@ -13,12 +13,7 @@ import { Project, ProjectStorage } from "./storage";
 import { SvnLocator } from "./svnLocator";
 import { VisualStudioCodeLocator } from "./vscodeLocator";
 
-// const homeDir = os.homedir();
-// const homePathVariable = "$home";
 const PROJECTS_FILE = "projects.json";
-
-// vscode projects support
-const MERGE_PROJECTS: boolean = true;
 
 const enum ProjectsSource {
     Projects,
@@ -276,12 +271,12 @@ export function activate(context: vscode.ExtensionContext) {
         return Promise.resolve(newDirectories);
     }
 
-    function getVSCodeProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
+    function getVSCodeProjects(itemsSorted: any[]): Promise<{}> {
 
         return new Promise((resolve, reject) => {
 
             vscLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("vscode.baseFolders"))
-                .then(filterKnownDirectories.bind(this, merge ? itemsSorted : []))
+                .then(filterKnownDirectories.bind(this, itemsSorted))
                 .then((dirList: any[]) => {
                     let newItems = [];
                     newItems = dirList.map(item => {
@@ -292,23 +287,17 @@ export function activate(context: vscode.ExtensionContext) {
                     });
 
                     newItems = sortGroupedList(newItems);
-
-                    if (merge) {
-                        let unifiedList = itemsSorted.concat(newItems);
-                        resolve(unifiedList);
-                    } else {
-                        resolve(newItems);
-                    }
+                    resolve(itemsSorted.concat(newItems));
                 });
         });
     }
 
-    function getGitProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
+    function getGitProjects(itemsSorted: any[]): Promise<{}> {
 
         return new Promise((resolve, reject) => {
 
             gitLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("git.baseFolders"))
-                .then(filterKnownDirectories.bind(this, merge ? itemsSorted : []))
+                .then(filterKnownDirectories.bind(this, itemsSorted))
                 .then((dirList: any[]) => {
                     let newItems = [];
                     newItems = dirList.map(item => {
@@ -319,23 +308,17 @@ export function activate(context: vscode.ExtensionContext) {
                     });
 
                     newItems = sortGroupedList(newItems);
-
-                    if (merge) {
-                        let unifiedList = itemsSorted.concat(newItems);
-                        resolve(unifiedList);
-                    } else {
-                        resolve(newItems);
-                    }
+                    resolve(itemsSorted.concat(newItems));
                 });
         });
     }
 
-    function getSvnProjects(itemsSorted: any[], merge: boolean): Promise<{}> {
+    function getSvnProjects(itemsSorted: any[]): Promise<{}> {
 
         return new Promise((resolve, reject) => {
 
             svnLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("svn.baseFolders"))
-                .then(filterKnownDirectories.bind(this, merge ? itemsSorted : []))
+                .then(filterKnownDirectories.bind(this, itemsSorted))
                 .then((dirList: any[]) => {
                     let newItems = [];
                     newItems = dirList.map(item => {
@@ -346,13 +329,7 @@ export function activate(context: vscode.ExtensionContext) {
                     });
 
                     newItems = sortGroupedList(newItems);
-
-                    if (merge) {
-                        let unifiedList = itemsSorted.concat(newItems);
-                        resolve(unifiedList);
-                    } else {
-                        resolve(newItems);
-                    }
+                    resolve(itemsSorted.concat(newItems));
                 });
         });
     }
@@ -425,41 +402,36 @@ export function activate(context: vscode.ExtensionContext) {
                     return folders;
                 }
 
-                // has PROJECTS and is NOT MERGED - always merge
-                // if ((sources.indexOf(ProjectsSource.Projects) > -1)  && (!<boolean>vscode.workspace.getConfiguration('projectManager').get('vscode.mergeProjects', true))) {
-                //     return folders;
-                // }
-
-                // Ok, can have VSCode
-                let merge: boolean = MERGE_PROJECTS; // vscode.workspace.getConfiguration('projectManager').get('vscode.mergeProjects', true);
-                return getVSCodeProjects(<any[]> folders, merge);
+                return getVSCodeProjects(<any[]> folders);
             })
             .then((folders) => {
                 if (sources.indexOf(ProjectsSource.Git) === -1) {
                     return folders;
                 }
-                let merge: boolean = MERGE_PROJECTS;
-                return getGitProjects(<any[]> folders, merge);
+
+                return getGitProjects(<any[]> folders);
             })
             .then((folders) => {
                 if (sources.indexOf(ProjectsSource.Svn) === -1) {
                     return folders;
                 }
-                let merge: boolean = MERGE_PROJECTS;
-                return getSvnProjects(<any[]> folders, merge);
+
+                return getSvnProjects(<any[]> folders);
             })
             .then((folders) => { // sort
                 if ((<any[]> folders).length === 0) {
                     vscode.window.showInformationMessage("No projects saved yet!");
                     return;
                 } else {
-                    if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
-                        vscode.window.showQuickPick(<any[]> folders, options)
-                            .then(onResolve, onRejectListProjects);
-                    } else {
-                        vscode.window.showQuickPick(sortProjectList(folders), options)
-                            .then(onResolve, onRejectListProjects);
+                    if (!vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
+                        folders = sortProjectList(folders);
                     }
+                    vscode.window.showQuickPick(<any[]> folders, options)
+                        .then(onResolve, onRejectListProjects);
+                    // } else {
+                    //     vscode.window.showQuickPick(, options)
+                    //         .then(onResolve, onRejectListProjects);
+                    // }
                 }
             });
     }
