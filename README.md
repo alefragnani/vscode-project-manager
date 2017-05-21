@@ -73,15 +73,25 @@ Just like **List Projects** but always opening in New Window.
 
 #### Sort the Project List
 
-Allow you to choose how the projects are sorted in **List Projects** command. You can choose:
+Allows you to choose how the projects are sorted in **List Projects** command. You can choose:
 
 * **Saved**: The order that you saved the projects
 * **Name**: The name that you typed for the project
 * **Path**: The full path of the project
 * **Recent**: The recently used projects
 
-```
+```json
     "projectManager.sortList": "Name"
+```
+
+#### Group the Project List
+
+> _new in version 0.17.0_
+
+List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git** and **SVN**).
+
+```json
+    "projectManager.groupList": true
 ```
 
 ![List](images/project-manager-list-sort-by-name.png)
@@ -90,7 +100,7 @@ Allow you to choose how the projects are sorted in **List Projects** command. Yo
 
 If you intend to _share_ projects between  **Stable** and **Insider** installations, or if you store your settings in different locations (cloud services), you can indicate an _alternative_ location for the `projects.json` file.
 
-```
+```json
     "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
