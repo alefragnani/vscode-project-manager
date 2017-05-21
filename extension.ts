@@ -3,8 +3,6 @@
 import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
-// import os = require("os");
-
 import stack = require("./stack");
 import { GitLocator } from "./gitLocator";
 import { homeDir, PathUtils } from "./PathUtils";
@@ -151,9 +149,6 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 if (option.title === "Yes, edit manually") {
-                    // var items = [];
-                    // items.push({ label: 'Project Name', description: 'Project Path' });
-                    // fs.writeFileSync(getProjectFilePath(), JSON.stringify(items, null, "\t"));
                     projectStorage.push("Project Name", "Root Path", "");
                     projectStorage.save();
                     vscode.commands.executeCommand("projectManager.editProjects");
@@ -428,10 +423,6 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                     vscode.window.showQuickPick(<any[]> folders, options)
                         .then(onResolve, onRejectListProjects);
-                    // } else {
-                    //     vscode.window.showQuickPick(, options)
-                    //         .then(onResolve, onRejectListProjects);
-                    // }
                 }
             });
     }
@@ -445,53 +436,14 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function indicateInvalidPaths(items: any[]): any[] {
-        // for (let index = 0; index < items.length; index++) {
         for (let element of items) {
-            // let element = items[index];
-
             if (!element.detail && (!fs.existsSync(element.description.toString()))) {
-                // items[index].detail = "$(circle-slash) Path does not exist";
                 element.detail = "$(circle-slash) Path does not exist";
             }
         }
 
         return items;
     }
-
-    // function pathIsUNC(path: string) {
-    //     return path.indexOf("\\\\") === 0;
-    // }
-
-    // /**
-    //  * If the project path is in the user's home directory then store the home directory as a
-    //  * parameter. This will help in situations when the user works with the same projects on
-    //  * different machines, under different user names.
-    //  */
-    // function compactHomePath(path: string) {
-    //     if (path.indexOf(homeDir) === 0) {
-    //         return path.replace(homeDir, homePathVariable);
-    //     }
-
-    //     return path;
-    // }
-
-    // /**
-    //  * Expand $home parameter from path to real os home path
-    //  */
-    // function expandHomePath(path: string) {
-    //     if (path.indexOf(homePathVariable) === 0) {
-    //         return path.replace(homePathVariable, homeDir);
-    //     }
-
-    //     return path;
-    // }
-
-    // function expandHomePaths(items: any[]) {
-    //     return items.map(item => {
-    //         item.description = expandHomePath(item.description);
-    //         return item;
-    //     });
-    // }
 
     function normalizePath(path: string): string {
         let normalizedPath: string = path;
