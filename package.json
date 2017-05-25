@@ -72,6 +72,11 @@
 					"default": true,
 					"description": "Should display the project name in the Status Bar?"
 				},
+				"projectManager.openInNewWindowWhenClickingInStatusBar": {
+					"type": "boolean",
+					"default": false,
+					"description": "Should the project be opened using a New Window when you click the Status Bar?"
+				},
 				"projectManager.sortList": {
 					"type": "string",
 					"default": "Name",
