@@ -162,6 +162,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Should cache the VSCode, Git and SVN projects found?"
+				},
+				"projectManager.checkInvalidPathsBeforeListing": {
+					"type": "boolean",
+					"default": true,
+					"description": "Should check for invalid paths before listing, showing a message below the project name?"
 				}
 			}
 		},

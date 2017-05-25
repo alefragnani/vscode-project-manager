@@ -234,7 +234,10 @@ export function activate(context: vscode.ExtensionContext) {
     function sortProjectList(items): any[] {
         let itemsToShow = PathUtils.expandHomePaths(items);
         itemsToShow = removeRootPath(itemsToShow);
-        itemsToShow = indicateInvalidPaths(itemsToShow);
+        let checkInvalidPath: boolean = vscode.workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
+        if (checkInvalidPath) {
+            itemsToShow = indicateInvalidPaths(itemsToShow);
+        }
         let sortList = vscode.workspace.getConfiguration("projectManager").get("sortList", "Name");
         let newItemsSorted = ProjectsSorter.SortItemsByCriteria(itemsToShow, sortList, aStack);
         return newItemsSorted;
