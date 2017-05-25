@@ -39,7 +39,7 @@
 		"onCommand:projectManager.editProjects",
 		"onCommand:projectManager.refreshProjects"
 	],
-	"main": "./out/extension",
+	"main": "./out/src/extension",
 	"contributes": {
 		"commands": [
 			{
