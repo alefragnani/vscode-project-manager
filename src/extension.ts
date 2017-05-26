@@ -354,6 +354,12 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             if (!fs.existsSync(selected.description.toString())) {
+
+                if (selected.label.substr(0, 2) === "$(") {
+                    vscode.window.showErrorMessage("Path does not exist or is unavailable.");
+                    return;
+                }
+
                 let optionUpdateProject = <vscode.MessageItem> {
                     title: "Update Project"
                 };
