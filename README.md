@@ -67,13 +67,13 @@ Shows your projects and select one to open.
 
 ### List Projects to Open in New Window
 
-Just like **List Projects** but always opening in New Window.
+Just like **List Projects** but always opening in **New Window**.
 
 ## Available settings
 
 #### Sort the Project List
 
-Allows you to choose how the projects are sorted in **List Projects** command. You can choose:
+Allows you to choose how the projects are sorted in **List Projects** commands. You can choose:
 
 * **Saved**: The order that you saved the projects
 * **Name**: The name that you typed for the project
@@ -83,6 +83,8 @@ Allows you to choose how the projects are sorted in **List Projects** command. Y
 ```json
     "projectManager.sortList": "Name"
 ```
+
+![List](images/project-manager-list-sort-by-name.png)
 
 #### Group the Project List
 
@@ -94,7 +96,15 @@ List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git** an
     "projectManager.groupList": true
 ```
 
-![List](images/project-manager-list-sort-by-name.png)
+#### Check Invalid Paths Before Listing
+
+> _new in version 0.18.0_
+
+By default, it will check for invalid paths to display a message below the project name. If you don't want this check for any reason, just turn it off.
+
+```json 
+    "projectManager.checkInvalidPathsBeforeListing": false
+```
 
 #### Projects Location
 
@@ -149,6 +159,16 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 ```
 
 ![Save](images/project-manager-statusbar.png) 
+
+#### Open Projects in New Window When Clicking in Status Bar
+
+> _new in version 0.18.0_
+
+You can choose if it would open projects in **New Window** when clicking in status bar.
+
+```json 
+    "projectManager.openInNewWindowWhenClickingInStatusBar": true
+```
 
 ## Participate
 

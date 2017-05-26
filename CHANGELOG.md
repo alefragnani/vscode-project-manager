@@ -1,3 +1,9 @@
+## Version 0.18.0
+
+* **New Setting:** Decide if it would open projects in New Window when clicking in Status Bar
+* **New Setting:** Disable checking for invalid paths before listing projects
+* **Internal**: Source code moved to `src` folder
+
 ## Version 0.17.0
 
 * **Removed Setting:** The `projectManager.openInNewWindow` setting was removed, since you already have `List Projects to Open in New Window` command.
