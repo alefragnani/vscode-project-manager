@@ -1,4 +1,5 @@
 import fs = require("fs");
+import { PathUtils } from "./PathUtils";
 
 // http://stackoverflow.com/questions/38161925/change-json-data-to-typescript-interface-objects-in-angular-2
 
@@ -158,10 +159,10 @@ export class ProjectStorage {
      * @return A [Project](#Project) with the given `rootPath`
      */
     public existsWithRootPath(rootPath: string): Project {
-        // for (let i = 0; i < this.projectList.length; i++) {
+        let rootPathUsingHome: string = PathUtils.compactHomePath(rootPath).toLocaleLowerCase();
+
         for (let element of this.projectList) {
-            // let element = this.projectList[i];
-            if (element.rootPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase()) {
+            if ((element.rootPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase()) || (element.rootPath.toLocaleLowerCase() === rootPathUsingHome)) {
                 return element;
             }
         } 

@@ -86,7 +86,8 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        let foundProject: Project = projectStorage.existsWithRootPath(PathUtils.compactHomePath(currentProjectPath));
+        // let foundProject: Project = projectStorage.existsWithRootPath(PathUtils.compactHomePath(currentProjectPath));
+        let foundProject: Project = projectStorage.existsWithRootPath(currentProjectPath);
         if (foundProject) {
             statusItem.text += foundProject.name;
             statusItem.show();
