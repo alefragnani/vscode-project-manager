@@ -1,3 +1,7 @@
+## Version 0.18.1
+
+* **Fix:** Status Bar sometimes not showing in MacOS  (issue [#127](https://github.com/alefragnani/vscode-project-manager/issues/127))
+
 ## Version 0.18.0
 
 * **New Setting:** Decide if it would open projects in New Window when clicking in Status Bar
