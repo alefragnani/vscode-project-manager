@@ -10,12 +10,14 @@ import { ProjectsSorter } from "./sorter";
 import { Project, ProjectStorage } from "./storage";
 import { SvnLocator } from "./svnLocator";
 import { VisualStudioCodeLocator } from "./vscodeLocator";
+import {VisualStudioCodeMultiRootLocator } from "./vscodeMultiRootLocator";
 
 const PROJECTS_FILE = "projects.json";
 
 const enum ProjectsSource {
     Projects,
     VSCode,
+    VSCodeMultiRoot,
     Git,
     Svn
 }
@@ -23,6 +25,7 @@ const enum ProjectsSource {
 export interface ProjectsSourceSet extends Array<ProjectsSource> { };
 
 let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
+let vscmrLocator: VisualStudioCodeMultiRootLocator = new VisualStudioCodeMultiRootLocator();
 let gitLocator: GitLocator = new GitLocator();
 let svnLocator: SvnLocator = new SvnLocator();
 
@@ -41,8 +44,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects());
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
-    vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
-    vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
+    vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.VSCodeMultiRoot, ProjectsSource.Git, ProjectsSource.Svn]));
+    vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.VSCodeMultiRoot, ProjectsSource.Git, ProjectsSource.Svn]));
     loadProjectsFile();
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
@@ -297,6 +300,27 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
+    function getVSCodeMultiRootProjects(itemsSorted: any[]): Promise<{}> {
+
+        return new Promise((resolve, reject) => {
+
+            vscmrLocator.locateProjects(vscode.workspace.getConfiguration("").get("workspace"))
+                .then(filterKnownDirectories.bind(this, itemsSorted))
+                .then((dirList: any[]) => {
+                    let newItems = [];
+                    newItems = dirList.map(item => {
+                        return {
+                            description: item.fullPath,
+                            label: "$(file-submodule) " + item.name
+                        };
+                    });
+
+                    newItems = sortGroupedList(newItems);
+                    resolve(itemsSorted.concat(newItems));
+                });
+        });
+    }
+
     function getGitProjects(itemsSorted: any[]): Promise<{}> {
 
         return new Promise((resolve, reject) => {
@@ -414,6 +438,15 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 return getVSCodeProjects(<any[]> folders);
+            })
+            .then((folders) => {
+
+                // not in SET
+                if (sources.indexOf(ProjectsSource.VSCodeMultiRoot) === -1) {
+                    return folders;
+                }
+
+                return getVSCodeMultiRootProjects(<any[]> folders);
             })
             .then((folders) => {
                 if (sources.indexOf(ProjectsSource.Git) === -1) {
