@@ -8,7 +8,7 @@ export interface DirList extends Array<DirInfo> { };
 
 export class VisualStudioCodeMultiRootLocator {
 
-    public dirList: DirList = <DirList>[];
+    public dirList: DirList = <DirList> [];
     private workspaces;
 
     public locateProjects(workspaces) {
@@ -20,11 +20,12 @@ export class VisualStudioCodeMultiRootLocator {
             // initialize
             this.dirList = [];
 
-            //     "folders": [
-            //         "file:///c%3A/Users/alessandrofm/Downloads/Virtual-TreeView",
-            //         "file:///c%3A/Users/alessandrofm/Downloads/SAXforPascal1-1/SAX%20for%20Pascal"
-            //     ]
-            // },
+            //     "file:///c:/Users/alefr/Documents/GitHub/_forks/vscode-go": {
+            //         "folders": [
+            //             "file:///c:/Users/alefr/Documents/GitHub/_forks/vscode-docs",
+            //             "file:///c:/Users/alefr/Documents/GitHub/_forks/vscode-extension-samples"
+            //         ]
+            //     }
 
             // loop multi-root projects
             for (let property in workspaces) {
@@ -46,7 +47,11 @@ export class VisualStudioCodeMultiRootLocator {
     }
 
     public removeURI(projectPath: string): string {
-        return projectPath.substr(8); // file:///
+        let normPath = projectPath.substr(8); // file:///
+        if (process.platform === "win32") {
+            normPath = normPath.replace(/\//g, "\\");
+        }
+        return normPath;
     }
 
     public decideProjectName(projectPath: string): string {
