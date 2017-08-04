@@ -1,3 +1,7 @@
+## Version 0.19.0
+
+* **New:** Support _git-worktree_ projects (issue [#134](https://github.com/alefragnani/vscode-project-manager/issues/134))
+
 ## Version 0.18.1
 
 * **Fix:** Status Bar sometimes not showing in MacOS  (issue [#127](https://github.com/alefragnani/vscode-project-manager/issues/127))
