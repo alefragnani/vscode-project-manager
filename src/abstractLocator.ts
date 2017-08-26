@@ -4,6 +4,7 @@ import fs = require("fs");
 import vscode = require("vscode");
 // import os = require("os");
 import { homeDir, PathUtils } from "./PathUtils";
+import { Project } from "./storage";
 
 // const homeDir = os.homedir();
 const CACHE_FILE = "projects_cache_";
@@ -35,7 +36,7 @@ export abstract class AbstractLocator {
         this.maxDepth = vscode.workspace.getConfiguration("projectManager").get(this.getKind() + ".maxDepthRecursion", -1);
         this.useCachedProjects = vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true);
         this.baseFolders = vscode.workspace.getConfiguration("projectManager").get<string[]>(this.getKind() + ".baseFolders");
-        
+
     }
 
     public abstract getKind(): string;
@@ -155,7 +156,8 @@ export abstract class AbstractLocator {
     public addToList(projectPath: string, projectName: string = null) {
         this.dirList.push({
             fullPath: projectPath,
-            name: projectName === null ? path.basename(projectPath) : projectName });
+            name: projectName === null ? path.basename(projectPath) : projectName
+        });
         return;
     }
 
@@ -169,7 +171,7 @@ export abstract class AbstractLocator {
     public handleError(err) {
         console.log("Error walker:", err);
     }
-    
+
     public refreshProjects(): void {
         this.clearDirList();
         let cacheFile: string = this.getCacheFile();
@@ -179,13 +181,34 @@ export abstract class AbstractLocator {
         this.setAlreadyLocated(false);
     }
 
+    public existsWithRootPath(rootPath: string): Project {
+        
+        // it only works if using `cache`
+        this.initializeCfg(this.getKind());
+        if (!this.isAlreadyLocated()) {
+            return null;
+        }
+
+        let rootPathUsingHome: string = PathUtils.compactHomePath(rootPath).toLocaleLowerCase();
+        for (let element of this.dirList) {
+            if ((element.fullPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase()) || (element.fullPath.toLocaleLowerCase() === rootPathUsingHome)) {
+                return {
+                    rootPath: element.fullPath,
+                    name: element.name,
+                    group: "",
+                    paths: [] 
+                };
+            }
+        }
+    }
+
     private getChannelPath(): string {
         if (vscode.env.appName.indexOf("Insiders") > 0) {
             return "Code - Insiders";
         } else {
             return "Code";
         }
-    }   
+    }
 
     private getCacheFile() {
         let cacheFile: string;
