@@ -354,11 +354,13 @@ export function activate(context: vscode.ExtensionContext) {
         items = sortGroupedList(items);
 
         function onRejectListProjects(reason) {
+            vscode.commands.executeCommand("setContext", "inProjectManagerList", false);
             vscode.window.showInformationMessage("Error loading projects: ${reason}");
         }
 
         // promisses
         function onResolve(selected) {
+            vscode.commands.executeCommand("setContext", "inProjectManagerList", false);
             if (!selected) {
                 return;
             }
@@ -446,6 +448,7 @@ export function activate(context: vscode.ExtensionContext) {
                     if (!vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
                         folders = sortProjectList(folders);
                     }
+                    vscode.commands.executeCommand("setContext", "inProjectManagerList", true);
                     vscode.window.showQuickPick(<any[]> folders, options)
                         .then(onResolve, onRejectListProjects);
                 }
