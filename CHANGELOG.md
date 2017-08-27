@@ -1,6 +1,7 @@
 ## Version 0.20.0
 
 * **New:** Status Bar now also displays for auto-detected projects (VSCode, Git and SVN) (issue [#116](https://github.com/alefragnani/vscode-project-manager/issues/116))
+* **New:** Support keyboard navigation (Vim like) in the project list (issue [#136](https://github.com/alefragnani/vscode-project-manager/issues/136))
 
 ## Version 0.19.0
 

@@ -69,6 +69,22 @@ Shows your projects and select one to open.
 
 Just like **List Projects** but always opening in **New Window**.
 
+## Keyboard Focused Users
+
+> _new in version 0.20.0_
+
+If you are a keyboard focused user and uses _Vim like_ keyboard navigation, you can navigate thru the project list with your own keybindings. 
+
+Just use the `when` clause `"inProjectManagerList"`, like:
+
+```json
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.quickOpenSelectNext",
+        "when": "inProjectManagerList"
+    }
+```
+
 ## Available settings
 
 #### Sort the Project List
@@ -88,8 +104,6 @@ Allows you to choose how the projects are sorted in **List Projects** commands. 
 
 #### Group the Project List
 
-> _new in version 0.17.0_
-
 List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git** and **SVN**).
 
 ```json
@@ -97,8 +111,6 @@ List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git** an
 ```
 
 #### Check Invalid Paths Before Listing
-
-> _new in version 0.18.0_
 
 By default, it will check for invalid paths to display a message below the project name. If you don't want this check for any reason, just turn it off.
 
@@ -161,8 +173,6 @@ You have the option to display the _Project Name_ in the Status Bar, so you can 
 ![Save](images/project-manager-statusbar.png) 
 
 #### Open Projects in New Window When Clicking in Status Bar
-
-> _new in version 0.18.0_
 
 You can choose if it would open projects in **New Window** when clicking in status bar.
 
