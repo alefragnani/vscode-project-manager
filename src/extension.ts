@@ -10,6 +10,7 @@ import { ProjectsSorter } from "./sorter";
 import { Project, ProjectStorage } from "./storage";
 import { SvnLocator } from "./svnLocator";
 import { VisualStudioCodeLocator } from "./vscodeLocator";
+import { ProjectProvider } from "./ProjectProvider";
 
 const PROJECTS_FILE = "projects.json";
 
@@ -36,6 +37,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     // load the projects
     let projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
+
+    // tree-view
+    const projectProvider = new ProjectProvider(vscode.workspace.rootPath, projectStorage, vscLocator, gitLocator, svnLocator, 
+        context);
+    vscode.window.registerTreeDataProvider("projectsExplorer", projectProvider);
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
