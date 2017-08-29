@@ -12,38 +12,38 @@ import * as vscode from 'vscode';
 import * as myStack from '../src/stack';
 
 // Defines a Mocha test suite to group tests of similar kind together
-suite("Stack Tests", () => {
+// suite("Stack Tests", () => {
     
-    let stack: myStack.StringStack;
+//     let stack: myStack.StringStack;
     
-    setup( () => {
-        stack = new myStack.StringStack();        
-    })
+//     setup( () => {
+//         stack = new myStack.StringStack();        
+//     })
 
-    // Defines a Mocha unit test
-    test("Something 1", () => {
-        assert.equal(-1, [1, 2, 3].indexOf(5));
-        assert.equal(-1, [1, 2, 3].indexOf(0));
-    });
+//     // Defines a Mocha unit test
+//     test("Something 1", () => {
+//         assert.equal(-1, [1, 2, 3].indexOf(5));
+//         assert.equal(-1, [1, 2, 3].indexOf(0));
+//     });
     
-    test("Stack should start empty", () => {
-        assert.equal(stack.length(), 0);
-    });
+//     test("Stack should start empty", () => {
+//         assert.equal(stack.length(), 0);
+//     });
 
-    test("Stack should have one item after adding one", () => {
-        stack.push("item 0");
-        assert.equal(stack.length(), 1);
-    });
+//     test("Stack should have one item after adding one", () => {
+//         stack.push("item 0");
+//         assert.equal(stack.length(), 1);
+//     });
 
-    test("Stack should have two items after adding two different items", () => {
-        stack.push("item 0");
-        stack.push("item 1");
-        assert.equal(stack.length(), 2);
-    });
+//     test("Stack should have two items after adding two different items", () => {
+//         stack.push("item 0");
+//         stack.push("item 1");
+//         assert.equal(stack.length(), 2);
+//     });
 
-    test("Stack should have on item after adding two equal items", () => {
-        stack.push("item 0");
-        stack.push("item 0");
-        assert.equal(stack.length(), 1);
-    });
-});
+//     test("Stack should have on item after adding two equal items", () => {
+//         stack.push("item 0");
+//         stack.push("item 0");
+//         assert.equal(stack.length(), 1);
+//     });
+// });
