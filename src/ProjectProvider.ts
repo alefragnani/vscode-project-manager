@@ -71,7 +71,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
             ll.push(new ProjectNode(bbb.name, vscode.TreeItemCollapsibleState.None, ProjectNodeKind.NODE_PROJECT, null, {
               command: "projectManager.open",
               title: "",
-              arguments: [bbb.name, bbb.path],
+              arguments: [bbb.path],
             }));
           }
 
@@ -135,7 +135,6 @@ class ProjectNode extends vscode.TreeItem {
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
     public readonly kind: ProjectNodeKind,
-
     public readonly projects?: ProjectPreview[],
     public readonly command?: vscode.Command
   ) {

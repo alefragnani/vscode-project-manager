@@ -42,13 +42,26 @@ export function activate(context: vscode.ExtensionContext) {
     const projectProvider = new ProjectProvider(vscode.workspace.rootPath, projectStorage, [vscLocator, gitLocator, svnLocator], context);
     vscode.window.registerTreeDataProvider("projectsExplorer", projectProvider);
 
-    vscode.commands.registerCommand("projectManager.open", (projectName, projectPath: string) => {
-        let uri: vscode.Uri = vscode.Uri.file(projectPath);
+    vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
+        let uri: vscode.Uri;
+        if (typeof node === "string") {
+            uri = vscode.Uri.file(node);
+        } else {
+            uri = vscode.Uri.file(node.command.arguments[0]);
+        }
         vscode.commands.executeCommand("vscode.openFolder", uri, false)
             .then(
             value => ({}),  // done
             value => vscode.window.showInformationMessage("Could not open the project!"));
     });
+    vscode.commands.registerCommand("projectManager.openInNewWindow", node => {
+        let uri: vscode.Uri = vscode.Uri.file(node.command.arguments[0]);
+        vscode.commands.executeCommand("vscode.openFolder", uri, true)
+            .then(
+            value => ({}),  // done
+            value => vscode.window.showInformationMessage("Could not open the project!"));
+    });
+    
     
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
