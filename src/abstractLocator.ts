@@ -40,6 +40,7 @@ export abstract class AbstractLocator {
     }
 
     public abstract getKind(): string;
+    public abstract getDisplayName(): string;
     public abstract decideProjectName(projectPath: string): string;
     public abstract isRepoDir(projectPath: string): boolean;
 

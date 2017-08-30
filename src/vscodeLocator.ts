@@ -8,6 +8,10 @@ export class VisualStudioCodeLocator extends AbstractLocator {
         return "vscode";
     }
 
+    public getDisplayName(): string {
+        return "VSCode";
+    }
+
     public isRepoDir(projectPath: string) {
         return fs.existsSync(path.join(projectPath, ".vscode"));
     }

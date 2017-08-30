@@ -8,6 +8,10 @@ export class GitLocator extends AbstractLocator {
         return "git";
     }
 
+    public getDisplayName(): string {
+        return "Git";
+    }
+
     public isRepoDir(projectPath: string) {
         let isGit: boolean;
         isGit = fs.existsSync(path.join(projectPath, ".git", "config"));

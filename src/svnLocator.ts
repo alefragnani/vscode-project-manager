@@ -8,6 +8,10 @@ export class SvnLocator extends AbstractLocator {
         return "svn";
     }
 
+    public getDisplayName(): string {
+        return "SVN";
+    }
+
     public isRepoDir(projectPath: string) {
         return fs.existsSync(path.join(projectPath, ".svn", "pristine"));
     }

@@ -1,10 +1,6 @@
 import * as vscode from "vscode";
-import { ProjectStorage, Project } from "./storage";
-import { VisualStudioCodeLocator } from "./vscodeLocator";
-import { GitLocator } from "./gitLocator";
-import { SvnLocator } from "./svnLocator";
-// import { Bookmark } from "./Bookmark";
-// import { Bookmarks } from "./Bookmarks";
+import { AbstractLocator, DirInfo } from "./abstractLocator";
+import { Project, ProjectStorage } from "./storage";
 
 export const NODE_KIND = 0;
 export const NODE_PROJECT = 1;
@@ -31,8 +27,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
 
   private tree: ProjectNode[] = [];
 
-  constructor(private workspaceRoot: string, private projectStorage: ProjectStorage, private vscLocator: VisualStudioCodeLocator,
-    private gitLocator: GitLocator, private svnLocator: SvnLocator, ctx: vscode.ExtensionContext) {
+  constructor(private workspaceRoot: string, private projectStorage: ProjectStorage, private locators: AbstractLocator[], ctx: vscode.ExtensionContext) {
 
     context = ctx;
 
@@ -72,7 +67,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         if (element.kind === ProjectNodeKind.NODE_KIND) {
           let ll: ProjectNode[] = [];
 
-          for (let bbb of element.books) {
+          for (let bbb of element.projects) {
             ll.push(new ProjectNode(bbb.name, vscode.TreeItemCollapsibleState.None, ProjectNodeKind.NODE_PROJECT, null, {
               command: "projectManager.open",
               title: "",
@@ -88,8 +83,6 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
       } else {
 
         // ROOT
-
-        let x: Coisa;
 
         // raw list
         let lll: ProjectNode[] = [];
@@ -112,24 +105,28 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
           lll.push(new ProjectNode("Favorites", vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
         }
 
-        // 
+        for (let locator of this.locators) {
+          let projects: ProjectPreview[] = [];
+          locator.initializeCfg(locator.getKind());
+
+          if (locator.dirList.length > 0) {
+            for (let index = 0; index < locator.dirList.length; index++) {
+              let dirinfo: DirInfo = locator.dirList[index];
+              
+              projects.push({
+                name: dirinfo.name,
+                path: dirinfo.fullPath
+              });
+            }
+            lll.push(new ProjectNode(locator.getDisplayName(), vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
+          }
+        }
+
         resolve(lll);
       }
     });
   }
 
-}
-
-function removeRootPathFrom(path: string): string {
-  if (!vscode.workspace.rootPath) {
-    return path;
-  }
-
-  if (path.indexOf(vscode.workspace.rootPath) === 0) {
-    return path.split(vscode.workspace.rootPath).pop().substr(1);
-  } else {
-    return path;
-  }
 }
 
 class ProjectNode extends vscode.TreeItem {
@@ -139,29 +136,23 @@ class ProjectNode extends vscode.TreeItem {
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
     public readonly kind: ProjectNodeKind,
 
-   // public readonly bookmark: Bookmark,
-    public readonly books?: ProjectPreview[],
+    public readonly projects?: ProjectPreview[],
     public readonly command?: vscode.Command
   ) {
     super(label, collapsibleState);
 
     if (kind === ProjectNodeKind.NODE_KIND) {
-      if (hasIcons) {
-        this.iconPath = {
-          light: context.asAbsolutePath("images/bookmark-explorer-light.svg"),
-          dark: context.asAbsolutePath("images/bookmark-explorer-dark.svg")
-        };
+      this.iconPath = {
+        light: context.asAbsolutePath("images/ico-project-light.svg"),
+        dark: context.asAbsolutePath("images/ico-project-dark.svg")
       }
       this.contextValue = "ProjectNodeKind";
     } else {
       this.iconPath = {
-        light: context.asAbsolutePath("images/bookmark.svg"),
-        dark: context.asAbsolutePath("images/bookmark.svg")
+        light: context.asAbsolutePath("images/ico-project-light.svg"),
+        dark: context.asAbsolutePath("images/ico-project-dark.svg")
       };
       this.contextValue = "ProjectNodeProject";
     }
   }
-
-  // contextValue = "BookmarkNode";
-
 }
