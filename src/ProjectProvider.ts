@@ -25,12 +25,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
   readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined> = this._onDidChangeTreeData.event;
 
   constructor(private workspaceRoot: string, private projectStorage: ProjectStorage, private locators: AbstractLocator[], ctx: vscode.ExtensionContext) {
-
     context = ctx;
-
-    // projectStorage.onDidUpdateProject(prj => {
-    //   this._onDidChangeTreeData.fire();
-    // });
   }
 
   public refresh(): void {
@@ -41,20 +36,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
     return element;
   }
 
-  // very much based in `listFromAllFiles` command
   getChildren(element?: ProjectNode): Thenable<ProjectNode[]> {
-
-    // no bookmark
-    // let totalBookmarkCount: number = 0;
-    // for (let elem of this.bookmarks.bookmarks) {
-    //   totalBookmarkCount = totalBookmarkCount + elem.bookmarks.length;
-    // }
-
-    // if (totalBookmarkCount === 0) {
-    //   // vscode.window.showInformationMessage("No Bookmarks in this project.");
-    //   this.tree = [];
-    //   return Promise.resolve([]);
-    // }
 
     // loop !!!
     return new Promise(resolve => {
@@ -102,6 +84,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
           lll.push(new ProjectNode("Favorites", vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
         }
 
+        // Locators (VSCode/Git/SVN)
         for (let locator of this.locators) {
           let projects: ProjectPreview[] = [];
           locator.initializeCfg(locator.getKind());
@@ -139,16 +122,22 @@ class ProjectNode extends vscode.TreeItem {
 
     if (kind === ProjectNodeKind.NODE_KIND) {
       this.iconPath = {
-        light: context.asAbsolutePath("images/ico-project-light.svg"),
-        dark: context.asAbsolutePath("images/ico-project-dark.svg")
+        // light: context.asAbsolutePath("images/ico-project-light.svg"),
+        // dark: context.asAbsolutePath("images/ico-project-dark.svg")
+        light: context.asAbsolutePath(this.getProjectIcon(label, "light")),
+        dark: context.asAbsolutePath(this.getProjectIcon(label, "dark"))
       };
       this.contextValue = "ProjectNodeKind";
     } else {
-      this.iconPath = {
-        light: context.asAbsolutePath("images/ico-project-light.svg"),
-        dark: context.asAbsolutePath("images/ico-project-dark.svg")
-      };
+      // this.iconPath = {
+      //   light: context.asAbsolutePath("images/ico-project-light.svg"),
+      //   dark: context.asAbsolutePath("images/ico-project-dark.svg")
+      // };
       this.contextValue = "ProjectNodeProject";
     }
+  }
+
+  private getProjectIcon(project: string, lightDark: string): string {
+    return "images/ico-" + project.toLowerCase() + "-" + lightDark + ".svg";
   }
 }

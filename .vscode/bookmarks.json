@@ -1,9 +1,4 @@
 {
-	"onDidClearBookmarkEmitter": {},
-	"onDidClearAllBookmarksEmitter": {},
-	"onDidAddBookmarkEmitter": {},
-	"onDidRemoveBookmarkEmitter": {},
-	"onDidUpdateBookmarkEmitter": {},
 	"bookmarks": [
 		{
 			"fsPath": "$ROOTPATH$\\abstractLocator.ts",
