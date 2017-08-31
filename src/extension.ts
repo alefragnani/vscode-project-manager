@@ -6,11 +6,11 @@ import path = require("path");
 import stack = require("./stack");
 import { GitLocator } from "./gitLocator";
 import { homeDir, PathUtils } from "./PathUtils";
+import { ProjectProvider } from "./ProjectProvider";
 import { ProjectsSorter } from "./sorter";
 import { Project, ProjectStorage } from "./storage";
 import { SvnLocator } from "./svnLocator";
 import { VisualStudioCodeLocator } from "./vscodeLocator";
-import { ProjectProvider } from "./ProjectProvider";
 
 const PROJECTS_FILE = "projects.json";
 
@@ -62,8 +62,6 @@ export function activate(context: vscode.ExtensionContext) {
             value => vscode.window.showInformationMessage("Could not open the project!"));
     });
     
-    
-
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects());

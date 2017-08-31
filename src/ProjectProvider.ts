@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { AbstractLocator, DirInfo } from "./abstractLocator";
-import { Project, ProjectStorage } from "./storage";
+import { ProjectStorage } from "./storage";
 
 export const NODE_KIND = 0;
 export const NODE_PROJECT = 1;
@@ -18,14 +18,11 @@ interface Coisa {
 export interface CoisaList extends Array<Coisa> {};
 
 let context: vscode.ExtensionContext;
-let hasIcons: boolean = vscode.workspace.getConfiguration("workbench").get("iconTheme", "") !== null;
 
 export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
 
   private _onDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
   readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined> = this._onDidChangeTreeData.event;
-
-  private tree: ProjectNode[] = [];
 
   constructor(private workspaceRoot: string, private projectStorage: ProjectStorage, private locators: AbstractLocator[], ctx: vscode.ExtensionContext) {
 
@@ -90,15 +87,15 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         // favorites
         if (this.projectStorage.length() > 0) {
 
-          let projectsMapped = <CoisaList>this.projectStorage.map();
+          let projectsMapped = <CoisaList> this.projectStorage.map();
           let projects: ProjectPreview[] = [];
 
           for (let index = 0; index < projectsMapped.length; index++) {
-            let element: Coisa = projectsMapped[index];
+            let prj: Coisa = projectsMapped[index];
           
             projects.push({
-              name: element.label,
-              path: element.description
+              name: prj.label,
+              path: prj.description
             });
           }
 
@@ -144,7 +141,7 @@ class ProjectNode extends vscode.TreeItem {
       this.iconPath = {
         light: context.asAbsolutePath("images/ico-project-light.svg"),
         dark: context.asAbsolutePath("images/ico-project-dark.svg")
-      }
+      };
       this.contextValue = "ProjectNodeKind";
     } else {
       this.iconPath = {
