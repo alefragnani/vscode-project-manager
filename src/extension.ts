@@ -157,17 +157,17 @@ export function activate(context: vscode.ExtensionContext) {
         let refreshedSomething: boolean = false;
         config = vscode.workspace.getConfiguration("projectManager").get<string[]>("vscode.baseFolders");
         if (!arraysAreEquals(vscLocator.getBaseFolders(), config)) {
-            vscLocator.refreshProjects();
+            vscLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("vscode.baseFolders"));
             refreshedSomething = true;
         }
         config = vscode.workspace.getConfiguration("projectManager").get<string[]>("git.baseFolders");
         if (!arraysAreEquals(gitLocator.getBaseFolders(), config)) {
-            gitLocator.refreshProjects();
+            gitLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("git.baseFolders"));
             refreshedSomething = true;
         }
         config = vscode.workspace.getConfiguration("projectManager").get<string[]>("svn.baseFolders");
         if (!arraysAreEquals(svnLocator.getBaseFolders(), config)) {
-            svnLocator.refreshProjects();
+            svnLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("svn.baseFolders"));
             refreshedSomething = true;
         }
         if (refreshedSomething) {
@@ -176,9 +176,9 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function refreshProjects() {
-        vscLocator.refreshProjects();
-        gitLocator.refreshProjects();
-        svnLocator.refreshProjects();
+        vscLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("vscode.baseFolders"));
+        gitLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("git.baseFolders"));
+        svnLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("svn.baseFolders"));
         projectProvider.refresh();
         vscode.window.showInformationMessage("The projects have been refreshed!");
     }

@@ -173,13 +173,17 @@ export abstract class AbstractLocator {
         console.log("Error walker:", err);
     }
 
-    public refreshProjects(): void {
+    public refreshProjects(projectsDirList?): void {
         this.clearDirList();
         let cacheFile: string = this.getCacheFile();
         if (fs.existsSync(cacheFile)) {
             fs.unlinkSync(cacheFile);
         }
         this.setAlreadyLocated(false);
+
+        if (projectsDirList) {
+            this.locateProjects(projectsDirList);
+        }
     }
 
     public existsWithRootPath(rootPath: string): Project {
