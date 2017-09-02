@@ -122,17 +122,11 @@ class ProjectNode extends vscode.TreeItem {
 
     if (kind === ProjectNodeKind.NODE_KIND) {
       this.iconPath = {
-        // light: context.asAbsolutePath("images/ico-project-light.svg"),
-        // dark: context.asAbsolutePath("images/ico-project-dark.svg")
         light: context.asAbsolutePath(this.getProjectIcon(label, "light")),
         dark: context.asAbsolutePath(this.getProjectIcon(label, "dark"))
       };
       this.contextValue = "ProjectNodeKind";
     } else {
-      // this.iconPath = {
-      //   light: context.asAbsolutePath("images/ico-project-light.svg"),
-      //   dark: context.asAbsolutePath("images/ico-project-dark.svg")
-      // };
       this.contextValue = "ProjectNodeProject";
     }
   }
