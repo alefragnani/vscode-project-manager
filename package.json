@@ -129,7 +129,8 @@
 						"node_modules",
 						"out",
 						"typings",
-						"test"
+						"test",
+						".haxelib"
 					],
 					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
 				},
