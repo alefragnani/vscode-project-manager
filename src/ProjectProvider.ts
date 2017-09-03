@@ -11,11 +11,12 @@ export interface ProjectPreview {
   path: string;
 };
 
-interface Coisa {
+interface ProjectInQuickPick {
   label: string;
   description: string;
 }
-export interface CoisaList extends Array<Coisa> {};
+
+export interface ProjectInQuickPickList extends Array<ProjectInQuickPick> {};
 
 let context: vscode.ExtensionContext;
 
@@ -46,6 +47,19 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         if (element.kind === ProjectNodeKind.NODE_KIND) {
           let ll: ProjectNode[] = [];
 
+          // sort projects by name
+          element.projects.sort((n1, n2) => {
+              if (n1.name > n2.name) {
+                  return 1;
+              }
+
+              if (n1.name < n2.name) {
+                  return -1;
+              }
+
+              return 0;
+          });
+
           for (let bbb of element.projects) {
             ll.push(new ProjectNode(bbb.name, vscode.TreeItemCollapsibleState.None, ProjectNodeKind.NODE_PROJECT, null, {
               command: "projectManager.open",
@@ -69,11 +83,11 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         // favorites
         if (this.projectStorage.length() > 0) {
 
-          let projectsMapped = <CoisaList> this.projectStorage.map();
+          let projectsMapped = <ProjectInQuickPickList> this.projectStorage.map();
           let projects: ProjectPreview[] = [];
 
           for (let index = 0; index < projectsMapped.length; index++) {
-            let prj: Coisa = projectsMapped[index];
+            let prj: ProjectInQuickPick = projectsMapped[index];
           
             projects.push({
               name: prj.label,
