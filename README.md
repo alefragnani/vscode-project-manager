@@ -180,6 +180,16 @@ You can choose if it would open projects in **New Window** when clicking in stat
     "projectManager.openInNewWindowWhenClickingInStatusBar": true
 ```
 
+## Treeview
+
+> _New in version 0.21.0_
+
+There is also a **Projects Treeview**, right in the Explorer panel. You will have all your projects there, organized by type. A few commands were added:
+* Open a project, simply clicking in the project item
+* Open a project in a New Window, right clicking in the project item
+
+![Treeview](images/vscode-project-manager-treeview.gif)
+
 ## Participate
 
 If you have any idea, feel free to create issues and pull requests
