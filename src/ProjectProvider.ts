@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { AbstractLocator, DirInfo } from "./abstractLocator";
 import { ProjectStorage } from "./storage";
+import { PathUtils } from "./PathUtils";
 
 export const NODE_KIND = 0;
 export const NODE_PROJECT = 1;
@@ -91,7 +92,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
           
             projects.push({
               name: prj.label,
-              path: prj.description
+              path: PathUtils.expandHomePath(prj.description)
             });
           }
 
