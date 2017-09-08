@@ -45,7 +45,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;
         if (typeof node === "string") {
-            uri = vscode.Uri.file(node);
+            let path = PathUtils.expandHomePath(node);
+            uri = vscode.Uri.file(path);
         } else {
             uri = vscode.Uri.file(node.command.arguments[0]);
         }
@@ -61,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
             value => ({}),  // done
             value => vscode.window.showInformationMessage("Could not open the project!"));
     });
-    
+
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects());
@@ -80,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
-    
+
     // function commands
     function showStatusBar(projectName?: string) {
         let showStatusConfig = vscode.workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
@@ -141,14 +142,14 @@ export function activate(context: vscode.ExtensionContext) {
         for (let i = 0, l = array1.length; i < l; i++) {
             if (array1[i] instanceof Array && array2[i] instanceof Array) {
                 if (!array1[i].equals(array2[i])) {
-                    return false;       
+                    return false;
                 }
             } else {
-                if (array1[i] !== array2[i]) { 
-                    return false;   
+                if (array1[i] !== array2[i]) {
+                    return false;
                 }
-            }           
-        }       
+            }
+        }
         return true;
     }
 
