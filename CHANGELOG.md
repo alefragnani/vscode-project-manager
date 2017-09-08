@@ -1,3 +1,7 @@
+## Version 0.21.0
+
+* **New:** Projects Treeview (issue [#103](https://github.com/alefragnani/vscode-project-manager/issues/103))
+
 ## Version 0.20.0
 
 * **New:** Status Bar now also displays for auto-detected projects (VSCode, Git and SVN) (issue [#116](https://github.com/alefragnani/vscode-project-manager/issues/116))
