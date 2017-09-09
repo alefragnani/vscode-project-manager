@@ -1,3 +1,7 @@
+## Version 0.21.1
+
+* **Fix:** Error opening _Favorite_ projects in Treeview (issue [#141](https://github.com/alefragnani/vscode-project-manager/issues/141))
+
 ## Version 0.21.0
 
 * **New:** Projects Treeview (issue [#103](https://github.com/alefragnani/vscode-project-manager/issues/103))
