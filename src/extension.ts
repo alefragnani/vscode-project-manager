@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
             value => ({}),  // done
             value => vscode.window.showInformationMessage("Could not open the project!"));
     });
-    
+
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects());
@@ -80,7 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     let statusItem: vscode.StatusBarItem;
     showStatusBar();
-    
+
     // function commands
     function showStatusBar(projectName?: string) {
         let showStatusConfig = vscode.workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
@@ -141,14 +141,14 @@ export function activate(context: vscode.ExtensionContext) {
         for (let i = 0, l = array1.length; i < l; i++) {
             if (array1[i] instanceof Array && array2[i] instanceof Array) {
                 if (!array1[i].equals(array2[i])) {
-                    return false;       
+                    return false;
                 }
             } else {
-                if (array1[i] !== array2[i]) { 
-                    return false;   
+                if (array1[i] !== array2[i]) {
+                    return false;
                 }
-            }           
-        }       
+            }
+        }
         return true;
     }
 
@@ -490,7 +490,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function removeRootPath(items: any[]): any[] {
-        if (!vscode.workspace.rootPath) {
+        if (!vscode.workspace.rootPath || !vscode.workspace.getConfiguration("projectManager").get("removeCurrentProjectFromList")) {
             return items;
         } else {
             return items.filter(value => value.description.toString().toLowerCase() !== vscode.workspace.rootPath.toLowerCase());

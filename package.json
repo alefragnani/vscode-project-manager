@@ -116,6 +116,11 @@
 					"default": false,
 					"description": "Should the project be opened using a New Window when you click the Status Bar?"
 				},
+				"projectManager.removeCurrentProjectFromList": {
+					"type": "boolean",
+					"default": true,
+					"description": "Should the current project be hidden in the list of available projects?"
+				},
 				"projectManager.sortList": {
 					"type": "string",
 					"default": "Name",
