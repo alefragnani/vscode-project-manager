@@ -26,7 +26,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
   private _onDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
   readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot: string, private projectStorage: ProjectStorage, private locators: AbstractLocator[], ctx: vscode.ExtensionContext) {
+  constructor(private projectStorage: ProjectStorage, private locators: AbstractLocator[], ctx: vscode.ExtensionContext) {
     context = ctx;
   }
 
