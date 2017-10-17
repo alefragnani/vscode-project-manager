@@ -86,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
         let showStatusConfig = vscode.workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
         // multi-root - decide do use the "first folder" as the original "rootPath"
         // let currentProjectPath = vscode.workspace.rootPath;
-        let workspace0 = vscode.workspace.workspaceFolders[0];
+        let workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
         let currentProjectPath = workspace0 ? workspace0.uri.fsPath : undefined;
 
         if (!showStatusConfig || !currentProjectPath) { return; }
@@ -215,7 +215,7 @@ export function activate(context: vscode.ExtensionContext) {
     function saveProject() {
         // Display a message box to the user
         // let wpath = vscode.workspace.rootPath;
-        let workspace0 = vscode.workspace.workspaceFolders[0];
+        let workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
         let wpath = workspace0 ? workspace0.uri.fsPath : undefined;
         if (process.platform === "win32") {
             wpath = wpath.substr(wpath.lastIndexOf("\\") + 1);
@@ -242,7 +242,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             // let rootPath = PathUtils.compactHomePath(vscode.workspace.rootPath);
-            let workspace0 = vscode.workspace.workspaceFolders[0];
+            let workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
             let rootPath = workspace0 ? PathUtils.compactHomePath(workspace0.uri.fsPath) : undefined;
     
             if (!projectStorage.exists(projectName)) {
@@ -498,7 +498,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     function removeRootPath(items: any[]): any[] {
         // if (!vscode.workspace.rootPath) {
-        let workspace0 = vscode.workspace.workspaceFolders[0];
+        let workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
         if (!workspace0) {
             return items;
         } else {
