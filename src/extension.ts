@@ -38,6 +38,10 @@ export function activate(context: vscode.ExtensionContext) {
     // load the projects
     let projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
+    // tree-view optional
+    let canShowTreeView: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
+    vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
+
     // tree-view
     const projectProvider = new ProjectProvider(vscode.workspace.rootPath, projectStorage, [vscLocator, gitLocator, svnLocator], context);
     vscode.window.registerTreeDataProvider("projectsExplorer", projectProvider);
@@ -76,6 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
        refreshProjectsOnChangeConfiguration();
+       refreshTreeViewOnChangeConfiguration();
     }));
 
     let statusItem: vscode.StatusBarItem;
@@ -172,6 +177,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
         if (refreshedSomething) {
             projectProvider.refresh();
+        }
+    }
+
+    function refreshTreeViewOnChangeConfiguration() {
+        let config: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
+        if (canShowTreeView != config) {
+            canShowTreeView = config;
+            vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
         }
     }
 

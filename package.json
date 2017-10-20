@@ -46,7 +46,8 @@
 			"explorer": [
 				{
 					"id": "projectsExplorer",
-					"name": "Projects"
+					"name": "Projects",
+					"when": "canShowTreeView"
 				}
 			]
 		},
@@ -212,6 +213,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Should check for invalid paths before listing, showing a message below the project name?"
+				},
+				"projectManager.treeview.visible": {
+					"type": "boolean",
+					"default": true,
+					"description": "Should display the TreeView?"
 				}
 			}
 		},
