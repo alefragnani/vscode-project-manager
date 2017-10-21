@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.21.1",
+	"version": "0.22.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -217,7 +217,7 @@
 				"projectManager.treeview.visible": {
 					"type": "boolean",
 					"default": true,
-					"description": "Should display the TreeView?"
+					"description": "Should display the Treeview?"
 				}
 			}
 		},

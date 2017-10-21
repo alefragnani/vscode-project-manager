@@ -1,3 +1,9 @@
+## Version 0.22.0
+
+* **New Setting:** Treeview is Optional (issue [#143](https://github.com/alefragnani/vscode-project-manager/issues/143))
+* **New Setting:** Remove Current Project From List (Thanks to @rockingskier [PR #146](https://github.com/alefragnani/vscode-project-manager/pull/146))
+* **Update Setting:** Add `.haxelib` to `git.ignoredFolders` (Thanks to @Gamma11 [PR #140](https://github.com/alefragnani/vscode-project-manager/pull/140))
+
 ## Version 0.21.1
 
 * **Fix:** Error opening _Favorite_ projects in Treeview (issue [#141](https://github.com/alefragnani/vscode-project-manager/issues/141))

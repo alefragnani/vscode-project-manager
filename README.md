@@ -110,6 +110,16 @@ List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git** an
     "projectManager.groupList": true
 ```
 
+#### Remove the Current Project from List
+
+> _new in version 0.22.0_
+
+By default, the current project is removed from the list. If you don't want this for any reason, just turn it off.
+
+```json
+    "projectManager.removeCurrentProjectFromList": true
+```
+
 #### Check Invalid Paths Before Listing
 
 By default, it will check for invalid paths to display a message below the project name. If you don't want this check for any reason, just turn it off.
@@ -182,13 +192,21 @@ You can choose if it would open projects in **New Window** when clicking in stat
 
 ## Treeview
 
-> _New in version 0.21.0_
-
 There is also a **Projects Treeview**, right in the Explorer panel. You will have all your projects there, organized by type. A few commands were added:
 * Open a project, simply clicking in the project item
 * Open a project in a New Window, right clicking in the project item
 
 ![Treeview](images/vscode-project-manager-treeview.gif)
+
+#### Treeview is Optional
+
+> _new in version 0.22.0_
+
+You can choose if you want to see the TreeView.
+
+```json 
+    "projectManager.treeview.visible": true
+```
 
 ## Participate
 
