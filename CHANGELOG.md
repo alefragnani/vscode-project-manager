@@ -1,3 +1,7 @@
+## Version 0.22.0
+
+* **New:** Multi-root support (issue [#149](https://github.com/alefragnani/vscode-project-manager/issues/149))
+
 ## Version 0.21.1
 
 * **Fix:** Error opening _Favorite_ projects in Treeview (issue [#141](https://github.com/alefragnani/vscode-project-manager/issues/141))
