@@ -9,6 +9,7 @@
 		"no-unused-variable": true,
 		"no-trailing-whitespace": false,
 		"no-angle-bracket-type-assertion": false,
+		"no-shadowed-variable": false,
 		"interface-name": [
 			false
 		],
@@ -18,7 +19,7 @@
 		"semicolon": false,
 		"triple-equals": true,
 		"arrow-parens": false,
-		"no-console": true,
+		"no-console": false,
 		"trailing-comma": [
 			false
 		],

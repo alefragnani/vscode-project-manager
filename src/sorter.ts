@@ -3,7 +3,7 @@ import {StringStack} from "./stack";
 export class ProjectsSorter {
 
     public static getSortedByName(items: any[]): any[] {
-        let itemsSorted = [] = items.sort((n1, n2) => {
+        const itemsSorted = [] = items.sort((n1, n2) => {
             // ignore octicons
             if (n1.label.replace(/\$\(\w*(-)*\w*\)\s/, "") > n2.label.replace(/\$\(\w*(-)*\w*\)\s/, "")) {
                 return 1;
@@ -19,7 +19,7 @@ export class ProjectsSorter {
     }
 
     public static getSortedByPath(items: any[]): any[] {
-        let itemsSorted = [] = items.sort((n1, n2) => {
+        const itemsSorted = [] = items.sort((n1, n2) => {
             if (n1.description > n2.description) {
                 return 1;
             }
@@ -39,14 +39,14 @@ export class ProjectsSorter {
             return items;
         }
 
-        let loadedProjects = items;
+        const loadedProjects = items;
 
         for (let index = 0; index < aStack.length(); index++) {
-            let element: string = aStack.getItem(index);
+            const element: string = aStack.getItem(index);
 
             let found: number = -1;
             for (let i = 0; i < loadedProjects.length; i++) {
-                let itemElement = loadedProjects[i];
+                const itemElement = loadedProjects[i];
                 if (itemElement.label === element) {
                     found = i;
                     break;
@@ -54,7 +54,7 @@ export class ProjectsSorter {
             }
 
             if (found > -1) {
-                let removedProject = loadedProjects.splice(found, 1);
+                const removedProject = loadedProjects.splice(found, 1);
                 loadedProjects.unshift(removedProject[0]);
             }
         }

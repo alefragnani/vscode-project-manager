@@ -1,9 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from "vscode";
 import fs = require("fs");
 import path = require("path");
+import * as vscode from "vscode";
 import stack = require("./stack");
+
 import { GitLocator } from "./gitLocator";
 import { homeDir, PathUtils } from "./PathUtils";
 import { ProjectProvider } from "./ProjectProvider";
@@ -23,20 +24,20 @@ const enum ProjectsSource {
 
 export interface ProjectsSourceSet extends Array<ProjectsSource> { };
 
-let vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
-let gitLocator: GitLocator = new GitLocator();
-let svnLocator: SvnLocator = new SvnLocator();
+const vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
+const gitLocator: GitLocator = new GitLocator();
+const svnLocator: SvnLocator = new SvnLocator();
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-    let recentProjects: string = context.globalState.get<string>("recent", "");
-    let aStack: stack.StringStack = new stack.StringStack();
+    const recentProjects: string = context.globalState.get<string>("recent", "");
+    const aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(recentProjects);
 
     // load the projects
-    let projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
+    const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
     // tree-view
     const projectProvider = new ProjectProvider(projectStorage, [vscLocator, gitLocator, svnLocator], context);
@@ -55,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
             value => vscode.window.showInformationMessage("Could not open the project!"));
     });
     vscode.commands.registerCommand("projectManager.openInNewWindow", node => {
-        let uri: vscode.Uri = vscode.Uri.file(node.command.arguments[0]);
+        const uri: vscode.Uri = vscode.Uri.file(node.command.arguments[0]);
         vscode.commands.executeCommand("vscode.openFolder", uri, true)
             .then(
             value => ({}),  // done
@@ -83,11 +84,11 @@ export function activate(context: vscode.ExtensionContext) {
     
     // function commands
     function showStatusBar(projectName?: string) {
-        let showStatusConfig = vscode.workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
+        const showStatusConfig = vscode.workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
         // multi-root - decide do use the "first folder" as the original "rootPath"
         // let currentProjectPath = vscode.workspace.rootPath;
-        let workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
-        let currentProjectPath = workspace0 ? workspace0.uri.fsPath : undefined;
+        const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
+        const currentProjectPath = workspace0 ? workspace0.uri.fsPath : undefined;
 
         if (!showStatusConfig || !currentProjectPath) { return; }
 
@@ -97,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
         statusItem.text = "$(file-directory) ";
         statusItem.tooltip = currentProjectPath;
 
-        let openInNewWindow: boolean = vscode.workspace.getConfiguration("projectManager").get("openInNewWindowWhenClickingInStatusBar", false);
+        const openInNewWindow: boolean = vscode.workspace.getConfiguration("projectManager").get("openInNewWindowWhenClickingInStatusBar", false);
         if (openInNewWindow) {
             statusItem.command = "projectManager.listProjectsNewWindow";
         } else {
@@ -192,7 +193,7 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showTextDocument(doc);
             });
         } else {
-            let optionEditProject = <vscode.MessageItem> {
+            const optionEditProject = <vscode.MessageItem> {
                 title: "Yes, edit manually"
             };
             vscode.window.showErrorMessage("No projects saved yet! You should open a folder and use Save Project instead. Do you really want to edit manually? ", optionEditProject).then(option => {
@@ -215,7 +216,7 @@ export function activate(context: vscode.ExtensionContext) {
     function saveProject() {
         // Display a message box to the user
         // let wpath = vscode.workspace.rootPath;
-        let workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
+        const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
         let wpath = workspace0 ? workspace0.uri.fsPath : undefined;
         if (process.platform === "win32") {
             wpath = wpath.substr(wpath.lastIndexOf("\\") + 1);
@@ -224,7 +225,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         // ask the PROJECT NAME (suggest the )
-        let ibo = <vscode.InputBoxOptions> {
+        const ibo = <vscode.InputBoxOptions> {
             prompt: "Project Name",
             placeHolder: "Type a name for your project",
             value: wpath
@@ -242,8 +243,8 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             // let rootPath = PathUtils.compactHomePath(vscode.workspace.rootPath);
-            let workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
-            let rootPath = workspace0 ? PathUtils.compactHomePath(workspace0.uri.fsPath) : undefined;
+            const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
+            const rootPath = workspace0 ? PathUtils.compactHomePath(workspace0.uri.fsPath) : undefined;
     
             if (!projectStorage.exists(projectName)) {
                 aStack.push(projectName);
@@ -253,10 +254,10 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage("Project saved!");
                 showStatusBar(projectName);
             } else {
-                let optionUpdate = <vscode.MessageItem> {
+                const optionUpdate = <vscode.MessageItem> {
                     title: "Update"
                 };
-                let optionCancel = <vscode.MessageItem> {
+                const optionCancel = <vscode.MessageItem> {
                     title: "Cancel"
                 };
 
@@ -285,12 +286,12 @@ export function activate(context: vscode.ExtensionContext) {
     function sortProjectList(items): any[] {
         let itemsToShow = PathUtils.expandHomePaths(items);
         itemsToShow = removeRootPath(itemsToShow);
-        let checkInvalidPath: boolean = vscode.workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
+        const checkInvalidPath: boolean = vscode.workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
         if (checkInvalidPath) {
             itemsToShow = indicateInvalidPaths(itemsToShow);
         }
-        let sortList = vscode.workspace.getConfiguration("projectManager").get("sortList", "Name");
-        let newItemsSorted = ProjectsSorter.SortItemsByCriteria(itemsToShow, sortList, aStack);
+        const sortList = vscode.workspace.getConfiguration("projectManager").get("sortList", "Name");
+        const newItemsSorted = ProjectsSorter.SortItemsByCriteria(itemsToShow, sortList, aStack);
         return newItemsSorted;
     }
 
@@ -413,10 +414,10 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
 
-                let optionUpdateProject = <vscode.MessageItem> {
+                const optionUpdateProject = <vscode.MessageItem> {
                     title: "Update Project"
                 };
-                let optionDeleteProject = <vscode.MessageItem> {
+                const optionDeleteProject = <vscode.MessageItem> {
                     title: "Delete Project"
                 };
 
@@ -443,7 +444,7 @@ export function activate(context: vscode.ExtensionContext) {
                 aStack.push(selected.label);
                 context.globalState.update("recent", aStack.toString());
 
-                let uri: vscode.Uri = vscode.Uri.file(projectPath);
+                const uri: vscode.Uri = vscode.Uri.file(projectPath);
                 vscode.commands.executeCommand("vscode.openFolder", uri, forceNewWindow)
                     .then(
                     value => ({}),  // done
@@ -451,7 +452,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
 
-        let options = <vscode.QuickPickOptions> {
+        const options = <vscode.QuickPickOptions> {
             matchOnDescription: false,
             matchOnDetail: false,
             placeHolder: "Loading Projects (pick one to open)"
@@ -498,7 +499,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     function removeRootPath(items: any[]): any[] {
         // if (!vscode.workspace.rootPath) {
-        let workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
+        const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
         if (!workspace0) {
             return items;
         } else {
@@ -507,7 +508,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function indicateInvalidPaths(items: any[]): any[] {
-        for (let element of items) {
+        for (const element of items) {
             if (!element.detail && (!fs.existsSync(element.description.toString()))) {
                 element.detail = "$(circle-slash) Path does not exist";
             }
@@ -520,7 +521,7 @@ export function activate(context: vscode.ExtensionContext) {
         let normalizedPath: string = path;
 
         if (!PathUtils.pathIsUNC(normalizedPath)) {
-            let replaceable = normalizedPath.split("\\");
+            const replaceable = normalizedPath.split("\\");
             normalizedPath = replaceable.join("\\\\");
         }
 
@@ -536,10 +537,10 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function loadProjectsFile() {
-        let errorLoading: string = projectStorage.load();
+        const errorLoading: string = projectStorage.load();
         // how to handle now, since the extension starts 'at load'?
         if (errorLoading !== "") {
-            let optionOpenFile = <vscode.MessageItem> {
+            const optionOpenFile = <vscode.MessageItem> {
                 title: "Open File"
             };
             vscode.window.showErrorMessage("Error loading projects.json file. Message: " + errorLoading, optionOpenFile).then(option => {
@@ -560,12 +561,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     function getProjectFilePath() {
         let projectFile: string;
-        let projectsLocation: string = vscode.workspace.getConfiguration("projectManager").get<string>("projectsLocation");
+        const projectsLocation: string = vscode.workspace.getConfiguration("projectManager").get<string>("projectsLocation");
         if (projectsLocation !== "") {
             projectFile = path.join(projectsLocation, PROJECTS_FILE);
         } else {
-            let appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
-            let channelPath: string = getChannelPath();
+            const appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
+            const channelPath: string = getChannelPath();
             projectFile = path.join(appdata, channelPath, "User", PROJECTS_FILE);
             // in linux, it may not work with /var/local, then try to use /home/myuser/.config
             if ((process.platform === "linux") && (!fs.existsSync(projectFile))) {

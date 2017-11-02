@@ -22,7 +22,7 @@ export class StringStack {
      * push
      */
     public push(item: string) {
-        let index: number = this.stack.indexOf(item);
+        const index: number = this.stack.indexOf(item);
         if (index > -1) {
             this.stack.splice(index, 1);
         }

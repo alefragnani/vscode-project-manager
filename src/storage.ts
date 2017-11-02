@@ -32,7 +32,7 @@ export class ProjectStorage {
     private projectList: ProjectList;
     private filename: string;
 
-    constructor (filename: string) {
+    constructor(filename: string) {
         this.filename = filename;
         this.projectList = <ProjectList> [];
     }
@@ -60,7 +60,7 @@ export class ProjectStorage {
      */
     public pop(name: string): Project {
         for (let index = 0; index < this.projectList.length; index++) {
-            let element: Project = this.projectList[index];
+            const element: Project = this.projectList[index];
             if (element.name.toLowerCase() === name.toLowerCase()) {
                 return this.projectList.splice(index, 1)[0];
             }
@@ -77,7 +77,7 @@ export class ProjectStorage {
      */
     public addPath(name: string, path: string): void {
         // for (let index = 0; index < this.projectList.length; index++) {
-        for (let element of this.projectList) {
+        for (const element of this.projectList) {
             // let element: Project = this.projectList[index];
             if (element.name.toLowerCase() === name.toLowerCase()) {
                 // this.projectList[index].paths.push(path);
@@ -96,7 +96,7 @@ export class ProjectStorage {
      */
     public updateRootPath(name: string, path: string): void {
         // for (let index = 0; index < this.projectList.length; index++) {
-        for (let element of this.projectList) {
+        for (const element of this.projectList) {
             // let element: Project = this.projectList[index];
             if (element.name.toLowerCase() === name.toLowerCase()) {
                 // this.projectList[index].rootPath = path;
@@ -115,12 +115,12 @@ export class ProjectStorage {
      */
     public removePath(name: string, path: string): void {
         // for (let index = 0; index < this.projectList.length; index++) {
-        for (let element of this.projectList) {
+        for (const element of this.projectList) {
             // let element: Project = this.projectList[index];
             if (element.name.toLowerCase() === name.toLowerCase()) {
 
                 for (let indexPath = 0; indexPath < element.paths.length; indexPath++) {
-                    let elementPath = element.paths[indexPath];
+                    const elementPath = element.paths[indexPath];
                     if (elementPath.toLowerCase() === path.toLowerCase()) {
                         // this.projectList[index].paths.splice(indexPath, 1);
                         element.paths.splice(indexPath, 1);
@@ -142,7 +142,7 @@ export class ProjectStorage {
         let found: boolean = false;
         
         // for (let i = 0; i < this.projectList.length; i++) {
-        for (let element of this.projectList) {
+        for (const element of this.projectList) {
             // let element = this.projectList[i];
             if (element.name.toLocaleLowerCase() === name.toLocaleLowerCase()) {
                 found = true;
@@ -159,9 +159,9 @@ export class ProjectStorage {
      * @return A [Project](#Project) with the given `rootPath`
      */
     public existsWithRootPath(rootPath: string): Project {
-        let rootPathUsingHome: string = PathUtils.compactHomePath(rootPath).toLocaleLowerCase();
+        const rootPathUsingHome: string = PathUtils.compactHomePath(rootPath).toLocaleLowerCase();
 
-        for (let element of this.projectList) {
+        for (const element of this.projectList) {
             if ((element.rootPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase()) || (element.rootPath.toLocaleLowerCase() === rootPathUsingHome)) {
                 return element;
             }
@@ -199,7 +199,7 @@ export class ProjectStorage {
             // OLD format
             if ((items.length > 0) && (items[0].label)) {
                 // for (let index = 0; index < items.length; index++) {
-                for (let element of items) {
+                for (const element of items) {
                     // let element = items[index];
                     this.projectList.push(new ProjectItem(element.label, element.description));
                 }
@@ -250,7 +250,7 @@ export class ProjectStorage {
      * @return A list of projects `{[label, description]}` to be used on a `showQuickPick`
      */    
     public map(): any {
-        let newItems = this.projectList.map(item => {
+        const newItems = this.projectList.map(item => {
             return {
               label: item.name,
               description: item.rootPath  
