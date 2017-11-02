@@ -1,4 +1,4 @@
-## Version 0.22.0
+## Version 0.23.0
 
 * **New:** Multi-root support (issue [#149](https://github.com/alefragnani/vscode-project-manager/issues/149))
 
