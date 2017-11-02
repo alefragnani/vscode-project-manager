@@ -1,3 +1,7 @@
+## Version 0.23.0
+
+* **New:** Multi-root support (issue [#149](https://github.com/alefragnani/vscode-project-manager/issues/149))
+
 ## Version 0.22.0
 
 * **New Setting:** Treeview is Optional (issue [#143](https://github.com/alefragnani/vscode-project-manager/issues/143))

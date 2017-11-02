@@ -8,18 +8,18 @@
 		"no-duplicate-key": true,
 		"no-unused-variable": true,
 		"no-trailing-whitespace": false,
+		"no-angle-bracket-type-assertion": false,
+		"no-shadowed-variable": false,
 		"interface-name": [
 			false
 		],
 		"eofline": false,
 		"curly": true,
 		"class-name": true,
-		"semicolon": ["always"],
+		"semicolon": false,
 		"triple-equals": true,
 		"arrow-parens": false,
-		"no-console": [
-			"error"
-		],
+		"no-console": false,
 		"trailing-comma": [
 			false
 		],

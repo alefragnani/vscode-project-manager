@@ -1,5 +1,5 @@
-import path = require("path");
 import fs = require("fs");
+import path = require("path");
 import {AbstractLocator} from "./abstractLocator";
 
 export class GitLocator extends AbstractLocator {
