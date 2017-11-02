@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { AbstractLocator, DirInfo } from "./abstractLocator";
-import { ProjectStorage } from "./storage";
 import { PathUtils } from "./PathUtils";
+import { ProjectStorage } from "./storage";
 
 export const NODE_KIND = 0;
 export const NODE_PROJECT = 1;
@@ -34,11 +34,11 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
     this._onDidChangeTreeData.fire();
   }
 
-  getTreeItem(element: ProjectNode): vscode.TreeItem {
+  public getTreeItem(element: ProjectNode): vscode.TreeItem {
     return element;
   }
 
-  getChildren(element?: ProjectNode): Thenable<ProjectNode[]> {
+  public getChildren(element?: ProjectNode): Thenable<ProjectNode[]> {
 
     // loop !!!
     return new Promise(resolve => {
@@ -46,7 +46,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
       if (element) {
 
         if (element.kind === ProjectNodeKind.NODE_KIND) {
-          let ll: ProjectNode[] = [];
+          const ll: ProjectNode[] = [];
 
           // sort projects by name
           element.projects.sort((n1, n2) => {
@@ -61,7 +61,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
               return 0;
           });
 
-          for (let bbb of element.projects) {
+          for (const bbb of element.projects) {
             ll.push(new ProjectNode(bbb.name, vscode.TreeItemCollapsibleState.None, ProjectNodeKind.NODE_PROJECT, null, {
               command: "projectManager.open",
               title: "",
@@ -79,16 +79,17 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         // ROOT
 
         // raw list
-        let lll: ProjectNode[] = [];
+        const lll: ProjectNode[] = [];
             
         // favorites
         if (this.projectStorage.length() > 0) {
 
-          let projectsMapped = <ProjectInQuickPickList> this.projectStorage.map();
-          let projects: ProjectPreview[] = [];
+          const projectsMapped = <ProjectInQuickPickList> this.projectStorage.map();
+          const projects: ProjectPreview[] = [];
 
+          // tslint:disable-next-line:prefer-for-of
           for (let index = 0; index < projectsMapped.length; index++) {
-            let prj: ProjectInQuickPick = projectsMapped[index];
+            const prj: ProjectInQuickPick = projectsMapped[index];
           
             projects.push({
               name: prj.label,
@@ -100,13 +101,14 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         }
 
         // Locators (VSCode/Git/SVN)
-        for (let locator of this.locators) {
-          let projects: ProjectPreview[] = [];
+        for (const locator of this.locators) {
+          const projects: ProjectPreview[] = [];
           locator.initializeCfg(locator.getKind());
 
           if (locator.dirList.length > 0) {
+            // tslint:disable-next-line:prefer-for-of
             for (let index = 0; index < locator.dirList.length; index++) {
-              let dirinfo: DirInfo = locator.dirList[index];
+              const dirinfo: DirInfo = locator.dirList[index];
               
               projects.push({
                 name: dirinfo.name,

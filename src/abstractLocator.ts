@@ -1,7 +1,8 @@
-let walker = require("walker");
-import path = require("path");
+// const walker = require("walker");
 import fs = require("fs");
+import path = require("path");
 import vscode = require("vscode");
+import walker = require("walker");
 // import os = require("os");
 import { homeDir, PathUtils } from "./PathUtils";
 import { Project } from "./storage";
@@ -68,7 +69,7 @@ export abstract class AbstractLocator {
         if (this.useCachedProjects) {
             this.alreadyLocated = al;
             if (this.alreadyLocated) {
-                let cacheFile: string = this.getCacheFile();
+                const cacheFile: string = this.getCacheFile();
                 fs.writeFileSync(cacheFile, JSON.stringify(this.dirList, null, "\t"), { encoding: "utf8" });
             }
         }
@@ -86,7 +87,7 @@ export abstract class AbstractLocator {
         if (!this.useCachedProjects) {
             this.clearDirList();
         } else {
-            let cacheFile: string = this.getCacheFile();
+            const cacheFile: string = this.getCacheFile();
             if (fs.existsSync(cacheFile)) {
                 this.dirList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
                 this.setAlreadyLocated(true);
@@ -111,20 +112,20 @@ export abstract class AbstractLocator {
                 return;
             }
 
-            let promises = [];
+            const promises = [];
             this.clearDirList();
 
             projectsDirList.forEach((projectBasePath) => {
-                let expandedBasePath: string = PathUtils.expandHomePath(projectBasePath);
+                const expandedBasePath: string = PathUtils.expandHomePath(projectBasePath);
                 if (!fs.existsSync(expandedBasePath)) {
                     vscode.window.setStatusBarMessage("Directory " + expandedBasePath + " does not exists.", 1500);
 
                     return;
                 }
 
-                let depth = this.getPathDepth(expandedBasePath);
+                const depth = this.getPathDepth(expandedBasePath);
 
-                let promise = new Promise((resolve, reject) => {
+                const promise = new Promise((resolve, reject) => {
                     try {
                         walker(expandedBasePath)
                             .filterDir((dir, stat) => {
@@ -175,7 +176,7 @@ export abstract class AbstractLocator {
 
     public refreshProjects(projectsDirList?): void {
         this.clearDirList();
-        let cacheFile: string = this.getCacheFile();
+        const cacheFile: string = this.getCacheFile();
         if (fs.existsSync(cacheFile)) {
             fs.unlinkSync(cacheFile);
         }
@@ -194,8 +195,8 @@ export abstract class AbstractLocator {
             return null;
         }
 
-        let rootPathUsingHome: string = PathUtils.compactHomePath(rootPath).toLocaleLowerCase();
-        for (let element of this.dirList) {
+        const rootPathUsingHome: string = PathUtils.compactHomePath(rootPath).toLocaleLowerCase();
+        for (const element of this.dirList) {
             if ((element.fullPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase()) || (element.fullPath.toLocaleLowerCase() === rootPathUsingHome)) {
                 return {
                     rootPath: element.fullPath,
@@ -217,8 +218,8 @@ export abstract class AbstractLocator {
 
     private getCacheFile() {
         let cacheFile: string;
-        let appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
-        let channelPath: string = this.getChannelPath();
+        const appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
+        const channelPath: string = this.getChannelPath();
         cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.getKind() + ".json");
         if ((process.platform === "linux") && (!fs.existsSync(cacheFile))) {
             cacheFile = path.join(homeDir, ".config/", channelPath, "User", CACHE_FILE + this.getKind() + ".json");
