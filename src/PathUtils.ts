@@ -1,7 +1,7 @@
 "use strict";
 
 import os = require("os");
-// import path = require("path");
+import path = require("path");
 // import fs = require("fs");
 
 export const homeDir = os.homedir();
@@ -54,6 +54,28 @@ export class PathUtils {
             item.description = this.expandHomePath(item.description);
             return item;
         });
+    }
+
+    public static updateWithPathSeparator(items: string[]): string[] {
+        let newItems: string[] = [];
+        for (let apath of items) {
+            // win
+            newItems.push(this.updateWithPathSeparatorStr(apath));
+            // if(path.sep === '\\') {
+            //     newItems.push(apath.replace(/\//g, '\\'));   
+            // } else {
+            //     newItems.push(apath.replace(/\\/g, '/'));
+            // }
+        }
+        return newItems;
+    }
+
+    public static updateWithPathSeparatorStr(item: string): string {
+        if(path.sep === '\\') {
+            return item.replace(/\//g, '\\');   
+        } else {
+            return item.replace(/\\/g, '/');
+        }
     }
 
 }

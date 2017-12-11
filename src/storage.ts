@@ -185,7 +185,7 @@ export class ProjectStorage {
      * @return A `string` containing the _Error Message_ in case something goes wrong. 
      *         An **empty string** if everything is ok.
      */
-    public load(/*file: string*/): string {
+    public load(): string {
         let items = [];
 
         // missing file (new install)
@@ -198,21 +198,27 @@ export class ProjectStorage {
             items = JSON.parse(fs.readFileSync(this.filename).toString());
             // OLD format
             if ((items.length > 0) && (items[0].label)) {
-                // for (let index = 0; index < items.length; index++) {
                 for (const element of items) {
-                    // let element = items[index];
                     this.projectList.push(new ProjectItem(element.label, element.description));
                 }
                 // save updated
                 this.save();
             } else { // NEW format
                 this.projectList = items as ProjectList;
-                // this.projectList = <ProjectList>items;
             }
+
+            this.updatePaths();
             return "";
         } catch (error) {
             console.log(error);
             return error.toString();
+        }
+    }
+
+    private updatePaths(): void {
+        for (let index = 0; index < this.projectList.length; index++) {
+            const pi = this.projectList[index];
+            pi.rootPath = PathUtils.updateWithPathSeparatorStr(pi.rootPath);
         }
     }
 
