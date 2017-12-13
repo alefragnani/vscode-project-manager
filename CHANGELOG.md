@@ -1,3 +1,7 @@
+## Version 0.24.0
+
+* **New:** Paths are now OS independent (issue [#152](https://github.com/alefragnani/vscode-project-manager/issues/152))
+
 ## Version 0.23.0
 
 * **New:** Multi-root support (issue [#149](https://github.com/alefragnani/vscode-project-manager/issues/149))

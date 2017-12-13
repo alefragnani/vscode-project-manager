@@ -97,6 +97,7 @@ export abstract class AbstractLocator {
 
     public locateProjects(projectsDirList) {
 
+        projectsDirList = PathUtils.updateWithPathSeparator(projectsDirList);
         this.baseFolders = projectsDirList.slice();
 
         return new Promise<DirList>((resolve, reject) => {

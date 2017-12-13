@@ -1,7 +1,7 @@
 "use strict";
 
 import os = require("os");
-// import path = require("path");
+import path = require("path");
 // import fs = require("fs");
 
 export const homeDir = os.homedir();
@@ -54,6 +54,32 @@ export class PathUtils {
             item.description = this.expandHomePath(item.description);
             return item;
         });
+    }
+
+    /**
+     * Update paths to use the proper path separator, based on the Host OS
+     * 
+     * @param items The array of items <string> to update
+     */
+    public static updateWithPathSeparator(items: string[]): string[] {
+        const newItems: string[] = [];
+        for (const apath of items) {
+            newItems.push(this.updateWithPathSeparatorStr(apath));
+        }
+        return newItems;
+    }
+
+    /**
+     * Update a path to use the proper path separator, based on the Host OS
+     * 
+     * @param item The path <string> to update
+     */
+    public static updateWithPathSeparatorStr(item: string): string {
+        if (path.sep === "\\") {
+            return item.replace(/\//g, "\\");   
+        } else {
+            return item.replace(/\\/g, "/");
+        }
     }
 
 }
