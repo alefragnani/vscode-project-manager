@@ -62,8 +62,8 @@ export class PathUtils {
      * @param items The array of items <string> to update
      */
     public static updateWithPathSeparator(items: string[]): string[] {
-        let newItems: string[] = [];
-        for (let apath of items) {
+        const newItems: string[] = [];
+        for (const apath of items) {
             newItems.push(this.updateWithPathSeparatorStr(apath));
         }
         return newItems;
@@ -75,10 +75,10 @@ export class PathUtils {
      * @param item The path <string> to update
      */
     public static updateWithPathSeparatorStr(item: string): string {
-        if(path.sep === '\\') {
-            return item.replace(/\//g, '\\');   
+        if (path.sep === "\\") {
+            return item.replace(/\//g, "\\");   
         } else {
-            return item.replace(/\\/g, '/');
+            return item.replace(/\\/g, "/");
         }
     }
 
