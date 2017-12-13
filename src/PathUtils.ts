@@ -56,20 +56,24 @@ export class PathUtils {
         });
     }
 
+    /**
+     * Update paths to use the proper path separator, based on the Host OS
+     * 
+     * @param items The array of items <string> to update
+     */
     public static updateWithPathSeparator(items: string[]): string[] {
         let newItems: string[] = [];
         for (let apath of items) {
-            // win
             newItems.push(this.updateWithPathSeparatorStr(apath));
-            // if(path.sep === '\\') {
-            //     newItems.push(apath.replace(/\//g, '\\'));   
-            // } else {
-            //     newItems.push(apath.replace(/\\/g, '/'));
-            // }
         }
         return newItems;
     }
 
+    /**
+     * Update a path to use the proper path separator, based on the Host OS
+     * 
+     * @param item The path <string> to update
+     */
     public static updateWithPathSeparatorStr(item: string): string {
         if(path.sep === '\\') {
             return item.replace(/\//g, '\\');   
