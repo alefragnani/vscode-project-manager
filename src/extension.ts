@@ -81,8 +81,11 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
-       refreshProjects();
-       refreshTreeViewOnChangeConfiguration();
+        if (cfg.affectsConfiguration("projectManager.git") || cfg.affectsConfiguration("projectManager.vscode") ||
+            cfg.affectsConfiguration("projectManager.svn") || cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
+            refreshProjects();
+        }
+        refreshTreeViewOnChangeConfiguration();
     }));
 
     let statusItem: vscode.StatusBarItem;
