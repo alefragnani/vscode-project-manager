@@ -27,6 +27,7 @@ export interface ProjectsSourceSet extends Array<ProjectsSource> { };
 const vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
 const gitLocator: GitLocator = new GitLocator();
 const svnLocator: SvnLocator = new SvnLocator();
+const locators = [vscLocator, gitLocator, svnLocator];
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -69,7 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
-    vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects());
+    vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects(true, true));
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
@@ -80,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
-       refreshProjectsOnChangeConfiguration();
+       refreshProjects();
        refreshTreeViewOnChangeConfiguration();
     }));
 
@@ -138,66 +139,27 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function arraysAreEquals(array1, array2): boolean {
-        if (!array1 || !array2) {
-            return false;
-        }
-
-        if (array1.length !== array2.length) {
-            return false;
-        }
-
-        for (let i = 0, l = array1.length; i < l; i++) {
-            if (array1[i] instanceof Array && array2[i] instanceof Array) {
-                if (!array1[i].equals(array2[i])) {
-                    return false;
-                }
-            } else {
-                if (array1[i] !== array2[i]) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    function refreshProjectsOnChangeConfiguration() {
-        let config = [];
-        let refreshedSomething: boolean = false;
-        config = vscode.workspace.getConfiguration("projectManager").get<string[]>("vscode.baseFolders");
-        if (!arraysAreEquals(vscLocator.getBaseFolders(), config)) {
-            vscLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("vscode.baseFolders"));
-            refreshedSomething = true;
-        }
-        config = vscode.workspace.getConfiguration("projectManager").get<string[]>("git.baseFolders");
-        if (!arraysAreEquals(gitLocator.getBaseFolders(), config)) {
-            gitLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("git.baseFolders"));
-            refreshedSomething = true;
-        }
-        config = vscode.workspace.getConfiguration("projectManager").get<string[]>("svn.baseFolders");
-        if (!arraysAreEquals(svnLocator.getBaseFolders(), config)) {
-            svnLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("svn.baseFolders"));
-            refreshedSomething = true;
-        }
-        if (refreshedSomething) {
-            projectProvider.refresh();
-        }
-    }
-
     function refreshTreeViewOnChangeConfiguration() {
-        let config: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
-        if (canShowTreeView != config) {
+        const config: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
+        if (canShowTreeView !== config) {
             canShowTreeView = config;
             vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
         }
     }
 
-    function refreshProjects() {
-        vscLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("vscode.baseFolders"));
-        gitLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("git.baseFolders"));
-        svnLocator.refreshProjects(vscode.workspace.getConfiguration("projectManager").get("svn.baseFolders"));
-        projectProvider.refresh();
-        vscode.window.showInformationMessage("The projects have been refreshed!");
+    function refreshProjects(showMessage?: boolean, forceProviderRefresh?: boolean) {
+        let refreshedSomething: boolean = false;
+        for (const locator of locators) {
+            refreshedSomething = refreshedSomething || locator.refreshProjects();
+        }
+
+        if (refreshedSomething || forceProviderRefresh) {
+            projectProvider.refresh();
+        }
+
+        if (showMessage) {
+            vscode.window.showInformationMessage("The projects have been refreshed!");
+        }
     }
 
     function editProjects() {
@@ -344,7 +306,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         return new Promise((resolve, reject) => {
 
-            vscLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("vscode.baseFolders"))
+            vscLocator.locateProjects()
                 .then(filterKnownDirectories.bind(this, itemsSorted))
                 .then((dirList: any[]) => {
                     let newItems = [];
@@ -365,7 +327,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         return new Promise((resolve, reject) => {
 
-            gitLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("git.baseFolders"))
+            gitLocator.locateProjects()
                 .then(filterKnownDirectories.bind(this, itemsSorted))
                 .then((dirList: any[]) => {
                     let newItems = [];
@@ -386,7 +348,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         return new Promise((resolve, reject) => {
 
-            svnLocator.locateProjects(vscode.workspace.getConfiguration("projectManager").get("svn.baseFolders"))
+            svnLocator.locateProjects()
                 .then(filterKnownDirectories.bind(this, itemsSorted))
                 .then((dirList: any[]) => {
                     let newItems = [];
