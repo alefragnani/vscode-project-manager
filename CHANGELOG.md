@@ -1,6 +1,7 @@
-## Version 0.24.0
+## Version 0.23.1
 
-* **New:** Paths are now OS independent (issue [#152](https://github.com/alefragnani/vscode-project-manager/issues/152))
+* **Fix:** Paths are now OS independent (issue [#152](https://github.com/alefragnani/vscode-project-manager/issues/152))
+* **Fix:** Detect changes on any `git`, `vscode` or `svn` config (Thanks to @jcw- [PR #150](https://github.com/alefragnani/vscode-project-manager/pull/150))
 
 ## Version 0.23.0
 

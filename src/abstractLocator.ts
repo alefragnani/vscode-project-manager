@@ -31,23 +31,13 @@ export abstract class AbstractLocator {
         this.useCachedProjects = true;
         this.alreadyLocated = false;
         this.baseFolders = [];
-
-        //
-        this.ignoredFolders = vscode.workspace.getConfiguration("projectManager").get(this.getKind() + ".ignoredFolders", []);
-        this.maxDepth = vscode.workspace.getConfiguration("projectManager").get(this.getKind() + ".maxDepthRecursion", -1);
-        this.useCachedProjects = vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true);
-        this.baseFolders = vscode.workspace.getConfiguration("projectManager").get<string[]>(this.getKind() + ".baseFolders");
-
+        this.refreshConfig();
     }
 
     public abstract getKind(): string;
     public abstract getDisplayName(): string;
     public abstract decideProjectName(projectPath: string): string;
     public abstract isRepoDir(projectPath: string): boolean;
-
-    public getBaseFolders(): string[] {
-        return this.baseFolders;
-    }
 
     public getPathDepth(s) {
         return s.split(path.sep).length;
@@ -81,9 +71,6 @@ export abstract class AbstractLocator {
 
     public initializeCfg(kind: string) {
 
-        // this.ignoredFolders = vscode.workspace.getConfiguration("projectManager").get(kind + ".ignoredFolders", []);
-        // this.maxDepth = vscode.workspace.getConfiguration("projectManager").get(kind + ".maxDepthRecursion", -1);
-        // this.useCachedProjects = vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true);
         if (!this.useCachedProjects) {
             this.clearDirList();
         } else {
@@ -95,8 +82,9 @@ export abstract class AbstractLocator {
         }
     }
 
-    public locateProjects(projectsDirList) {
+    public locateProjects() {
 
+        let projectsDirList = this.baseFolders;
         projectsDirList = PathUtils.updateWithPathSeparator(projectsDirList);
         this.baseFolders = projectsDirList.slice();
 
@@ -175,17 +163,19 @@ export abstract class AbstractLocator {
         console.log("Error walker:", err);
     }
 
-    public refreshProjects(projectsDirList?): void {
+    public refreshProjects(): boolean {
+        if (!this.refreshConfig()) {
+            return false;
+        }
+
         this.clearDirList();
         const cacheFile: string = this.getCacheFile();
         if (fs.existsSync(cacheFile)) {
             fs.unlinkSync(cacheFile);
         }
         this.setAlreadyLocated(false);
-
-        if (projectsDirList) {
-            this.locateProjects(projectsDirList);
-        }
+        this.locateProjects();
+        return true;
     }
 
     public existsWithRootPath(rootPath: string): Project {
@@ -226,6 +216,61 @@ export abstract class AbstractLocator {
             cacheFile = path.join(homeDir, ".config/", channelPath, "User", CACHE_FILE + this.getKind() + ".json");
         }
         return cacheFile;
+    }
+
+    private refreshConfig(): boolean {
+        const config = vscode.workspace.getConfiguration("projectManager");
+        let refreshedSomething: boolean = false;
+        let currentValue = null;
+
+        currentValue = config.get<string[]>(this.getKind() + ".baseFolders");
+        if (!this.arraysAreEquals(this.baseFolders, currentValue)) {
+            this.baseFolders = currentValue;
+            refreshedSomething = true;
+        }
+
+        currentValue = config.get<string[]>(this.getKind() + ".ignoredFolders", []);
+        if (!this.arraysAreEquals(this.ignoredFolders, currentValue)) {
+            this.ignoredFolders = currentValue;
+            refreshedSomething = true;
+        }        
+
+        currentValue = config.get(this.getKind() + ".maxDepthRecursion", -1);
+        if (this.maxDepth !== currentValue) {
+            this.maxDepth = currentValue;
+            refreshedSomething = true;
+        }
+
+        currentValue = config.get("cacheProjectsBetweenSessions", true);
+        if (this.useCachedProjects !== currentValue) {
+            this.useCachedProjects = currentValue;
+            refreshedSomething = true;
+        }
+
+        return refreshedSomething;
+    }
+
+    private arraysAreEquals(array1, array2): boolean {
+        if (!array1 || !array2) {
+            return false;
+        }
+
+        if (array1.length !== array2.length) {
+            return false;
+        }
+
+        for (let i = 0, l = array1.length; i < l; i++) {
+            if (array1[i] instanceof Array && array2[i] instanceof Array) {
+                if (!array1[i].equals(array2[i])) {
+                    return false;
+                }
+            } else {
+                if (array1[i] !== array2[i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }
