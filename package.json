@@ -20,7 +20,7 @@
 		"switch",
 		"manage",
 		"git",
-        "multi-root ready"
+		"multi-root ready"
 	],
 	"icon": "images/icon.png",
 	"license": "SEE LICENSE IN LICENSE.md",
@@ -219,6 +219,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Should display the Treeview?"
+				},
+				"projectManager.filterOnFullPath": {
+					"type": "boolean",
+					"default": false,
+					"description": "Should filter projects through full path?"
 				}
 			}
 		},
@@ -239,7 +244,7 @@
 		"@types/node": "^6.0.40",
 		"typescript": "^2.3.2",
 		"vscode": "^1.1.6"
-},
+	},
 	"dependencies": {
 		"walker": "^1.0.7"
 	}
