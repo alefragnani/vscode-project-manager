@@ -128,6 +128,14 @@ By default, it will check for invalid paths to display a message below the proje
     "projectManager.checkInvalidPathsBeforeListing": false
 ```
 
+#### Filter Projects Through Full Path
+
+By default, it will filter projects by its **name** only. If you want to filter also based on its **path**, just turn it on.
+
+```json 
+    "projectManager.filterOnFullPath": true
+```
+
 #### Projects Location
 
 If you intend to _share_ projects between  **Stable** and **Insider** installations, or if you store your settings in different locations (cloud services), you can indicate an _alternative_ location for the `projects.json` file.
