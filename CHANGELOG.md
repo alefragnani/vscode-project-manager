@@ -1,3 +1,7 @@
+## Version 0.24.0
+
+* **New Setting:** Filter projects through full path (Thanks to @R3oLoN [PR #166](https://github.com/alefragnani/vscode-project-manager/pull/166))
+
 ## Version 0.23.1
 
 * **Fix:** Paths are now OS independent (issue [#152](https://github.com/alefragnani/vscode-project-manager/issues/152))
