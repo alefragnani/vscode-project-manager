@@ -71,8 +71,6 @@ Just like **List Projects** but always opening in **New Window**.
 
 ## Keyboard Focused Users
 
-> _new in version 0.20.0_
-
 If you are a keyboard focused user and uses _Vim like_ keyboard navigation, you can navigate thru the project list with your own keybindings. 
 
 Just use the `when` clause `"inProjectManagerList"`, like:
@@ -111,8 +109,6 @@ List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git** an
 ```
 
 #### Remove the Current Project from List
-
-> _new in version 0.22.0_
 
 By default, the current project is removed from the list. If you don't want this for any reason, just turn it off.
 
@@ -207,8 +203,6 @@ There is also a **Projects Treeview**, right in the Explorer panel. You will hav
 ![Treeview](images/vscode-project-manager-treeview.gif)
 
 #### Treeview is Optional
-
-> _new in version 0.22.0_
 
 You can choose if you want to see the TreeView.
 
