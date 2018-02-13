@@ -1,13 +1,10 @@
-// const walker = require("walker");
 import fs = require("fs");
 import path = require("path");
 import vscode = require("vscode");
 import walker = require("walker");
-// import os = require("os");
 import { homeDir, PathUtils } from "./PathUtils";
 import { Project } from "./storage";
 
-// const homeDir = os.homedir();
 const CACHE_FILE = "projects_cache_";
 
 export interface DirInfo {

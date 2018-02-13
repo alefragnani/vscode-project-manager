@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "0.24.0",
+	"version": "0.25.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -137,7 +137,7 @@
 				"projectManager.groupList": {
 					"type": "boolean",
 					"default": false,
-					"description": "List the projects grouped by...(Favorites, VSCode, Git and SVN)"
+					"description": "List the projects grouped by...(Favorites, VSCode, Git, Mercurial and SVN)"
 				},
 				"projectManager.projectsLocation": {
 					"type": "string",
@@ -181,6 +181,27 @@
 					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
 				},
 				"projectManager.git.maxDepthRecursion": {
+					"type": "integer",
+					"default": 4,
+					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+				},
+				"projectManager.hg.baseFolders": {
+					"type": "array",
+					"default": [],
+					"description": "Indicates the base folders to search for Mercurial projects"
+				},
+				"projectManager.hg.ignoredFolders": {
+					"type": "array",
+					"default": [
+						"node_modules",
+						"out",
+						"typings",
+						"test",
+						".haxelib"
+					],
+					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+				},
+				"projectManager.hg.maxDepthRecursion": {
 					"type": "integer",
 					"default": 4,
 					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"

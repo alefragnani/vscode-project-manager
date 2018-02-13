@@ -6,6 +6,7 @@ import * as vscode from "vscode";
 import stack = require("./stack");
 
 import { GitLocator } from "./gitLocator";
+import { MercurialLocator } from "./mercurialLocator";
 import { homeDir, PathUtils } from "./PathUtils";
 import { ProjectProvider } from "./ProjectProvider";
 import { ProjectsSorter } from "./sorter";
@@ -19,6 +20,7 @@ const enum ProjectsSource {
     Projects,
     VSCode,
     Git,
+    Mercurial,
     Svn
 }
 
@@ -26,8 +28,9 @@ export interface ProjectsSourceSet extends Array<ProjectsSource> { };
 
 const vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
 const gitLocator: GitLocator = new GitLocator();
+const mercurialLocator: MercurialLocator = new MercurialLocator();
 const svnLocator: SvnLocator = new SvnLocator();
-const locators = [vscLocator, gitLocator, svnLocator];
+const locators = [vscLocator, gitLocator, mercurialLocator, svnLocator];
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -45,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
 
     // tree-view
-    const projectProvider = new ProjectProvider(projectStorage, [vscLocator, gitLocator, svnLocator], context);
+    const projectProvider = new ProjectProvider(projectStorage, [vscLocator, gitLocator, mercurialLocator, svnLocator], context);
     vscode.window.registerTreeDataProvider("projectsExplorer", projectProvider);
 
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
@@ -72,8 +75,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects(true, true));
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
-    vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
-    vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
+    vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Mercurial, ProjectsSource.Svn]));
+    vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Mercurial, ProjectsSource.Svn]));
     loadProjectsFile();
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
@@ -81,8 +84,9 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
-        if (cfg.affectsConfiguration("projectManager.git") || cfg.affectsConfiguration("projectManager.vscode") ||
-            cfg.affectsConfiguration("projectManager.svn") || cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
+        if (cfg.affectsConfiguration("projectManager.git") || cfg.affectsConfiguration("projectManager.hg") ||
+            cfg.affectsConfiguration("projectManager.vscode") || cfg.affectsConfiguration("projectManager.svn") || 
+            cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
             refreshProjects();
         }
         refreshTreeViewOnChangeConfiguration();
@@ -125,13 +129,15 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        // let foundProject: Project = projectStorage.existsWithRootPath(PathUtils.compactHomePath(currentProjectPath));
         let foundProject: Project = projectStorage.existsWithRootPath(currentProjectPath);
         if (!foundProject) {
             foundProject = vscLocator.existsWithRootPath(currentProjectPath);
         }
         if (!foundProject) {
             foundProject = gitLocator.existsWithRootPath(currentProjectPath);
+        }
+        if (!foundProject) {
+            foundProject = mercurialLocator.existsWithRootPath(currentProjectPath);
         }
         if (!foundProject) {
             foundProject = svnLocator.existsWithRootPath(currentProjectPath);
@@ -347,6 +353,27 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
+    function getMercurialProjects(itemsSorted: any[]): Promise<{}> {
+
+        return new Promise((resolve, reject) => {
+
+            mercurialLocator.locateProjects()
+                .then(filterKnownDirectories.bind(this, itemsSorted))
+                .then((dirList: any[]) => {
+                    let newItems = [];
+                    newItems = dirList.map(item => {
+                        return {
+                            label: "$(git-branch) " + item.name,
+                            description: item.fullPath
+                        };
+                    });
+
+                    newItems = sortGroupedList(newItems);
+                    resolve(itemsSorted.concat(newItems));
+                });
+        });
+    }
+
     function getSvnProjects(itemsSorted: any[]): Promise<{}> {
 
         return new Promise((resolve, reject) => {
@@ -452,6 +479,13 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 return getGitProjects(<any[]> folders);
+            })
+            .then((folders) => {
+                if (sources.indexOf(ProjectsSource.Mercurial) === -1) {
+                    return folders;
+                }
+
+                return getMercurialProjects(<any[]> folders);
             })
             .then((folders) => {
                 if (sources.indexOf(ProjectsSource.Svn) === -1) {
