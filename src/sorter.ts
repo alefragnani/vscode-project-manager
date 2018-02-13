@@ -5,11 +5,11 @@ export class ProjectsSorter {
     public static getSortedByName(items: any[]): any[] {
         const itemsSorted = [] = items.sort((n1, n2) => {
             // ignore octicons
-            if (n1.label.replace(/\$\(\w*(-)*\w*\)\s/, "") > n2.label.replace(/\$\(\w*(-)*\w*\)\s/, "")) {
+            if (n1.label.replace(/\$\(\w*(-)*\w*\)\s/, "").toLowerCase() > n2.label.replace(/\$\(\w*(-)*\w*\)\s/, "").toLowerCase()) {
                 return 1;
             }
 
-            if (n1.label.replace(/\$\(\w*(-)*\w*\)\s/, "") < n2.label.replace(/\$\(\w*(-)*\w*\)\s/, "")) {
+            if (n1.label.replace(/\$\(\w*(-)*\w*\)\s/, "").toLowerCase() < n2.label.replace(/\$\(\w*(-)*\w*\)\s/, "").toLowerCase()) {
                 return -1;
             }
 
