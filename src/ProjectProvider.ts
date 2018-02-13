@@ -100,11 +100,11 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
           lll.push(new ProjectNode("Favorites", vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
         }
 
-        // Locators (VSCode/Git/SVN)
+        // Locators (VSCode/Git/Mercurial/SVN)
         for (const locator of this.locators) {
           const projects: ProjectPreview[] = [];
           locator.initializeCfg(locator.getKind());
-
+          
           if (locator.dirList.length > 0) {
             // tslint:disable-next-line:prefer-for-of
             for (let index = 0; index < locator.dirList.length; index++) {
