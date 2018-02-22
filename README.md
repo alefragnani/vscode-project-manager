@@ -22,7 +22,7 @@ Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
 
 ### Save Project
 
-You can save the current project in the manager at any time. You just need to type a name. It even suggest you _automatically_ :)
+You can save the current project in the manager at any time. You just need to type a name. It even suggests a name to you _automatically_ :)
 
 ![Save](images/project-manager-save.png)
  
@@ -53,7 +53,7 @@ For easier customization of your project list, you can edit the `projects.json` 
 ]
 ```
 
-> For now, only `name` and `rootPath` are usefull. The `paths` and `group` fields are there to be used in the future by two new features: [Support multiple folders in the same project](https://github.com/alefragnani/vscode-project-manager/issues/46) and [Contextual Structure for Projects](https://github.com/alefragnani/vscode-project-manager/issues/50) . 
+> For now, only `name` and `rootPath` are useful. The `paths` and `group` fields are there to be used in the future by two new features: [Support multiple folders in the same project](https://github.com/alefragnani/vscode-project-manager/issues/46) and [Contextual Structure for Projects](https://github.com/alefragnani/vscode-project-manager/issues/50) . 
 
 You can use a special variable called `$home` while defining any `path`. It's useful if you sync your projects between different machines, because it will be replaced by the HOME folder.  
 
