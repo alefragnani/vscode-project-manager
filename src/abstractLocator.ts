@@ -163,8 +163,8 @@ export abstract class AbstractLocator {
         console.log("Error walker:", err);
     }
 
-    public refreshProjects(): boolean {
-        if (!this.refreshConfig()) {
+    public refreshProjects(forceRefresh: boolean): boolean {
+        if (!forceRefresh && !this.refreshConfig()) {
             return false;
         }
 

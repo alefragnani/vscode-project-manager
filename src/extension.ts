@@ -150,13 +150,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function refreshProjects(showMessage?: boolean, forceProviderRefresh?: boolean) {
+    function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
         let refreshedSomething: boolean = false;
         for (const locator of locators) {
-            refreshedSomething = refreshedSomething || locator.refreshProjects();
+            let locatorRefreshed: boolean = locator.refreshProjects(forceRefresh);
+            refreshedSomething = refreshedSomething || locatorRefreshed;
         }
 
-        if (refreshedSomething || forceProviderRefresh) {
+        if (refreshedSomething || forceRefresh) {
             projectProvider.refresh();
         }
 
