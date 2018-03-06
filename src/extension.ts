@@ -194,7 +194,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             if (showMessage) {
-                vscode.window.showInformationMessage("The projects have been refreshed!");
+                vscode.window.showInformationMessage("The projects has been refreshed!");
             }
         })
 
