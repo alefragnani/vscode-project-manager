@@ -107,7 +107,7 @@ export abstract class AbstractLocator {
             projectsDirList.forEach((projectBasePath) => {
                 const expandedBasePath: string = PathUtils.expandHomePath(projectBasePath);
                 if (!fs.existsSync(expandedBasePath)) {
-                    vscode.window.setStatusBarMessage("Directory " + expandedBasePath + " does not exists.", 1500);
+                    // vscode.window.setStatusBarMessage("Directory " + expandedBasePath + " does not exists.", 1500);
 
                     return;
                 }
@@ -136,7 +136,7 @@ export abstract class AbstractLocator {
 
             Promise.all(promises)
                 .then(() => {
-                    vscode.window.setStatusBarMessage("Searching folders completed", 1500);
+                    // vscode.window.setStatusBarMessage("Searching folders completed", 1500);
                     this.setAlreadyLocated(true);
                     resolve(this.dirList);
                 })
@@ -153,7 +153,7 @@ export abstract class AbstractLocator {
     }
 
     public processDirectory = (absPath: string, stat: any) => {
-        vscode.window.setStatusBarMessage(absPath, 600);
+        // vscode.window.setStatusBarMessage(absPath, 600);
         if (this.isRepoDir(absPath)) {
             this.addToList(absPath, this.decideProjectName(absPath));
         }
@@ -163,19 +163,28 @@ export abstract class AbstractLocator {
         console.log("Error walker:", err);
     }
 
-    public refreshProjects(): boolean {
-        if (!this.refreshConfig()) {
-            return false;
-        }
+    public refreshProjects(forceRefresh: boolean): Promise<boolean> {
 
-        this.clearDirList();
-        const cacheFile: string = this.getCacheFile();
-        if (fs.existsSync(cacheFile)) {
-            fs.unlinkSync(cacheFile);
-        }
-        this.setAlreadyLocated(false);
-        this.locateProjects();
-        return true;
+        return new Promise((resolve, reject) => {
+            
+            if (!forceRefresh && !this.refreshConfig()) {
+                resolve(false);
+            }
+    
+            this.clearDirList();
+            const cacheFile: string = this.getCacheFile();
+            if (fs.existsSync(cacheFile)) {
+                fs.unlinkSync(cacheFile);
+            }
+            this.setAlreadyLocated(false);
+            this.locateProjects()
+              .then(() => {
+                  resolve(true);
+                })
+                .catch(error => {
+                    reject(error)
+                })            
+        });
     }
 
     public existsWithRootPath(rootPath: string): Project {
