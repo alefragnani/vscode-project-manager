@@ -107,7 +107,7 @@ export abstract class AbstractLocator {
             projectsDirList.forEach((projectBasePath) => {
                 const expandedBasePath: string = PathUtils.expandHomePath(projectBasePath);
                 if (!fs.existsSync(expandedBasePath)) {
-                    vscode.window.setStatusBarMessage("Directory " + expandedBasePath + " does not exists.", 1500);
+                    // vscode.window.setStatusBarMessage("Directory " + expandedBasePath + " does not exists.", 1500);
 
                     return;
                 }
@@ -136,7 +136,7 @@ export abstract class AbstractLocator {
 
             Promise.all(promises)
                 .then(() => {
-                    vscode.window.setStatusBarMessage("Searching folders completed", 1500);
+                    // vscode.window.setStatusBarMessage("Searching folders completed", 1500);
                     this.setAlreadyLocated(true);
                     resolve(this.dirList);
                 })
@@ -153,7 +153,7 @@ export abstract class AbstractLocator {
     }
 
     public processDirectory = (absPath: string, stat: any) => {
-        vscode.window.setStatusBarMessage(absPath, 600);
+        // vscode.window.setStatusBarMessage(absPath, 600);
         if (this.isRepoDir(absPath)) {
             this.addToList(absPath, this.decideProjectName(absPath));
         }
@@ -180,6 +180,9 @@ export abstract class AbstractLocator {
             this.locateProjects()
               .then(() => {
                   resolve(true);
+                })
+                .catch(error => {
+                    reject(error)
                 })            
         });
     }

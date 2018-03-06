@@ -152,28 +152,51 @@ export function activate(context: vscode.ExtensionContext) {
 
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
-        let promisses: Promise<boolean>[] = [];
-        for (const locator of locators) {
-            let ll = locator.refreshProjects(forceRefresh)
-            promisses.push(ll);
-        }
+        // let promisses: Promise<boolean>[] = [];
+        // for (const locator of locators) {
+        //     let ll = locator.refreshProjects(forceRefresh)
+        //     promisses.push(ll);
+        // }
 
-        Promise.all(promisses).then(
-            (values) => {
-                let refreshedSomething: boolean = false;
-                for (const locatorRefreshed of values) {
-                    refreshedSomething = refreshedSomething || locatorRefreshed;
-                }
+        // Promise.all(promisses).then(
+        //     (values) => {
+        //         let refreshedSomething: boolean = false;
+        //         for (const locatorRefreshed of values) {
+        //             refreshedSomething = refreshedSomething || locatorRefreshed;
+        //         }
 
-                if (refreshedSomething || forceRefresh) {
-                    projectProvider.refresh();
-                }
+        //         if (refreshedSomething || forceRefresh) {
+        //             projectProvider.refresh();
+        //         }
 
-                if (showMessage) {
-                    vscode.window.showInformationMessage("The projects have been refreshed!");
-                }
+        //         if (showMessage) {
+        //             vscode.window.showInformationMessage("The projects have been refreshed!");
+        //         }
+        //     }
+        // );
+
+        vscode.window.withProgress({
+            location: vscode.ProgressLocation.Window,
+            title: 'Refresh Projects'
+        }, async (progress) => {
+            progress.report({ message: 'Refreshing Projects (VSCode)' });
+            let rvscode = await vscLocator.refreshProjects(forceRefresh);
+        
+            progress.report({ message: 'Refreshing Projects (Git)' });
+            let rgit = await gitLocator.refreshProjects(forceRefresh);
+        
+            progress.report({ message: 'Refreshing Projects (SVN)' });
+            let rsvn = await svnLocator.refreshProjects(forceRefresh);
+
+            if (rvscode || rgit || rsvn || forceRefresh) {
+                progress.report({ message: "Refreshing Projects (TreeView)"});
+                projectProvider.refresh()
             }
-        )
+
+            if (showMessage) {
+                vscode.window.showInformationMessage("The projects have been refreshed!");
+            }
+        })
 
         // let refreshedSomething: boolean = false;
         // for (const locator of locators) {
