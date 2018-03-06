@@ -151,19 +151,43 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
-        let refreshedSomething: boolean = false;
+
+        let promisses: Promise<boolean>[] = [];
         for (const locator of locators) {
-            let locatorRefreshed: boolean = locator.refreshProjects(forceRefresh);
-            refreshedSomething = refreshedSomething || locatorRefreshed;
+            let ll = locator.refreshProjects(forceRefresh)
+            promisses.push(ll);
         }
 
-        if (refreshedSomething || forceRefresh) {
-            projectProvider.refresh();
-        }
+        Promise.all(promisses).then(
+            (values) => {
+                let refreshedSomething: boolean = false;
+                for (const locatorRefreshed of values) {
+                    refreshedSomething = refreshedSomething || locatorRefreshed;
+                }
 
-        if (showMessage) {
-            vscode.window.showInformationMessage("The projects have been refreshed!");
-        }
+                if (refreshedSomething || forceRefresh) {
+                    projectProvider.refresh();
+                }
+
+                if (showMessage) {
+                    vscode.window.showInformationMessage("The projects have been refreshed!");
+                }
+            }
+        )
+
+        // let refreshedSomething: boolean = false;
+        // for (const locator of locators) {
+        //     let locatorRefreshed: boolean = locator.refreshProjects(forceRefresh);
+        //     refreshedSomething = refreshedSomething || locatorRefreshed;
+        // }
+
+        // if (refreshedSomething || forceRefresh) {
+        //     projectProvider.refresh();
+        // }
+
+        // if (showMessage) {
+        //     vscode.window.showInformationMessage("The projects have been refreshed!");
+        // }
     }
 
     function editProjects() {

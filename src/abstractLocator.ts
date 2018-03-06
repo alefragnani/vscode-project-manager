@@ -163,19 +163,25 @@ export abstract class AbstractLocator {
         console.log("Error walker:", err);
     }
 
-    public refreshProjects(forceRefresh: boolean): boolean {
-        if (!forceRefresh && !this.refreshConfig()) {
-            return false;
-        }
+    public refreshProjects(forceRefresh: boolean): Promise<boolean> {
 
-        this.clearDirList();
-        const cacheFile: string = this.getCacheFile();
-        if (fs.existsSync(cacheFile)) {
-            fs.unlinkSync(cacheFile);
-        }
-        this.setAlreadyLocated(false);
-        this.locateProjects();
-        return true;
+        return new Promise((resolve, reject) => {
+            
+            if (!forceRefresh && !this.refreshConfig()) {
+                resolve(false);
+            }
+    
+            this.clearDirList();
+            const cacheFile: string = this.getCacheFile();
+            if (fs.existsSync(cacheFile)) {
+                fs.unlinkSync(cacheFile);
+            }
+            this.setAlreadyLocated(false);
+            this.locateProjects()
+              .then(() => {
+                  resolve(true);
+                })            
+        });
     }
 
     public existsWithRootPath(rootPath: string): Project {
