@@ -1,3 +1,7 @@
+## Version 0.24.1
+
+* **Fix:** `Refresh Projects` and Automatic Detection of Projects not working correctly (issues [#157](https://github.com/alefragnani/vscode-project-manager/issues/157), [#164](https://github.com/alefragnani/vscode-project-manager/issues/164), [#167](https://github.com/alefragnani/vscode-project-manager/issues/167) and [#172](https://github.com/alefragnani/vscode-project-manager/issues/172))
+
 ## Version 0.24.0
 
 * **New Setting:** Filter projects through full path (Thanks to @R3oLoN [PR #166](https://github.com/alefragnani/vscode-project-manager/pull/166))
