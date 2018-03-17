@@ -2,7 +2,7 @@
 
 Manage your projects right inside Visual Studio Code. Easily access and switch between them.
 
-You can define your own **Favorite** projects, and auto-detect **VSCode** projects, **Git** and **SVN** repositories.
+You can define your own **Favorite** projects, and auto-detect **VSCode** projects, **Git**, **Mercurial** and **SVN** repositories.
 
 # Installation
 
@@ -15,7 +15,7 @@ Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
 * **Project Manager: Edit Project** Edit the project list (`projects.json` file) directly inside **Code**
 * **Project Manager: List Projects to Open** List all saved projects and pick one
 * **Project Manager: List Projects to Open in New Window** List all saved projects and pick one to be opened in New Window
-* **Project Manager: Refresh Projects** Refresh the cached projects (VSCode, Git and SVN)
+* **Project Manager: Refresh Projects** Refresh the cached projects (VSCode, Git, Mercurial and SVN)
 * **Project Manager: Save Project** Save the current project in the manager
 
 ![Commands](images/project-manager-commands.png)
@@ -102,7 +102,7 @@ Allows you to choose how the projects are sorted in **List Projects** commands. 
 
 #### Group the Project List
 
-List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git** and **SVN**).
+List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git**, **Mercurial** and **SVN**).
 
 ```json
     "projectManager.groupList": true
@@ -142,35 +142,33 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 #### Automatic Detection of Projects
 
-You can have automatic detection of **VSCode** ![vscode](images/ico_file_code.png) **Git** ![git](images/ico_git_branch.png) and **SVN** ![svn](images/ico_svn.png) projects. For this, you just have to indicate a list of folders where each kind of project is located.
+You can have automatic detection of **VSCode** ![vscode](images/ico_file_code.png), **Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png) and **SVN** ![svn](images/ico_svn.png) projects. For this, you just have to indicate a list of folders where each kind of project is located.
 
 ```json
-    "projectManager.vscode.baseFolders": [
-        "c:\\VSCodeProjects\\code",
-        "d:\\MoreVSCodeProjects\\code-testing",
+    "projectManager.git.baseFolders": [
+        "c:\\Projects\\code",
+        "d:\\MoreProjects\\code-testing",
         "$home\\personal-coding"
     ]
 ```
 
-> Git and SVN has similar settings (`projectManager.git.baseFolders` and `projectManager.svn.baseFolders` respectively)
-
 To customize how _deep_ to look projects or folders to be _ignored_ you have two additional settings:
 
 ```json
-    "projectManager.vscode.ignoredFolders": [
+    "projectManager.git.ignoredFolders": [
         "node_modules", 
         "out", 
         "typings", 
         "test"
     ],
-    "projectManager.vscode.maxDepthRecursion": 4
+    "projectManager.git.maxDepthRecursion": 4
 ```
 
-> Git and SVN also has similar settings (`projectManager.git.ignoredFolders`, `projectManager.git.maxDepthRecursion`, `projectManager.svn.ignoredFolders` and `projectManager.svn.maxDepthRecursion`  respectively)
+> All kinds of projects (VSCode, Git, Mercurial and SVN) have the same kind of settings
 
 #### Cache Automatically Detected Projects
 
-By default, the automatically detected projects (VSCode, Git and SVN) are cached. If you don't want this for any reason, just turn it off.
+By default, the automatically detected projects (VSCode, Git, Mercurial and SVN) are cached. If you don't want this for any reason, just turn it off.
 
 ```json 
     "projectManager.cacheProjectsBetweenSessions": false
