@@ -191,10 +191,13 @@ export function activate(context: vscode.ExtensionContext) {
             progress.report({ message: 'Refreshing Projects (Git)' });
             let rgit = await gitLocator.refreshProjects(forceRefresh);
         
+            progress.report({ message: 'Refreshing Projects (Mercurial)' });
+            let rmercurial = await mercurialLocator.refreshProjects(forceRefresh);
+        
             progress.report({ message: 'Refreshing Projects (SVN)' });
             let rsvn = await svnLocator.refreshProjects(forceRefresh);
 
-            if (rvscode || rgit || rsvn || forceRefresh) {
+            if (rvscode || rgit || rmercurial || rsvn || forceRefresh) {
                 progress.report({ message: "Refreshing Projects (TreeView)"});
                 projectProvider.refresh()
             }
