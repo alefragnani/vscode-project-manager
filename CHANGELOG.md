@@ -1,3 +1,7 @@
+## [0.25.0] - 2018-03-18
+### New
+- Support _Mercurial_ projects, similar to VSCode, Git and SVN (kudos to @lavir [PR 168](https://github.com/alefragnani/vscode-project-manager/pull/168))
+
 ## [0.24.1] - 2018-03-06
 ### Fixed
 - `Refresh Projects` and Automatic Detection of Projects not working correctly (issues [#157](https://github.com/alefragnani/vscode-project-manager/issues/157), [#164](https://github.com/alefragnani/vscode-project-manager/issues/164), [#167](https://github.com/alefragnani/vscode-project-manager/issues/167) and [#172](https://github.com/alefragnani/vscode-project-manager/issues/172))
