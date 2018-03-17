@@ -3,7 +3,10 @@
 - Support _Mercurial_ projects, similar to VSCode, Git and SVN (kudos to @lavir [PR 168](https://github.com/alefragnani/vscode-project-manager/pull/168))
 
 ### Changed
-- The _sort by name_ option is now case-insensitive (kudos to @lavir [PR 168](https://github.com/alefragnani/vscode-project-manager/pull/169))
+- The _sort by name_ option is now case-insensitive (kudos to @lavir [PR 169](https://github.com/alefragnani/vscode-project-manager/pull/169))
+
+### Fixed
+- Readme typo (thanks to @gavinr [PR 171](https://github.com/alefragnani/vscode-project-manager/pull/171))
 
 ## [0.24.1] - 2018-03-06
 ### Fixed
@@ -57,7 +60,7 @@
 - Setting to disable checking for invalid paths before listing projects
 
 ### Changed
-- : Source code moved to `src` folder
+- Source code moved to `src` folder
 
 ## [0.17.0] - 2017-05-20
 ### Added
