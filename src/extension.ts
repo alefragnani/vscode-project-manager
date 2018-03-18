@@ -14,6 +14,11 @@ import { Project, ProjectStorage } from "./storage";
 
 const PROJECTS_FILE = "projects.json";
 
+const VSCODE_ICON = "$(file-code)";
+const GIT_ICON = "$(git-branch)";
+const MERCURIAL_ICON = "$(git-branch)";
+const SVN_ICON = "$(zap)";
+
 const vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", new CustomRepositoryDetector([".vscode"]));
 const gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([".git"]));
 const mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", new CustomRepositoryDetector([".hg", "hgrc"]));
@@ -274,7 +279,7 @@ export function activate(context: vscode.ExtensionContext) {
         itemsToShow = removeRootPath(itemsToShow);
         const checkInvalidPath: boolean = vscode.workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
         if (checkInvalidPath) {
-            itemsToShow = indicateInvalidPaths(itemsToShow);
+            itemsToShow = PathUtils.indicateInvalidPaths(itemsToShow);
         }
         const sortList = vscode.workspace.getConfiguration("projectManager").get("sortList", "Name");
         const newItemsSorted = ProjectsSorter.SortItemsByCriteria(itemsToShow, sortList, aStack);
@@ -309,38 +314,17 @@ export function activate(context: vscode.ExtensionContext) {
         return Promise.resolve(newDirectories);
     }
 
-    function getVSCodeProjects(itemsSorted: any[]): Promise<{}> {
+    function getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator, icon: string): Promise<{}> {
 
         return new Promise((resolve, reject) => {
 
-            vscLocator.locateProjects()
+            locator.locateProjects()
                 .then(filterKnownDirectories.bind(this, itemsSorted))
                 .then((dirList: any[]) => {
                     let newItems = [];
                     newItems = dirList.map(item => {
                         return {
-                            description: item.fullPath,
-                            label: "$(file-code) " + item.name
-                        };
-                    });
-
-                    newItems = sortGroupedList(newItems);
-                    resolve(itemsSorted.concat(newItems));
-                });
-        });
-    }
-
-    function getGitProjects(itemsSorted: any[]): Promise<{}> {
-
-        return new Promise((resolve, reject) => {
-
-            gitLocator.locateProjects()
-                .then(filterKnownDirectories.bind(this, itemsSorted))
-                .then((dirList: any[]) => {
-                    let newItems = [];
-                    newItems = dirList.map(item => {
-                        return {
-                            label: "$(git-branch) " + item.name,
+                            label: icon + " " + item.name,
                             description: item.fullPath
                         };
                     });
@@ -349,49 +333,7 @@ export function activate(context: vscode.ExtensionContext) {
                     resolve(itemsSorted.concat(newItems));
                 });
         });
-    }
-
-    function getMercurialProjects(itemsSorted: any[]): Promise<{}> {
-
-        return new Promise((resolve, reject) => {
-
-            mercurialLocator.locateProjects()
-                .then(filterKnownDirectories.bind(this, itemsSorted))
-                .then((dirList: any[]) => {
-                    let newItems = [];
-                    newItems = dirList.map(item => {
-                        return {
-                            label: "$(git-branch) " + item.name,
-                            description: item.fullPath
-                        };
-                    });
-
-                    newItems = sortGroupedList(newItems);
-                    resolve(itemsSorted.concat(newItems));
-                });
-        });
-    }
-
-    function getSvnProjects(itemsSorted: any[]): Promise<{}> {
-
-        return new Promise((resolve, reject) => {
-
-            svnLocator.locateProjects()
-                .then(filterKnownDirectories.bind(this, itemsSorted))
-                .then((dirList: any[]) => {
-                    let newItems = [];
-                    newItems = dirList.map(item => {
-                        return {
-                            label: "$(zap) " + item.name,
-                            description: item.fullPath
-                        };
-                    });
-
-                    newItems = sortGroupedList(newItems);
-                    resolve(itemsSorted.concat(newItems));
-                });
-        });
-    }
+    }    
 
     function listProjects(forceNewWindow: boolean) {
         let items = [];
@@ -441,7 +383,7 @@ export function activate(context: vscode.ExtensionContext) {
             } else {
                 // project path
                 let projectPath = selected.description;
-                projectPath = normalizePath(projectPath);
+                projectPath = PathUtils.normalizePath(projectPath);
 
                 // update MRU
                 aStack.push(selected.label);
@@ -463,20 +405,16 @@ export function activate(context: vscode.ExtensionContext) {
 
         getProjects(items)
             .then((folders) => {
-
-                return getVSCodeProjects(<any[]> folders);
+                return getLocatorProjects(<any[]> folders, vscLocator, VSCODE_ICON);
             })
             .then((folders) => {
-
-                return getGitProjects(<any[]> folders);
+                return getLocatorProjects(<any[]> folders, gitLocator, GIT_ICON);
             })
             .then((folders) => {
-
-                return getMercurialProjects(<any[]> folders);
+                return getLocatorProjects(<any[]> folders, mercurialLocator, MERCURIAL_ICON);
             })
             .then((folders) => {
-
-                return getSvnProjects(<any[]> folders);
+                return getLocatorProjects(<any[]> folders, svnLocator, SVN_ICON);
             })
             .then((folders) => { // sort
                 if ((<any[]> folders).length === 0) {
@@ -503,26 +441,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function indicateInvalidPaths(items: any[]): any[] {
-        for (const element of items) {
-            if (!element.detail && (!fs.existsSync(element.description.toString()))) {
-                element.detail = "$(circle-slash) Path does not exist";
-            }
-        }
-
-        return items;
-    }
-
-    function normalizePath(path: string): string {
-        let normalizedPath: string = path;
-
-        if (!PathUtils.pathIsUNC(normalizedPath)) {
-            const replaceable = normalizedPath.split("\\");
-            normalizedPath = replaceable.join("\\\\");
-        }
-
-        return normalizedPath;
-    }
 
     function getChannelPath(): string {
         if (vscode.env.appName.indexOf("Insiders") > 0) {
