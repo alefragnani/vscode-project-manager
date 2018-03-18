@@ -1,22 +1,22 @@
 import fs = require("fs");
 import path = require("path");
-import {AbstractLocator} from "./abstractLocator";
+import {CustomProjectLocator} from "./abstractLocator";
 
-export class SvnLocator extends AbstractLocator {
+export class SvnLocator extends CustomProjectLocator {
 
-    public getKind(): string {
-        return "svn";
-    }
+    // public getKind(): string {
+    //     return "svn";
+    // }
 
-    public getDisplayName(): string {
-        return "SVN";
-    }
+    // public getDisplayName(): string {
+    //     return "SVN";
+    // }
 
-    public isRepoDir(projectPath: string) {
-        return fs.existsSync(path.join(projectPath, ".svn", "pristine"));
-    }
+    // public isRepoDir(projectPath: string) {
+    //     return fs.existsSync(path.join(projectPath, ".svn", "pristine"));
+    // }
 
-    public decideProjectName(projectPath: string): string {
-        return path.basename(projectPath);
-    }
+    // public decideProjectName(projectPath: string): string {
+    //     return path.basename(projectPath);
+    // }
 }

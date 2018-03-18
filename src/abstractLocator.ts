@@ -13,7 +13,31 @@ export interface DirInfo {
 }
 export interface DirList extends Array<DirInfo> { };
 
-export abstract class AbstractLocator {
+type DecideProjectName = (projectPath: string) => string;
+type IsRepoDir = (projectPath: string) => boolean;
+
+export interface RepositoryDetector {
+
+    isRepoDir(projectPath: string);
+    decideProjectName(projectPath: string): string; 
+
+}
+
+export class CustomRepositoryDetector implements RepositoryDetector {
+
+    constructor (public paths: string[]) {
+    }
+
+    public isRepoDir(projectPath: string) {
+        return fs.existsSync(path.join(projectPath, ...this.paths));
+    }
+
+    public decideProjectName(projectPath: string): string {
+        return path.basename(projectPath);
+    }    
+}
+
+export class CustomProjectLocator {
 
     public dirList: DirList = <DirList> [];
     private maxDepth: number;
@@ -22,7 +46,10 @@ export abstract class AbstractLocator {
     private alreadyLocated: boolean;
     private baseFolders: string[];
 
-    constructor() {
+    constructor(public kind: string, public displayName: string, 
+        public repositoryDetector: RepositoryDetector) {
+    //   public decideProjectName: DecideProjectName,
+    //   public isRepoDir: IsRepoDir) {
         this.maxDepth = -1;
         this.ignoredFolders = [];
         this.useCachedProjects = true;
@@ -31,10 +58,10 @@ export abstract class AbstractLocator {
         this.refreshConfig();
     }
 
-    public abstract getKind(): string;
-    public abstract getDisplayName(): string;
-    public abstract decideProjectName(projectPath: string): string;
-    public abstract isRepoDir(projectPath: string): boolean;
+    // public abstract getKind(): string;
+    // public abstract getDisplayName(): string;
+    // public abstract decideProjectName(projectPath: string): string;
+    // public abstract isRepoDir(projectPath: string): boolean;
 
     public getPathDepth(s) {
         return s.split(path.sep).length;
@@ -92,7 +119,7 @@ export abstract class AbstractLocator {
                 return;
             }
 
-            this.initializeCfg(this.getKind());
+            this.initializeCfg(this.kind);
             if (this.isAlreadyLocated()) {
                 resolve(this.dirList);
                 return;
@@ -151,8 +178,8 @@ export abstract class AbstractLocator {
 
     public processDirectory = (absPath: string, stat: any) => {
         // vscode.window.setStatusBarMessage(absPath, 600);
-        if (this.isRepoDir(absPath)) {
-            this.addToList(absPath, this.decideProjectName(absPath));
+        if (this.repositoryDetector.isRepoDir(absPath)) {
+            this.addToList(absPath, this.repositoryDetector.decideProjectName(absPath));
         }
     }
 
@@ -187,7 +214,7 @@ export abstract class AbstractLocator {
     public existsWithRootPath(rootPath: string): Project {
         
         // it only works if using `cache`
-        this.initializeCfg(this.getKind());
+        this.initializeCfg(this.kind);
         if (!this.isAlreadyLocated()) {
             return null;
         }
@@ -217,9 +244,9 @@ export abstract class AbstractLocator {
         let cacheFile: string;
         const appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
         const channelPath: string = this.getChannelPath();
-        cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.getKind() + ".json");
+        cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.kind + ".json");
         if ((process.platform === "linux") && (!fs.existsSync(cacheFile))) {
-            cacheFile = path.join(homeDir, ".config/", channelPath, "User", CACHE_FILE + this.getKind() + ".json");
+            cacheFile = path.join(homeDir, ".config/", channelPath, "User", CACHE_FILE + this.kind + ".json");
         }
         return cacheFile;
     }
@@ -229,19 +256,19 @@ export abstract class AbstractLocator {
         let refreshedSomething: boolean = false;
         let currentValue = null;
 
-        currentValue = config.get<string[]>(this.getKind() + ".baseFolders");
+        currentValue = config.get<string[]>(this.kind + ".baseFolders");
         if (!this.arraysAreEquals(this.baseFolders, currentValue)) {
             this.baseFolders = currentValue;
             refreshedSomething = true;
         }
 
-        currentValue = config.get<string[]>(this.getKind() + ".ignoredFolders", []);
+        currentValue = config.get<string[]>(this.kind + ".ignoredFolders", []);
         if (!this.arraysAreEquals(this.ignoredFolders, currentValue)) {
             this.ignoredFolders = currentValue;
             refreshedSomething = true;
         }        
 
-        currentValue = config.get(this.getKind() + ".maxDepthRecursion", -1);
+        currentValue = config.get(this.kind + ".maxDepthRecursion", -1);
         if (this.maxDepth !== currentValue) {
             this.maxDepth = currentValue;
             refreshedSomething = true;

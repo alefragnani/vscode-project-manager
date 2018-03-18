@@ -5,14 +5,12 @@ import path = require("path");
 import * as vscode from "vscode";
 import stack = require("./stack");
 
-import { GitLocator } from "./gitLocator";
-import { MercurialLocator } from "./mercurialLocator";
+import { CustomProjectLocator, CustomRepositoryDetector } from "./abstractLocator";
+import { GitRepositoryDetector } from "./gitLocator";
 import { homeDir, PathUtils } from "./PathUtils";
 import { ProjectProvider } from "./ProjectProvider";
 import { ProjectsSorter } from "./sorter";
 import { Project, ProjectStorage } from "./storage";
-import { SvnLocator } from "./svnLocator";
-import { VisualStudioCodeLocator } from "./vscodeLocator";
 
 const PROJECTS_FILE = "projects.json";
 
@@ -26,10 +24,10 @@ const enum ProjectsSource {
 
 export interface ProjectsSourceSet extends Array<ProjectsSource> { };
 
-const vscLocator: VisualStudioCodeLocator = new VisualStudioCodeLocator();
-const gitLocator: GitLocator = new GitLocator();
-const mercurialLocator: MercurialLocator = new MercurialLocator();
-const svnLocator: SvnLocator = new SvnLocator();
+const vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", new CustomRepositoryDetector([".vscode"]));
+const gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([".git"]));
+const mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", new CustomRepositoryDetector([".hg", "hgrc"]));
+const svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", new CustomRepositoryDetector([".svn", "pristine"]));
 const locators = [vscLocator, gitLocator, mercurialLocator, svnLocator];
 
 // this method is called when your extension is activated

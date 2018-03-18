@@ -1,22 +1,22 @@
 import fs = require("fs");
 import path = require("path");
-import {AbstractLocator} from "./abstractLocator";
+import {CustomProjectLocator} from "./abstractLocator";
 
-export class MercurialLocator extends AbstractLocator {
+export class MercurialLocator extends CustomProjectLocator {
 
-    public getKind(): string {
-        return "hg";
-    }
+    // public getKind(): string {
+    //     return "hg";
+    // }
 
-    public getDisplayName(): string {
-        return "Mercurial";
-    }
+    // public getDisplayName(): string {
+    //     return "Mercurial";
+    // }
 
-    public isRepoDir(projectPath: string) {
-        return fs.existsSync(path.join(projectPath, ".hg", "hgrc"));
-    }
+    // public isRepoDir(projectPath: string) {
+    //     return fs.existsSync(path.join(projectPath, ".hg", "hgrc"));
+    // }
 
-    public decideProjectName(projectPath: string): string {
-        return path.basename(projectPath);
-    }
+    // public decideProjectName(projectPath: string): string {
+    //     return path.basename(projectPath);
+    // }
 }

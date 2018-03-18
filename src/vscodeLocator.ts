@@ -1,22 +1,11 @@
 import fs = require("fs");
 import path = require("path");
-import {AbstractLocator} from "./abstractLocator";
+import { CustomProjectLocator, CustomRepositoryDetector} from "./abstractLocator";
 
-export class VisualStudioCodeLocator extends AbstractLocator {
+export class VisualStudioCodeLocator extends CustomRepositoryDetector {
 
-    public getKind(): string {
-        return "vscode";
-    }
+    // public isRepoDir(projectPath: string) {
+    //     return fs.existsSync(path.join(projectPath, ".vscode"));
+    // }
 
-    public getDisplayName(): string {
-        return "VSCode";
-    }
-
-    public isRepoDir(projectPath: string) {
-        return fs.existsSync(path.join(projectPath, ".vscode"));
-    }
-
-    public decideProjectName(projectPath: string): string {
-        return path.basename(projectPath);
-    }    
 }

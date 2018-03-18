@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { AbstractLocator, DirInfo } from "./abstractLocator";
+import { CustomProjectLocator, DirInfo } from "./abstractLocator";
 import { PathUtils } from "./PathUtils";
 import { ProjectStorage } from "./storage";
 
@@ -26,7 +26,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
   private _onDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
   readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private projectStorage: ProjectStorage, private locators: AbstractLocator[], ctx: vscode.ExtensionContext) {
+  constructor(private projectStorage: ProjectStorage, private locators: CustomProjectLocator[], ctx: vscode.ExtensionContext) {
     context = ctx;
   }
 
@@ -103,7 +103,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         // Locators (VSCode/Git/Mercurial/SVN)
         for (const locator of this.locators) {
           const projects: ProjectPreview[] = [];
-          locator.initializeCfg(locator.getKind());
+          locator.initializeCfg(locator.kind);
           
           if (locator.dirList.length > 0) {
             // tslint:disable-next-line:prefer-for-of
@@ -115,7 +115,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
                 path: dirinfo.fullPath
               });
             }
-            lll.push(new ProjectNode(locator.getDisplayName(), vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
+            lll.push(new ProjectNode(locator.displayName, vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
           }
         }
 
