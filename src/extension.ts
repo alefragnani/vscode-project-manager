@@ -14,21 +14,10 @@ import { Project, ProjectStorage } from "./storage";
 
 const PROJECTS_FILE = "projects.json";
 
-const enum ProjectsSource {
-    Projects,
-    VSCode,
-    Git,
-    Mercurial,
-    Svn
-}
-
-export interface ProjectsSourceSet extends Array<ProjectsSource> { };
-
 const vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", new CustomRepositoryDetector([".vscode"]));
 const gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([".git"]));
 const mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", new CustomRepositoryDetector([".hg", "hgrc"]));
 const svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", new CustomRepositoryDetector([".svn", "pristine"]));
-const locators = [vscLocator, gitLocator, mercurialLocator, svnLocator];
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -73,8 +62,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects(true, true));
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
-    vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Mercurial, ProjectsSource.Svn]));
-    vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Mercurial, ProjectsSource.Svn]));
+    vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
+    vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
     loadProjectsFile();
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
@@ -156,29 +145,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
-        // let promisses: Promise<boolean>[] = [];
-        // for (const locator of locators) {
-        //     let ll = locator.refreshProjects(forceRefresh)
-        //     promisses.push(ll);
-        // }
-
-        // Promise.all(promisses).then(
-        //     (values) => {
-        //         let refreshedSomething: boolean = false;
-        //         for (const locatorRefreshed of values) {
-        //             refreshedSomething = refreshedSomething || locatorRefreshed;
-        //         }
-
-        //         if (refreshedSomething || forceRefresh) {
-        //             projectProvider.refresh();
-        //         }
-
-        //         if (showMessage) {
-        //             vscode.window.showInformationMessage("The projects have been refreshed!");
-        //         }
-        //     }
-        // );
-
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Window,
             title: 'Refresh Projects'
@@ -205,19 +171,6 @@ export function activate(context: vscode.ExtensionContext) {
             }
         })
 
-        // let refreshedSomething: boolean = false;
-        // for (const locator of locators) {
-        //     let locatorRefreshed: boolean = locator.refreshProjects(forceRefresh);
-        //     refreshedSomething = refreshedSomething || locatorRefreshed;
-        // }
-
-        // if (refreshedSomething || forceRefresh) {
-        //     projectProvider.refresh();
-        // }
-
-        // if (showMessage) {
-        //     vscode.window.showInformationMessage("The projects have been refreshed!");
-        // }
     }
 
     function editProjects() {
@@ -336,15 +289,11 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function getProjects(itemsSorted: any[], sources: ProjectsSourceSet): Promise<{}> {
+    function getProjects(itemsSorted: any[]): Promise<{}> {
 
         return new Promise((resolve, reject) => {
 
-            if (sources.indexOf(ProjectsSource.Projects) === -1) {
-                resolve([]);
-            } else {
-                resolve(itemsSorted);
-            }
+            resolve(itemsSorted);
 
         });
     }
@@ -444,7 +393,7 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    function listProjects(forceNewWindow: boolean, sources: ProjectsSourceSet) {
+    function listProjects(forceNewWindow: boolean) {
         let items = [];
         items = projectStorage.map();
         items = sortGroupedList(items);
@@ -512,34 +461,20 @@ export function activate(context: vscode.ExtensionContext) {
             placeHolder: "Loading Projects (pick one to open)"
         };
 
-        getProjects(items, sources)
+        getProjects(items)
             .then((folders) => {
-
-                // not in SET
-                if (sources.indexOf(ProjectsSource.VSCode) === -1) {
-                    return folders;
-                }
 
                 return getVSCodeProjects(<any[]> folders);
             })
             .then((folders) => {
-                if (sources.indexOf(ProjectsSource.Git) === -1) {
-                    return folders;
-                }
 
                 return getGitProjects(<any[]> folders);
             })
             .then((folders) => {
-                if (sources.indexOf(ProjectsSource.Mercurial) === -1) {
-                    return folders;
-                }
 
                 return getMercurialProjects(<any[]> folders);
             })
             .then((folders) => {
-                if (sources.indexOf(ProjectsSource.Svn) === -1) {
-                    return folders;
-                }
 
                 return getSvnProjects(<any[]> folders);
             })
