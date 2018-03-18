@@ -13,9 +13,6 @@ export interface DirInfo {
 }
 export interface DirList extends Array<DirInfo> { };
 
-type DecideProjectName = (projectPath: string) => string;
-type IsRepoDir = (projectPath: string) => boolean;
-
 export interface RepositoryDetector {
 
     isRepoDir(projectPath: string);
@@ -48,8 +45,6 @@ export class CustomProjectLocator {
 
     constructor(public kind: string, public displayName: string, 
         public repositoryDetector: RepositoryDetector) {
-    //   public decideProjectName: DecideProjectName,
-    //   public isRepoDir: IsRepoDir) {
         this.maxDepth = -1;
         this.ignoredFolders = [];
         this.useCachedProjects = true;
@@ -57,11 +52,6 @@ export class CustomProjectLocator {
         this.baseFolders = [];
         this.refreshConfig();
     }
-
-    // public abstract getKind(): string;
-    // public abstract getDisplayName(): string;
-    // public abstract decideProjectName(projectPath: string): string;
-    // public abstract isRepoDir(projectPath: string): boolean;
 
     public getPathDepth(s) {
         return s.split(path.sep).length;
