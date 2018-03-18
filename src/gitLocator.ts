@@ -1,6 +1,6 @@
 import fs = require("fs");
 import path = require("path");
-import { CustomProjectLocator, CustomRepositoryDetector } from "./abstractLocator";
+import { CustomRepositoryDetector } from "./abstractLocator";
 
 export class GitRepositoryDetector extends CustomRepositoryDetector {
 
