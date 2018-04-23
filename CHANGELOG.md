@@ -1,3 +1,7 @@
+## [0.25.1] - 2018-04-23
+### Fixed
+- Support _OSS_ releases, using the correct _User folder_ to store the projects (kudos to @lavir [PR 179](https://github.com/alefragnani/vscode-project-manager/pull/179))
+
 ## [0.25.0] - 2018-03-18
 ### New
 - Support _Mercurial_ projects, similar to VSCode, Git and SVN (kudos to @lavir [PR 168](https://github.com/alefragnani/vscode-project-manager/pull/168))
