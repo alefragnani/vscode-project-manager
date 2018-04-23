@@ -592,13 +592,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function getChannelPath(): string {
-        if (vscode.env.appName.indexOf("Insiders") > 0) {
-            return "Code - Insiders";
-        } else if (vscode.env.appName.indexOf("OSS") > 0) {
-            return "Code - OSS";
-        } else {
-            return "Code";
-        }
+        return vscode.env.appName.replace("Visual Studio ", "");
     }
 
     function loadProjectsFile() {
