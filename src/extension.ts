@@ -152,19 +152,19 @@ export function activate(context: vscode.ExtensionContext) {
 
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Window,
-            title: 'Refresh Projects'
+            title: "Refresh Projects"
         }, async (progress) => {
-            progress.report({ message: 'Refreshing Projects (VSCode)' });
-            let rvscode = await vscLocator.refreshProjects(forceRefresh);
+            progress.report({ message: "Refreshing Projects (VSCode)" });
+            const rvscode = await vscLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: 'Refreshing Projects (Git)' });
-            let rgit = await gitLocator.refreshProjects(forceRefresh);
+            progress.report({ message: "Refreshing Projects (Git)" });
+            const rgit = await gitLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: 'Refreshing Projects (Mercurial)' });
-            let rmercurial = await mercurialLocator.refreshProjects(forceRefresh);
+            progress.report({ message: "Refreshing Projects (Mercurial)" });
+            const rmercurial = await mercurialLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: 'Refreshing Projects (SVN)' });
-            let rsvn = await svnLocator.refreshProjects(forceRefresh);
+            progress.report({ message: "Refreshing Projects (SVN)" });
+            const rsvn = await svnLocator.refreshProjects(forceRefresh);
 
             if (rvscode || rgit || rmercurial || rsvn || forceRefresh) {
                 progress.report({ message: "Refreshing Projects (TreeView)"});
@@ -440,7 +440,6 @@ export function activate(context: vscode.ExtensionContext) {
             return items.filter(value => value.description.toString().toLowerCase() !== vscode.workspace.rootPath.toLowerCase());
         }
     }
-
 
     function getChannelPath(): string {
         if (vscode.env.appName.indexOf("Insiders") > 0) {

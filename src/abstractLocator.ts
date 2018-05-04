@@ -22,7 +22,7 @@ export interface RepositoryDetector {
 
 export class CustomRepositoryDetector implements RepositoryDetector {
 
-    constructor (public paths: string[]) {
+    constructor(public paths: string[]) {
     }
 
     public isRepoDir(projectPath: string) {
@@ -44,7 +44,7 @@ export class CustomProjectLocator {
     private baseFolders: string[];
 
     constructor(public kind: string, public displayName: string, 
-        public repositoryDetector: RepositoryDetector) {
+                public repositoryDetector: RepositoryDetector) {
         this.maxDepth = -1;
         this.ignoredFolders = [];
         this.useCachedProjects = true;
