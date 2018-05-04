@@ -19,10 +19,10 @@ const GIT_ICON = "$(git-branch)";
 const MERCURIAL_ICON = "$(git-branch)";
 const SVN_ICON = "$(zap)";
 
-const vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", new CustomRepositoryDetector([".vscode"]));
-const gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([".git"]));
-const mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", new CustomRepositoryDetector([".hg", "hgrc"]));
-const svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", new CustomRepositoryDetector([".svn", "pristine"]));
+const vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", VSCODE_ICON, new CustomRepositoryDetector([".vscode"]));
+const gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", GIT_ICON, new GitRepositoryDetector([".git"]));
+const mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", MERCURIAL_ICON, new CustomRepositoryDetector([".hg", "hgrc"]));
+const svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", SVN_ICON, new CustomRepositoryDetector([".svn", "pristine"]));
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -314,7 +314,7 @@ export function activate(context: vscode.ExtensionContext) {
         return Promise.resolve(newDirectories);
     }
 
-    function getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator, icon: string): Promise<{}> {
+    function getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator): Promise<{}> {
 
         return new Promise((resolve, reject) => {
 
@@ -324,7 +324,7 @@ export function activate(context: vscode.ExtensionContext) {
                     let newItems = [];
                     newItems = dirList.map(item => {
                         return {
-                            label: icon + " " + item.name,
+                            label: locator.icon + " " + item.name,
                             description: item.fullPath
                         };
                     });
@@ -405,16 +405,16 @@ export function activate(context: vscode.ExtensionContext) {
 
         getProjects(items)
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, vscLocator, VSCODE_ICON);
+                return getLocatorProjects(<any[]> folders, vscLocator);
             })
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, gitLocator, GIT_ICON);
+                return getLocatorProjects(<any[]> folders, gitLocator);
             })
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, mercurialLocator, MERCURIAL_ICON);
+                return getLocatorProjects(<any[]> folders, mercurialLocator);
             })
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, svnLocator, SVN_ICON);
+                return getLocatorProjects(<any[]> folders, svnLocator);
             })
             .then((folders) => { // sort
                 if ((<any[]> folders).length === 0) {

@@ -43,8 +43,8 @@ export class CustomProjectLocator {
     private alreadyLocated: boolean;
     private baseFolders: string[];
 
-    constructor(public kind: string, public displayName: string, 
-                public repositoryDetector: RepositoryDetector) {
+    constructor(public kind: string, public displayName: string,
+                public icon: string, public repositoryDetector: RepositoryDetector) {
         this.maxDepth = -1;
         this.ignoredFolders = [];
         this.useCachedProjects = true;
