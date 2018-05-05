@@ -215,13 +215,6 @@ export class ProjectStorage {
         }
     }
 
-    private updatePaths(): void {
-        for (let index = 0; index < this.projectList.length; index++) {
-            const pi = this.projectList[index];
-            pi.rootPath = PathUtils.updateWithPathSeparatorStr(pi.rootPath);
-        }
-    }
-
     /**
      * Reloads the `projects.json` file. 
      * 
@@ -263,5 +256,11 @@ export class ProjectStorage {
             };
         });
         return newItems;
+    }
+
+    private updatePaths(): void {
+        for (const project of this.projectList) {
+            project.rootPath = PathUtils.updateWithPathSeparatorStr(project.rootPath);
+        }
     }
 }

@@ -23,15 +23,16 @@ let context: vscode.ExtensionContext;
 
 export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
 
-  private _onDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
-  readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined> = this._onDidChangeTreeData.event;
+  public readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined>;
+  private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
 
   constructor(private projectStorage: ProjectStorage, private locators: CustomProjectLocator[], ctx: vscode.ExtensionContext) {
+    this.onDidChangeTreeData = this.internalOnDidChangeTreeData.event;
     context = ctx;
   }
 
   public refresh(): void {
-    this._onDidChangeTreeData.fire();
+    this.internalOnDidChangeTreeData.fire();
   }
 
   public getTreeItem(element: ProjectNode): vscode.TreeItem {

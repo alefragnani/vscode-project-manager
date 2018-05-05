@@ -1,8 +1,8 @@
 "use strict";
 
+import fs = require("fs");
 import os = require("os");
 import path = require("path");
- import fs = require("fs");
 
 export const homeDir = os.homedir();
 export const homePathVariable = "$home";
@@ -112,6 +112,4 @@ export class PathUtils {
 
         return items;
     }
-
-
 }
