@@ -43,11 +43,40 @@
 	],
 	"main": "./out/src/extension",
 	"contributes": {
-		"views": {
-			"explorer": [
+		"viewsContainers": {
+			"activitybar": [
 				{
-					"id": "projectsExplorer",
-					"name": "Projects",
+					"id": "project-manager",
+					"title": "Project Manager",
+					"icon": "images/ico-favorites-dark.svg"
+				}
+			]
+		},
+		"views": {
+			"project-manager": [
+				{
+					"id": "projectsExplorerFavorites",
+					"name": "Favorites",
+					"when": "canShowTreeView"
+				},
+				{
+					"id": "projectsExplorerGit",
+					"name": "Git",
+					"when": "canShowTreeView"
+				},
+				{
+					"id": "projectsExplorerSVN",
+					"name": "SVN",
+					"when": "canShowTreeView"
+				},
+				{
+					"id": "projectsExplorerMercurial",
+					"name": "Mercurial",
+					"when": "canShowTreeView"
+				},
+				{
+					"id": "projectsExplorerVSCode",
+					"name": "VSCode",
 					"when": "canShowTreeView"
 				}
 			]

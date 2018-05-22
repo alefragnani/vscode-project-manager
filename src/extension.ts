@@ -45,8 +45,15 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
 
     // tree-view
-    const projectProvider = new ProjectProvider(projectStorage, [vscLocator, gitLocator, svnLocator], context);
-    vscode.window.registerTreeDataProvider("projectsExplorer", projectProvider);
+    const projectProvider1 = new ProjectProvider(projectStorage, context);
+    const projectProvider2 = new ProjectProvider(vscLocator, context);
+    const projectProvider3 = new ProjectProvider(gitLocator, context);
+    const projectProvider4 = new ProjectProvider(svnLocator, context);
+
+    vscode.window.registerTreeDataProvider("projectsExplorerFavorites", projectProvider1);
+    vscode.window.registerTreeDataProvider("projectsExplorerVSCode", projectProvider2);
+    vscode.window.registerTreeDataProvider("projectsExplorerGit", projectProvider3);
+    vscode.window.registerTreeDataProvider("projectsExplorerSVN", projectProvider4);
 
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;
@@ -77,7 +84,10 @@ export function activate(context: vscode.ExtensionContext) {
     loadProjectsFile();
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
-        projectProvider.refresh();
+        projectProvider1.refresh();
+        projectProvider2.refresh();
+        projectProvider3.refresh();
+        projectProvider4.refresh();
     });
 
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
@@ -157,7 +167,10 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         if (refreshedSomething || forceProviderRefresh) {
-            projectProvider.refresh();
+            projectProvider1.refresh();
+            projectProvider2.refresh();
+            projectProvider3.refresh();
+            projectProvider4.refresh();
         }
 
         if (showMessage) {
