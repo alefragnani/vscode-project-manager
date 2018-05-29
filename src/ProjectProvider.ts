@@ -140,6 +140,25 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
     });
   }
 
+  showTreeView(): void {
+    let canShowTreeView: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", true);
+    if (this.projectSource instanceof ProjectStorage) {
+      vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + "Favorites", canShowTreeView && this.projectSource.length() > 0);
+      return;
+    }
+
+    if (this.projectSource instanceof AbstractLocator) {
+      if (canShowTreeView) {
+        this.projectSource.initializeCfg(this.projectSource.getKind());
+        vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.getKind(), 
+        this.projectSource.dirList.length > 0);
+      } else {
+        vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.getKind(), false);
+      }      
+      return;
+    }
+  }
+
 }
 
 class ProjectNode extends vscode.TreeItem {

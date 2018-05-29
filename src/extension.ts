@@ -41,19 +41,8 @@ export function activate(context: vscode.ExtensionContext) {
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
     // tree-view optional
-    let canShowTreeView: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
-    vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
-
-    // tree-view
-    const projectProvider1 = new ProjectProvider(projectStorage, context);
-    const projectProvider2 = new ProjectProvider(vscLocator, context);
-    const projectProvider3 = new ProjectProvider(gitLocator, context);
-    const projectProvider4 = new ProjectProvider(svnLocator, context);
-
-    vscode.window.registerTreeDataProvider("projectsExplorerFavorites", projectProvider1);
-    vscode.window.registerTreeDataProvider("projectsExplorerVSCode", projectProvider2);
-    vscode.window.registerTreeDataProvider("projectsExplorerGit", projectProvider3);
-    vscode.window.registerTreeDataProvider("projectsExplorerSVN", projectProvider4);
+    // let canShowTreeView: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
+    // vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView", canShowTreeView);
 
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;
@@ -82,6 +71,27 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true, [ProjectsSource.Projects, ProjectsSource.VSCode, ProjectsSource.Git, ProjectsSource.Svn]));
     loadProjectsFile();
+
+    // tree-view
+    let providers: any[] = [];
+    const projectProvider1 = new ProjectProvider(projectStorage, context);
+    const projectProvider2 = new ProjectProvider(vscLocator, context);
+    const projectProvider3 = new ProjectProvider(gitLocator, context);
+    const projectProvider4 = new ProjectProvider(svnLocator, context);
+    providers.push(projectProvider1);
+    providers.push(projectProvider2);
+    providers.push(projectProvider3);
+    providers.push(projectProvider4);
+
+    vscode.window.registerTreeDataProvider("projectsExplorerFavorites", projectProvider1);
+    vscode.window.registerTreeDataProvider("projectsExplorervscode", projectProvider2);
+    vscode.window.registerTreeDataProvider("projectsExplorergit", projectProvider3);
+    vscode.window.registerTreeDataProvider("projectsExplorersvn", projectProvider4);
+    for (let index = 0; index < providers.length; index++) {
+        const element = providers[index];
+        element.showTreeView();
+    }
+
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
         projectProvider1.refresh();
@@ -154,9 +164,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     function refreshTreeViewOnChangeConfiguration() {
         const config: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
-        if (canShowTreeView !== config) {
-            canShowTreeView = config;
-            vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
+        // if (canShowTreeView !== config) {
+        //     canShowTreeView = config;
+        //     vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView", canShowTreeView);
+        // }
+        for (let index = 0; index < providers.length; index++) {
+            const element = providers[index];
+            element.showTreeView();
         }
     }
 

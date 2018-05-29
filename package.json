@@ -57,27 +57,27 @@
 				{
 					"id": "projectsExplorerFavorites",
 					"name": "Favorites",
-					"when": "canShowTreeView"
+					"when": "projectManager.canShowTreeViewFavorites"
 				},
 				{
-					"id": "projectsExplorerGit",
+					"id": "projectsExplorergit",
 					"name": "Git",
-					"when": "canShowTreeView"
+					"when": "projectManager.canShowTreeViewgit"
 				},
 				{
-					"id": "projectsExplorerSVN",
+					"id": "projectsExplorersvn",
 					"name": "SVN",
-					"when": "canShowTreeView"
+					"when": "projectManager.canShowTreeViewsvn"
 				},
 				{
-					"id": "projectsExplorerMercurial",
+					"id": "projectsExplorermercurial",
 					"name": "Mercurial",
-					"when": "canShowTreeView"
+					"when": "projectManager.canShowTreeViewmercurial"
 				},
 				{
-					"id": "projectsExplorerVSCode",
+					"id": "projectsExplorervscode",
 					"name": "VSCode",
-					"when": "canShowTreeView"
+					"when": "projectManager.canShowTreeViewvscode"
 				}
 			]
 		},
