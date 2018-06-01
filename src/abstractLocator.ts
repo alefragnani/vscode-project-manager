@@ -183,6 +183,7 @@ export class CustomProjectLocator {
             
             if (!forceRefresh && !this.refreshConfig()) {
                 resolve(false);
+                return;
             }
     
             this.clearDirList();
