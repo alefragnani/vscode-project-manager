@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { AbstractLocator, DirInfo } from "./abstractLocator";
+import { CustomProjectLocator, DirInfo } from "./abstractLocator";
 import { PathUtils } from "./PathUtils";
 import { ProjectStorage } from "./storage";
 
@@ -23,15 +23,16 @@ let context: vscode.ExtensionContext;
 
 export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
 
-  private _onDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
-  readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined> = this._onDidChangeTreeData.event;
+  public readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined>;
+  private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
 
-  constructor(private projectStorage: ProjectStorage, private locators: AbstractLocator[], ctx: vscode.ExtensionContext) {
+  constructor(private projectStorage: ProjectStorage, private locators: CustomProjectLocator[], ctx: vscode.ExtensionContext) {
+    this.onDidChangeTreeData = this.internalOnDidChangeTreeData.event;
     context = ctx;
   }
 
   public refresh(): void {
-    this._onDidChangeTreeData.fire();
+    this.internalOnDidChangeTreeData.fire();
   }
 
   public getTreeItem(element: ProjectNode): vscode.TreeItem {
@@ -103,7 +104,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         // Locators (VSCode/Git/Mercurial/SVN)
         for (const locator of this.locators) {
           const projects: ProjectPreview[] = [];
-          locator.initializeCfg(locator.getKind());
+          locator.initializeCfg(locator.kind);
           
           if (locator.dirList.length > 0) {
             // tslint:disable-next-line:prefer-for-of
@@ -115,7 +116,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
                 path: dirinfo.fullPath
               });
             }
-            lll.push(new ProjectNode(locator.getDisplayName(), vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
+            lll.push(new ProjectNode(locator.displayName, vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
           }
         }
 

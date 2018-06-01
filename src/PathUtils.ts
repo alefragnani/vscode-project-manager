@@ -1,8 +1,8 @@
 "use strict";
 
+import fs = require("fs");
 import os = require("os");
 import path = require("path");
-// import fs = require("fs");
 
 export const homeDir = os.homedir();
 export const homePathVariable = "$home";
@@ -82,4 +82,34 @@ export class PathUtils {
         }
     }
 
+    /**
+     * Normalizes a path (fix \ -> \\)
+     * 
+     * @param path The path <string> to be normalized
+     */
+    public static normalizePath(path: string): string {
+        let normalizedPath: string = path;
+
+        if (!PathUtils.pathIsUNC(normalizedPath)) {
+            const replaceable = normalizedPath.split("\\");
+            normalizedPath = replaceable.join("\\\\");
+        }
+
+        return normalizedPath;
+    }
+ 
+    /**
+     * Indicates if a path is invalid, which means "does not exists"
+     * "
+     * @param items The items <QuickPickItems> to check for invalid paths
+     */
+    public static indicateInvalidPaths(items: any[]): any[] {
+        for (const element of items) {
+            if (!element.detail && (!fs.existsSync(element.description.toString()))) {
+                element.detail = "$(circle-slash) Path does not exist";
+            }
+        }
+
+        return items;
+    }
 }

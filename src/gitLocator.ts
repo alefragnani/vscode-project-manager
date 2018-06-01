@@ -1,16 +1,8 @@
 import fs = require("fs");
 import path = require("path");
-import {AbstractLocator} from "./abstractLocator";
+import { CustomRepositoryDetector } from "./abstractLocator";
 
-export class GitLocator extends AbstractLocator {
-
-    public getKind(): string {
-        return "git";
-    }
-
-    public getDisplayName(): string {
-        return "Git";
-    }
+export class GitRepositoryDetector extends CustomRepositoryDetector {
 
     public isRepoDir(projectPath: string) {
         let isGit: boolean;
@@ -36,7 +28,4 @@ export class GitLocator extends AbstractLocator {
         return false;
     }
 
-    public decideProjectName(projectPath: string): string {
-        return path.basename(projectPath);
-    }
 }
