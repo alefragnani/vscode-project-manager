@@ -9,7 +9,7 @@
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^1.18.0"
+		"vscode": "^1.21.0"
 	},
 	"categories": [
 		"Other"
@@ -43,12 +43,41 @@
 	],
 	"main": "./out/src/extension",
 	"contributes": {
-		"views": {
-			"explorer": [
+		"viewsContainers": {
+			"activitybar": [
 				{
-					"id": "projectsExplorer",
-					"name": "Projects",
-					"when": "canShowTreeView"
+					"id": "project-manager",
+					"title": "Project Manager",
+					"icon": "images/ico-favorites-dark.svg"
+				}
+			]
+		},
+		"views": {
+			"project-manager": [
+				{
+					"id": "projectsExplorerFavorites",
+					"name": "Favorites",
+					"when": "projectManager.canShowTreeViewFavorites"
+				},
+				{
+					"id": "projectsExplorerGit",
+					"name": "Git",
+					"when": "projectManager.canShowTreeViewGit"
+				},
+				{
+					"id": "projectsExplorerSVN",
+					"name": "SVN",
+					"when": "projectManager.canShowTreeViewSVN"
+				},
+				{
+					"id": "projectsExplorerMercurial",
+					"name": "Mercurial",
+					"when": "projectManager.canShowTreeViewMercurial"
+				},
+				{
+					"id": "projectsExplorerVSCode",
+					"name": "VSCode",
+					"when": "projectManager.canShowTreeViewVSCode"
 				}
 			]
 		},
@@ -264,7 +293,7 @@
 	"devDependencies": {
 		"@types/node": "^6.0.40",
 		"typescript": "^2.3.2",
-		"vscode": "^1.1.6"
+		"vscode": "^1.1.17"
 	},
 	"dependencies": {
 		"walker": "^1.0.7"
