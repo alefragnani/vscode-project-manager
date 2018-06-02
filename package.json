@@ -125,11 +125,11 @@
 			"view/item/context": [
 				{
 					"command": "projectManager.open",
-					"when": "view == projectsExplorer && viewItem == ProjectNodeProject"
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/"
 				},
 				{
 					"command": "projectManager.openInNewWindow",
-					"when": "view == projectsExplorer && viewItem == ProjectNodeProject"
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/"
 				}
 			]
 		},
