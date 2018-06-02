@@ -192,7 +192,7 @@ class ProjectNode extends vscode.TreeItem {
       dark: context.asAbsolutePath(this.getProjectIcon(icon, "dark"))
     };
     this.contextValue = "ProjectNodeKind";
-    this.tooltip = "";
+    this.tooltip = preview.path;
   }
 
   private getProjectIcon(project: string, lightDark: string): string {
