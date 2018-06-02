@@ -109,6 +109,10 @@
 			{
 				"command": "projectManager.openInNewWindow",
 				"title": "Open in New Window"
+			},
+			{
+				"command": "projectManager.addToWorkspace",
+				"title": "Add to Workspace"
 			}
 		],
 		"menus": {
@@ -120,16 +124,27 @@
 				{
 					"command": "projectManager.openInNewWindow",
 					"when": "false"
+				},
+				{
+					"command": "projectManager.addToWorkspace",
+					"when": "false"
 				}
 			],
 			"view/item/context": [
 				{
 					"command": "projectManager.open",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/"
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"group": "navigation"
 				},
 				{
 					"command": "projectManager.openInNewWindow",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/"
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"group": "navigation"
+				},
+				{
+					"command": "projectManager.addToWorkspace",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"group": "workspace"
 				}
 			]
 		},

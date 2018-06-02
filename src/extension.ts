@@ -55,6 +55,10 @@ export function activate(context: vscode.ExtensionContext) {
             value => vscode.window.showInformationMessage("Could not open the project!"));
     });
 
+    vscode.commands.registerCommand("projectManager.addToWorkspace", node => {
+        vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(node.command.arguments[ 0 ]) });
+    });
+
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects(true, true));
