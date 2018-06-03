@@ -66,6 +66,24 @@ export class ProjectStorage {
             }
         }
     }
+    
+    /**
+     * Removes a project to the list
+     * 
+     * @param `name` The [Project Name](#Project.name)
+     *
+     * @return The [Project](#Project) that was removed
+     */
+    public rename(oldName: string, newName: string): void {
+        // for (let index = 0; index < this.projectList.length; index++) {
+        //     const element: Project = this.projectList[index];
+        for (const element of this.projectList) {
+            if (element.name.toLowerCase() === oldName.toLowerCase()) {
+                element.name = newName;
+                return;
+            }
+        }
+    }
 
     /**
      * Adds another `path` to a project

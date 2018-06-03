@@ -101,7 +101,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
               {
                 command: "projectManager.open",
                 title: "",
-                arguments: [PathUtils.expandHomePath(prj.description)],
+                arguments: [PathUtils.expandHomePath(prj.description), prj.label],
               }));
           }
 
