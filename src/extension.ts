@@ -522,6 +522,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function deleteProject(node: any) {
+        aStack.pop(node.command.arguments[1]);
         projectStorage.pop(node.command.arguments[1]);
         projectStorage.save();
         vscode.window.showInformationMessage("Project successfully deleted!");
@@ -537,22 +538,23 @@ export function activate(context: vscode.ExtensionContext) {
             value: oldName
         };
 
-        vscode.window.showInputBox(ibo).then(projectName => {
-            if (typeof projectName === "undefined") {
+        vscode.window.showInputBox(ibo).then(newName => {
+            if (typeof newName === "undefined") {
                 return;
             }
 
             // 'empty'
-            if (projectName === "") {
+            if (newName === "") {
                 vscode.window.showWarningMessage("You must define a new name for the project.");
                 return;
             }
 
-            if (!projectStorage.exists(projectName)) {
-                projectStorage.rename(oldName, projectName);
+            if (!projectStorage.exists(newName)) {
+                aStack.rename(oldName, newName)
+                projectStorage.rename(oldName, newName);
                 projectStorage.save();
                 vscode.window.showInformationMessage("Project renamed!");
-                updateStatusBar(oldName, node.command.arguments[0], projectName);
+                updateStatusBar(oldName, node.command.arguments[0], newName);
             } else {
                 vscode.window.showErrorMessage("Project already exists!");
             }
