@@ -1,3 +1,11 @@
+## [8.0.0] - TBD
+### Added
+- Projects Activity Bar (issue [#183](https://github.com/alefragnani/vscode-project-manager/issues/183))
+- New Command in TreeView `Add to Workspace` (issue [#161](https://github.com/alefragnani/vscode-project-manager/issues/161))
+- New Version Numbering based on `semver`
+- New Welcome Page 
+- New Support Model based on DDD (Donation Driven Development :-) )
+
 ## [0.25.2 - 7.2.2] - 2018-04-23
 ### Fixed
 - Support _OSS_ releases, using the correct _User folder_ to store the projects (kudos to @Kurolox [PR 179](https://github.com/alefragnani/vscode-project-manager/pull/179))
