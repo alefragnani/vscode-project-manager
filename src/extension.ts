@@ -35,14 +35,6 @@ export function activate(context: vscode.ExtensionContext) {
     // load the projects
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
-    // tree-view optional
-    let canShowTreeView: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
-    vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
-
-    // tree-view
-    const projectProvider = new ProjectProvider(projectStorage, [vscLocator, gitLocator, mercurialLocator, svnLocator], context);
-    vscode.window.registerTreeDataProvider("projectsExplorer", projectProvider);
-
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;
         if (typeof node === "string") {
@@ -69,10 +61,32 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
+
+    // new commands (ActivityBar)
+    vscode.commands.registerCommand("projectManager.addToWorkspace", (node) => addProjectToWorkspace(node));
+    vscode.commands.registerCommand("projectManager.deleteProject", (node) => deleteProject(node));
+    vscode.commands.registerCommand("projectManager.renameProject", (node) => renameProject(node));
+
     loadProjectsFile();
+
+    // new place to register TreeView
+    const projectProviderStorage = new ProjectProvider(projectStorage, context);
+    const projectProviderVSCode = new ProjectProvider(vscLocator, context);
+    const projectProviderGit = new ProjectProvider(gitLocator, context);
+    const projectProviderMercurial = new ProjectProvider(mercurialLocator, context);
+    const projectProviderSVN = new ProjectProvider(svnLocator, context);
+    
+    vscode.window.registerTreeDataProvider("projectsExplorerFavorites", projectProviderStorage);
+    vscode.window.registerTreeDataProvider("projectsExplorerVSCode", projectProviderVSCode);
+    vscode.window.registerTreeDataProvider("projectsExplorerGit", projectProviderGit);
+    vscode.window.registerTreeDataProvider("projectsExplorerMercurial", projectProviderMercurial);
+    vscode.window.registerTreeDataProvider("projectsExplorerSVN", projectProviderSVN);
+
+    showTreeViewFromAllProviders();
+
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
-        projectProvider.refresh();
+        projectProviderStorage.refresh();
     });
 
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
@@ -81,7 +95,6 @@ export function activate(context: vscode.ExtensionContext) {
             cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
             refreshProjects();
         }
-        refreshTreeViewOnChangeConfiguration();
     }));
 
     let statusItem: vscode.StatusBarItem;
@@ -140,12 +153,18 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function refreshTreeViewOnChangeConfiguration() {
-        const config: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", false);
-        if (canShowTreeView !== config) {
-            canShowTreeView = config;
-            vscode.commands.executeCommand("setContext", "canShowTreeView", canShowTreeView);
+    function updateStatusBar(oldName: string, oldPath: string, newName: string): void {
+        if (statusItem.text === "$(file-directory) " + oldName && statusItem.tooltip === oldPath) {
+            statusItem.text = "$(file-directory) " + newName;
         }
+    }
+
+    function showTreeViewFromAllProviders() {
+        projectProviderStorage.showTreeView();
+        projectProviderVSCode.showTreeView();
+        projectProviderGit.showTreeView();
+        projectProviderMercurial.showTreeView();
+        projectProviderSVN.showTreeView();
     }
 
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
@@ -168,7 +187,19 @@ export function activate(context: vscode.ExtensionContext) {
 
             if (rvscode || rgit || rmercurial || rsvn || forceRefresh) {
                 progress.report({ message: "Refreshing Projects (TreeView)"});
-                projectProvider.refresh()
+                if (rvscode || forceRefresh) {
+                    projectProviderVSCode.refresh();
+                }
+                if (rgit || forceRefresh) {
+                    projectProviderGit.refresh();
+                }
+                if (rmercurial || forceRefresh) {
+                    projectProviderMercurial.refresh();
+                }
+                if (rsvn || forceRefresh) {
+                    projectProviderSVN.refresh();
+                }
+                showTreeViewFromAllProviders();
             }
 
             if (showMessage) {
@@ -484,4 +515,50 @@ export function activate(context: vscode.ExtensionContext) {
         }
         return projectFile;
     }
+
+    function addProjectToWorkspace(node: any) {
+        vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders ? 
+            vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(node.command.arguments[ 0 ]) });
+    }
+
+    function deleteProject(node: any) {
+        aStack.pop(node.command.arguments[1]);
+        projectStorage.pop(node.command.arguments[1]);
+        projectStorage.save();
+        vscode.window.showInformationMessage("Project successfully deleted!");
+    };
+
+    function renameProject(node: any) {
+        const oldName: string = node.command.arguments[1];
+        // Display a message box to the user
+        // ask the NEW PROJECT NAME ()
+        const ibo = <vscode.InputBoxOptions> {
+            prompt: "New Project Name",
+            placeHolder: "Type a new name for the project",
+            value: oldName
+        };
+
+        vscode.window.showInputBox(ibo).then(newName => {
+            if (typeof newName === "undefined") {
+                return;
+            }
+
+            // 'empty'
+            if (newName === "") {
+                vscode.window.showWarningMessage("You must define a new name for the project.");
+                return;
+            }
+
+            if (!projectStorage.exists(newName)) {
+                aStack.rename(oldName, newName)
+                projectStorage.rename(oldName, newName);
+                projectStorage.save();
+                vscode.window.showInformationMessage("Project renamed!");
+                updateStatusBar(oldName, node.command.arguments[0], newName);
+            } else {
+                vscode.window.showErrorMessage("Project already exists!");
+            }
+        });
+    };
+
 }

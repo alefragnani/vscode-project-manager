@@ -24,9 +24,12 @@ let context: vscode.ExtensionContext;
 export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
 
   public readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined>;
+  
+  private projectSource: ProjectStorage | CustomProjectLocator;
   private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
 
-  constructor(private projectStorage: ProjectStorage, private locators: CustomProjectLocator[], ctx: vscode.ExtensionContext) {
+  constructor(projectSource: ProjectStorage | CustomProjectLocator, ctx: vscode.ExtensionContext) {
+    this.projectSource = projectSource;
     this.onDidChangeTreeData = this.internalOnDidChangeTreeData.event;
     context = ctx;
   }
@@ -46,34 +49,15 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
 
       if (element) {
 
-        if (element.kind === ProjectNodeKind.NODE_KIND) {
-          const ll: ProjectNode[] = [];
+        const ll: ProjectNode[] = [];
 
-          // sort projects by name
-          element.projects.sort((n1, n2) => {
-              if (n1.name > n2.name) {
-                  return 1;
-              }
+        ll.push(new ProjectNode(element.label, vscode.TreeItemCollapsibleState.None, "git", element.preview, {
+          command: "projectManager.open",
+          title: "",
+          arguments: [element.preview.path],
+        }));
 
-              if (n1.name < n2.name) {
-                  return -1;
-              }
-
-              return 0;
-          });
-
-          for (const bbb of element.projects) {
-            ll.push(new ProjectNode(bbb.name, vscode.TreeItemCollapsibleState.None, ProjectNodeKind.NODE_PROJECT, null, {
-              command: "projectManager.open",
-              title: "",
-              arguments: [bbb.path],
-            }));
-          }
-
-          resolve(ll);
-        } else {
-          resolve([]);
-        }
+        resolve(ll);
         
       } else {
 
@@ -83,40 +67,86 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         const lll: ProjectNode[] = [];
             
         // favorites
-        if (this.projectStorage.length() > 0) {
+        if (this.projectSource instanceof ProjectStorage) {
 
-          const projectsMapped = <ProjectInQuickPickList> this.projectStorage.map();
+          const projectsMapped = <ProjectInQuickPickList> this.projectSource.map();
           const projects: ProjectPreview[] = [];
+
+          projectsMapped.sort((n1, n2) => {
+            if (n1.label > n2.label) {
+              return 1;
+            }
+
+            if (n1.label < n2.label) {
+              return -1;
+            }
+
+            return 0;
+          });
 
           // tslint:disable-next-line:prefer-for-of
           for (let index = 0; index < projectsMapped.length; index++) {
             const prj: ProjectInQuickPick = projectsMapped[index];
           
-            projects.push({
-              name: prj.label,
-              path: PathUtils.expandHomePath(prj.description)
-            });
+            // projects.push({
+            //   name: prj.label,
+            //   path: PathUtils.expandHomePath(prj.description)
+            // });
+            // lll.push(new ProjectNode("Favorites", vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
+            lll.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
+              "favorites", {
+                name: prj.label,
+                path: PathUtils.expandHomePath(prj.description)
+              },
+              {
+                command: "projectManager.open",
+                title: "",
+                arguments: [PathUtils.expandHomePath(prj.description), prj.label],
+              }));
           }
 
-          lll.push(new ProjectNode("Favorites", vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
         }
 
         // Locators (VSCode/Git/Mercurial/SVN)
-        for (const locator of this.locators) {
+        if (this.projectSource instanceof CustomProjectLocator) {
           const projects: ProjectPreview[] = [];
-          locator.initializeCfg(locator.kind);
+          this.projectSource.initializeCfg(this.projectSource.kind);
           
-          if (locator.dirList.length > 0) {
+          if (this.projectSource.dirList.length > 0) {
+
+            this.projectSource.dirList.sort((n1, n2) => {
+              if (n1.name > n2.name) {
+                return 1;
+              }
+
+              if (n1.name < n2.name) {
+                return -1;
+              }
+
+              return 0;
+            });
+
             // tslint:disable-next-line:prefer-for-of
-            for (let index = 0; index < locator.dirList.length; index++) {
-              const dirinfo: DirInfo = locator.dirList[index];
+            for (let index = 0; index < this.projectSource.dirList.length; index++) {
+              const dirinfo: DirInfo = this.projectSource.dirList[index];
               
-              projects.push({
-                name: dirinfo.name,
-                path: dirinfo.fullPath
-              });
+              // projects.push({
+              //   name: dirinfo.name,
+              //   path: dirinfo.fullPath
+              // });
+              // lll.push(new ProjectNode(this.projectSource.displayName, 
+              //     vscode.TreeItemCollapsibleState.Collapsed, 
+              //     ProjectNodeKind.NODE_KIND, projects));
+              lll.push(new ProjectNode(dirinfo.name, vscode.TreeItemCollapsibleState.None,
+                this.projectSource.displayName, {
+                  name: dirinfo.name,
+                  path: dirinfo.fullPath
+                }, {
+                  command: "projectManager.open",
+                  title: "",
+                  arguments: [dirinfo.fullPath, this.projectSource.icon + " " + dirinfo.name],
+                }));
             }
-            lll.push(new ProjectNode(locator.displayName, vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
           }
         }
 
@@ -125,6 +155,25 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
     });
   }
 
+  public showTreeView(): void {
+    const canShowTreeView: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", true);
+    if (this.projectSource instanceof ProjectStorage) {
+      vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + "Favorites", canShowTreeView && this.projectSource.length() > 0);
+      return;
+    }
+
+    if (this.projectSource instanceof CustomProjectLocator) {
+      if (canShowTreeView) {
+        this.projectSource.initializeCfg(this.projectSource.kind);
+        vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName, 
+        this.projectSource.dirList.length > 0);
+      } else {
+        vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName, false);
+      }      
+      return;
+    }
+  }  
+
 }
 
 class ProjectNode extends vscode.TreeItem {
@@ -132,21 +181,18 @@ class ProjectNode extends vscode.TreeItem {
   constructor(
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly kind: ProjectNodeKind,
-    public readonly projects?: ProjectPreview[],
+    public readonly icon: string,
+    public readonly preview: ProjectPreview,
     public readonly command?: vscode.Command
   ) {
     super(label, collapsibleState);
 
-    if (kind === ProjectNodeKind.NODE_KIND) {
-      this.iconPath = {
-        light: context.asAbsolutePath(this.getProjectIcon(label, "light")),
-        dark: context.asAbsolutePath(this.getProjectIcon(label, "dark"))
-      };
-      this.contextValue = "ProjectNodeKind";
-    } else {
-      this.contextValue = "ProjectNodeProject";
-    }
+    this.iconPath = {
+      light: context.asAbsolutePath(this.getProjectIcon(icon, "light")),
+      dark: context.asAbsolutePath(this.getProjectIcon(icon, "dark"))
+    };
+    this.contextValue = "ProjectNodeKind";
+    this.tooltip = preview.path;
   }
 
   private getProjectIcon(project: string, lightDark: string): string {

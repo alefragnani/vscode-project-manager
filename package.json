@@ -9,7 +9,7 @@
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^1.18.0"
+		"vscode": "^1.21.0"
 	},
 	"categories": [
 		"Other"
@@ -43,12 +43,41 @@
 	],
 	"main": "./out/src/extension",
 	"contributes": {
-		"views": {
-			"explorer": [
+		"viewsContainers": {
+			"activitybar": [
 				{
-					"id": "projectsExplorer",
-					"name": "Projects",
-					"when": "canShowTreeView"
+					"id": "project-manager",
+					"title": "Project Manager",
+					"icon": "images/ico-favorites-dark.svg"
+				}
+			]
+		},
+		"views": {
+			"project-manager": [
+				{
+					"id": "projectsExplorerFavorites",
+					"name": "Favorites",
+					"when": "projectManager.canShowTreeViewFavorites"
+				},
+				{
+					"id": "projectsExplorerGit",
+					"name": "Git",
+					"when": "projectManager.canShowTreeViewGit"
+				},
+				{
+					"id": "projectsExplorerSVN",
+					"name": "SVN",
+					"when": "projectManager.canShowTreeViewSVN"
+				},
+				{
+					"id": "projectsExplorerMercurial",
+					"name": "Mercurial",
+					"when": "projectManager.canShowTreeViewMercurial"
+				},
+				{
+					"id": "projectsExplorerVSCode",
+					"name": "VSCode",
+					"when": "projectManager.canShowTreeViewVSCode"
 				}
 			]
 		},
@@ -67,7 +96,11 @@
 			},
 			{
 				"command": "projectManager.editProjects",
-				"title": "Project Manager: Edit Projects"
+				"title": "Project Manager: Edit Projects",
+				"icon": {
+					"light": "images/ico-edit-projects-light.svg",
+					"dark": "images/ico-edit-projects-dark.svg"
+				}
 			},
 			{
 				"command": "projectManager.refreshProjects",
@@ -80,6 +113,18 @@
 			{
 				"command": "projectManager.openInNewWindow",
 				"title": "Open in New Window"
+			},
+			{
+				"command": "projectManager.addToWorkspace",
+				"title": "Add to Workspace"
+			},
+			{
+				"command": "projectManager.deleteProject",
+				"title": "Delete Project"
+			},
+			{
+				"command": "projectManager.renameProject",
+				"title": "Rename Project"
 			}
 		],
 		"menus": {
@@ -91,16 +136,52 @@
 				{
 					"command": "projectManager.openInNewWindow",
 					"when": "false"
+				},
+				{
+					"command": "projectManager.addToWorkspace",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.deleteProject",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.renameProject",
+					"when": "false"
+				}
+			],
+			"view/title": [
+				{
+					"command": "projectManager.editProjects",
+					"when": "view == projectsExplorerFavorites",
+					"group": "navigation"
 				}
 			],
 			"view/item/context": [
 				{
 					"command": "projectManager.open",
-					"when": "view == projectsExplorer && viewItem == ProjectNodeProject"
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"group": "navigation"
 				},
 				{
 					"command": "projectManager.openInNewWindow",
-					"when": "view == projectsExplorer && viewItem == ProjectNodeProject"
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"group": "navigation"
+				},
+				{
+					"command": "projectManager.addToWorkspace",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"group": "workspace"
+				},
+				{
+					"command": "projectManager.deleteProject",
+					"when": "view == projectsExplorerFavorites",
+					"group": "favorites"
+				},
+				{
+					"command": "projectManager.renameProject",
+					"when": "view == projectsExplorerFavorites",
+					"group": "favorites"
 				}
 			]
 		},
@@ -264,7 +345,7 @@
 	"devDependencies": {
 		"@types/node": "^6.0.40",
 		"typescript": "^2.3.2",
-		"vscode": "^1.1.6"
+		"vscode": "^1.1.17"
 	},
 	"dependencies": {
 		"walker": "^1.0.7"

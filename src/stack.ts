@@ -32,10 +32,32 @@ export class StringStack {
     /**
      * pop
      */
-    public pop(): string {
-        return this.stack.pop();
+    public pop(item?: string): string {
+        if (!item) {
+            return this.stack.pop();
+        } else {
+            for (let index = 0; index < this.stack.length; index++) {
+                const element = this.stack[index];
+                if (element === item) {
+                    return this.stack.splice(index, 1)[0];
+                }
+            }
+        }
     }
-    
+
+    /**
+     * Rename an item in the stack
+     * @param oldItem string
+     * @param newItem string
+     */
+    public rename(oldItem: string, newItem: string): void {
+        for (let iterator of this.stack) {
+            if (iterator === oldItem) {
+                iterator = newItem;
+            }
+        }
+    }
+
     /**
      * length
      */
