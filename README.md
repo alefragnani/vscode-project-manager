@@ -1,24 +1,41 @@
-# Functionality
+<p align="center">
+  <br />
+  <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="images/project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
+</p>
 
-Manage your projects right inside Visual Studio Code. Easily access and switch between them.
+# What's new in Project Manager 8
 
-You can define your own **Favorite** projects, and auto-detect **VSCode** projects, **Git**, **Mercurial** and **SVN** repositories.
+* Moves the Treeview to is own **Activity Bar**
+* Add any project to current workspace with a new command `Add to Workspace`
 
-# Installation
+# Project Manager
 
-Press `F1` in VSCode, type `ext install` and then look for `Project Manager`.
+**Project Manager** is an open source extension created for **Visual Studio Code**. While being free and open source, if you find it useful, please consider [supporting it](#support)
 
-# Usage
+It helps you to easily access your projects, no matter where they are located. _Don't miss that important projects anymore_. You can define your own **Favorite** projects, or choose for auto-detect **VSCode** projects, **Git**, **Mercurial** and **SVN** repositories.
 
-## Available commands
+Since version 8 you have a dedicated **Activity Bar** for your projects!
 
-* **Project Manager: Edit Project** Edit the project list (`projects.json` file) directly inside **Code**
-* **Project Manager: List Projects to Open** List all saved projects and pick one
-* **Project Manager: List Projects to Open in New Window** List all saved projects and pick one to be opened in New Window
-* **Project Manager: Refresh Projects** Refresh the cached projects (VSCode, Git, Mercurial and SVN)
-* **Project Manager: Save Project** Save the current project in the manager
+Here are some of the features that **Project Manager** provides:
 
-![Commands](images/project-manager-commands.png)
+* Save any project as **Favorite**
+* Auto-detect **VSCode**, **Git**, **Mercurial** and **SVN** repositiories
+* Open projects in the same or new window
+* Identify _deleted/renamed_ projects
+* A **Status Bar** which identifies the current project
+* A dedicated **Activity Bar**
+
+# Features
+
+## Available Commands
+
+* `Project Manager: Save Project` Save the current folder as a new project
+* `Project Manager: Edit Project` Edit your projects manually (`projects.json`)
+* `Project Manager: List Projects to Open` List all saved/detected projects and pick one
+* `Project Manager: List Projects to Open in New Window` List all saved/detected projects and pick one to be opened in New Window
+* `Project Manager: Refresh Projects` Refresh the cached projects
+
+## Manage your projects
 
 ### Save Project
 
@@ -53,13 +70,14 @@ For easier customization of your project list, you can edit the `projects.json` 
 ]
 ```
 
-> For now, only `name` and `rootPath` are useful. The `paths` and `group` fields are there to be used in the future by two new features: [Support multiple folders in the same project](https://github.com/alefragnani/vscode-project-manager/issues/46) and [Contextual Structure for Projects](https://github.com/alefragnani/vscode-project-manager/issues/50) . 
-
-You can use a special variable called `$home` while defining any `path`. It's useful if you sync your projects between different machines, because it will be replaced by the HOME folder.  
+> For now, only `name` and `rootPath` fields are used. 
+> Use a special variable called `$home` while defining any `path`. It will be replaced by the HOME folder.  
 
 > Be sure that the JSON file is well-formed. Otherwise, **Project Manager** will not be able to open it, and an error message like this should appear. In this case, you should use the `Open File` button to fix it.
 
 ![Corrupted](images/project-manager-edit-corrupted-projectsJson.png)
+
+## Access 
 
 ### List Projects to Open
 
@@ -83,16 +101,14 @@ Just use the `when` clause `"inProjectManagerList"`, like:
     }
 ```
 
-## Available settings
+## Available Settings
 
-#### Sort the Project List
+You can choose how your projects are sorted
 
-Allows you to choose how the projects are sorted in **List Projects** commands. You can choose:
-
-* **Saved**: The order that you saved the projects
-* **Name**: The name that you typed for the project
-* **Path**: The full path of the project
-* **Recent**: The recently used projects
+* `Saved`: The order that you saved the projects
+* `Name`: The name that you typed for the project
+* `Path`: The full path of the project
+* `Recent`: The recently used projects
 
 ```json
     "projectManager.sortList": "Name"
@@ -100,39 +116,31 @@ Allows you to choose how the projects are sorted in **List Projects** commands. 
 
 ![List](images/project-manager-list-sort-by-name.png)
 
-#### Group the Project List
-
-List the projects, grouped by its _kind_ (**Favorites**, **VS Code**, **Git**, **Mercurial** and **SVN**).
+* Choose if the project list must be grouped by its _kind_ (**Favorites**, **VS Code**, **Git**, **Mercurial** and **SVN**).
 
 ```json
     "projectManager.groupList": true
 ```
 
-#### Remove the Current Project from List
-
-By default, the current project is removed from the list. If you don't want this for any reason, just turn it off.
+* Should the current project be removed from the list? (`false` by default)
 
 ```json
     "projectManager.removeCurrentProjectFromList": true
 ```
 
-#### Check Invalid Paths Before Listing
-
-By default, it will check for invalid paths to display a message below the project name. If you don't want this check for any reason, just turn it off.
+* Should identify _invalid paths_ on project list? (`true` by default)
 
 ```json 
     "projectManager.checkInvalidPathsBeforeListing": false
 ```
 
-#### Filter Projects Through Full Path
-
-By default, it will filter projects by its **name** only. If you want to filter also based on its **path**, just turn it on.
+* Filter Projects Through Full Path (`false` by default)
 
 ```json 
     "projectManager.filterOnFullPath": true
 ```
 
-#### Projects Location
+* Custom projects file (`projects.json`) location
 
 If you intend to _share_ projects between  **Stable** and **Insider** installations, or if you store your settings in different locations (cloud services), you can indicate an _alternative_ location for the `projects.json` file.
 
@@ -140,9 +148,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
-#### Automatic Detection of Projects
-
-You can have automatic detection of **VSCode** ![vscode](images/ico_file_code.png), **Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png) and **SVN** ![svn](images/ico_svn.png) projects. For this, you just have to indicate a list of folders where each kind of project is located.
+* Automatic Detection of Projects (**VSCode** ![vscode](images/ico_file_code.png), **Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png) and **SVN** ![svn](images/ico_svn.png))
 
 ```json
     "projectManager.git.baseFolders": [
@@ -151,8 +157,7 @@ You can have automatic detection of **VSCode** ![vscode](images/ico_file_code.pn
         "$home\\personal-coding"
     ]
 ```
-
-To customize how _deep_ to look projects or folders to be _ignored_ you have two additional settings:
+> Define the folders which contains the projects
 
 ```json
     "projectManager.git.ignoredFolders": [
@@ -161,63 +166,59 @@ To customize how _deep_ to look projects or folders to be _ignored_ you have two
         "typings", 
         "test"
     ],
+```
+> Define which folders should be ignored (inside the BaseFolders)
+
+```json
     "projectManager.git.maxDepthRecursion": 4
 ```
+> Define how deeps it should search for projects
 
-> All kinds of projects (VSCode, Git, Mercurial and SVN) have the same kind of settings
-
-#### Cache Automatically Detected Projects
-
-By default, the automatically detected projects (VSCode, Git, Mercurial and SVN) are cached. If you don't want this for any reason, just turn it off.
+* Cache automatically detected projects (`true` by default)
 
 ```json 
     "projectManager.cacheProjectsBetweenSessions": false
 ```
 
-#### Display Project Name in Status Bar
-
-You have the option to display the _Project Name_ in the Status Bar, so you can easily detect in which project you are.
+* Display the Project Name in Status Bar (`true` by default)
 
 ```json 
     "projectManager.showProjectNameInStatusBar": true
 ```
-
 ![Save](images/project-manager-statusbar.png) 
 
-#### Open Projects in New Window When Clicking in Status Bar
-
-You can choose if it would open projects in **New Window** when clicking in status bar.
+* Open projects in _New Window_ when clicking in status bar (`false` by default)
 
 ```json 
     "projectManager.openInNewWindowWhenClickingInStatusBar": true
 ```
 
-## Treeview
+## Activity Bar
 
-There is also a **Projects Treeview**, right in the Explorer panel. You will have all your projects there, organized by type. A few commands were added:
+The **Projects** are now presented id its own Activity Bar ,giving you more free space in your Explorer bar. You will have a few extra commands available:
 * Open a project, simply clicking in the project item
 * Open a project in a New Window, right clicking in the project item
+* Add a project to the current Workspace
 
 ![Treeview](images/vscode-project-manager-treeview.gif)
 
-#### Treeview is Optional
+## Support Project Manager
 
-You can choose if you want to see the TreeView.
+While **Project Manager** is free and open source, if you find it useful, please consider supporting it.
 
-```json 
-    "projectManager.treeview.visible": true
-```
+I've been building **Project Manager** since VS Code internal beta days, and while I enjoy developing it, I would like to be able to give more attention to its growth.
 
-## Participate
-
-If you have any idea, feel free to create issues and pull requests
+<table align="center" width="30%" border="0">
+  <tr>
+    <td>
+      <a title="Paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/></a>
+    </td>
+    <td>
+      <a title="Paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=BR&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_SM.gif"/></a>
+    </td>
+  </tr>
+</table>
 
 # License
 
 [MIT](LICENSE.md) &copy; Alessandro Fragnani
-
----
-
-[![Paypal Donations](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) a :coffee: and you will help me to keep working on this extension :wink:
-
-[![Paypal Donations](https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=BR&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) um :coffee: e você vai me ajudar a continuar trabalhando nesta extensão :wink:
