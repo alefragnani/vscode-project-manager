@@ -1,9 +1,11 @@
-## [8.0.0] - TBD
+## [8.0.0] - 2018-07-04
 ### Added
-- Projects Activity Bar (issue [#183](https://github.com/alefragnani/vscode-project-manager/issues/183))
+- Project Manager Activity Bar (issue [#183](https://github.com/alefragnani/vscode-project-manager/issues/183))
 - New Command in TreeView `Add to Workspace` (issue [#161](https://github.com/alefragnani/vscode-project-manager/issues/161))
 - New Version Numbering based on `semver`
-- New Support Model based on DDD (Donation Driven Development :-) )
+
+### Fixed
+- `Save Project` command raises error when no folder is open (issue [#191](https://github.com/alefragnani/vscode-project-manager/issues/191))
 
 ## [0.25.2 - 7.2.2] - 2018-04-23
 ### Fixed

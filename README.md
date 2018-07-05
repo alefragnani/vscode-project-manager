@@ -6,7 +6,8 @@
 # What's new in Project Manager 8
 
 * Moves the Treeview to is own **Activity Bar**
-* Add any project to current workspace with a new command `Add to Workspace`
+* Adds `Add to Workspace` command to add any project to current workspace
+* Fixes [#191](https://github.com/alefragnani/vscode-project-manager/issues/191) - `Save Project` command raises error when no folder is open
 
 # Project Manager
 
@@ -200,7 +201,7 @@ The **Projects** are now presented id its own Activity Bar ,giving you more free
 * Open a project in a New Window, right clicking in the project item
 * Add a project to the current Workspace
 
-![Treeview](images/vscode-project-manager-treeview.gif)
+![Activity Bar](images/vscode-project-manager-activity-bar.gif)
 
 ## Support Project Manager
 
