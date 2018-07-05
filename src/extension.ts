@@ -240,6 +240,12 @@ export function activate(context: vscode.ExtensionContext) {
         // let wpath = vscode.workspace.rootPath;
         const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
         let wpath = workspace0 ? workspace0.uri.fsPath : undefined;
+
+        if (!wpath) {
+            vscode.window.showInformationMessage("Open a folder first to save a project");
+            return;
+        }
+
         if (process.platform === "win32") {
             wpath = wpath.substr(wpath.lastIndexOf("\\") + 1);
         } else {
