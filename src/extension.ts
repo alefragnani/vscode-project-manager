@@ -170,8 +170,9 @@ export function activate(context: vscode.ExtensionContext) {
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
         vscode.window.withProgress({
-            location: vscode.ProgressLocation.Window,
-            title: "Refresh Projects"
+            location: vscode.ProgressLocation.Notification,
+            title: "Refresh Projects",
+            cancellable: false
         }, async (progress) => {
             progress.report({ message: "Refreshing Projects (VSCode)" });
             const rvscode = await vscLocator.refreshProjects(forceRefresh);
