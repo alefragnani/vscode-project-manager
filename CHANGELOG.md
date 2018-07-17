@@ -1,3 +1,7 @@
+## [8.1.0] - TBD
+### Added
+- Use the new NotificationUI for refresh progress (issue [#174](https://github.com/alefragnani/vscode-project-manager/issues/174))
+
 ## [8.0.0] - 2018-07-04
 ### Added
 - Project Manager Activity Bar (issue [#183](https://github.com/alefragnani/vscode-project-manager/issues/183))
