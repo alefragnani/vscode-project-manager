@@ -16,7 +16,7 @@ export interface DirList extends Array<DirInfo> { };
 export interface RepositoryDetector {
 
     isRepoDir(projectPath: string);
-    decideProjectName(projectPath: string): string; 
+    decideProjectName(projectPath: string): string;
 
 }
 
@@ -31,12 +31,12 @@ export class CustomRepositoryDetector implements RepositoryDetector {
 
     public decideProjectName(projectPath: string): string {
         return path.basename(projectPath);
-    }    
+    }
 }
 
 export class CustomProjectLocator {
 
-    public dirList: DirList = <DirList> [];
+    public dirList: DirList = <DirList>[];
     private maxDepth: number;
     private ignoredFolders: string[];
     private useCachedProjects: boolean;
@@ -44,7 +44,7 @@ export class CustomProjectLocator {
     private baseFolders: string[];
 
     constructor(public kind: string, public displayName: string,
-                public icon: string, public repositoryDetector: RepositoryDetector) {
+        public icon: string, public repositoryDetector: RepositoryDetector) {
         this.maxDepth = -1;
         this.ignoredFolders = [];
         this.useCachedProjects = true;
@@ -62,7 +62,12 @@ export class CustomProjectLocator {
     }
 
     public isFolderIgnored(folder) {
-        return this.ignoredFolders.indexOf(folder) !== -1;
+        if (this.ignoredFolders.indexOf(folder) !== -1) {
+            return true
+        }
+        return this.ignoredFolders.some(function (ignoreString) {
+            return new RegExp(ignoreString).exec(folder) !== null;
+        })
     }
 
     public isAlreadyLocated(): boolean {
@@ -105,7 +110,7 @@ export class CustomProjectLocator {
         return new Promise<DirList>((resolve, reject) => {
 
             if (projectsDirList.length === 0) {
-                resolve(<DirList> []);
+                resolve(<DirList>[]);
                 return;
             }
 
@@ -180,12 +185,12 @@ export class CustomProjectLocator {
     public refreshProjects(forceRefresh: boolean): Promise<boolean> {
 
         return new Promise((resolve, reject) => {
-            
+
             if (!forceRefresh && !this.refreshConfig()) {
                 resolve(false);
                 return;
             }
-    
+
             this.clearDirList();
             const cacheFile: string = this.getCacheFile();
             if (fs.existsSync(cacheFile)) {
@@ -193,17 +198,17 @@ export class CustomProjectLocator {
             }
             this.setAlreadyLocated(false);
             this.locateProjects()
-              .then(() => {
-                  resolve(true);
+                .then(() => {
+                    resolve(true);
                 })
                 .catch(error => {
                     reject(error)
-                })            
+                })
         });
     }
 
     public existsWithRootPath(rootPath: string): Project {
-        
+
         // it only works if using `cache`
         this.initializeCfg(this.kind);
         if (!this.isAlreadyLocated()) {
@@ -217,7 +222,7 @@ export class CustomProjectLocator {
                     rootPath: element.fullPath,
                     name: element.name,
                     group: "",
-                    paths: [] 
+                    paths: []
                 };
             }
         }
@@ -257,7 +262,7 @@ export class CustomProjectLocator {
         if (!this.arraysAreEquals(this.ignoredFolders, currentValue)) {
             this.ignoredFolders = currentValue;
             refreshedSomething = true;
-        }        
+        }
 
         currentValue = config.get(this.kind + ".maxDepthRecursion", -1);
         if (this.maxDepth !== currentValue) {
