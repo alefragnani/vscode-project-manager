@@ -511,7 +511,8 @@ export function activate(context: vscode.ExtensionContext) {
         if (projectsLocation !== "") {
             projectFile = path.join(projectsLocation, PROJECTS_FILE);
         } else {
-            let appdata, channelPath;
+            let appdata: string,
+                channelPath: string;
             if (process.env.VSCODE_PORTABLE) {
                 appdata = process.env.VSCODE_PORTABLE;
                 channelPath = "user-data";
