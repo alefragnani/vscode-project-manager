@@ -23,7 +23,7 @@
     <img src="https://img.shields.io/badge/donate-paypal-yellow.svg" alt="Donate on PayPal" />
   </a>
   <a href="https://spectrum.chat/vscode-project-manager">
-    <img src="https://img.shields.io/badge/join%20the%20community-on%20spectrum-blue.svg?colorB=4400cc" alt="Join the community on Spectrum" />
+    <img src="https://img.shields.io/badge/join%20the%20community-on%20spectrum-blue.svg?colorB=8416ff" alt="Join the community on Spectrum" />
   </a>
 </p>
 
