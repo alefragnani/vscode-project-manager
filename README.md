@@ -2,16 +2,34 @@
   <br />
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
+<hr/>
 
-# What's new in Project Manager 8
+<p align="center">
+  <strong>Project Manager for Visual Studio Code</strong><br>
+  Easily access your projects, no matter where they are located.
+</p>
 
-* Moves the Treeview to is own **Activity Bar**
-* Adds `Add to Workspace` command to add any project to current workspace
-* Fixes [#191](https://github.com/alefragnani/vscode-project-manager/issues/191) - `Save Project` command raises error when no folder is open
+<p align="center">
+  <a href="https://github.com/alefragnani/vscode-project-manager/blob/master/LICENSE.md">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license" />
+  </a>
+  <a href="https://github.com/alefragnani/vscode-project-manager/compare">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager">
+    <img src="https://img.shields.io/badge/downloads-150K-brightgreen.svg" alt="Extension installs" />
+  </a>
+  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted">
+    <img src="	https://img.shields.io/badge/donate-paypal-yellow.svg" alt="Donate on PayPal" />
+  </a>
+  <a href="https://spectrum.chat/vscode-project-manager">
+    <img src="https://img.shields.io/badge/join%20the%20community-on%20spectrum-blue.svg?colorB=4400cc" alt="Join the community on Spectrum" />
+  </a>
+</p>
 
-# Project Manager
+Project Manager is an extension for managing your projects.
 
-**Project Manager** is an open source extension created for **Visual Studio Code**. While being free and open source, if you find it useful, please consider [supporting it](#support)
+**Project Manager** is an open source extension created for **Visual Studio Code**. While being free and open source, if you find it useful, please consider [supporting it](#support).
 
 It helps you to easily access your projects, no matter where they are located. _Don't miss that important projects anymore_. You can define your own **Favorite** projects, or choose for auto-detect **VSCode** projects, **Git**, **Mercurial** and **SVN** repositories.
 
@@ -25,6 +43,12 @@ Here are some of the features that **Project Manager** provides:
 * Identify _deleted/renamed_ projects
 * A **Status Bar** which identifies the current project
 * A dedicated **Activity Bar**
+
+# What's new in Project Manager 8
+
+* Moves the Treeview to is own **Activity Bar**
+* Adds `Add to Workspace` command to add any project to current workspace
+* Fixes [#191](https://github.com/alefragnani/vscode-project-manager/issues/191) - `Save Project` command raises error when no folder is open
 
 # Features
 
@@ -203,22 +227,13 @@ The **Projects** are now presented id its own Activity Bar ,giving you more free
 
 ![Activity Bar](images/vscode-project-manager-activity-bar.gif)
 
-## Support Project Manager
+## Support
 
 While **Project Manager** is free and open source, if you find it useful, please consider supporting it.
 
 I've been building **Project Manager** since VS Code internal beta days, and while I enjoy developing it, I would like to be able to give more attention to its growth.
 
-<table align="center" width="30%" border="0">
-  <tr>
-    <td>
-      <a title="Paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/></a>
-    </td>
-    <td>
-      <a title="Paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=BR&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=BRL&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/pt_BR/i/btn/btn_donate_SM.gif"/></a>
-    </td>
-  </tr>
-</table>
+<a title="Paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/></a>
 
 # License
 
