@@ -20,7 +20,7 @@
     <img src="https://img.shields.io/badge/downloads-150K-brightgreen.svg" alt="Extension installs" />
   </a>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted">
-    <img src="	https://img.shields.io/badge/donate-paypal-yellow.svg" alt="Donate on PayPal" />
+    <img src="https://img.shields.io/badge/donate-paypal-yellow.svg" alt="Donate on PayPal" />
   </a>
   <a href="https://spectrum.chat/vscode-project-manager">
     <img src="https://img.shields.io/badge/join%20the%20community-on%20spectrum-blue.svg?colorB=4400cc" alt="Join the community on Spectrum" />
