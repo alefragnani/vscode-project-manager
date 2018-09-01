@@ -174,20 +174,20 @@ export function activate(context: vscode.ExtensionContext) {
             title: "Refresh Projects",
             cancellable: false
         }, async (progress) => {
-            progress.report({ message: "Refreshing Projects (VSCode)" });
+            progress.report({ message: "Refreshing VSCode" });
             const rvscode = await vscLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: "Refreshing Projects (Git)" });
+            progress.report({ message: "Refreshing Git" });
             const rgit = await gitLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: "Refreshing Projects (Mercurial)" });
+            progress.report({ message: "Refreshing Mercurial" });
             const rmercurial = await mercurialLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: "Refreshing Projects (SVN)" });
+            progress.report({ message: "Refreshing SVN" });
             const rsvn = await svnLocator.refreshProjects(forceRefresh);
 
             if (rvscode || rgit || rmercurial || rsvn || forceRefresh) {
-                progress.report({ message: "Refreshing Projects (TreeView)"});
+                progress.report({ message: "Refreshing TreeView"});
                 if (rvscode || forceRefresh) {
                     projectProviderVSCode.refresh();
                 }
