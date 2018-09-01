@@ -1,4 +1,4 @@
-## [8.1.0] - TBD
+## [9.0.0] - TBD
 ### Added
 - Use the new NotificationUI for refresh progress (issue [#174](https://github.com/alefragnani/vscode-project-manager/issues/174))
 

@@ -3,11 +3,11 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 8
+# What's new in Project Manager 9
 
 * Moves the Treeview to is own **Activity Bar**
 * Adds `Add to Workspace` command to add any project to current workspace
-* Fixes [#191](https://github.com/alefragnani/vscode-project-manager/issues/191) - `Save Project` command raises error when no folder is open
+* Use new NotificationUI while refreshing projects
 
 # Project Manager
 
