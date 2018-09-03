@@ -70,6 +70,11 @@
 					"when": "projectManager.canShowTreeViewSVN"
 				},
 				{
+					"id": "projectsExplorerAny",
+					"name": "Any",
+					"when": "projectManager.canShowTreeViewAny"
+				},
+				{
 					"id": "projectsExplorerMercurial",
 					"name": "Mercurial",
 					"when": "projectManager.canShowTreeViewMercurial"
@@ -160,17 +165,17 @@
 			"view/item/context": [
 				{
 					"command": "projectManager.open",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/",
 					"group": "navigation"
 				},
 				{
 					"command": "projectManager.openInNewWindow",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/",
 					"group": "navigation"
 				},
 				{
 					"command": "projectManager.addToWorkspace",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Mercurial)/",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/",
 					"group": "workspace"
 				},
 				{
@@ -303,6 +308,26 @@
 					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
 				},
 				"projectManager.svn.maxDepthRecursion": {
+					"type": "integer",
+					"default": 4,
+					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+				},
+				"projectManager.any.baseFolders": {
+					"type": "array",
+					"default": [],
+					"description": "Indicates the base folders to search for any folder projects"
+				},
+				"projectManager.any.ignoredFolders": {
+					"type": "array",
+					"default": [
+						"node_modules",
+						"out",
+						"typings",
+						"test"
+					],
+					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+				},
+				"projectManager.any.maxDepthRecursion": {
 					"type": "integer",
 					"default": 4,
 					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
