@@ -1,3 +1,7 @@
+## [8.1.0] - 2018-09-15
+### Added
+- Patreon button
+
 ## [8.0.0] - 2018-07-04
 ### Added
 - Project Manager Activity Bar (issue [#183](https://github.com/alefragnani/vscode-project-manager/issues/183))
