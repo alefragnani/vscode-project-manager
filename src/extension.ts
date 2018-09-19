@@ -18,11 +18,13 @@ const VSCODE_ICON = "$(file-code)";
 const GIT_ICON = "$(git-branch)";
 const MERCURIAL_ICON = "$(git-branch)";
 const SVN_ICON = "$(zap)";
+const ANY_ICON = "$(file-directory)"; 
 
 const vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", VSCODE_ICON, new CustomRepositoryDetector([".vscode"]));
 const gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", GIT_ICON, new GitRepositoryDetector([".git"]));
 const mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", MERCURIAL_ICON, new CustomRepositoryDetector([".hg", "hgrc"]));
 const svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", SVN_ICON, new CustomRepositoryDetector([".svn", "pristine"]));
+const anyLocator: CustomProjectLocator = new CustomProjectLocator("any", "Any", ANY_ICON, new CustomRepositoryDetector([]));
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -75,12 +77,14 @@ export function activate(context: vscode.ExtensionContext) {
     const projectProviderGit = new ProjectProvider(gitLocator, context);
     const projectProviderMercurial = new ProjectProvider(mercurialLocator, context);
     const projectProviderSVN = new ProjectProvider(svnLocator, context);
+    const projectProviderAny = new ProjectProvider(anyLocator, context);
     
     vscode.window.registerTreeDataProvider("projectsExplorerFavorites", projectProviderStorage);
     vscode.window.registerTreeDataProvider("projectsExplorerVSCode", projectProviderVSCode);
     vscode.window.registerTreeDataProvider("projectsExplorerGit", projectProviderGit);
     vscode.window.registerTreeDataProvider("projectsExplorerMercurial", projectProviderMercurial);
     vscode.window.registerTreeDataProvider("projectsExplorerSVN", projectProviderSVN);
+    vscode.window.registerTreeDataProvider("projectsExplorerAny", projectProviderAny);
 
     showTreeViewFromAllProviders();
 
@@ -92,6 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
         if (cfg.affectsConfiguration("projectManager.git") || cfg.affectsConfiguration("projectManager.hg") ||
             cfg.affectsConfiguration("projectManager.vscode") || cfg.affectsConfiguration("projectManager.svn") || 
+            cfg.affectsConfiguration("projectManager.any") || 
             cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
             refreshProjects();
         }
@@ -147,6 +152,9 @@ export function activate(context: vscode.ExtensionContext) {
         if (!foundProject) {
             foundProject = svnLocator.existsWithRootPath(currentProjectPath);
         }
+        if (!foundProject) {
+            foundProject = anyLocator.existsWithRootPath(currentProjectPath);
+        }
         if (foundProject) {
             statusItem.text += foundProject.name;
             statusItem.show();
@@ -165,6 +173,7 @@ export function activate(context: vscode.ExtensionContext) {
         projectProviderGit.showTreeView();
         projectProviderMercurial.showTreeView();
         projectProviderSVN.showTreeView();
+        projectProviderAny.showTreeView();
     }
 
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
@@ -185,7 +194,10 @@ export function activate(context: vscode.ExtensionContext) {
             progress.report({ message: "Refreshing Projects (SVN)" });
             const rsvn = await svnLocator.refreshProjects(forceRefresh);
 
-            if (rvscode || rgit || rmercurial || rsvn || forceRefresh) {
+            progress.report({ message: "Refreshing Projects (Any)" });
+            const rany = await anyLocator.refreshProjects(forceRefresh);
+
+            if (rvscode || rgit || rmercurial || rsvn || rany || forceRefresh) {
                 progress.report({ message: "Refreshing Projects (TreeView)"});
                 if (rvscode || forceRefresh) {
                     projectProviderVSCode.refresh();
@@ -198,6 +210,9 @@ export function activate(context: vscode.ExtensionContext) {
                 }
                 if (rsvn || forceRefresh) {
                     projectProviderSVN.refresh();
+                }
+                if (rany || forceRefresh) {
+                    projectProviderAny.refresh();
                 }
                 showTreeViewFromAllProviders();
             }
@@ -452,6 +467,9 @@ export function activate(context: vscode.ExtensionContext) {
             })
             .then((folders) => {
                 return getLocatorProjects(<any[]> folders, svnLocator);
+            })
+            .then((folders) => {
+                return getLocatorProjects(<any[]> folders, anyLocator);
             })
             .then((folders) => { // sort
                 if ((<any[]> folders).length === 0) {
