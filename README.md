@@ -203,7 +203,14 @@ The **Projects** are now presented id its own Activity Bar ,giving you more free
 
 ![Activity Bar](images/vscode-project-manager-activity-bar.gif)
 
-## Support Project Manager
+## Installation and Configuration
+
+You should follow the oficial documentation to:
+
+- [Install the extension](https://code.visualstudio.com/docs/editor/extension-gallery)
+- [Modify its settings](https://code.visualstudio.com/docs/getstarted/settings)
+
+## Support
 
 While **Project Manager** is free and open source, if you find it useful, please consider supporting it.
 
