@@ -2,6 +2,7 @@
 ### Added
 - Support _any folder_ as project (issue [#137](https://github.com/alefragnani/vscode-project-manager/issues/137))
 - Use the new NotificationUI for refresh progress (issue [#174](https://github.com/alefragnani/vscode-project-manager/issues/174))
+- Add instructions for install the extension and modifying its settings (issue [#176](https://github.com/alefragnani/vscode-project-manager/issues/176))
 
 ## [8.1.0] - 2018-09-15
 ### Added
