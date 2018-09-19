@@ -179,22 +179,23 @@ export function activate(context: vscode.ExtensionContext) {
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
         vscode.window.withProgress({
-            location: vscode.ProgressLocation.Window,
-            title: "Refresh Projects"
+            location: vscode.ProgressLocation.Notification,
+            title: "Refresh Projects",
+            cancellable: false
         }, async (progress) => {
-            progress.report({ message: "Refreshing Projects (VSCode)" });
+            progress.report({ message: "Refreshing VSCode" });
             const rvscode = await vscLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: "Refreshing Projects (Git)" });
+            progress.report({ message: "Refreshing Git" });
             const rgit = await gitLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: "Refreshing Projects (Mercurial)" });
+            progress.report({ message: "Refreshing Mercurial" });
             const rmercurial = await mercurialLocator.refreshProjects(forceRefresh);
         
-            progress.report({ message: "Refreshing Projects (SVN)" });
+            progress.report({ message: "Refreshing SVN" });
             const rsvn = await svnLocator.refreshProjects(forceRefresh);
 
-            progress.report({ message: "Refreshing Projects (Any)" });
+            progress.report({ message: "Refreshing Any" });
             const rany = await anyLocator.refreshProjects(forceRefresh);
 
             if (rvscode || rgit || rmercurial || rsvn || rany || forceRefresh) {

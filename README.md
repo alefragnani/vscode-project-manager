@@ -3,24 +3,24 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 8
+# What's new in Project Manager 9
 
 * Moves the Treeview to its own **Activity Bar**
 * Adds `Add to Workspace` command to add any project to current workspace
-* Fixes [#191](https://github.com/alefragnani/vscode-project-manager/issues/191) - `Save Project` command raises error when no folder is open
+* Use new `NotificationUI` while refreshing projects
 
 # Project Manager
 
 **Project Manager** is an open source extension created for **Visual Studio Code**. While being free and open source, if you find it useful, please consider [supporting it](#support)
 
-It helps you to easily access your projects, no matter where they are located. _Don't miss that important projects anymore_. You can define your own **Favorite** projects, or choose for auto-detect **VSCode** projects, **Git**, **Mercurial** and **SVN** repositories.
+It helps you to easily access your projects, no matter where they are located. _Don't miss that important projects anymore_. You can define your own **Favorite** projects, or choose for auto-detect **VSCode** projects, **Git**, **Mercurial** and **SVN** repositories or **any** folder.
 
 Since version 8 you have a dedicated **Activity Bar** for your projects!
 
 Here are some of the features that **Project Manager** provides:
 
 * Save any project as **Favorite**
-* Auto-detect **VSCode**, **Git**, **Mercurial** and **SVN** repositiories
+* Auto-detect **VSCode**, **Git**, **Mercurial** or **SVN** repositiories
 * Open projects in the same or new window
 * Identify _deleted/renamed_ projects
 * A **Status Bar** which identifies the current project

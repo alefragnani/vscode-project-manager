@@ -1,3 +1,8 @@
+## [9.0.0] - 2018-09-19
+### Added
+- Support _any folder_ as project (issue [#137](https://github.com/alefragnani/vscode-project-manager/issues/137))
+- Use the new NotificationUI for refresh progress (issue [#174](https://github.com/alefragnani/vscode-project-manager/issues/174))
+
 ## [8.1.0] - 2018-09-15
 ### Added
 - Patreon button
