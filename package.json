@@ -47,7 +47,7 @@
 			"activitybar": [
 				{
 					"id": "project-manager",
-					"title": "Project Manager",
+					"title": "%projectManager.activitybar.title%",
 					"icon": "images/ico-favorites-dark.svg"
 				}
 			]
@@ -89,19 +89,19 @@
 		"commands": [
 			{
 				"command": "projectManager.saveProject",
-				"title": "Project Manager: Save Project"
+				"title": "%projectManager.commands.saveProject.title%"
 			},
 			{
 				"command": "projectManager.listProjects",
-				"title": "Project Manager: List Projects to Open"
+				"title": "%projectManager.commands.listProjects.title%"
 			},
 			{
 				"command": "projectManager.listProjectsNewWindow",
-				"title": "Project Manager: List Projects to Open in New Window"
+				"title": "%projectManager.commands.listProjectsNewWindow.title%"
 			},
 			{
 				"command": "projectManager.editProjects",
-				"title": "Project Manager: Edit Projects",
+				"title": "%projectManager.commands.editProjects.title%",
 				"icon": {
 					"light": "images/ico-edit-projects-light.svg",
 					"dark": "images/ico-edit-projects-dark.svg"
@@ -109,27 +109,27 @@
 			},
 			{
 				"command": "projectManager.refreshProjects",
-				"title": "Project Manager: Refresh Projects"
+				"title": "%projectManager.commands.refreshProjects.title%"
 			},
 			{
 				"command": "projectManager.open",
-				"title": "Open"
+				"title": "%projectManager.commands.open.title%"
 			},
 			{
 				"command": "projectManager.openInNewWindow",
-				"title": "Open in New Window"
+				"title": "%projectManager.commands.openInNewWindow.title%"
 			},
 			{
 				"command": "projectManager.addToWorkspace",
-				"title": "Add to Workspace"
+				"title": "%projectManager.commands.addToWorkspace.title%"
 			},
 			{
 				"command": "projectManager.deleteProject",
-				"title": "Delete Project"
+				"title": "%projectManager.commands.deleteProject.title%"
 			},
 			{
 				"command": "projectManager.renameProject",
-				"title": "Rename Project"
+				"title": "%projectManager.commands.renameProject.title%"
 			}
 		],
 		"menus": {
@@ -192,27 +192,27 @@
 		},
 		"configuration": {
 			"type": "object",
-			"title": "Project Manager Configuration",
+			"title": "%projectManager.configuration.title%",
 			"properties": {
 				"projectManager.showProjectNameInStatusBar": {
 					"type": "boolean",
 					"default": true,
-					"description": "Should display the project name in the Status Bar?"
+					"description": "%projectManager.configuration.showProjectNameInStatusBar.description%"
 				},
 				"projectManager.openInNewWindowWhenClickingInStatusBar": {
 					"type": "boolean",
 					"default": false,
-					"description": "Should the project be opened using a New Window when you click the Status Bar?"
+					"description": "%projectManager.configuration.openInNewWindowWhenClickingInStatusBar.description%"
 				},
 				"projectManager.removeCurrentProjectFromList": {
 					"type": "boolean",
 					"default": true,
-					"description": "Should the current project be hidden in the list of available projects?"
+					"description": "%projectManager.configuration.removeCurrentProjectFromList.description%"
 				},
 				"projectManager.sortList": {
 					"type": "string",
 					"default": "Name",
-					"description": "List the projects sorted by...(Saved, Name, Path or Recent)",
+					"description": "%projectManager.configuration.sortList.description%",
 					"enum": [
 						"Saved",
 						"Name",
@@ -223,17 +223,17 @@
 				"projectManager.groupList": {
 					"type": "boolean",
 					"default": false,
-					"description": "List the projects grouped by...(Favorites, VSCode, Git, Mercurial and SVN)"
+					"description": "%projectManager.configuration.groupList.description%"
 				},
 				"projectManager.projectsLocation": {
 					"type": "string",
 					"default": "",
-					"description": "Indicates an alternative location where the `projects.json` file is stored"
+					"description": "%projectManager.configuration.projectsLocation.description%"
 				},
 				"projectManager.vscode.baseFolders": {
 					"type": "array",
 					"default": [],
-					"description": "Indicates the base folders to search for VSCode projects"
+					"description": "%projectManager.configuration.vscode.baseFolders.description%"
 				},
 				"projectManager.vscode.ignoredFolders": {
 					"type": "array",
@@ -243,17 +243,17 @@
 						"typings",
 						"test"
 					],
-					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+					"description": "%projectManager.configuration.vscode.ignoredFolders.description%"
 				},
 				"projectManager.vscode.maxDepthRecursion": {
 					"type": "integer",
 					"default": 4,
-					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+					"description": "%projectManager.configuration.vscode.maxDepthRecursion.description%"
 				},
 				"projectManager.git.baseFolders": {
 					"type": "array",
 					"default": [],
-					"description": "Indicates the base folders to search for Git projects"
+					"description": "%projectManager.configuration.git.baseFolders.description%"
 				},
 				"projectManager.git.ignoredFolders": {
 					"type": "array",
@@ -264,17 +264,17 @@
 						"test",
 						".haxelib"
 					],
-					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+					"description": "%projectManager.configuration.git.ignoredFolders.description%"
 				},
 				"projectManager.git.maxDepthRecursion": {
 					"type": "integer",
 					"default": 4,
-					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+					"description": "%projectManager.configuration.git.maxDepthRecursion.description%"
 				},
 				"projectManager.hg.baseFolders": {
 					"type": "array",
 					"default": [],
-					"description": "Indicates the base folders to search for Mercurial projects"
+					"description": "%projectManager.configuration.hg.baseFolders.description%"
 				},
 				"projectManager.hg.ignoredFolders": {
 					"type": "array",
@@ -285,17 +285,17 @@
 						"test",
 						".haxelib"
 					],
-					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+					"description": "%projectManager.configuration.hg.ignoredFolders.description%"
 				},
 				"projectManager.hg.maxDepthRecursion": {
 					"type": "integer",
 					"default": 4,
-					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+					"description": "%projectManager.configuration.hg.maxDepthRecursion.description%"
 				},
 				"projectManager.svn.baseFolders": {
 					"type": "array",
 					"default": [],
-					"description": "Indicates the base folders to search for SVN projects"
+					"description": "%projectManager.configuration.svn.baseFolders.description%"
 				},
 				"projectManager.svn.ignoredFolders": {
 					"type": "array",
@@ -305,17 +305,17 @@
 						"typings",
 						"test"
 					],
-					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+					"description": "%projectManager.configuration.svn.ignoredFolders.description%"
 				},
 				"projectManager.svn.maxDepthRecursion": {
 					"type": "integer",
 					"default": 4,
-					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+					"description": "%projectManager.configuration.svn.maxDepthRecursion.description%"
 				},
 				"projectManager.any.baseFolders": {
 					"type": "array",
 					"default": [],
-					"description": "Indicates the base folders to search for any folder projects"
+					"description": "%projectManager.configuration.any.baseFolders.description%"
 				},
 				"projectManager.any.ignoredFolders": {
 					"type": "array",
@@ -325,32 +325,32 @@
 						"typings",
 						"test"
 					],
-					"description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\""
+					"description": "%projectManager.configuration.any.ignoredFolders.description%"
 				},
 				"projectManager.any.maxDepthRecursion": {
 					"type": "integer",
 					"default": 4,
-					"description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit"
+					"description": "%projectManager.configuration.any.maxDepthRecursion.description%"
 				},
 				"projectManager.cacheProjectsBetweenSessions": {
 					"type": "boolean",
 					"default": true,
-					"description": "Should cache the VSCode, Git and SVN projects found?"
+					"description": "%projectManager.configuration.cacheProjectsBetweenSessions.description%"
 				},
 				"projectManager.checkInvalidPathsBeforeListing": {
 					"type": "boolean",
 					"default": true,
-					"description": "Should check for invalid paths before listing, showing a message below the project name?"
+					"description": "%projectManager.configuration.checkInvalidPathsBeforeListing.description%"
 				},
 				"projectManager.treeview.visible": {
 					"type": "boolean",
 					"default": true,
-					"description": "Should display the Treeview?"
+					"description": "%projectManager.configuration.treeview.visible.description%"
 				},
 				"projectManager.filterOnFullPath": {
 					"type": "boolean",
 					"default": false,
-					"description": "Should filter projects through full path?"
+					"description": "%projectManager.configuration.filterOnFullPath.description%"
 				}
 			}
 		},
