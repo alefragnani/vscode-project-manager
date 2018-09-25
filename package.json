@@ -2,14 +2,14 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "9.0.0",
+	"version": "9.0.1",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^1.22.0"
+		"vscode": "^1.23.0"
 	},
 	"categories": [
 		"Other"

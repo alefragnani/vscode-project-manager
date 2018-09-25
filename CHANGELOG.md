@@ -1,3 +1,7 @@
+## [9.0.1] - 2018-09-25
+### Fixed
+- Avoid installation in unsupported VSCode version (issue [#198](https://github.com/alefragnani/vscode-project-manager/issues/198))
+
 ## [9.0.0] - 2018-09-19
 ### Added
 - Support _any folder_ as project (issue [#137](https://github.com/alefragnani/vscode-project-manager/issues/137))
