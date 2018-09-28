@@ -1,4 +1,3 @@
-import * as lodash from 'lodash';
 import { ProjectInQuickPickList } from './ProjectProvider';
 
 export interface TreeItem {
@@ -12,39 +11,44 @@ export interface TreeItem {
 }
 
 export default class Tree {
-  private list!: ProjectInQuickPickList;
+  private list: ProjectInQuickPickList;
 
   constructor (list: ProjectInQuickPickList) {
     this.list = list;
   }
 
+  /**
+   * clean characters `[./\]` around of path;
+   * @param path 
+   */
   static trimPath (path) {
     let trimPatten = /(^[\.,\\\/\$\~]*|[\.\/\\]*$)/ig;
 
     return path.replace(trimPatten, '');
   }
 
-  public getChildren(path: string = '') {
-    let list: TreeItem[] = [];
+  /**
+   * groupBy collection by property
+   * @param collection 
+   * @param prop 
+   */
+  static groupBy (collection = [], prop) {
+    let group = {}
 
-    this.list.forEach(item => {
-      let parentPath = Tree.trimPath(path);
-      let itemPath = Tree.trimPath(item.label);
-      let shortPath = Tree.trimPath(itemPath.replace(parentPath, ''))
-      let name = shortPath.split(/[\/\\]/)[0];
+    collection.forEach(item => {
+      group[item[prop]] = group[item[prop]] || [];
+      group[item[prop]].push(item);
+    })
 
-      if (itemPath.indexOf(parentPath) === 0) {
-        list.push({
-          name,
-          path: [parentPath, name].join('/'),
-          parentPath: parentPath,
-          isDirectory: this.hasChildren(itemPath.replace(parentPath, '')),
-          ...item
-        });
-      }
-    });
+    return group;
+  }
 
-    let group = lodash.groupBy(list, 'name');
+  private hasChildren(path) {
+    return Tree.trimPath(path).split(/\/\\/).length > 1;
+  }
+
+  private groupChildren(children) {
+    let group = Tree.groupBy(children, 'name');
     let folders = [];
 
     Object.keys(group).forEach(key => {
@@ -72,7 +76,26 @@ export default class Tree {
     return folders;
   }
 
-  hasChildren(path) {
-    return Tree.trimPath(path).split(/\/\\/).length > 1;
+  public getChildren(path: string = '') {
+    const list: TreeItem[] = [];
+
+    this.list.forEach(item => {
+      const parentPath = Tree.trimPath(path);
+      const itemPath = Tree.trimPath(item.label);
+      const shortPath = Tree.trimPath(itemPath.replace(parentPath, ''))
+      const name = shortPath.split(/[\/\\]/)[0];
+
+      if (itemPath.indexOf(parentPath) === 0) {
+        list.push({
+          name,
+          path: [parentPath, name].join('/'),
+          parentPath: parentPath,
+          isDirectory: this.hasChildren(itemPath.replace(parentPath, '')),
+          ...item
+        });
+      }
+    });
+
+    return this.groupChildren(list);
   }
 }
