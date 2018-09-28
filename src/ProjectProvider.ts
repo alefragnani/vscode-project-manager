@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { CustomProjectLocator, DirInfo } from "./abstractLocator";
 import { PathUtils } from "./PathUtils";
 import { ProjectStorage } from "./storage";
+import Tree from './tree';
 
 export const NODE_KIND = 0;
 export const NODE_PROJECT = 1;
@@ -15,6 +16,8 @@ export interface ProjectPreview {
 interface ProjectInQuickPick {
   label: string;
   description: string;
+  path?: any;
+  isDirectory?: boolean;
 }
 
 export interface ProjectInQuickPickList extends Array<ProjectInQuickPick> {};
@@ -26,6 +29,7 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
   public readonly onDidChangeTreeData: vscode.Event<ProjectNode | undefined>;
   
   private projectSource: ProjectStorage | CustomProjectLocator;
+  private tree!: Tree;
   private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | undefined> = new vscode.EventEmitter<ProjectNode | undefined>();
 
   constructor(projectSource: ProjectStorage | CustomProjectLocator, ctx: vscode.ExtensionContext) {
@@ -41,6 +45,95 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
   public getTreeItem(element: ProjectNode): vscode.TreeItem {
     return element;
   }
+  
+  private sortProjects(list, sortByProperty: 'name' | 'label') {
+    return list.sort((n1, n2) => {
+      if (n1[sortByProperty] > n2[sortByProperty]) {
+        return 1;
+      }
+
+      if (n1[sortByProperty] < n2[sortByProperty]) {
+        return -1;
+      }
+
+      return 0;
+    });
+  }
+
+  /**
+   * getFavorites
+   * @param parentPath 
+   * @return ProjectNode[]
+   */
+  public getFavorites(parentPath = ''): ProjectNode[] {
+    const projectStorage:  ProjectStorage = this.projectSource as  ProjectStorage;
+    const list = <ProjectInQuickPickList>  projectStorage.map();
+    const tree = new Tree(list);
+    const root = tree.getChildren(parentPath);
+    const projectNodes: ProjectNode[] = [];
+    const projectsMapped = root; // <ProjectInQuickPickList> this.projectSource.map();
+
+    this.sortProjects(projectsMapped, 'label');
+
+    // tslint:disable-next-line:prefer-for-of
+    for (let index = 0; index < projectsMapped.length; index++) {
+      const prj: ProjectInQuickPick = projectsMapped[index];
+    
+      projectNodes.push(new ProjectNode(
+        prj.label, 
+        prj.isDirectory ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None,
+        prj.isDirectory ? "favorites" : "vscode", 
+        {
+          name: prj.label,
+          path: PathUtils.expandHomePath(prj.description)
+        },
+        {
+          command: "projectManager.open",
+          title: "",
+          arguments: [PathUtils.expandHomePath(prj.description), prj.label],
+        },
+        prj.path
+      ));
+    }
+
+    return projectNodes;
+  }
+
+  /**
+   * getCustomProjectLocator
+   * 
+   * @return ProjectNode[]
+   */
+  public getCustomProjectLocator(): ProjectNode[] {
+    const projectSource:  CustomProjectLocator = this.projectSource as  CustomProjectLocator;
+    const projectNodes: ProjectNode[] = [];
+    
+    projectSource.initializeCfg(projectSource.kind);
+    
+    if (projectSource.dirList.length > 0) {
+
+      this.sortProjects(projectSource.dirList, 'name');
+
+      // tslint:disable-next-line:prefer-for-of
+      for (let index = 0; index < projectSource.dirList.length; index++) {
+        const dirinfo: DirInfo = projectSource.dirList[index];
+        
+        projectNodes.push(new ProjectNode(
+          dirinfo.name, 
+          vscode.TreeItemCollapsibleState.None,
+          projectSource.displayName, 
+          { name: dirinfo.name, path: dirinfo.fullPath },
+          {
+            command: "projectManager.open",
+            title: "",
+            arguments: [dirinfo.fullPath, projectSource.icon + " " + dirinfo.name],
+          }
+        ));
+      }
+    }
+
+    return projectNodes;
+  }
 
   public getChildren(element?: ProjectNode): Thenable<ProjectNode[]> {
 
@@ -48,109 +141,34 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
     return new Promise(resolve => {
 
       if (element) {
+        if (element.metadata) {
+          // children of favorites
+          resolve(this.getFavorites(element.metadata));
+        } else {
+          let ll: ProjectNode[] = [];
 
-        const ll: ProjectNode[] = [];
+          ll.push(new ProjectNode(element.label, vscode.TreeItemCollapsibleState.None, "git", element.preview, {
+            command: "projectManager.open",
+            title: "",
+            arguments: [element.preview.path],
+          }));
 
-        ll.push(new ProjectNode(element.label, vscode.TreeItemCollapsibleState.None, "git", element.preview, {
-          command: "projectManager.open",
-          title: "",
-          arguments: [element.preview.path],
-        }));
-
-        resolve(ll);
-        
+          resolve(ll);
+        }
       } else {
-
         // ROOT
 
         // raw list
-        const lll: ProjectNode[] = [];
-            
+
         // favorites
         if (this.projectSource instanceof ProjectStorage) {
-
-          const projectsMapped = <ProjectInQuickPickList> this.projectSource.map();
-          const projects: ProjectPreview[] = [];
-
-          projectsMapped.sort((n1, n2) => {
-            if (n1.label > n2.label) {
-              return 1;
-            }
-
-            if (n1.label < n2.label) {
-              return -1;
-            }
-
-            return 0;
-          });
-
-          // tslint:disable-next-line:prefer-for-of
-          for (let index = 0; index < projectsMapped.length; index++) {
-            const prj: ProjectInQuickPick = projectsMapped[index];
-          
-            // projects.push({
-            //   name: prj.label,
-            //   path: PathUtils.expandHomePath(prj.description)
-            // });
-            // lll.push(new ProjectNode("Favorites", vscode.TreeItemCollapsibleState.Collapsed, ProjectNodeKind.NODE_KIND, projects));
-            lll.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
-              "favorites", {
-                name: prj.label,
-                path: PathUtils.expandHomePath(prj.description)
-              },
-              {
-                command: "projectManager.open",
-                title: "",
-                arguments: [PathUtils.expandHomePath(prj.description), prj.label],
-              }));
-          }
-
+          resolve(this.getFavorites())
         }
 
         // Locators (VSCode/Git/Mercurial/SVN)
         if (this.projectSource instanceof CustomProjectLocator) {
-          const projects: ProjectPreview[] = [];
-          this.projectSource.initializeCfg(this.projectSource.kind);
-          
-          if (this.projectSource.dirList.length > 0) {
-
-            this.projectSource.dirList.sort((n1, n2) => {
-              if (n1.name > n2.name) {
-                return 1;
-              }
-
-              if (n1.name < n2.name) {
-                return -1;
-              }
-
-              return 0;
-            });
-
-            // tslint:disable-next-line:prefer-for-of
-            for (let index = 0; index < this.projectSource.dirList.length; index++) {
-              const dirinfo: DirInfo = this.projectSource.dirList[index];
-              
-              // projects.push({
-              //   name: dirinfo.name,
-              //   path: dirinfo.fullPath
-              // });
-              // lll.push(new ProjectNode(this.projectSource.displayName, 
-              //     vscode.TreeItemCollapsibleState.Collapsed, 
-              //     ProjectNodeKind.NODE_KIND, projects));
-              lll.push(new ProjectNode(dirinfo.name, vscode.TreeItemCollapsibleState.None,
-                this.projectSource.displayName, {
-                  name: dirinfo.name,
-                  path: dirinfo.fullPath
-                }, {
-                  command: "projectManager.open",
-                  title: "",
-                  arguments: [dirinfo.fullPath, this.projectSource.icon + " " + dirinfo.name],
-                }));
-            }
-          }
+          resolve(this.getCustomProjectLocator())
         }
-
-        resolve(lll);
       }
     });
   }
@@ -172,18 +190,19 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
       }      
       return;
     }
-  }  
-
+  }
 }
 
 class ProjectNode extends vscode.TreeItem {
+  public parent = '';
 
   constructor(
     public readonly label: string,
-    public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+    public collapsibleState: vscode.TreeItemCollapsibleState,
     public readonly icon: string,
     public readonly preview: ProjectPreview,
-    public readonly command?: vscode.Command
+    public readonly command?: vscode.Command,
+    public readonly metadata?: any
   ) {
     super(label, collapsibleState);
 
