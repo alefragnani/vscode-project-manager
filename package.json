@@ -373,8 +373,6 @@
 		"vscode": "^1.1.17"
 	},
 	"dependencies": {
-		"@types/lodash": "^4.14.116",
-		"lodash": "^4.17.11",
 		"walker": "^1.0.7"
 	}
 }
