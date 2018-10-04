@@ -54,25 +54,30 @@ For easier customization of your project list, you can edit the `projects.json` 
         "name": "Pascal MI",
         "rootPath": "c:\\PascalProjects\\pascal-menu-insight",
         "paths": [],
-        "group": ""
+        "group": "",
+        "enabled": true
     },
     {
         "name": "Bookmarks",
         "rootPath": "$home\\Documents\\GitHub\\vscode-bookmarks",
         "paths": [],
-        "group": ""
+        "group": "",
+        "enabled": true
     },
     {
         "name": "Numbered Bookmarks",
         "rootPath": "$home\\Documents\\GitHub\\vscode-numbered-bookmarks",
         "paths": [],
-        "group": ""
+        "group": "",
+        "enabled": false
     }
 ]
 ```
 
-> For now, only `name` and `rootPath` fields are used. 
-> Use a special variable called `$home` while defining any `path`. It will be replaced by the HOME folder.  
+For now, only `name`, `rootPath`, and `enabled` fields are used.
+> Use a special variable called `$home` while defining any `path`. It will be replaced by the HOME folder.
+
+> Projects that are *not* `enabled` will be hidden from project listings until re-enabled.
 
 > Be sure that the JSON file is well-formed. Otherwise, **Project Manager** will not be able to open it, and an error message like this should appear. In this case, you should use the `Open File` button to fix it.
 
