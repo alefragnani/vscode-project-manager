@@ -68,6 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.addToWorkspace", (node) => addProjectToWorkspace(node));
     vscode.commands.registerCommand("projectManager.deleteProject", (node) => deleteProject(node));
     vscode.commands.registerCommand("projectManager.renameProject", (node) => renameProject(node));
+    vscode.commands.registerCommand("projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
 
     loadProjectsFile();
 
@@ -586,4 +587,27 @@ export function activate(context: vscode.ExtensionContext) {
         });
     };
 
+    function toggleProjectEnabled(node: any) {
+        const enabled = projectStorage.toggleEnabled(node.command.arguments[1]);
+        
+        if (enabled == undefined) {
+            return;
+        }
+
+        projectStorage.save();
+        if (enabled) {
+            vscode.window.showInformationMessage("Project enabled.", "Undo").then(undo => {
+                if (undo) {
+                    toggleProjectEnabled(node);
+                }
+            });;
+        } else {
+            vscode.window.showInformationMessage("Project disabled.", "Undo").then(undo => {
+                if (undo) {
+                    toggleProjectEnabled(node);
+                }
+            });
+        }
+            
+    };
 }

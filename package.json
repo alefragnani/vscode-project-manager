@@ -130,6 +130,10 @@
 			{
 				"command": "projectManager.renameProject",
 				"title": "Rename Project"
+			},
+			{
+				"command": "projectManager.toggleProjectEnabled",
+				"title": "Disable Project"
 			}
 		],
 		"menus": {
@@ -185,6 +189,11 @@
 				},
 				{
 					"command": "projectManager.renameProject",
+					"when": "view == projectsExplorerFavorites",
+					"group": "favorites"
+				},
+				{
+					"command": "projectManager.toggleProjectEnabled",
 					"when": "view == projectsExplorerFavorites",
 					"group": "favorites"
 				}

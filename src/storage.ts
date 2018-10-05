@@ -87,6 +87,22 @@ export class ProjectStorage {
             }
         }
     }
+    
+    /**
+     * Toggle the enabled property of a project
+     * 
+     * @param `name` The [Project Name](#Project.name)
+     *
+     * @return If the project is *now* enabled (or `undefined` if not found)
+     */
+    public toggleEnabled(name: string): boolean | undefined {
+        for (const element of this.projectList) {
+            if (element.name.toLowerCase() === name.toLowerCase()) {
+                element.enabled = !element.enabled;
+                return element.enabled;
+            }
+        }
+    }
 
     /**
      * Adds another `path` to a project
