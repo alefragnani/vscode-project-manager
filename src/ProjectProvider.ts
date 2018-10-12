@@ -81,14 +81,14 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
     
       projectNodes.push(new ProjectNode(
         prj.label, 
-        prj.isDirectory ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None,
+        prj.isDirectory ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.None,
         prj.isDirectory ? "favorites" : "vscode", 
         {
           name: prj.label,
           path: PathUtils.expandHomePath(prj.description)
         },
         {
-          command: "projectManager.open",
+          command: "projectManager.openInNewWindow",
           title: "",
           arguments: [PathUtils.expandHomePath(prj.description), prj.label],
         },
