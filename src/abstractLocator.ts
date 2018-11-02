@@ -53,11 +53,14 @@ export class CustomProjectLocator {
         this.refreshConfig();
     }
 
-    public getPathDepth(s) {
-        return s.split(path.sep).length;
+    public getPathDepth(s: string) {
+        let depth = s.split(path.sep).length;
+        if (s.endsWith(path.sep))
+            depth--;
+        return depth;
     }
 
-    public isMaxDeptReached(currentDepth, initialDepth) {
+    public isMaxDepthReached(currentDepth, initialDepth) {
         return (this.maxDepth > 0) && ((currentDepth - initialDepth) > this.maxDepth);
     }
 
@@ -133,7 +136,7 @@ export class CustomProjectLocator {
                         walker(expandedBasePath)
                             .filterDir((dir, stat) => {
                                 return !(this.isFolderIgnored(path.basename(dir)) ||
-                                    this.isMaxDeptReached(this.getPathDepth(dir), depth));
+                                    this.isMaxDepthReached(this.getPathDepth(dir), depth));
                             })
                             .on("dir", this.processDirectory)
                             .on("error", this.handleError)
