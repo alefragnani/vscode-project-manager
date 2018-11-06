@@ -1,3 +1,7 @@
+## [9.1.0] - 2018-11-06
+### Added
+- CodeStream becomes a Sponsor
+
 ## [9.0.1] - 2018-09-25
 ### Fixed
 - Avoid installation in unsupported VSCode version (issue [#198](https://github.com/alefragnani/vscode-project-manager/issues/198))
