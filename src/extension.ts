@@ -519,7 +519,7 @@ export function activate(context: vscode.ExtensionContext) {
                 projectFile = path.join(appdata, channelPath, "User", PROJECTS_FILE);
             } else {
                 appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
-                channelPath: string = getChannelPath();
+                channelPath = getChannelPath();
                 projectFile = path.join(appdata, channelPath, "User", PROJECTS_FILE);
             }
             // in linux, it may not work with /var/local, then try to use /home/myuser/.config
