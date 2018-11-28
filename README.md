@@ -5,7 +5,7 @@
 
 # What's new in Project Manager 9
 
-* Moves the Treeview to its own **Activity Bar**
+* Adds an all-new **Side Bar**
 * Adds `Add to Workspace` command to add any project to current workspace
 * Use new `NotificationUI` while refreshing projects
 
