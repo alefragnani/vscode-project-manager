@@ -1,3 +1,7 @@
+## [10.0.0] - 2018-11-28
+### Added
+- What's New
+
 ## [9.1.0] - 2018-11-06
 ### Added
 - CodeStream becomes a Sponsor

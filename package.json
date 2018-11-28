@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "9.1.0",
+	"version": "10.0.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -130,6 +130,10 @@
 			{
 				"command": "projectManager.renameProject",
 				"title": "Rename Project"
+			},
+			{
+				"command": "projectManager.whatsNew",
+				"title": "Project Manager: What's New"
 			}
 		],
 		"menus": {
@@ -369,8 +373,8 @@
 	},
 	"devDependencies": {
 		"@types/node": "^6.0.40",
-		"typescript": "^2.3.2",
-		"vscode": "^1.1.17"
+		"typescript": "^3.1.6",
+		"vscode": "^1.1.21"
 	},
 	"dependencies": {
 		"walker": "^1.0.7"
