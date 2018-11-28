@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "9.1.0",
+	"version": "10.0.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -130,10 +130,10 @@
 			{
 				"command": "projectManager.renameProject",
 				"title": "Rename Project"
-            },
-            {
-                "command": "projectManager.whatsNew",
-                "title": "Project Manager: What's New"
+			},
+			{
+				"command": "projectManager.whatsNew",
+				"title": "Project Manager: What's New"
 			}
 		],
 		"menus": {
