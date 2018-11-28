@@ -130,6 +130,10 @@
 			{
 				"command": "projectManager.renameProject",
 				"title": "Rename Project"
+            },
+            {
+                "command": "projectManager.whatsNew",
+                "title": "Project Manager: What's New"
 			}
 		],
 		"menus": {

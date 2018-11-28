@@ -12,6 +12,9 @@ import { ProjectProvider } from "./ProjectProvider";
 import { ProjectsSorter } from "./sorter";
 import { Project, ProjectStorage } from "./storage";
 
+import { WhatsNewManager } from "../vscode-whats-new/src/Manager";
+import { WhatsNewProjectManagerContentProvider } from "./whats-new/ProjectManagerContentProvider";
+
 const PROJECTS_FILE = "projects.json";
 
 const VSCODE_ICON = "$(file-code)";
@@ -36,6 +39,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     // load the projects
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
+
+    const provider = new WhatsNewProjectManagerContentProvider();
+    const viewer = new WhatsNewManager(context).registerContentProvider("project-manager", provider);
+    viewer.showPageInActivation();
+    context.subscriptions.push(vscode.commands.registerCommand("projectManager.whatsNew", () => viewer.showPage()));
 
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;
