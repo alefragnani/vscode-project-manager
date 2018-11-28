@@ -1,0 +1,3 @@
+[submodule "vscode-whats-new"]
+	path = vscode-whats-new
+	url = https://github.com/alefragnani/vscode-whats-new.git
