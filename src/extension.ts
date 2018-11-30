@@ -68,6 +68,11 @@ export function activate(context: vscode.ExtensionContext) {
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects(true, true));
+    vscode.commands.registerCommand("projectManager.refreshVSCodeProjects", () => refreshProjectsByType("VSCode", vscLocator, projectProviderVSCode, true, true));
+    vscode.commands.registerCommand("projectManager.refreshGitProjects", () => refreshProjectsByType("Git", gitLocator, projectProviderGit, true, true));
+    vscode.commands.registerCommand("projectManager.refreshMercurialProjects", () => refreshProjectsByType("Mercurial", mercurialLocator, projectProviderMercurial, true, true));
+    vscode.commands.registerCommand("projectManager.refreshSVNProjects", () => refreshProjectsByType("SVN", svnLocator, projectProviderSVN, true, true));
+    vscode.commands.registerCommand("projectManager.refreshAnyProjects", () => refreshProjectsByType("Any", anyLocator, projectProviderAny, true, true));
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
@@ -230,7 +235,32 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage("The projects have been refreshed!");
             }
         })
+    }
 
+    async function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function refreshProjectsByType(projectType: string, locator: CustomProjectLocator, projectProvider: ProjectProvider, showMessage?: boolean, forceRefresh?: boolean) {
+        vscode.window.withProgress({
+            location: vscode.ProgressLocation.Notification,
+            title: "Refreshing Projects",
+            cancellable: false
+        }, async (progress) => {
+            progress.report({ increment: 50, message: projectType });
+            const result = await locator.refreshProjects(forceRefresh);
+
+            if (result || forceRefresh) {
+                progress.report({ increment: 50, message: projectType });
+                projectProvider.refresh();
+                projectProvider.showTreeView();
+            }
+        }).then(async () => {           
+            if (showMessage) {                
+                await delay(1000);
+                vscode.window.showInformationMessage(`${projectType} projects have been refreshed!`);
+            }
+        })
     }
 
     function editProjects() {
