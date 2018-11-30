@@ -76,6 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.addToWorkspace", (node) => addProjectToWorkspace(node));
     vscode.commands.registerCommand("projectManager.deleteProject", (node) => deleteProject(node));
     vscode.commands.registerCommand("projectManager.renameProject", (node) => renameProject(node));
+    vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
 
     loadProjectsFile();
 
@@ -259,21 +260,29 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function saveProject() {
-        // Display a message box to the user
-        // let wpath = vscode.workspace.rootPath;
-        const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
-        let wpath = workspace0 ? workspace0.uri.fsPath : undefined;
+    function saveProject(node?: any) {
+        let wpath: string;
+        let rootPath: string;
 
-        if (!wpath) {
-            vscode.window.showInformationMessage("Open a folder first to save a project");
-            return;
-        }
-
-        if (process.platform === "win32") {
-            wpath = wpath.substr(wpath.lastIndexOf("\\") + 1);
+        if (node) {
+            wpath = node.label; 
+            rootPath = node.command.arguments[0];
         } else {
-            wpath = wpath.substr(wpath.lastIndexOf("/") + 1);
+            // Display a message box to the user
+            // let wpath = vscode.workspace.rootPath;
+            const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
+            rootPath = workspace0 ? workspace0.uri.fsPath : undefined;
+
+            if (!rootPath) {
+                vscode.window.showInformationMessage("Open a folder first to save a project");
+                return;
+            }
+    
+            if (process.platform === "win32") {
+                wpath = rootPath.substr(rootPath.lastIndexOf("\\") + 1);
+            } else {
+                wpath = rootPath.substr(rootPath.lastIndexOf("/") + 1);
+            }    
         }
 
         // ask the PROJECT NAME (suggest the )
@@ -293,18 +302,16 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showWarningMessage("You must define a name for the project.");
                 return;
             }
-
-            // let rootPath = PathUtils.compactHomePath(vscode.workspace.rootPath);
-            const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
-            const rootPath = workspace0 ? PathUtils.compactHomePath(workspace0.uri.fsPath) : undefined;
-    
+   
             if (!projectStorage.exists(projectName)) {
                 aStack.push(projectName);
                 context.globalState.update("recent", aStack.toString());
                 projectStorage.push(projectName, rootPath, "");
                 projectStorage.save();
                 vscode.window.showInformationMessage("Project saved!");
-                showStatusBar(projectName);
+                if (!node) {
+                    showStatusBar(projectName);
+                }
             } else {
                 const optionUpdate = <vscode.MessageItem> {
                     title: "Update"
@@ -325,7 +332,9 @@ export function activate(context: vscode.ExtensionContext) {
                         projectStorage.updateRootPath(projectName, rootPath);
                         projectStorage.save();
                         vscode.window.showInformationMessage("Project saved!");
-                        showStatusBar(projectName);
+                        if (!node) {
+                            showStatusBar(projectName);
+                        }
                         return;
                     } else {
                         return;

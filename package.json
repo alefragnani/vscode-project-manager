@@ -134,6 +134,10 @@
 			{
 				"command": "projectManager.whatsNew",
 				"title": "Project Manager: What's New"
+			},
+			{
+				"command": "projectManager.addToFavorites",
+				"title": "Add to Favorites"
 			}
 		],
 		"menus": {
@@ -181,6 +185,11 @@
 					"command": "projectManager.addToWorkspace",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/",
 					"group": "workspace"
+				},
+				{
+					"command": "projectManager.addToFavorites",
+					"when": "view =~ /projectsExplorer(VSCode|Git|SVN|Any|Mercurial)/",
+					"group": "favorites"
 				},
 				{
 					"command": "projectManager.deleteProject",
