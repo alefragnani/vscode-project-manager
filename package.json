@@ -39,6 +39,11 @@
 		"onCommand:projectManager.listProjectsNewWindow",
 		"onCommand:projectManager.editProjects",
 		"onCommand:projectManager.refreshProjects",
+		"onCommand:projectManager.refreshVSCodeProjects",
+		"onCommand:projectManager.refreshGitProjects",
+		"onCommand:projectManager.refreshSVNProjects",
+		"onCommand:projectManager.refreshAnyProjects",
+		"onCommand:projectManager.refreshMercurialProjects",
 		"onView:projectsExplorer"
 	],
 	"main": "./out/src/extension",
@@ -112,6 +117,46 @@
 				"title": "Project Manager: Refresh Projects"
 			},
 			{
+				"command": "projectManager.refreshVSCodeProjects",
+				"title": "Project Manager: Refresh VSCode Projects",
+				"icon": {
+					"light": "images/ico-refresh-light.svg",
+					"dark": "images/ico-refresh-dark.svg"
+				}
+			},
+			{
+				"command": "projectManager.refreshGitProjects",
+				"title": "Project Manager: Refresh Git Projects",
+				"icon": {
+					"light": "images/ico-refresh-light.svg",
+					"dark": "images/ico-refresh-dark.svg"
+				}
+			},
+			{
+				"command": "projectManager.refreshSVNProjects",
+				"title": "Project Manager: Refresh SVN Projects",
+				"icon": {
+					"light": "images/ico-refresh-light.svg",
+					"dark": "images/ico-refresh-dark.svg"
+				}
+			},
+			{
+				"command": "projectManager.refreshAnyProjects",
+				"title": "Project Manager: Refresh Any Projects",
+				"icon": {
+					"light": "images/ico-refresh-light.svg",
+					"dark": "images/ico-refresh-dark.svg"
+				}
+			},
+			{
+				"command": "projectManager.refreshMercurialProjects",
+				"title": "Project Manager: Refresh Mercurial Projects",
+				"icon": {
+					"light": "images/ico-refresh-light.svg",
+					"dark": "images/ico-refresh-dark.svg"
+				}
+			},
+			{
 				"command": "projectManager.open",
 				"title": "Open"
 			},
@@ -163,6 +208,31 @@
 				{
 					"command": "projectManager.editProjects",
 					"when": "view == projectsExplorerFavorites",
+					"group": "navigation"
+				},
+				{
+					"command": "projectManager.refreshVSCodeProjects",
+					"when": "view == projectsExplorerVSCode",
+					"group": "navigation"
+				},
+				{
+					"command": "projectManager.refreshGitProjects",
+					"when": "view == projectsExplorerGit",
+					"group": "navigation"
+				},
+				{
+					"command": "projectManager.refreshSVNProjects",
+					"when": "view == projectsExplorerSVN",
+					"group": "navigation"
+				},
+				{
+					"command": "projectManager.refreshAnyProjects",
+					"when": "view == projectsExplorerAny",
+					"group": "navigation"
+				},
+				{
+					"command": "projectManager.refreshMercurialProjects",
+					"when": "view == projectsExplorerMercurial",
 					"group": "navigation"
 				}
 			],
