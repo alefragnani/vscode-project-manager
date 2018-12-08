@@ -15,9 +15,9 @@ export interface DirList extends Array<DirInfo> { };
 
 export interface RepositoryDetector {
 
-    isRepoDir(projectPath: string);
+    isRepoDir(projectPath: string, dirList: DirList): boolean;
     decideProjectName(projectPath: string): string; 
-
+    refreshConfig();
 }
 
 export class CustomRepositoryDetector implements RepositoryDetector {
@@ -25,7 +25,11 @@ export class CustomRepositoryDetector implements RepositoryDetector {
     constructor(public paths: string[]) {
     }
 
-    public isRepoDir(projectPath: string) {
+    public refreshConfig() {
+        //
+    }
+
+    public isRepoDir(projectPath: string, dirList: DirList) {
         return fs.existsSync(path.join(projectPath, ...this.paths));
     }
 
@@ -168,7 +172,7 @@ export class CustomProjectLocator {
 
     public processDirectory = (absPath: string, stat: any) => {
         // vscode.window.setStatusBarMessage(absPath, 600);
-        if (this.repositoryDetector.isRepoDir(absPath)) {
+        if (this.repositoryDetector.isRepoDir(absPath, this.dirList)) {
             this.addToList(absPath, this.repositoryDetector.decideProjectName(absPath));
         }
     }
@@ -270,6 +274,8 @@ export class CustomProjectLocator {
             this.useCachedProjects = currentValue;
             refreshedSomething = true;
         }
+
+        this.repositoryDetector.refreshConfig();
 
         return refreshedSomething;
     }

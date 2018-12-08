@@ -338,6 +338,11 @@
 					"default": [],
 					"description": "Indicates the base folders to search for Git projects"
 				},
+				"projectManager.git.ignoreSubmodules": {
+					"type": "boolean",
+					"default": false,
+					"description": "Indicates whether to ignore Git submodules"
+				},
 				"projectManager.git.ignoredFolders": {
 					"type": "array",
 					"default": [
