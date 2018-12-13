@@ -21,7 +21,7 @@ const VSCODE_ICON = "$(file-code)";
 const GIT_ICON = "$(git-branch)";
 const MERCURIAL_ICON = "$(git-branch)";
 const SVN_ICON = "$(zap)";
-const ANY_ICON = "$(file-directory)"; 
+const ANY_ICON = "$(file-directory)";
 
 const vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", VSCODE_ICON, new CustomRepositoryDetector([".vscode"]));
 const gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", GIT_ICON, new GitRepositoryDetector([".git"]));
@@ -54,15 +54,15 @@ export function activate(context: vscode.ExtensionContext) {
         }
         vscode.commands.executeCommand("vscode.openFolder", uri, false)
             .then(
-            value => ({}),  // done
-            value => vscode.window.showInformationMessage("Could not open the project!"));
+                value => ({}),  // done
+                value => vscode.window.showInformationMessage("Could not open the project!"));
     });
     vscode.commands.registerCommand("projectManager.openInNewWindow", node => {
         const uri: vscode.Uri = vscode.Uri.file(node.command.arguments[0]);
         vscode.commands.executeCommand("vscode.openFolder", uri, true)
             .then(
-            value => ({}),  // done
-            value => vscode.window.showInformationMessage("Could not open the project!"));
+                value => ({}),  // done
+                value => vscode.window.showInformationMessage("Could not open the project!"));
     });
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
@@ -92,7 +92,7 @@ export function activate(context: vscode.ExtensionContext) {
     const projectProviderMercurial = new ProjectProvider(mercurialLocator, context);
     const projectProviderSVN = new ProjectProvider(svnLocator, context);
     const projectProviderAny = new ProjectProvider(anyLocator, context);
-    
+
     vscode.window.registerTreeDataProvider("projectsExplorerFavorites", projectProviderStorage);
     vscode.window.registerTreeDataProvider("projectsExplorerVSCode", projectProviderVSCode);
     vscode.window.registerTreeDataProvider("projectsExplorerGit", projectProviderGit);
@@ -102,15 +102,15 @@ export function activate(context: vscode.ExtensionContext) {
 
     showTreeViewFromAllProviders();
 
-    fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
+    fs.watchFile(getProjectFilePath(), { interval: 100 }, (prev, next) => {
         loadProjectsFile();
         projectProviderStorage.refresh();
     });
 
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
         if (cfg.affectsConfiguration("projectManager.git") || cfg.affectsConfiguration("projectManager.hg") ||
-            cfg.affectsConfiguration("projectManager.vscode") || cfg.affectsConfiguration("projectManager.svn") || 
-            cfg.affectsConfiguration("projectManager.any") || 
+            cfg.affectsConfiguration("projectManager.vscode") || cfg.affectsConfiguration("projectManager.svn") ||
+            cfg.affectsConfiguration("projectManager.any") ||
             cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
             refreshProjects();
         }
@@ -199,13 +199,13 @@ export function activate(context: vscode.ExtensionContext) {
         }, async (progress) => {
             progress.report({ message: "VSCode" });
             const rvscode = await vscLocator.refreshProjects(forceRefresh);
-        
+
             progress.report({ message: "Git" });
             const rgit = await gitLocator.refreshProjects(forceRefresh);
-        
+
             progress.report({ message: "Mercurial" });
             const rmercurial = await mercurialLocator.refreshProjects(forceRefresh);
-        
+
             progress.report({ message: "SVN" });
             const rsvn = await svnLocator.refreshProjects(forceRefresh);
 
@@ -213,7 +213,7 @@ export function activate(context: vscode.ExtensionContext) {
             const rany = await anyLocator.refreshProjects(forceRefresh);
 
             if (rvscode || rgit || rmercurial || rsvn || rany || forceRefresh) {
-                progress.report({ message: "Activity Bar"});
+                progress.report({ message: "Activity Bar" });
                 if (rvscode || forceRefresh) {
                     projectProviderVSCode.refresh();
                 }
@@ -256,8 +256,8 @@ export function activate(context: vscode.ExtensionContext) {
                 projectProvider.refresh();
                 projectProvider.showTreeView();
             }
-        }).then(async () => {           
-            if (showMessage) {                
+        }).then(async () => {
+            if (showMessage) {
                 await delay(1000);
                 vscode.window.showInformationMessage(`${projectType} projects have been refreshed!`);
             }
@@ -270,7 +270,7 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showTextDocument(doc);
             });
         } else {
-            const optionEditProject = <vscode.MessageItem> {
+            const optionEditProject = <vscode.MessageItem>{
                 title: "Yes, edit manually"
             };
             vscode.window.showErrorMessage("No projects saved yet! You should open a folder and use Save Project instead. Do you really want to edit manually? ", optionEditProject).then(option => {
@@ -295,7 +295,7 @@ export function activate(context: vscode.ExtensionContext) {
         let rootPath: string;
 
         if (node) {
-            wpath = node.label; 
+            wpath = node.label;
             rootPath = node.command.arguments[0];
         } else {
             // Display a message box to the user
@@ -307,16 +307,16 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage("Open a folder first to save a project");
                 return;
             }
-    
+
             if (process.platform === "win32") {
                 wpath = rootPath.substr(rootPath.lastIndexOf("\\") + 1);
             } else {
                 wpath = rootPath.substr(rootPath.lastIndexOf("/") + 1);
-            }    
+            }
         }
 
         // ask the PROJECT NAME (suggest the )
-        const ibo = <vscode.InputBoxOptions> {
+        const ibo = <vscode.InputBoxOptions>{
             prompt: "Project Name",
             placeHolder: "Type a name for your project",
             value: wpath
@@ -332,7 +332,7 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showWarningMessage("You must define a name for the project.");
                 return;
             }
-   
+
             if (!projectStorage.exists(projectName)) {
                 aStack.push(projectName);
                 context.globalState.update("recent", aStack.toString());
@@ -343,10 +343,10 @@ export function activate(context: vscode.ExtensionContext) {
                     showStatusBar(projectName);
                 }
             } else {
-                const optionUpdate = <vscode.MessageItem> {
+                const optionUpdate = <vscode.MessageItem>{
                     title: "Update"
                 };
-                const optionCancel = <vscode.MessageItem> {
+                const optionCancel = <vscode.MessageItem>{
                     title: "Cancel"
                 };
 
@@ -433,7 +433,7 @@ export function activate(context: vscode.ExtensionContext) {
                     resolve(itemsSorted.concat(newItems));
                 });
         });
-    }    
+    }
 
     function listProjects(forceNewWindow: boolean) {
         let items = [];
@@ -459,10 +459,10 @@ export function activate(context: vscode.ExtensionContext) {
                     return;
                 }
 
-                const optionUpdateProject = <vscode.MessageItem> {
+                const optionUpdateProject = <vscode.MessageItem>{
                     title: "Update Project"
                 };
-                const optionDeleteProject = <vscode.MessageItem> {
+                const optionDeleteProject = <vscode.MessageItem>{
                     title: "Delete Project"
                 };
 
@@ -492,12 +492,12 @@ export function activate(context: vscode.ExtensionContext) {
                 const uri: vscode.Uri = vscode.Uri.file(projectPath);
                 vscode.commands.executeCommand("vscode.openFolder", uri, forceNewWindow)
                     .then(
-                    value => ({}),  // done
-                    value => vscode.window.showInformationMessage("Could not open the project!"));
+                        value => ({}),  // done
+                        value => vscode.window.showInformationMessage("Could not open the project!"));
             }
         }
 
-        const options = <vscode.QuickPickOptions> {
+        const options = <vscode.QuickPickOptions>{
             matchOnDescription: vscode.workspace.getConfiguration("projectManager").get("filterOnFullPath", false),
             matchOnDetail: false,
             placeHolder: "Loading Projects (pick one to open)"
@@ -505,22 +505,22 @@ export function activate(context: vscode.ExtensionContext) {
 
         getProjects(items)
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, vscLocator);
+                return getLocatorProjects(<any[]>folders, vscLocator);
             })
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, gitLocator);
+                return getLocatorProjects(<any[]>folders, gitLocator);
             })
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, mercurialLocator);
+                return getLocatorProjects(<any[]>folders, mercurialLocator);
             })
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, svnLocator);
+                return getLocatorProjects(<any[]>folders, svnLocator);
             })
             .then((folders) => {
-                return getLocatorProjects(<any[]> folders, anyLocator);
+                return getLocatorProjects(<any[]>folders, anyLocator);
             })
             .then((folders) => { // sort
-                if ((<any[]> folders).length === 0) {
+                if ((<any[]>folders).length === 0) {
                     vscode.window.showInformationMessage("No projects saved yet!");
                     return;
                 } else {
@@ -528,7 +528,7 @@ export function activate(context: vscode.ExtensionContext) {
                         folders = sortProjectList(folders);
                     }
                     vscode.commands.executeCommand("setContext", "inProjectManagerList", true);
-                    vscode.window.showQuickPick(<any[]> folders, options)
+                    vscode.window.showQuickPick(<any[]>folders, options)
                         .then(onResolve, onRejectListProjects);
                 }
             });
@@ -545,14 +545,18 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function getChannelPath(): string {
-        return vscode.env.appName.replace("Visual Studio ", "");
+        return process.env.VSCODE_PORTABLE ? "user-data" : vscode.env.appName.replace("Visual Studio ", "");
+    }
+
+    function getAppdataPath(): string {
+        return process.env.VSCODE_PORTABLE || process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
     }
 
     function loadProjectsFile() {
         const errorLoading: string = projectStorage.load();
         // how to handle now, since the extension starts 'at load'?
         if (errorLoading !== "") {
-            const optionOpenFile = <vscode.MessageItem> {
+            const optionOpenFile = <vscode.MessageItem>{
                 title: "Open File"
             };
             vscode.window.showErrorMessage("Error loading projects.json file. Message: " + errorLoading, optionOpenFile).then(option => {
@@ -577,7 +581,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (projectsLocation !== "") {
             projectFile = path.join(projectsLocation, PROJECTS_FILE);
         } else {
-            const appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
+            const appdata: string = getAppdataPath();
             const channelPath: string = getChannelPath();
             projectFile = path.join(appdata, channelPath, "User", PROJECTS_FILE);
             // in linux, it may not work with /var/local, then try to use /home/myuser/.config
@@ -589,8 +593,8 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function addProjectToWorkspace(node: any) {
-        vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders ? 
-            vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(node.command.arguments[ 0 ]) });
+        vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders ?
+            vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(node.command.arguments[0]) });
     }
 
     function deleteProject(node: any) {
@@ -604,7 +608,7 @@ export function activate(context: vscode.ExtensionContext) {
         const oldName: string = node.command.arguments[1];
         // Display a message box to the user
         // ask the NEW PROJECT NAME ()
-        const ibo = <vscode.InputBoxOptions> {
+        const ibo = <vscode.InputBoxOptions>{
             prompt: "New Project Name",
             placeHolder: "Type a new name for the project",
             value: oldName
