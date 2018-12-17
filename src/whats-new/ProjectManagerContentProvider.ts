@@ -15,6 +15,8 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         const changeLog: ChangeLogItem[] = [];
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds an all-new Project Manager <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Add to Workspace</b> command to add any project to current workspace"});
+        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Add to Favorites</b> command to add any auto-detected project as Favorite"});
+        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Refresh Project</b> commands for every kind of auto-detected project"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Use new <b>Notification UI</b> while refreshing projects"});
         changeLog.push({kind: ChangeLogKind.FIXED, message: `Avoid installation in unsupported VSCode version (<a title=\"Open Issue #198\" 
             href=\"https://github.com/alefragnani/vscode-project-manager/issues/198\">
