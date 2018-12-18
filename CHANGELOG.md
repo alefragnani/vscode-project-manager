@@ -1,3 +1,8 @@
+## [10.1.0] - 2018-12-17
+### Added
+- `Add to Favorites` command in Activity Bar (thanks to @ckaczor [PR 229](https://github.com/alefragnani/vscode-project-manager/pull/229))
+- `Refresh Project` commands in Activity Bar for every kind of auto-detected project (thanks to @ckaczor [PR 231](https://github.com/alefragnani/vscode-project-manager/pull/231))
+
 ## [10.0.0] - 2018-11-28
 ### Added
 - What's New
