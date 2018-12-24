@@ -238,11 +238,19 @@ export class CustomProjectLocator {
 
     private getCacheFile() {
         let cacheFile: string;
-        const appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
-        const channelPath: string = this.getChannelPath();
-        cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.kind + ".json");
-        if ((process.platform === "linux") && (!fs.existsSync(cacheFile))) {
-            cacheFile = path.join(homeDir, ".config/", channelPath, "User", CACHE_FILE + this.kind + ".json");
+        let appdata: string;
+        let channelPath: string;
+        if (process.env.VSCODE_PORTABLE) {
+            appdata = process.env.VSCODE_PORTABLE;
+            channelPath = "user-data";
+            cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.kind + ".json");
+    } else {
+            appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
+            channelPath = this.getChannelPath();
+            cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.kind + ".json");
+            if ((process.platform === "linux") && (!fs.existsSync(cacheFile))) {
+                cacheFile = path.join(homeDir, ".config/", channelPath, "User", CACHE_FILE + this.kind + ".json");
+            }
         }
         return cacheFile;
     }
