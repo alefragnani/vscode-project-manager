@@ -590,10 +590,10 @@ export function activate(context: vscode.ExtensionContext) {
                 appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
                 channelPath = getChannelPath();
                 projectFile = path.join(appdata, channelPath, "User", PROJECTS_FILE);
-            }
-            // in linux, it may not work with /var/local, then try to use /home/myuser/.config
-            if ((process.platform === "linux") && (!fs.existsSync(projectFile))) {
-                projectFile = path.join(homeDir, ".config/", channelPath, "User", PROJECTS_FILE);
+                // in linux, it may not work with /var/local, then try to use /home/myuser/.config
+                if ((process.platform === "linux") && (!fs.existsSync(projectFile))) {
+                    projectFile = path.join(homeDir, ".config/", channelPath, "User", PROJECTS_FILE);
+                }
             }
         }
         return projectFile;
