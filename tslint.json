@@ -5,7 +5,6 @@
 	"rules": {
 		"no-unused-expression": true,
 		"no-duplicate-variable": true,
-		"no-duplicate-key": true,
 		"no-unused-variable": true,
 		"no-trailing-whitespace": false,
 		"no-angle-bracket-type-assertion": false,
@@ -24,9 +23,7 @@
 			false
 		],
 		"object-literal-sort-keys": false,
-		"max-classes-per-file": [
-		  false	
-		],
+		"max-classes-per-file": false,
 		"max-line-length": [
 			false
 		]

@@ -125,7 +125,7 @@ export class PathUtils {
 
     public static getFilePathFromAppData(file: string): string {
         let appdata: string;
-        let channelPath: string = this.getChannelPath();
+        const channelPath: string = this.getChannelPath();
         let newFile: string;
         if (process.env.VSCODE_PORTABLE) {
             appdata = process.env.VSCODE_PORTABLE;
