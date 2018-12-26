@@ -228,31 +228,8 @@ export class CustomProjectLocator {
         }
     }
 
-    private getChannelPath(): string {
-        if (vscode.env.appName.indexOf("Insiders") > 0) {
-            return "Code - Insiders";
-        } else {
-            return "Code";
-        }
-    }
-
     private getCacheFile() {
-        let cacheFile: string;
-        let appdata: string;
-        let channelPath: string;
-        if (process.env.VSCODE_PORTABLE) {
-            appdata = process.env.VSCODE_PORTABLE;
-            channelPath = "user-data";
-            cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.kind + ".json");
-    } else {
-            appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
-            channelPath = this.getChannelPath();
-            cacheFile = path.join(appdata, channelPath, "User", CACHE_FILE + this.kind + ".json");
-            if ((process.platform === "linux") && (!fs.existsSync(cacheFile))) {
-                cacheFile = path.join(homeDir, ".config/", channelPath, "User", CACHE_FILE + this.kind + ".json");
-            }
-        }
-        return cacheFile;
+        return PathUtils.getFilePathFromAppData(CACHE_FILE + this.kind + ".json");
     }
 
     private refreshConfig(): boolean {
