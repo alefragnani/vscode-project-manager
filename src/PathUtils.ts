@@ -8,6 +8,7 @@
 import fs = require("fs");
 import os = require("os");
 import path = require("path");
+import { env } from "vscode";
 
 export const homeDir = os.homedir();
 export const homePathVariable = "$home";
@@ -116,5 +117,27 @@ export class PathUtils {
         }
 
         return items;
+    }
+
+    public static getChannelPath(): string {
+        return process.env.VSCODE_PORTABLE ? "user-data" : env.appName.replace("Visual Studio ", "");
+    }
+
+    public static getFilePathFromAppData(file: string): string {
+        let appdata: string;
+        const channelPath: string = this.getChannelPath();
+        let newFile: string;
+        if (process.env.VSCODE_PORTABLE) {
+            appdata = process.env.VSCODE_PORTABLE;
+            newFile = path.join(appdata, channelPath, "User", file);
+        } else {
+            appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
+            newFile = path.join(appdata, channelPath, "User", file);
+            // in linux, it may not work with /var/local, then try to use /home/myuser/.config
+            if ((process.platform === "linux") && (!fs.existsSync(newFile))) {
+                newFile = path.join(homeDir, ".config/", channelPath, "User", file);
+            }
+        }
+        return newFile;
     }
 }

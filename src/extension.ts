@@ -547,10 +547,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function getChannelPath(): string {
-        return vscode.env.appName.replace("Visual Studio ", "");
-    }
-
     function loadProjectsFile() {
         const errorLoading: string = projectStorage.load();
         // how to handle now, since the extension starts 'at load'?
@@ -580,13 +576,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (projectsLocation !== "") {
             projectFile = path.join(projectsLocation, PROJECTS_FILE);
         } else {
-            const appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
-            const channelPath: string = getChannelPath();
-            projectFile = path.join(appdata, channelPath, "User", PROJECTS_FILE);
-            // in linux, it may not work with /var/local, then try to use /home/myuser/.config
-            if ((process.platform === "linux") && (!fs.existsSync(projectFile))) {
-                projectFile = path.join(homeDir, ".config/", channelPath, "User", PROJECTS_FILE);
-            }
+            projectFile = PathUtils.getFilePathFromAppData(PROJECTS_FILE);
         }
         return projectFile;
     }
