@@ -222,7 +222,8 @@ export class CustomProjectLocator {
                     rootPath: element.fullPath,
                     name: element.name,
                     group: "",
-                    paths: [] 
+                    paths: [],
+                    enabled: true
                 };
             }
         }
