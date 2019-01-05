@@ -6,6 +6,8 @@
 # What's new in Project Manager 10
 
 * Adds an all-new **Side Bar**
+* Adds **Portable Mode** support
+* Adds `Disable Project` command to disable/hide Favorite projects
 * Adds `Add to Workspace` command to add any project to current workspace
 * Use new `NotificationUI` while refreshing projects
 * Adds `Add to Favorites` command to add any auto-detected project as Favorite
