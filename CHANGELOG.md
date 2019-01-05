@@ -1,6 +1,7 @@
 ## [10.2.0] - 2019-01-??
 ### Added
 - Support **Portable Mode** (thanks to @hcwhan [PR 204](https://github.com/alefragnani/vscode-project-manager/pull/204) and @TanShun [PR 242](https://github.com/alefragnani/vscode-project-manager/pull/242))
+- `Disable Project` command in Activity Bar (thanks to @tekerson [PR 226](https://github.com/alefragnani/vscode-project-manager/pull/226))
 
 ## [10.1.0] - 2018-12-17
 ### Added
