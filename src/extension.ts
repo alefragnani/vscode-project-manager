@@ -85,6 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.deleteProject", (node) => deleteProject(node));
     vscode.commands.registerCommand("projectManager.renameProject", (node) => renameProject(node));
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
+    vscode.commands.registerCommand("projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
 
     loadProjectsFile();
 
@@ -626,4 +627,33 @@ export function activate(context: vscode.ExtensionContext) {
         });
     };
 
+    function toggleProjectEnabled(node: any, askForUndo: boolean = true) {
+        const projectName: string = node.command.arguments[1];
+        const enabled: boolean = projectStorage.toggleEnabled(projectName);
+        
+        if (enabled == undefined) {
+            return;
+        }
+
+        projectStorage.save();
+
+        if (!askForUndo) {
+            return;
+        }
+
+        if (enabled) {
+            vscode.window.showInformationMessage(`Project "${projectName}" enabled.`, "Undo").then(undo => {
+                if (undo) {
+                    toggleProjectEnabled(node, false);
+                }
+            });;
+        } else {
+            vscode.window.showInformationMessage(`Project "${projectName}" disabled.`, "Undo").then(undo => {
+                if (undo) {
+                    toggleProjectEnabled(node, false);
+                }
+            });
+        }
+            
+    };
 }

@@ -13,6 +13,7 @@ export interface Project {
   rootPath: string; // the root path of this project
   paths: string[];  // the 'other paths' when you have multifolder project
   group: string;    // the group(s) that it belongs to
+  enabled: boolean; // the project should be displayed in the project list
 };
 
 export interface ProjectList extends Array<Project> {};
@@ -23,12 +24,14 @@ class ProjectItem implements Project {
     public rootPath: string; // the root path of this project
     public paths: string[];  // the 'other paths' when you have multifolder project
     public group: string;    // the group(s) that it belongs to
+    public enabled: boolean; // the project should be displayed in the project list
 
     constructor(pname: string, prootPath: string) {
         this.name = pname;
         this.rootPath = prootPath;
         this.paths = [];
         this.group = "";
+        this.enabled = true;
     }
 }
 
@@ -86,6 +89,22 @@ export class ProjectStorage {
             if (element.name.toLowerCase() === oldName.toLowerCase()) {
                 element.name = newName;
                 return;
+            }
+        }
+    }
+    
+    /**
+     * Toggle the enabled property of a project
+     * 
+     * @param `name` The [Project Name](#Project.name)
+     *
+     * @return If the project is *now* enabled (or `undefined` if not found)
+     */
+    public toggleEnabled(name: string): boolean | undefined {
+        for (const element of this.projectList) {
+            if (element.name.toLowerCase() === name.toLowerCase()) {
+                element.enabled = !element.enabled;
+                return element.enabled;
             }
         }
     }
@@ -209,7 +228,7 @@ export class ProjectStorage {
      *         An **empty string** if everything is ok.
      */
     public load(): string {
-        let items = [];
+        let items: Array<any> = [];
 
         // missing file (new install)
         if (!fs.existsSync(this.filename)) {
@@ -227,7 +246,14 @@ export class ProjectStorage {
                 // save updated
                 this.save();
             } else { // NEW format
-                this.projectList = items as ProjectList;
+                this.projectList = (items as Array<Partial<Project>>).map(item => ({
+                    name: '',
+                    rootPath: '',
+                    paths: [],
+                    group: '',
+                    enabled: true,
+                    ...item
+                }));
             }
 
             this.updatePaths();
@@ -272,7 +298,7 @@ export class ProjectStorage {
      * @return A list of projects `{[label, description]}` to be used on a `showQuickPick`
      */    
     public map(): any {
-        const newItems = this.projectList.map(item => {
+        const newItems = this.projectList.filter(item => item.enabled).map(item => {
             return {
               label: item.name,
               description: item.rootPath  
