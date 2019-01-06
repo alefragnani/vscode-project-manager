@@ -74,8 +74,23 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
         // favorites
         if (this.projectSource instanceof ProjectStorage) {
 
+          // no project saved yet...
+          if (this.projectSource.length() === 0) {
+            lll.push(new ProjectNode("No projects saved yet.", 
+              vscode.TreeItemCollapsibleState.None,
+              undefined, {
+                name: "No projects saved yet.",
+                path: ""
+              },
+              {
+                command: "projectManager.saveProject",
+                title: "",
+                arguments: [vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined],
+              }));
+            return resolve(lll);
+          }
+
           const projectsMapped = <ProjectInQuickPickList> this.projectSource.map();
-          const projects: ProjectPreview[] = [];
 
           projectsMapped.sort((n1, n2) => {
             if (n1.label > n2.label) {
@@ -161,17 +176,21 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
   }
 
   public showTreeView(): void {
+
     const canShowTreeView: boolean = vscode.workspace.getConfiguration("projectManager").get("treeview.visible", true);
+    
+    // The "Favorites" only depends on the "setting"
     if (this.projectSource instanceof ProjectStorage) {
-      vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + "Favorites", canShowTreeView && this.projectSource.length() > 0);
+      vscode.commands.executeCommand("setContext", "projectManager.canShowTreeViewFavorites", canShowTreeView);
       return;
     }
-
+    
+    // The "auto-detected" also depends if some project have been detected
     if (this.projectSource instanceof CustomProjectLocator) {
       if (canShowTreeView) {
         this.projectSource.initializeCfg(this.projectSource.kind);
         vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName, 
-        this.projectSource.dirList.length > 0);
+          this.projectSource.dirList.length > 0);
       } else {
         vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName, false);
       }      
@@ -186,16 +205,18 @@ class ProjectNode extends vscode.TreeItem {
   constructor(
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly icon: string,
+    public readonly icon: string | undefined,
     public readonly preview: ProjectPreview,
     public readonly command?: vscode.Command
   ) {
     super(label, collapsibleState);
 
-    this.iconPath = {
-      light: context.asAbsolutePath(this.getProjectIcon(icon, "light")),
-      dark: context.asAbsolutePath(this.getProjectIcon(icon, "dark"))
-    };
+    if (icon) {
+      this.iconPath = {
+        light: context.asAbsolutePath(this.getProjectIcon(icon, "light")),
+        dark: context.asAbsolutePath(this.getProjectIcon(icon, "dark"))
+      };        
+    }
     this.contextValue = "ProjectNodeKind";
     this.tooltip = preview.path;
   }
