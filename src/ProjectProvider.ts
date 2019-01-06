@@ -81,12 +81,12 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
               undefined, {
                 name: "No projects saved yet.",
                 path: ""
-              },
+              }/*,
               {
                 command: "projectManager.saveProject",
                 title: "",
                 arguments: [vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined],
-              }));
+              }*/));
             return resolve(lll);
           }
 
@@ -216,8 +216,10 @@ class ProjectNode extends vscode.TreeItem {
         light: context.asAbsolutePath(this.getProjectIcon(icon, "light")),
         dark: context.asAbsolutePath(this.getProjectIcon(icon, "dark"))
       };        
+      this.contextValue = "ProjectNodeKind";
+    } else {
+      this.contextValue = "ConfigNodeKind"
     }
-    this.contextValue = "ProjectNodeKind";
     this.tooltip = preview.path;
   }
 
