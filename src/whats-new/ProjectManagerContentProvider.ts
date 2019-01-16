@@ -38,10 +38,11 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
             link: "https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=projectmanager",
             image: "https://raw.githubusercontent.com/alefragnani/oss-resources/master/images/sponsors/codestream-hi-res.png",
             width: 35,
-            message: "<p>Use Slack inside VS Code and save your technical discussions where they belong - with your codebase.</p>",
+            message: `<p>Discuss, review, and share code with your team in VS Code. Links discussions about 
+                code to your code. Integrates w/ Slack, Jira, Trello, and Live Share.</p>`,
             extra: 
                 `<a title="Try CodeStream" href="https://codestream.com/?utm_source=vscmarket&utm_medium=banner&utm_campaign=projectmanager">
-                 Try CodeStream</a>` 
+                 Try it free</a>` 
         };
         sponsors.push(sponsorCodeStream);
         return sponsors
