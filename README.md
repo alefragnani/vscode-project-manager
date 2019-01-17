@@ -3,7 +3,7 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 10
+# What's new in Project Manager 10.3
 
 * Adds an all-new **Side Bar**
 * Adds **Portable Mode** support
@@ -15,7 +15,7 @@
 
 # Support
 
-**Project Manager** is an open source extension created for **Visual Studio Code**. While being free and open source, if you find it useful, please consider [supporting it](#support)
+**Project Manager** is an open source extension created for **Visual Studio Code**. While being free and open source, if you find it useful, please consider supporting it.
 
 <table align="center" width="60%" border="0">
   <tr>
