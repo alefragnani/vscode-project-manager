@@ -25,9 +25,9 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Add to Favorites</b> command to add any auto-detected project as Favorite"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Refresh Project</b> commands for every kind of auto-detected project"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Use new <b>Notification UI</b> while refreshing projects"});
-        changeLog.push({kind: ChangeLogKind.FIXED, message: `Avoid installation in unsupported VSCode version (<a title=\"Open Issue #198\" 
-            href=\"https://github.com/alefragnani/vscode-project-manager/issues/198\">
-            Issue #198</a>)</b>`});
+        changeLog.push({kind: ChangeLogKind.FIXED, message: `The projects in the <b>Side Bar</b> should not be sorted case-sensitive (<a title=\"Open Issue #243\" 
+            href=\"https://github.com/alefragnani/vscode-project-manager/issues/243\">
+            Issue #243</a>)`});
         return changeLog;
     }
 

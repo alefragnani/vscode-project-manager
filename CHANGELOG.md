@@ -1,12 +1,19 @@
-## [10.2.0] - 2019-01-??
+## [10.3.0] - 2019-01-17
+### Changed
+- The **Side Bar** is now visible by default, even with no projects (issue [#227](https://github.com/alefragnani/vscode-project-manager/issues/227)
+
+### Fixed
+- The projects in the **Side Bar** should not be sorted case-sensitive (issue [#243](https://github.com/alefragnani/vscode-project-manager/issues/243)
+
+## [10.2.0] - 2019-01-06
 ### Added
 - Support **Portable Mode** (thanks to @hcwhan [PR 204](https://github.com/alefragnani/vscode-project-manager/pull/204) and @TanShun [PR 242](https://github.com/alefragnani/vscode-project-manager/pull/242))
-- `Disable Project` command in Activity Bar (thanks to @tekerson [PR 226](https://github.com/alefragnani/vscode-project-manager/pull/226))
+- `Disable Project` command in Side Bar (thanks to @tekerson [PR 226](https://github.com/alefragnani/vscode-project-manager/pull/226))
 
 ## [10.1.0] - 2018-12-17
 ### Added
-- `Add to Favorites` command in Activity Bar (thanks to @ckaczor [PR 229](https://github.com/alefragnani/vscode-project-manager/pull/229))
-- `Refresh Project` commands in Activity Bar for every kind of auto-detected project (thanks to @ckaczor [PR 231](https://github.com/alefragnani/vscode-project-manager/pull/231))
+- `Add to Favorites` command in Side Bar (thanks to @ckaczor [PR 229](https://github.com/alefragnani/vscode-project-manager/pull/229))
+- `Refresh Project` commands in Side Bar for every kind of auto-detected project (thanks to @ckaczor [PR 231](https://github.com/alefragnani/vscode-project-manager/pull/231))
 
 ## [10.0.0] - 2018-11-28
 ### Added
@@ -32,7 +39,7 @@
 
 ## [8.0.0] - 2018-07-04
 ### Added
-- Project Manager Activity Bar (issue [#183](https://github.com/alefragnani/vscode-project-manager/issues/183))
+- Project Manager Side Bar (issue [#183](https://github.com/alefragnani/vscode-project-manager/issues/183))
 - New Command in TreeView `Add to Workspace` (issue [#161](https://github.com/alefragnani/vscode-project-manager/issues/161))
 - New Version Numbering based on `semver`
 
