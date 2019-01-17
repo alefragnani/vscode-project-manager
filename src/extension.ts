@@ -632,7 +632,7 @@ export function activate(context: vscode.ExtensionContext) {
         const projectName: string = node.command.arguments[1];
         const enabled: boolean = projectStorage.toggleEnabled(projectName);
         
-        if (enabled == undefined) {
+        if (enabled === undefined) {
             return;
         }
 
@@ -647,7 +647,7 @@ export function activate(context: vscode.ExtensionContext) {
                 if (undo) {
                     toggleProjectEnabled(node, false);
                 }
-            });;
+            });
         } else {
             vscode.window.showInformationMessage(`Project "${projectName}" disabled.`, "Undo").then(undo => {
                 if (undo) {
