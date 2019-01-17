@@ -187,6 +187,10 @@
 			{
 				"command": "projectManager.toggleProjectEnabled",
 				"title": "Disable Project"
+			},
+			{
+				"command": "projectManager.saveFirstProject",
+				"title": "Save your First Project"
 			}
 		],
 		"menus": {
@@ -247,37 +251,42 @@
 			"view/item/context": [
 				{
 					"command": "projectManager.open",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "navigation"
 				},
 				{
 					"command": "projectManager.openInNewWindow",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "navigation"
 				},
 				{
 					"command": "projectManager.addToWorkspace",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "workspace"
 				},
 				{
 					"command": "projectManager.addToFavorites",
-					"when": "view =~ /projectsExplorer(VSCode|Git|SVN|Any|Mercurial)/",
+					"when": "view =~ /projectsExplorer(VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},
 				{
 					"command": "projectManager.deleteProject",
-					"when": "view == projectsExplorerFavorites",
+					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},
 				{
 					"command": "projectManager.renameProject",
-					"when": "view == projectsExplorerFavorites",
+					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},
 				{
 					"command": "projectManager.toggleProjectEnabled",
-					"when": "view == projectsExplorerFavorites",
+					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
+					"group": "favorites"
+				},
+				{
+					"command": "projectManager.saveFirstProject",
+					"when": "view == projectsExplorerFavorites && viewItem == ConfigNodeKind",
 					"group": "favorites"
 				}
 			]
