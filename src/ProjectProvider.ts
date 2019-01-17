@@ -93,11 +93,11 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
           const projectsMapped = <ProjectInQuickPickList> this.projectSource.map();
 
           projectsMapped.sort((n1, n2) => {
-            if (n1.label > n2.label) {
+            if (n1.label.toLowerCase() > n2.label.toLowerCase()) {
               return 1;
             }
 
-            if (n1.label < n2.label) {
+            if (n1.label.toLowerCase() < n2.label.toLowerCase()) {
               return -1;
             }
 
@@ -135,11 +135,11 @@ export class ProjectProvider implements vscode.TreeDataProvider<ProjectNode> {
           if (this.projectSource.dirList.length > 0) {
 
             this.projectSource.dirList.sort((n1, n2) => {
-              if (n1.name > n2.name) {
+              if (n1.name.toLowerCase() > n2.name.toLowerCase()) {
                 return 1;
               }
 
-              if (n1.name < n2.name) {
+              if (n1.name.toLowerCase() < n2.name.toLowerCase()) {
                 return -1;
               }
 
