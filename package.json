@@ -471,7 +471,7 @@
 	"devDependencies": {
 		"@types/node": "^6.0.40",
 		"typescript": "^3.1.6",
-		"vscode": "^1.1.21"
+		"vscode": "^1.1.22"
 	},
 	"dependencies": {
 		"walker": "^1.0.7"
