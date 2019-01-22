@@ -8,12 +8,35 @@
 import fs = require("fs");
 import os = require("os");
 import path = require("path");
-import { env } from "vscode";
+import { env, ExtensionContext } from "vscode";
 
 export const homeDir = os.homedir();
 export const homePathVariable = "$home";
 
+// Contains recommended global storage path if provided by current version of VS Code. 
+let extensionStoragePath: string = ""
+
 export class PathUtils {
+
+    /** 
+     * Sets storage path if recommended path provided by current version of VS Code.  
+    */
+    public static setExtensionContext(context: ExtensionContext) {
+        // Detect if globalStoragePath is available in ExtensionContext
+        // for this version of VS Code.
+        if ((<any>context)["globalStoragePath"]) {
+            // If so, remember the path for future use  
+            extensionStoragePath = (<any>context)["globalStoragePath"];
+            // Validate the path exists and create it if not
+            const globalRoot = path.resolve(extensionStoragePath, '..');
+            if (!fs.existsSync(globalRoot)) {
+                fs.mkdirSync(globalRoot);
+            }
+            if (!fs.existsSync(extensionStoragePath)) {
+                fs.mkdirSync(extensionStoragePath);
+            }
+        }
+    }
 
     /**
      * Indicates if a path is a UNC path
@@ -127,7 +150,9 @@ export class PathUtils {
         let appdata: string;
         const channelPath: string = this.getChannelPath();
         let newFile: string;
-        if (process.env.VSCODE_PORTABLE) {
+        if (extensionStoragePath !== "") {
+            newFile = path.join(extensionStoragePath, file);
+        } else if (process.env.VSCODE_PORTABLE) {
             appdata = process.env.VSCODE_PORTABLE;
             newFile = path.join(appdata, channelPath, "User", file);
         } else {
