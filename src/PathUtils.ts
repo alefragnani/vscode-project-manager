@@ -150,9 +150,10 @@ export class PathUtils {
         let appdata: string;
         const channelPath: string = this.getChannelPath();
         let newFile: string;
-        if (extensionStoragePath !== "") {
-            newFile = path.join(extensionStoragePath, file);
-        } else if (process.env.VSCODE_PORTABLE) {
+        // Original logic to find path. We will only use this path
+        // if a file already exists in this location or we are on
+        // an old version of VS Code.
+        if (process.env.VSCODE_PORTABLE) {
             appdata = process.env.VSCODE_PORTABLE;
             newFile = path.join(appdata, channelPath, "User", file);
         } else {
@@ -161,6 +162,14 @@ export class PathUtils {
             // in linux, it may not work with /var/local, then try to use /home/myuser/.config
             if ((process.platform === "linux") && (!fs.existsSync(newFile))) {
                 newFile = path.join(homeDir, ".config/", channelPath, "User", file);
+            }
+        }
+        // If we are on a new version of VS Code, use the specified
+        // global extension storage path unless a file exists in 
+        // the old location.
+        if (extensionStoragePath !== "") {
+            if (!fs.existsSync(newFile)) {
+                newFile = path.join(extensionStoragePath, file);
             }
         }
         return newFile;
