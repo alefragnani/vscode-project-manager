@@ -42,7 +42,7 @@ Discuss, review, and share code with your team in VS Code. Links discussions abo
 
 It helps you to easily access your projects, no matter where they are located. _Don't miss that important projects anymore_. You can define your own **Favorite** projects, or choose for auto-detect **VSCode** projects, **Git**, **Mercurial** and **SVN** repositories or **any** folder.
 
-Since version 8 you have a dedicated **Activity Bar** for your projects!
+Since version 8 you have a dedicated **Side Bar** for your projects!
 
 Here are some of the features that **Project Manager** provides:
 
@@ -51,7 +51,7 @@ Here are some of the features that **Project Manager** provides:
 * Open projects in the same or new window
 * Identify _deleted/renamed_ projects
 * A **Status Bar** which identifies the current project
-* A dedicated **Activity Bar**
+* A dedicated **Side Bar**
 
 # Features
 
@@ -226,14 +226,14 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.openInNewWindowWhenClickingInStatusBar": true
 ```
 
-## Activity Bar
+## Side Bar
 
-The **Projects** are now presented id its own Activity Bar ,giving you more free space in your Explorer bar. You will have a few extra commands available:
+The **Projects** are now presented id its own **Side Bar**, giving you more free space in your Explorer bar. You will have a few extra commands available:
 * Open a project, simply clicking in the project item
 * Open a project in a New Window, right clicking in the project item
 * Add a project to the current Workspace
 
-![Activity Bar](images/vscode-project-manager-activity-bar.gif)
+![Side Bar](images/vscode-project-manager-activity-bar.gif)
 
 ## Installation and Configuration
 
