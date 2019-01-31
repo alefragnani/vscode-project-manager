@@ -1,3 +1,7 @@
+## [10.3.1] - 2019-01-31
+### Fixed
+- Update CodeStream logo
+
 ## [10.3.0] - 2019-01-17
 ### Changed
 - The **Side Bar** is now visible by default, even with no projects (issue [#227](https://github.com/alefragnani/vscode-project-manager/issues/227)
