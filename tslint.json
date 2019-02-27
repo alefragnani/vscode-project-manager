@@ -9,6 +9,7 @@
 		"no-trailing-whitespace": false,
 		"no-angle-bracket-type-assertion": false,
 		"no-shadowed-variable": false,
+		"no-string-literal": false,
 		"interface-name": [
 			false
 		],
