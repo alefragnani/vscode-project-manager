@@ -20,15 +20,15 @@ export class PathUtils {
 
     /** 
      * Sets storage path if recommended path provided by current version of VS Code.  
-    */
+     */
     public static setExtensionContext(context: ExtensionContext) {
         // Detect if globalStoragePath is available in ExtensionContext
         // for this version of VS Code.
-        if ((<any>context)["globalStoragePath"]) {
+        if ((<any> context)["globalStoragePath"]) {
             // If so, remember the path for future use  
-            extensionStoragePath = (<any>context)["globalStoragePath"];
+            extensionStoragePath = (<any> context)["globalStoragePath"];
             // Validate the path exists and create it if not
-            const globalRoot = path.resolve(extensionStoragePath, '..');
+            const globalRoot = path.resolve(extensionStoragePath, "..");
             if (!fs.existsSync(globalRoot)) {
                 fs.mkdirSync(globalRoot);
             }
