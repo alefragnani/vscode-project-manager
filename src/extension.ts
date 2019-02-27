@@ -36,6 +36,9 @@ const anyLocator: CustomProjectLocator = new CustomProjectLocator("any", "Any", 
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
+    // Sets storage path if recommended path provided by current version of VS Code.  
+    PathUtils.setExtensionContext(context);
+
     const recentProjects: string = context.globalState.get<string>("recent", "");
     const aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(recentProjects);
