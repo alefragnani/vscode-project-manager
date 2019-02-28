@@ -19,7 +19,7 @@
     "projectManager.commands.toggleProjectEnabled.title": "Disable Project",
     "projectManager.commands.saveFirstProject.title": "Save your First Project",
     "projectManager.commands.whatsNew.title": "Менеджер проектов: Что нового",
-    "projectManager.configuration.title": "Менеджер проектов - Настройки",
+    "projectManager.configuration.title": "Менеджер проектов",
     "projectManager.configuration.showProjectNameInStatusBar.description": "Должно ли отображаться название проекта в строке состояния?",
     "projectManager.configuration.openInNewWindowWhenClickingInStatusBar.description": "Следует ли открывать проект в новом окне при клике в строке состояния?",
     "projectManager.configuration.removeCurrentProjectFromList.description": "Должен ли текущий проект быть скрыт в списке доступных проектов?",
