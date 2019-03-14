@@ -1,3 +1,8 @@
+## [10.4.0] - 2019-03-14
+### Added
+- `GlobalStoragePath` Support (Thanks to @Chuxel [PR #250](https://github.com/alefragnani/vscode-project-manager/pull/250))
+- Localization support - Russian (Thanks to @Inter-Net-Pro [PR #222](https://github.com/alefragnani/vscode-project-manager/pull/222))
+
 ## [10.3.2] - 2019-02-01
 ### Fixed
 - Error in _clean install_ (issue [Bookmarks #178](https://github.com/alefragnani/vscode-bookmarks/issues/178))

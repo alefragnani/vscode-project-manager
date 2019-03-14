@@ -20,11 +20,17 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         const changeLog: ChangeLogItem[] = [];
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds an all-new Project Manager <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Portable Mode</b> support"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Disable Project</b> command to disable/hide Favorite projects"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Add to Workspace</b> command to add any project to current workspace"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Add to Favorites</b> command to add any auto-detected project as Favorite"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Refresh Project</b> commands for every kind of auto-detected project"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Use new <b>Notification UI</b> while refreshing projects"});
+        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Disable Project</b>, <b>Add to Workspace</b>, 
+            <b>Add to Favorites</b> and <b>Refresh Project</b> commands`});
+        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Localization</b> support - <b>Russian</b> (Thanks to 
+            @Inter-Net-Pro - <a title=\"Open PR #222\" 
+            href=\"https://github.com/alefragnani/vscode-project-manager/pull/222\">
+            PR #222</a>)`});    
+        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds support to <b>GlobalStoragePath</b> (Thanks to 
+            @Chuxel - <a title=\"Open PR #250\" 
+            href=\"https://github.com/alefragnani/vscode-project-manager/pull/250\">
+            PR #250</a>)`});    
         changeLog.push({kind: ChangeLogKind.FIXED, message: `The projects in the <b>Side Bar</b> should not be sorted case-sensitive (<a title=\"Open Issue #243\" 
             href=\"https://github.com/alefragnani/vscode-project-manager/issues/243\">
             Issue #243</a>)`});
