@@ -7,11 +7,9 @@
 
 * Adds an all-new **Side Bar**
 * Adds **Portable Mode** support
-* Adds `Disable Project` command to disable/hide Favorite projects
-* Adds `Add to Workspace` command to add any project to current workspace
 * Use new `NotificationUI` while refreshing projects
-* Adds `Add to Favorites` command to add any auto-detected project as Favorite
-* Adds `Refresh Project` commands for every kind of auto-detected project
+* Adds `Disable Project`, `Add to Workspace`, `Add to Favorites` and `Refresh Project` commands
+* Adds **Localization** support
 
 # Support
 
