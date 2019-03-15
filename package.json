@@ -9,7 +9,7 @@
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^1.23.0"
+		"vscode": "^1.32.0"
 	},
 	"categories": [
 		"Other"
@@ -46,7 +46,7 @@
 		"onCommand:projectManager.refreshMercurialProjects",
 		"onView:projectsExplorer"
 	],
-	"main": "./out/src/extension",
+	"main": "./dist/extension",
 	"contributes": {
 		"viewsContainers": {
 			"activitybar": [
@@ -464,18 +464,24 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "tsc -p ./",
+		"build": "webpack --mode development",
+		"watch": "webpack --watch --mode development --info-verbosity verbose",
+		"vscode:prepublish": "webpack --mode production",
+		"webpack": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch",
 		"compile": "tsc -watch -p ./",
 		"postinstall": "node ./node_modules/vscode/bin/install"
 	},
 	"devDependencies": {
 		"@types/node": "^6.0.40",
 		"typescript": "^3.1.6",
-		"vscode": "^1.1.22"
+		"vscode": "^1.1.28",
+		"webpack": "^4.19.1",
+		"webpack-cli": "^3.1.0",
+		"ts-loader": "^4.4.2",
+		"terser-webpack-plugin": "^1.2.1"
 	},
 	"dependencies": {
-		"walker": "^1.0.7",
-		"@types/semver": "^5.5.0",
-		"semver": "^5.6.0"
+		"walker": "^1.0.7"
 	}
 }
