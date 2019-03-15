@@ -3,3 +3,4 @@ node_modules
 issues
 npm-debug.log
 *.vsix
+dist

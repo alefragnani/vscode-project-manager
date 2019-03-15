@@ -4,10 +4,13 @@ typings/**
 issues/**
 **/*.ts
 **/*.map
+out/**
+node_modules/**
 .gitignore
 tsconfig.json
-out/projects.json
 npm-debug.log
-out/test/**
 test/**
 *.vsix
+package-lock.json
+webpack.config.js
+tslint.json
