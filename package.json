@@ -61,8 +61,7 @@
 			"project-manager": [
 				{
 					"id": "projectsExplorerFavorites",
-					"name": "Favorites",
-					"when": "projectManager.canShowTreeViewFavorites"
+					"name": "Favorites"
 				},
 				{
 					"id": "projectsExplorerGit",
