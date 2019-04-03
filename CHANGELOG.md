@@ -1,3 +1,7 @@
+## [10.5.0] - 2019-04-02
+### Added
+- Faster startup (issue [#264](https://github.com/alefragnani/vscode-project-manager/issues/264)
+
 ## [10.4.0] - 2019-03-14
 ### Added
 - `GlobalStoragePath` Support (Thanks to @Chuxel [PR #250](https://github.com/alefragnani/vscode-project-manager/pull/250))
