@@ -34,6 +34,7 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         changeLog.push({kind: ChangeLogKind.FIXED, message: `The projects in the <b>Side Bar</b> should not be sorted case-sensitive (<a title=\"Open Issue #243\" 
             href=\"https://github.com/alefragnani/vscode-project-manager/issues/243\">
             Issue #243</a>)`});
+        changeLog.push({kind: ChangeLogKind.NEW, message: "Faster startup (Side Bar)"});
         return changeLog;
     }
 
