@@ -6,14 +6,14 @@
 import fs = require("fs");
 import path = require("path");
 import * as vscode from "vscode";
-import stack = require("./stack");
+import stack = require("../vscode-project-manager-core/src/utils/stack");
 
-import { Locators } from "./locators";
-import { PathUtils } from "./PathUtils";
-import { Project, ProjectStorage } from "./storage";
+import { Locators } from "../vscode-project-manager-core/src/model/locators";
+import { Project, ProjectStorage } from "../vscode-project-manager-core/src/model/storage";
+import { PathUtils } from "../vscode-project-manager-core/src/utils/PathUtils";
 
+import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
 import { WhatsNewManager } from "../vscode-whats-new/src/Manager";
-import { Providers } from "./providers";
 import { WhatsNewProjectManagerContentProvider } from "./whats-new/ProjectManagerContentProvider";
 
 const PROJECTS_FILE = "projects.json";
