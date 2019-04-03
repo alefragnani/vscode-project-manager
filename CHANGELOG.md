@@ -1,6 +1,6 @@
 ## [10.5.0] - 2019-04-02
 ### Added
-- Faster startup (issue [#264](https://github.com/alefragnani/vscode-project-manager/issues/264)
+- Faster startup (Side Bar) (issue [#264](https://github.com/alefragnani/vscode-project-manager/issues/264))
 
 ## [10.4.0] - 2019-03-14
 ### Added
@@ -20,10 +20,10 @@
 
 ## [10.3.0] - 2019-01-17
 ### Changed
-- The **Side Bar** is now visible by default, even with no projects (issue [#227](https://github.com/alefragnani/vscode-project-manager/issues/227)
+- The **Side Bar** is now visible by default, even with no projects (issue [#227](https://github.com/alefragnani/vscode-project-manager/issues/227))
 
 ### Fixed
-- The projects in the **Side Bar** should not be sorted case-sensitive (issue [#243](https://github.com/alefragnani/vscode-project-manager/issues/243)
+- The projects in the **Side Bar** should not be sorted case-sensitive (issue [#243](https://github.com/alefragnani/vscode-project-manager/issues/243))
 
 ## [10.2.0] - 2019-01-06
 ### Added

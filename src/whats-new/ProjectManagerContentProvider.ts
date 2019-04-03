@@ -31,10 +31,10 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
             @Chuxel - <a title=\"Open PR #250\" 
             href=\"https://github.com/alefragnani/vscode-project-manager/pull/250\">
             PR #250</a>)`});    
+        changeLog.push({kind: ChangeLogKind.NEW, message: "Faster startup (Side Bar)"});
         changeLog.push({kind: ChangeLogKind.FIXED, message: `The projects in the <b>Side Bar</b> should not be sorted case-sensitive (<a title=\"Open Issue #243\" 
             href=\"https://github.com/alefragnani/vscode-project-manager/issues/243\">
             Issue #243</a>)`});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Faster startup (Side Bar)"});
         return changeLog;
     }
 
