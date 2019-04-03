@@ -8,12 +8,8 @@ import path = require("path");
 import * as vscode from "vscode";
 import stack = require("./stack");
 
-// import { CustomProjectLocator, CustomRepositoryDetector } from "./abstractLocator";
-// import { GitRepositoryDetector } from "./gitLocator";
 import { Locators } from "./locators";
-import { homeDir, PathUtils } from "./PathUtils";
-// import { ProjectProvider } from "./ProjectProvider";
-// import { ProjectsSorter } from "./sorter";
+import { PathUtils } from "./PathUtils";
 import { Project, ProjectStorage } from "./storage";
 
 import { WhatsNewManager } from "../vscode-whats-new/src/Manager";
@@ -21,18 +17,6 @@ import { Providers } from "./providers";
 import { WhatsNewProjectManagerContentProvider } from "./whats-new/ProjectManagerContentProvider";
 
 const PROJECTS_FILE = "projects.json";
-
-// const VSCODE_ICON = "$(file-code)";
-// const GIT_ICON = "$(git-branch)";
-// const MERCURIAL_ICON = "$(git-branch)";
-// const SVN_ICON = "$(zap)";
-// const ANY_ICON = "$(file-directory)"; 
-
-// const vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", VSCODE_ICON, new CustomRepositoryDetector([".vscode"]));
-// const gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", GIT_ICON, new GitRepositoryDetector([".git"]));
-// const mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", MERCURIAL_ICON, new CustomRepositoryDetector([".hg", "hgrc"]));
-// const svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", SVN_ICON, new CustomRepositoryDetector([".svn", "pristine"]));
-// const anyLocator: CustomProjectLocator = new CustomProjectLocator("any", "Any", ANY_ICON, new CustomRepositoryDetector([]));
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -80,11 +64,6 @@ export function activate(context: vscode.ExtensionContext) {
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects(true, true));
-    // vscode.commands.registerCommand("projectManager.refreshVSCodeProjects", () => refreshProjectsByType("VSCode", vscLocator, projectProviderVSCode, true, true));
-    // vscode.commands.registerCommand("projectManager.refreshGitProjects", () => refreshProjectsByType("Git", gitLocator, projectProviderGit, true, true));
-    // vscode.commands.registerCommand("projectManager.refreshMercurialProjects", () => refreshProjectsByType("Mercurial", mercurialLocator, projectProviderMercurial, true, true));
-    // vscode.commands.registerCommand("projectManager.refreshSVNProjects", () => refreshProjectsByType("SVN", svnLocator, projectProviderSVN, true, true));
-    // vscode.commands.registerCommand("projectManager.refreshAnyProjects", () => refreshProjectsByType("Any", anyLocator, projectProviderAny, true, true));
     locators.registerCommands();
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
@@ -101,20 +80,6 @@ export function activate(context: vscode.ExtensionContext) {
     loadProjectsFile();
 
     // // new place to register TreeView
-    // const projectProviderStorage = new ProjectProvider(projectStorage, context);
-    // const projectProviderVSCode = new ProjectProvider(locators.vscLocator, context);
-    // const projectProviderGit = new ProjectProvider(locators.gitLocator, context);
-    // const projectProviderMercurial = new ProjectProvider(locators.mercurialLocator, context);
-    // const projectProviderSVN = new ProjectProvider(locators.svnLocator, context);
-    // const projectProviderAny = new ProjectProvider(locators.anyLocator, context);
-    
-    // vscode.window.registerTreeDataProvider("projectsExplorerFavorites", projectProviderStorage);
-    // vscode.window.registerTreeDataProvider("projectsExplorerVSCode", projectProviderVSCode);
-    // vscode.window.registerTreeDataProvider("projectsExplorerGit", projectProviderGit);
-    // vscode.window.registerTreeDataProvider("projectsExplorerMercurial", projectProviderMercurial);
-    // vscode.window.registerTreeDataProvider("projectsExplorerSVN", projectProviderSVN);
-    // vscode.window.registerTreeDataProvider("projectsExplorerAny", projectProviderAny);
-
     providerManager.showTreeViewFromAllProviders();
 
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
@@ -196,15 +161,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    // function showTreeViewFromAllProviders() {
-    //     projectProviderStorage.showTreeView();
-    //     projectProviderVSCode.showTreeView();
-    //     projectProviderGit.showTreeView();
-    //     projectProviderMercurial.showTreeView();
-    //     projectProviderSVN.showTreeView();
-    //     projectProviderAny.showTreeView();
-    // }
-
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
         vscode.window.withProgress({
@@ -252,32 +208,6 @@ export function activate(context: vscode.ExtensionContext) {
             }
         })
     }
-
-    // async function delay(ms: number) {
-    //     return new Promise(resolve => setTimeout(resolve, ms));
-    // }
-
-    // function refreshProjectsByType(projectType: string, locator: CustomProjectLocator, projectProvider: ProjectProvider, showMessage?: boolean, forceRefresh?: boolean) {
-    //     vscode.window.withProgress({
-    //         location: vscode.ProgressLocation.Notification,
-    //         title: "Refreshing Projects",
-    //         cancellable: false
-    //     }, async (progress) => {
-    //         progress.report({ increment: 50, message: projectType });
-    //         const result = await locator.refreshProjects(forceRefresh);
-
-    //         if (result || forceRefresh) {
-    //             progress.report({ increment: 50, message: projectType });
-    //             projectProvider.refresh();
-    //             projectProvider.showTreeView();
-    //         }
-    //     }).then(async () => {           
-    //         if (showMessage) {                
-    //             await delay(1000);
-    //             vscode.window.showInformationMessage(`${projectType} projects have been refreshed!`);
-    //         }
-    //     })
-    // }
 
     function editProjects() {
         if (fs.existsSync(getProjectFilePath())) {
@@ -389,26 +319,6 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    // function sortProjectList(items): any[] {
-    //     let itemsToShow = PathUtils.expandHomePaths(items);
-    //     itemsToShow = removeRootPath(itemsToShow);
-    //     const checkInvalidPath: boolean = vscode.workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
-    //     if (checkInvalidPath) {
-    //         itemsToShow = PathUtils.indicateInvalidPaths(itemsToShow);
-    //     }
-    //     const sortList = vscode.workspace.getConfiguration("projectManager").get("sortList", "Name");
-    //     const newItemsSorted = ProjectsSorter.SortItemsByCriteria(itemsToShow, sortList, aStack);
-    //     return newItemsSorted;
-    // }
-
-    // function sortGroupedList(items): any[] {
-    //     if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
-    //         return sortProjectList(items);
-    //     } else {
-    //         return items;
-    //     }
-    // }
-
     function getProjects(itemsSorted: any[]): Promise<{}> {
 
         return new Promise((resolve, reject) => {
@@ -417,38 +327,6 @@ export function activate(context: vscode.ExtensionContext) {
 
         });
     }
-
-    // // Filters out any newDirectories entries that are present in knownDirectories.
-    // function filterKnownDirectories(knownDirectories: any[], newDirectories: any[]): Promise<any[]> {
-    //     if (knownDirectories) {
-    //         newDirectories = newDirectories.filter(item =>
-    //             !knownDirectories.some(sortedItem =>
-    //                 PathUtils.expandHomePath(sortedItem.description).toLowerCase() === PathUtils.expandHomePath(item.fullPath).toLowerCase()));
-    //     }
-
-    //     return Promise.resolve(newDirectories);
-    // }
-
-    // function getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator): Promise<{}> {
-
-    //     return new Promise((resolve, reject) => {
-
-    //         locator.locateProjects()
-    //             .then(filterKnownDirectories.bind(this, itemsSorted))
-    //             .then((dirList: any[]) => {
-    //                 let newItems = [];
-    //                 newItems = dirList.map(item => {
-    //                     return {
-    //                         label: locator.icon + " " + item.name,
-    //                         description: item.fullPath
-    //                     };
-    //                 });
-
-    //                 newItems = sortGroupedList(newItems);
-    //                 resolve(itemsSorted.concat(newItems));
-    //             });
-    //     });
-    // }    
 
     function listProjects(forceNewWindow: boolean) {
         let items = [];
@@ -548,16 +426,6 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             });
     }
-
-    // function removeRootPath(items: any[]): any[] {
-    //     // if (!vscode.workspace.rootPath) {
-    //     const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
-    //     if (!workspace0 || !vscode.workspace.getConfiguration("projectManager").get("removeCurrentProjectFromList")) {
-    //         return items;
-    //     } else {
-    //         return items.filter(value => value.description.toString().toLowerCase() !== vscode.workspace.rootPath.toLowerCase());
-    //     }
-    // }
 
     function loadProjectsFile() {
         const errorLoading: string = projectStorage.load();
