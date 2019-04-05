@@ -226,7 +226,8 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 ## Side Bar
 
-The **Projects** are now presented id its own **Side Bar**, giving you more free space in your Explorer bar. You will have a few extra commands available:
+The **Projects** are now presented id its own **Side Bar**, giving you more free space in your Explorer view. You will have a few extra commands available:
+
 * Open a project, simply clicking in the project item
 * Open a project in a New Window, right clicking in the project item
 * Add a project to the current Workspace
