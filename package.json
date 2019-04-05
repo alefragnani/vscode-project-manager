@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "10.5.0",
+	"version": "10.5.1",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
@@ -441,11 +441,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "%projectManager.configuration.checkInvalidPathsBeforeListing.description%"
-				},
-				"projectManager.treeview.visible": {
-					"type": "boolean",
-					"default": true,
-					"description": "%projectManager.configuration.treeview.visible.description%"
 				},
 				"projectManager.filterOnFullPath": {
 					"type": "boolean",

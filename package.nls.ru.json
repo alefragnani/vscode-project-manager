@@ -43,6 +43,5 @@
     "projectManager.configuration.any.maxDepthRecursion.description": "Укажите максимальную глубину вложенности папок для поиска проектов. Любое значение ниже 1 означает отсутствие ограничений",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Нужно ли кэшировать VSCode, Git и SVN найденные проекты?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Следует ли проверять наличие недопустимых путей перед выводом списка, показывая сообщение под именем проекта?",
-    "projectManager.configuration.treeview.visible.description": "Отображать в древовидном представлении?",
     "projectManager.configuration.filterOnFullPath.description": "Следует ли фильтровать проекты по полному пути?"
 }
