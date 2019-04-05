@@ -1,3 +1,7 @@
+## [10.5.1] - 2019-04-05
+### Fixed
+- Deprecate `projectManager.treeview.visible` setting. (issue [#265](https://github.com/alefragnani/vscode-project-manager/issues/265))
+
 ## [10.5.0] - 2019-04-02
 ### Added
 - Faster startup (Side Bar) (issue [#264](https://github.com/alefragnani/vscode-project-manager/issues/264))

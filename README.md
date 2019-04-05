@@ -233,6 +233,8 @@ The **Projects** are now presented id its own **Side Bar**, giving you more free
 
 ![Side Bar](images/vscode-project-manager-activity-bar.gif)
 
+> The `projectManager.treeview.visible` setting was deprecated. If you don't want to see the **Project Manager** icon in the Activity Bar, right-click and uncheck it from the context menu. 
+
 ## Installation and Configuration
 
 You should follow the oficial documentation to:
