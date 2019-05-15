@@ -287,6 +287,11 @@
 					"command": "projectManager.saveFirstProject",
 					"when": "view == projectsExplorerFavorites && viewItem == ConfigNodeKind",
 					"group": "favorites"
+				},
+				{
+					"command": "projectManager.saveProject",
+					"when": "view == projectsExplorerFavorites && viewItem != ProjectNodeKind",
+					"group": "favorites"
 				}
 			]
 		},
