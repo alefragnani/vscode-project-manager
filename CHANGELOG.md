@@ -1,3 +1,7 @@
+## [10.5.2] - 2019-05-28
+### Fixed
+- Security Alert: tar
+
 ## [10.5.1] - 2019-04-05
 ### Fixed
 - Deprecate `projectManager.treeview.visible` setting. (issue [#265](https://github.com/alefragnani/vscode-project-manager/issues/265))
