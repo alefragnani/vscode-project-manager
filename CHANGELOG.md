@@ -1,3 +1,7 @@
+## [10.6.0] - 2019-??-??
+### Added
+- Support for _auto-detected_ projects only scenario
+
 ## [10.5.2] - 2019-05-28
 ### Fixed
 - Security Alert: tar
