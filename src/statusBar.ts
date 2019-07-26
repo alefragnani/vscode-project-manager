@@ -35,9 +35,9 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
       return;
   }
 
-  if (projectStorage.length() === 0) {
-      return;
-  }
+//   if (projectStorage.length() === 0) {
+//       return;
+//   }
 
   let foundProject: Project = projectStorage.existsWithRootPath(currentProjectPath);
   if (!foundProject) {
