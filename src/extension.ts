@@ -9,7 +9,7 @@ import * as vscode from "vscode";
 import stack = require("../vscode-project-manager-core/src/utils/stack");
 
 import { Locators } from "../vscode-project-manager-core/src/model/locators";
-import { Project, ProjectStorage } from "../vscode-project-manager-core/src/model/storage";
+import { ProjectStorage } from "../vscode-project-manager-core/src/model/storage";
 import { PathUtils } from "../vscode-project-manager-core/src/utils/PathUtils";
 
 import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
@@ -98,71 +98,8 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }));
 
-    // let statusItem: vscode.StatusBarItem;
     showStatusBar(projectStorage, locators);
-
-    // // function commands
-    // function showStatusBar(projectName?: string) {
-    //     const showStatusConfig = vscode.workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
-    //     // multi-root - decide do use the "first folder" as the original "rootPath"
-    //     // let currentProjectPath = vscode.workspace.rootPath;
-    //     const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
-    //     const currentProjectPath = workspace0 ? workspace0.uri.fsPath : undefined;
-
-    //     if (!showStatusConfig || !currentProjectPath) { return; }
-
-    //     if (!statusItem) {
-    //         statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-    //     }
-    //     statusItem.text = "$(file-directory) ";
-    //     statusItem.tooltip = currentProjectPath;
-
-    //     const openInNewWindow: boolean = vscode.workspace.getConfiguration("projectManager").get("openInNewWindowWhenClickingInStatusBar", false);
-    //     if (openInNewWindow) {
-    //         statusItem.command = "projectManager.listProjectsNewWindow";
-    //     } else {
-    //         statusItem.command = "projectManager.listProjects";
-    //     }
-
-    //     // if we have a projectName, we don't need to search.
-    //     if (projectName) {
-    //         statusItem.text += projectName;
-    //         statusItem.show();
-    //         return;
-    //     }
-
-    //     if (projectStorage.length() === 0) {
-    //         return;
-    //     }
-
-    //     let foundProject: Project = projectStorage.existsWithRootPath(currentProjectPath);
-    //     if (!foundProject) {
-    //         foundProject = locators.vscLocator.existsWithRootPath(currentProjectPath);
-    //     }
-    //     if (!foundProject) {
-    //         foundProject = locators.gitLocator.existsWithRootPath(currentProjectPath);
-    //     }
-    //     if (!foundProject) {
-    //         foundProject = locators.mercurialLocator.existsWithRootPath(currentProjectPath);
-    //     }
-    //     if (!foundProject) {
-    //         foundProject = locators.svnLocator.existsWithRootPath(currentProjectPath);
-    //     }
-    //     if (!foundProject) {
-    //         foundProject = locators.anyLocator.existsWithRootPath(currentProjectPath);
-    //     }
-    //     if (foundProject) {
-    //         statusItem.text += foundProject.name;
-    //         statusItem.show();
-    //     }
-    // }
-
-    // function updateStatusBar(oldName: string, oldPath: string, newName: string): void {
-    //     if (statusItem.text === "$(file-directory) " + oldName && statusItem.tooltip === oldPath) {
-    //         statusItem.text = "$(file-directory) " + newName;
-    //     }
-    // }
-
+    
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
         vscode.window.withProgress({

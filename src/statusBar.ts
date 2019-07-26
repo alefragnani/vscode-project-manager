@@ -5,7 +5,9 @@ import { Project, ProjectStorage } from "../vscode-project-manager-core/src/mode
 let statusItem: StatusBarItem;
 
 export function showStatusBar(projectStorage: ProjectStorage, locators: Locators, projectName?: string) {
+
   const showStatusConfig = workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
+
   // multi-root - decide do use the "first folder" as the original "rootPath"
   // let currentProjectPath = vscode.workspace.rootPath;
   const workspace0 = workspace.workspaceFolders ? workspace.workspaceFolders[0] : undefined;
