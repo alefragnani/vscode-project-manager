@@ -290,7 +290,7 @@
 				},
 				{
 					"command": "projectManager.saveProject",
-					"when": "view == projectsExplorerFavorites && viewItem != ProjectNodeKind",
+					"when": "view == projectsExplorerFavorites && viewItem != ConfigNodeKind && viewItem != ProjectNodeKind",
 					"group": "favorites"
 				}
 			]
