@@ -93,7 +93,11 @@
 		"commands": [
 			{
 				"command": "projectManager.saveProject",
-				"title": "%projectManager.commands.saveProject.title%"
+				"title": "%projectManager.commands.saveProject.title%",
+				"icon": {
+					"light": "images/ico-save-project-light.svg",
+					"dark": "images/ico-save-project-dark.svg"
+				}
 			},
 			{
 				"command": "projectManager.listProjects",
@@ -217,9 +221,14 @@
 			],
 			"view/title": [
 				{
+					"command": "projectManager.saveProject",
+					"when": "view == projectsExplorerFavorites",
+					"group": "navigation@10"
+				},
+				{
 					"command": "projectManager.editProjects",
 					"when": "view == projectsExplorerFavorites",
-					"group": "navigation"
+					"group": "navigation@11"
 				},
 				{
 					"command": "projectManager.refreshVSCodeProjects",
