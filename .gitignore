@@ -4,3 +4,4 @@ issues
 npm-debug.log
 *.vsix
 dist
+._*

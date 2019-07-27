@@ -2,6 +2,7 @@
 ### Added
 - Support for _auto-detected_ projects only scenario
 - Localization support - Portuguese (Brazil)
+- `Save Button` button in Side Bar
 
 ## [10.5.2] - 2019-05-28
 ### Fixed
