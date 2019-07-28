@@ -20,13 +20,10 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         const changeLog: ChangeLogItem[] = [];
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds an all-new Project Manager <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Portable Mode</b> support"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Use new <b>Notification UI</b> while refreshing projects"});
+        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Save</b> button in <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Disable Project</b>, <b>Add to Workspace</b>, 
             <b>Add to Favorites</b> and <b>Refresh Project</b> commands`});
-        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Localization</b> support - <b>Russian</b> (Thanks to 
-            @Inter-Net-Pro - <a title=\"Open PR #222\" 
-            href=\"https://github.com/alefragnani/vscode-project-manager/pull/222\">
-            PR #222</a>)`});    
+        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Localization</b> support - <b>Russian</b> and <b>Portuguese (Brazil)</b>`});    
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds support to <b>GlobalStoragePath</b> (Thanks to 
             @Chuxel - <a title=\"Open PR #250\" 
             href=\"https://github.com/alefragnani/vscode-project-manager/pull/250\">
