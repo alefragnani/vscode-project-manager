@@ -238,7 +238,7 @@ The **Projects** are now presented id its own **Side Bar**, giving you more free
 
 ## Installation and Configuration
 
-You should follow the oficial documentation to:
+You should follow the official documentation to:
 
 - [Install the extension](https://code.visualstudio.com/docs/editor/extension-gallery)
 - [Modify its settings](https://code.visualstudio.com/docs/getstarted/settings)
