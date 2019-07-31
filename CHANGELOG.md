@@ -1,4 +1,4 @@
-## [10.6.0] - 2019-??-??
+## [10.6.0] - 2019-07-28
 ### Added
 - Support for _auto-detected_ projects only scenario
 - Localization support - Portuguese (Brazil)
