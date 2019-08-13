@@ -53,7 +53,7 @@
 				{
 					"id": "project-manager",
 					"title": "%projectManager.activitybar.title%",
-					"icon": "images/ico-favorites-dark.svg"
+					"icon": "images/project-manager-side-bar.svg"
 				}
 			]
 		},
