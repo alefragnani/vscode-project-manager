@@ -1,3 +1,7 @@
+## [10.7.0] - 2019-08-25
+### Added
+- New Side Bar icon matching new VS Code icon style
+
 ## [10.6.0] - 2019-07-28
 ### Added
 - Support for _auto-detected_ projects only scenario
