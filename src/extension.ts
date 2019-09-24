@@ -17,6 +17,7 @@ import { WhatsNewManager } from "../vscode-whats-new/src/Manager";
 import { WhatsNewProjectManagerContentProvider } from "./whats-new/ProjectManagerContentProvider";
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
+import { ProjectDetails, Suggestion } from "../vscode-project-manager-core/src/model/Suggestion";
 
 const PROJECTS_FILE = "projects.json";
 
@@ -182,21 +183,12 @@ export function activate(context: vscode.ExtensionContext) {
             wpath = node.label; 
             rootPath = node.command.arguments[0];
         } else {
-            // Display a message box to the user
-            // let wpath = vscode.workspace.rootPath;
-            const workspace0 = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0] : undefined;
-            rootPath = workspace0 ? workspace0.uri.fsPath : undefined;
-
-            if (!rootPath) {
-                vscode.window.showInformationMessage("Open a folder first to save a project");
+            const projectDetails = Suggestion.getProjectDetails();
+            if (!projectDetails) {
                 return;
             }
-    
-            if (process.platform === "win32") {
-                wpath = rootPath.substr(rootPath.lastIndexOf("\\") + 1);
-            } else {
-                wpath = rootPath.substr(rootPath.lastIndexOf("/") + 1);
-            }    
+            rootPath = projectDetails.path;
+            wpath = projectDetails.name;
         }
 
         // ask the PROJECT NAME (suggest the )
