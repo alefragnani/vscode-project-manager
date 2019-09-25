@@ -217,7 +217,6 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 ```json 
     "projectManager.showProjectNameInStatusBar": true
 ```
-![Save](images/project-manager-statusbar.png) 
 
 * Open projects in _New Window_ when clicking in status bar (`false` by default)
 
@@ -233,9 +232,9 @@ The **Projects** are now presented id its own **Side Bar**, giving you more free
 * Open a project in a New Window, right clicking in the project item
 * Add a project to the current Workspace
 
-![Side Bar](images/vscode-project-manager-activity-bar.gif)
+![Side Bar](images/vscode-project-manager-side-bar.gif)
 
-> The `projectManager.treeview.visible` setting was deprecated. If you don't want to see the **Project Manager** icon in the Activity Bar, right-click and uncheck it from the context menu. 
+> If you don't want to see the **Project Manager** icon in the Activity Bar, right-click and uncheck it from the context menu. 
 
 ## Installation and Configuration
 
