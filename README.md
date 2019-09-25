@@ -45,6 +45,7 @@ Since version 8 you have a dedicated **Side Bar** for your projects!
 Here are some of the features that **Project Manager** provides:
 
 * Save any project as **Favorite**
+* Save any workspace as **Favorite**
 * Auto-detect **VSCode**, **Git**, **Mercurial** or **SVN** repositiories
 * Open projects in the same or new window
 * Identify _deleted/renamed_ projects

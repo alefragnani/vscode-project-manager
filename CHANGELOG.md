@@ -1,4 +1,4 @@
-## [10.8.0] - 2019-09-??
+## [10.8.0] - 2019-09-24
 ### Added
 - Support to save **Workspaces** as projects
 
