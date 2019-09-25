@@ -10,8 +10,12 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
 
   // multi-root - decide do use the "first folder" as the original "rootPath"
   // let currentProjectPath = vscode.workspace.rootPath;
-  const workspace0 = workspace.workspaceFolders ? workspace.workspaceFolders[0] : undefined;
-  const currentProjectPath = workspace0 ? workspace0.uri.fsPath : undefined;
+//   const workspace0 = workspace.workspaceFolders ? workspace.workspaceFolders[0] : undefined;
+//   const currentProjectPath = workspace0 ? workspace0.uri.fsPath : undefined;
+  const workspace0 = workspace.workspaceFile ? workspace.workspaceFile :
+                        workspace.workspaceFolders ? workspace.workspaceFolders[0].uri : 
+                        undefined;
+  const currentProjectPath = workspace0 ? workspace0.fsPath : undefined;
 
   if (!showStatusConfig || !currentProjectPath) { return; }
 
