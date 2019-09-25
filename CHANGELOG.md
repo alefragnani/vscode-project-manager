@@ -1,3 +1,7 @@
+## [10.8.0] - 2019-09-??
+### Added
+- Support to save **Workspaces** as projects
+
 ## [10.7.0] - 2019-08-25
 ### Added
 - New Side Bar icon matching new VS Code icon style
