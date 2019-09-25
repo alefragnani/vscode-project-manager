@@ -393,6 +393,10 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function addProjectToWorkspace(node: any) {
+        if (path.extname(node.command.arguments[0]) === ".code-workspace") {
+            vscode.window.showWarningMessage("You can't add a Workspace to another Workspace.");
+            return;
+        }
         vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders ? 
             vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(node.command.arguments[ 0 ]) });
     }
