@@ -165,7 +165,11 @@
 			},
 			{
 				"command": "projectManager.openInNewWindow",
-				"title": "%projectManager.commands.openInNewWindow.title%"
+				"title": "%projectManager.commands.openInNewWindow.title%",
+				"icon": {
+					"light": "images/ico-open-new-window-light.svg",
+					"dark": "images/ico-open-new-window-dark.svg"
+				}
 			},
 			{
 				"command": "projectManager.addToWorkspace",
@@ -266,6 +270,11 @@
 					"command": "projectManager.openInNewWindow",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "navigation"
+				},
+				{
+					"command": "projectManager.openInNewWindow",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
+					"group": "inline"
 				},
 				{
 					"command": "projectManager.addToWorkspace",
