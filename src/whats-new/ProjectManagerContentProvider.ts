@@ -23,8 +23,9 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Portable Mode</b> support"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Save</b> button in <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Disable Project</b>, <b>Add to Workspace</b>, 
-            <b>Add to Favorites</b> and <b>Refresh Project</b> commands`});
-        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Localization</b> support - <b>Russian</b> and <b>Portuguese (Brazil)</b>`});    
+        <b>Add to Favorites</b> and <b>Refresh Project</b> commands`});
+        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Open in New Window</b> hover command in <b>Side Bar</b>"});
+        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Localization</b> support - <b>Russian</b>, <b>Portuguese (Brazil)</b> and <b>Simplified Chinese</b>`});    
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds support to <b>GlobalStoragePath</b> (Thanks to 
             @Chuxel - <a title=\"Open PR #250\" 
             href=\"https://github.com/alefragnani/vscode-project-manager/pull/250\">
