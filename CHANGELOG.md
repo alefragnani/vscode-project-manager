@@ -1,3 +1,8 @@
+## [10.9.0] - 2019-11-18
+### Added
+- Localization support - Simplified Chinese (Thanks to @L1cardo [PR #300](https://github.com/alefragnani/vscode-project-manager/pull/300))
+- `Open in New Window` hover command in Side Bar
+
 ## [10.8.0] - 2019-09-25
 ### Added
 - Support to save **Workspaces** as projects
