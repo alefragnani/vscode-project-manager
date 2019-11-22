@@ -1,3 +1,7 @@
+## [10.9.1] - 2019-11-21
+### Changed
+- Update CodeStream Ad and URL
+
 ## [10.9.0] - 2019-11-18
 ### Added
 - Localization support - Simplified Chinese (Thanks to @L1cardo [PR #300](https://github.com/alefragnani/vscode-project-manager/pull/300))
