@@ -39,15 +39,15 @@ Discussing code is now as easy as highlighting a block and typing a comment righ
 
 # Project Manager
 
-It helps you to easily access your projects, no matter where they are located. _Don't miss that important projects anymore_. You can define your own **Favorite** projects, or choose for auto-detect **VSCode** projects, **Git**, **Mercurial** and **SVN** repositories or **any** folder.
+It helps you to easily access your **projects**, no matter where they are located. _Don't miss that important projects anymore_. 
 
-Since version 8 you have a dedicated **Side Bar** for your projects!
+You can define your own **Projects** (also called **Favorites**), or choose for auto-detect **Git**, **Mercurial** or **SVN** repositories, **VSCode** folders, or **any** other folder.
 
 Here are some of the features that **Project Manager** provides:
 
-* Save any project as **Favorite**
-* Save any workspace as **Favorite**
-* Auto-detect **VSCode**, **Git**, **Mercurial** or **SVN** repositiories
+* Save any folder as a **Project**
+* Save any workspace as a **Project**
+* Auto-detect **Git**, **Mercurial** or **SVN** repositiories
 * Open projects in the same or new window
 * Identify _deleted/renamed_ projects
 * A **Status Bar** which identifies the current project
@@ -57,7 +57,7 @@ Here are some of the features that **Project Manager** provides:
 
 ## Available Commands
 
-* `Project Manager: Save Project` Save the current folder as a new project
+* `Project Manager: Save Project` Save the current folder/workspace as a new project
 * `Project Manager: Edit Project` Edit your projects manually (`projects.json`)
 * `Project Manager: List Projects to Open` List all saved/detected projects and pick one
 * `Project Manager: List Projects to Open in New Window` List all saved/detected projects and pick one to be opened in New Window
@@ -67,13 +67,15 @@ Here are some of the features that **Project Manager** provides:
 
 ### Save Project
 
-You can save the current project in the manager at any time. You just need to type a name. It even suggests a name to you _automatically_ :)
+You can save the current folder/workspace as a **Project** at any time. You just need to type its name. 
 
 ![Save](images/project-manager-save.png)
+
+> It suggests a name to you _automatically_ :)
  
 ### Edit Projects
 
-For easier customization of your project list, you can edit the `projects.json` file directly inside **Code**. Just execute `Project Manager: Edit Projects` and the `projects.json` file is opened. Simple as this:
+For easier customization of your project list, you can edit the `projects.json` file, directly inside **Code**. Just execute `Project Manager: Edit Projects` and the `projects.json` file is opened. Simple as this:
 
 ```json
 [
@@ -149,7 +151,7 @@ You can choose how your projects are sorted
 
 ![List](images/project-manager-list-sort-by-name.png)
 
-* Choose if the project list must be grouped by its _kind_ (**Favorites**, **VS Code**, **Git**, **Mercurial** and **SVN**).
+* Choose if the project list must be grouped by its _kind_ (**Favorites**, **Git**, **Mercurial**, **SVN** and **VS Code**).
 
 ```json
     "projectManager.groupList": true
@@ -181,7 +183,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
-* Automatic Detection of Projects (**VSCode** ![vscode](images/ico_file_code.png), **Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png) and **SVN** ![svn](images/ico_svn.png))
+* Automatic Detection of Projects (**Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png), **SVN** ![svn](images/ico_svn.png) and **VSCode** ![vscode](images/ico_file_code.png))
 
 ```json
     "projectManager.git.baseFolders": [
@@ -230,7 +232,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 The **Projects** are now presented id its own **Side Bar**, giving you more free space in your Explorer view. You will have a few extra commands available:
 
 * Open a project, simply clicking in the project item
-* Open a project in a New Window, right clicking in the project item
+* Open a project in a New Window, right clicking in the project item, or using the hover button
 * Add a project to the current Workspace
 
 ![Side Bar](images/vscode-project-manager-side-bar.gif)
