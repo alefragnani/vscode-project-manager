@@ -15,11 +15,14 @@
 		"Other"
 	],
 	"keywords": [
+		"git",
 		"project",
 		"folder",
+		"workspace",
 		"switch",
 		"manage",
-		"git",
+		"mercurial",
+		"svn",
 		"multi-root ready"
 	],
 	"icon": "images/icon.png",
