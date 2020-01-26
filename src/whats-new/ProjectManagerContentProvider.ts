@@ -12,13 +12,15 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         return <Header> {logo: <Image> {src: logoUrl, height: 50, width: 50}, 
             message: `<b>Project Manager</b> helps you to easily access your <b>projects</b>,
             no matter where they are located. <i>Don't miss that important projects anymore</i>.
-            You can define your own <b>Favorite</b> projects, or choose for auto-detect <b>VSCode</b>
-            projects, <b>Git</b>, <b>Mercurial</b> and <b>SVN</b> repositories or <b>any</b> folder.`};
+            <br><br>You can define your own <b>Projects</b> (also called <b>Favorites</b>), or choose 
+            for auto-detect <b>Git</b>, <b>Mercurial</b> or <b>SVN</b> repositories, <b>VSCode</b> 
+            folders or <b>any</b> other folder.`};
     }
 
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds an all-new Project Manager <b>Side Bar</b>"});
+        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Remote Development</b> support"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds support to save <b>Workspaces</b> as projects"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Portable Mode</b> support"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Save</b> button in <b>Side Bar</b>"});

@@ -1,3 +1,7 @@
+## [10.10.0] - 2012-01-25
+### Added
+- Support **Remote Development** (issues [#284](https://github.com/alefragnani/vscode-project-manager/issues/284) and [#318](https://github.com/alefragnani/vscode-project-manager/issues/318))
+
 ## [10.9.1] - 2019-11-21
 ### Changed
 - Update CodeStream Ad and URL
