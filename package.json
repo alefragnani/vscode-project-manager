@@ -22,6 +22,9 @@
 		"git",
 		"multi-root ready"
 	],
+	"extensionKind": [
+		"ui"
+	],
 	"icon": "images/icon.png",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"homepage": "https://github.com/alefragnani/vscode-project-manager/blob/master/README.md",
