@@ -9,7 +9,7 @@
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^1.37.0"
+		"vscode": "^1.40.0"
 	},
 	"categories": [
 		"Other"
@@ -100,7 +100,8 @@
 				"icon": {
 					"light": "images/ico-save-project-light.svg",
 					"dark": "images/ico-save-project-dark.svg"
-				}
+				},
+				"enablement": "projectManager.isRunningLocally"
 			},
 			{
 				"command": "projectManager.listProjects",
