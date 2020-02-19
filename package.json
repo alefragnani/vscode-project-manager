@@ -26,7 +26,8 @@
 		"multi-root ready"
 	],
 	"extensionKind": [
-		"ui"
+		"ui",
+		"workspace"
 	],
 	"icon": "images/icon.png",
 	"license": "SEE LICENSE IN LICENSE.md",
