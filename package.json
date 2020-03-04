@@ -9,7 +9,7 @@
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^1.40.0"
+		"vscode": "^1.42.0"
 	},
 	"categories": [
 		"Other"
@@ -100,10 +100,7 @@
 			{
 				"command": "projectManager.saveProject",
 				"title": "%projectManager.commands.saveProject.title%",
-				"icon": {
-					"light": "images/ico-save-project-light.svg",
-					"dark": "images/ico-save-project-dark.svg"
-				},
+				"icon": "$(save)",
 				"enablement": "projectManager.isRunningLocally"
 			},
 			{
@@ -117,10 +114,7 @@
 			{
 				"command": "projectManager.editProjects",
 				"title": "%projectManager.commands.editProjects.title%",
-				"icon": {
-					"light": "images/ico-edit-projects-light.svg",
-					"dark": "images/ico-edit-projects-dark.svg"
-				}
+				"icon": "$(edit)"
 			},
 			{
 				"command": "projectManager.refreshProjects",
@@ -129,42 +123,27 @@
 			{
 				"command": "projectManager.refreshVSCodeProjects",
 				"title": "%projectManager.commands.refreshVSCodeProjects.title%",
-				"icon": {
-					"light": "images/ico-refresh-light.svg",
-					"dark": "images/ico-refresh-dark.svg"
-				}
+				"icon": "$(refresh)"
 			},
 			{
 				"command": "projectManager.refreshGitProjects",
 				"title": "%projectManager.commands.refreshGitProjects.title%",
-				"icon": {
-					"light": "images/ico-refresh-light.svg",
-					"dark": "images/ico-refresh-dark.svg"
-				}
+				"icon": "$(refresh)"
 			},
 			{
 				"command": "projectManager.refreshSVNProjects",
 				"title": "%projectManager.commands.refreshSVNProjects.title%",
-				"icon": {
-					"light": "images/ico-refresh-light.svg",
-					"dark": "images/ico-refresh-dark.svg"
-				}
+				"icon": "$(refresh)"
 			},
 			{
 				"command": "projectManager.refreshAnyProjects",
 				"title": "%projectManager.commands.refreshAnyProjects.title%",
-				"icon": {
-					"light": "images/ico-refresh-light.svg",
-					"dark": "images/ico-refresh-dark.svg"
-				}
+				"icon": "$(refresh)"
 			},
 			{
 				"command": "projectManager.refreshMercurialProjects",
 				"title": "%projectManager.commands.refreshMercurialProjects.title%",
-				"icon": {
-					"light": "images/ico-refresh-light.svg",
-					"dark": "images/ico-refresh-dark.svg"
-				}
+				"icon": "$(refresh)"
 			},
 			{
 				"command": "projectManager.open",
@@ -173,10 +152,7 @@
 			{
 				"command": "projectManager.openInNewWindow",
 				"title": "%projectManager.commands.openInNewWindow.title%",
-				"icon": {
-					"light": "images/ico-open-new-window-light.svg",
-					"dark": "images/ico-open-new-window-dark.svg"
-				}
+				"icon": "$(link-external)"
 			},
 			{
 				"command": "projectManager.addToWorkspace",
