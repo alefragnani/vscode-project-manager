@@ -416,7 +416,7 @@ export function activate(context: vscode.ExtensionContext) {
         return result;
     }
 
-    function showListProjectsQuickPick(): Promise<string | undefined> {
+    function showListProjectsQuickPick(folderNotFound): Promise<string | undefined> {
         let items = [];
         items = projectStorage.map();
         items = locators.sortGroupedList(items);
@@ -467,6 +467,10 @@ export function activate(context: vscode.ExtensionContext) {
                                         vscode.window.showErrorMessage("Path does not exist or is unavailable.");
                                         return resolve(undefined);
                                     }
+
+                                    if (folderNotFound) {
+                                        folderNotFound(selected.label, selected.description);
+                                    }
                                 } else {
                                     // project path
                                     return resolve(PathUtils.normalizePath(selected.description));
@@ -480,13 +484,17 @@ export function activate(context: vscode.ExtensionContext) {
         })
     }
 
+    function folderNotFound(name, path) {
+        vscode.window.showErrorMessage(`Name: ${name} / Path: ${path}`);
+    }
+
     async function addProjectToWorkspace(node: any) {
         if (node) {
             addProjectPathToWorkspace(node.command.arguments[0]);
             return;
         }
 
-        const pick = await showListProjectsQuickPick(); 
+        const pick = await showListProjectsQuickPick(folderNotFound); 
         vscode.window.showInformationMessage(`Got: ${pick}`);
     }
 
