@@ -78,7 +78,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.saveFirstProject", () => saveProject());
 
     // new commands (ActivityBar)
-    vscode.commands.registerCommand("projectManager.addToWorkspace", (node) => addProjectToWorkspace(node));
+    vscode.commands.registerCommand("projectManager.addToWorkspace#sidebar", (node) => addProjectToWorkspace(node));
+    vscode.commands.registerCommand("projectManager.addToWorkspace", () => addProjectToWorkspace(undefined));
     vscode.commands.registerCommand("projectManager.deleteProject", (node) => deleteProject(node));
     vscode.commands.registerCommand("projectManager.renameProject", (node) => renameProject(node));
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
@@ -396,13 +397,97 @@ export function activate(context: vscode.ExtensionContext) {
         return projectFile;
     }
 
-    function addProjectToWorkspace(node: any) {
-        if (path.extname(node.command.arguments[0]) === ".code-workspace") {
+    function addProjectPathToWorkspace(projectPath: string) {
+        if (path.extname(projectPath) === ".code-workspace") {
             vscode.window.showWarningMessage("You can't add a Workspace to another Workspace.");
             return;
         }
         vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders ? 
-            vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(node.command.arguments[ 0 ]) });
+            vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(projectPath)});
+    }
+
+    async function showQuickPick() {
+        let i = 0;
+        const result = await vscode.window.showQuickPick(['eins', 'zwei', 'drei'], {
+            placeHolder: 'eins, zwei or drei',
+            onDidSelectItem: item => item
+        });
+        vscode.window.showInformationMessage(`Got: ${result}`);
+        return result;
+    }
+
+    function showListProjectsQuickPick(): Promise<string | undefined> {
+        let items = [];
+        items = projectStorage.map();
+        items = locators.sortGroupedList(items);
+
+        return new Promise<string | undefined>((resolve, reject) => {
+
+            const options = <vscode.QuickPickOptions> {
+                matchOnDescription: vscode.workspace.getConfiguration("projectManager").get("filterOnFullPath", false),
+                matchOnDetail: false,
+                placeHolder: "Loading Projects (pick one to...)"
+            };
+    
+            getProjects(items)
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.vscLocator);
+                })
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.gitLocator);
+                })
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.mercurialLocator);
+                })
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.svnLocator);
+                })
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.anyLocator);
+                })
+                .then((folders) => { // sort
+                    if ((<any[]> folders).length === 0) {
+                        vscode.window.showInformationMessage("No projects saved yet!");
+                        return resolve(undefined);
+                    } else {
+                        if (!vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
+                            folders = locators.sortProjectList(folders);
+                        }
+                        vscode.commands.executeCommand("setContext", "inProjectManagerList", true);
+                        vscode.window.showQuickPick(<any[]> folders, options)
+                            .then((selected) => {
+                                vscode.commands.executeCommand("setContext", "inProjectManagerList", false);
+                                if (!selected) {
+                                    return resolve(undefined);
+                                }
+
+                                if (!fs.existsSync(selected.description.toString())) {
+
+                                    if (selected.label.substr(0, 2) === "$(") {
+                                        vscode.window.showErrorMessage("Path does not exist or is unavailable.");
+                                        return resolve(undefined);
+                                    }
+                                } else {
+                                    // project path
+                                    return resolve(PathUtils.normalizePath(selected.description));
+                                }
+                            }, (reason) => {
+                                vscode.commands.executeCommand("setContext", "inProjectManagerList", false);
+                                return resolve(undefined);          
+                            });
+                    }
+                });
+        })
+    }
+
+    async function addProjectToWorkspace(node: any) {
+        if (node) {
+            addProjectPathToWorkspace(node.command.arguments[0]);
+            return;
+        }
+
+        const pick = await showListProjectsQuickPick(); 
+        vscode.window.showInformationMessage(`Got: ${pick}`);
     }
 
     function deleteProject(node: any) {
