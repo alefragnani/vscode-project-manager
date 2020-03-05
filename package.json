@@ -42,7 +42,7 @@
 	"activationEvents": [
 		"*",
 		"onCommand:projectManager.saveProject",
-		"onCommand:projectManager.addToWorkspace#sidebar",
+		"onCommand:projectManager.addToWorkspace#sideBar",
 		"onCommand:projectManager.addToWorkspace",
 		"onCommand:projectManager.listProjects",
 		"onCommand:projectManager.listProjectsNewWindow",
@@ -158,8 +158,8 @@
 				"icon": "$(link-external)"
 			},
 			{
-				"command": "projectManager.addToWorkspace#sidebar",
-				"title": "%projectManager.commands.addToWorkspace#sidebar.title%"
+				"command": "projectManager.addToWorkspace#sideBar",
+				"title": "%projectManager.commands.addToWorkspace#sideBar.title%"
 			},
 			{
 				"command": "projectManager.addToWorkspace",
@@ -201,7 +201,7 @@
 					"when": "false"
 				},
 				{
-					"command": "projectManager.addToWorkspace#sidebar",
+					"command": "projectManager.addToWorkspace#sideBar",
 					"when": "false"
 				},
 				{
@@ -267,7 +267,7 @@
 					"group": "inline"
 				},
 				{
-					"command": "projectManager.addToWorkspace#sidebar",
+					"command": "projectManager.addToWorkspace#sideBar",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "workspace"
 				},

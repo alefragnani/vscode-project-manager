@@ -12,7 +12,7 @@
     "projectManager.commands.refreshMercurialProjects.title": "Project Manager: Refresh Mercurial Projects",
     "projectManager.commands.open.title": "Open",
     "projectManager.commands.openInNewWindow.title": "Open in New Window",
-    "projectManager.commands.addToWorkspace#sidebar.title": "Add to Workspace",
+    "projectManager.commands.addToWorkspace#sideBar.title": "Add to Workspace",
     "projectManager.commands.addToWorkspace.title": "Project Manager: Add to Workspace",
     "projectManager.commands.deleteProject.title": "Delete Project",
     "projectManager.commands.renameProject.title": "Rename Project",
