@@ -13,7 +13,7 @@
     "projectManager.commands.open.title": "Open",
     "projectManager.commands.openInNewWindow.title": "Open in New Window",
     "projectManager.commands.addToWorkspace#sideBar.title": "Add to Workspace",
-    "projectManager.commands.addToWorkspace.title": "Project Manager: Add to Workspace",
+    "projectManager.commands.addToWorkspace.title": "Project Manager: Add Project to Workspace",
     "projectManager.commands.deleteProject.title": "Delete Project",
     "projectManager.commands.renameProject.title": "Rename Project",
     "projectManager.commands.addToFavorites.title": "Add to Favorites",
