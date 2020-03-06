@@ -78,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.saveFirstProject", () => saveProject());
 
     // new commands (ActivityBar)
-    vscode.commands.registerCommand("projectManager.addToWorkspace#sidebar", (node) => addProjectToWorkspace(node));
+    vscode.commands.registerCommand("projectManager.addToWorkspace#sideBar", (node) => addProjectToWorkspace(node));
     vscode.commands.registerCommand("projectManager.addToWorkspace", () => addProjectToWorkspace(undefined));
     vscode.commands.registerCommand("projectManager.deleteProject", (node) => deleteProject(node));
     vscode.commands.registerCommand("projectManager.renameProject", (node) => renameProject(node));
