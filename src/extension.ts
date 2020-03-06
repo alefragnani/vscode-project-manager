@@ -28,10 +28,6 @@ export function activate(context: vscode.ExtensionContext) {
     // Sets storage path if recommended path provided by current version of VS Code.  
     PathUtils.setExtensionContext(context);
 
-    const isRunningLocally = (vscode.env.uiKind === vscode.UIKind.Desktop) && 
-        (typeof vscode.env.remoteName === 'undefined')
-    vscode.commands.executeCommand("setContext", "projectManager.isRunningLocally", isRunningLocally);
-
     const recentProjects: string = context.globalState.get<string>("recent", "");
     const aStack: stack.StringStack = new stack.StringStack();
     aStack.fromString(recentProjects);

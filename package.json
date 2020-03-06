@@ -103,8 +103,7 @@
 			{
 				"command": "projectManager.saveProject",
 				"title": "%projectManager.commands.saveProject.title%",
-				"icon": "$(save)",
-				"enablement": "projectManager.isRunningLocally"
+				"icon": "$(save)"
 			},
 			{
 				"command": "projectManager.listProjects",
