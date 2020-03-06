@@ -1,4 +1,12 @@
-## [10.10.0] - 2012-01-25
+## [10.11.0] - 2019-03-06
+### Added
+- Increase **Remote Development** support (issues [#323](https://github.com/alefragnani/vscode-project-manager/issues/323) and (Thanks to @egamma [PR #331](https://github.com/alefragnani/vscode-project-manager/pull/331))
+- `Add Project to Workspace` command in Command Palette (issues [#283](https://github.com/alefragnani/vscode-project-manager/issues/283)
+
+## Internal
+- Support **ThemeIcon** (issues [#326](https://github.com/alefragnani/vscode-project-manager/issues/326)
+
+## [10.10.0] - 2019-01-25
 ### Added
 - Support **Remote Development** (issues [#284](https://github.com/alefragnani/vscode-project-manager/issues/284) and [#318](https://github.com/alefragnani/vscode-project-manager/issues/318))
 

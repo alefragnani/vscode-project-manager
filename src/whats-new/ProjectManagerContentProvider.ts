@@ -20,12 +20,13 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds an all-new Project Manager <b>Side Bar</b>"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Remote Development</b> support"});
+        changeLog.push({kind: ChangeLogKind.NEW, message: "Increases <b>Remote Development</b> support"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds support to save <b>Workspaces</b> as projects"});
+        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Add Project to Workspace</b> command to <b>Command Palette</b>`});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Portable Mode</b> support"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Save</b> button in <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Disable Project</b>, <b>Add to Workspace</b>, 
-        <b>Add to Favorites</b> and <b>Refresh Project</b> commands`});
+            <b>Add to Favorites</b> and <b>Refresh Project</b> commands in <b>Side Bar</b>`});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Open in New Window</b> hover command in <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Localization</b> support - <b>Russian</b>, <b>Portuguese (Brazil)</b> and <b>Simplified Chinese</b>`});    
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds support to <b>GlobalStoragePath</b> (Thanks to 

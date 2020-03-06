@@ -3,14 +3,14 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 10.10
+# What's new in Project Manager 10.11
 
 * Adds an all-new **Side Bar**
-* Adds **Remote Development** support
+* Increases **Remote Development** support
 * Adds support to save **Workspaces** as Projects
+* Adds `Add Project to Workspace` command to **Command Palette**
 * Adds **Portable Mode** support
-* Use new `NotificationUI` while refreshing projects
-* Adds `Disable Project`, `Add to Workspace`, `Add to Favorites` and `Refresh Project` commands
+* Adds `Disable Project`, `Add to Workspace`, `Add to Favorites` and `Refresh Project` commands in **Side Bar**
 * Adds `Open in New Window` hover command in **Side Bar**
 * Adds **Localization** support
 
