@@ -99,6 +99,12 @@
 				}
 			]
 		},
+		"viewsWelcome": [
+			{
+				"view": "projectsExplorerFavorites",
+				"contents": "No projects saved yet.\n[Save your First Project](command:projectManager.saveFirstProject)"
+			}
+		],
 		"commands": [
 			{
 				"command": "projectManager.saveProject",
@@ -288,11 +294,6 @@
 				{
 					"command": "projectManager.toggleProjectEnabled",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
-					"group": "favorites"
-				},
-				{
-					"command": "projectManager.saveFirstProject",
-					"when": "view == projectsExplorerFavorites && viewItem == ConfigNodeKind",
 					"group": "favorites"
 				}
 			]
