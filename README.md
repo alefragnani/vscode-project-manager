@@ -41,7 +41,7 @@ Discussing code is now as easy as highlighting a block and typing a comment righ
 
 # Project Manager
 
-It helps you to easily access your **projects**, no matter where they are located. _Don't miss that important projects anymore_. 
+It helps you to easily access your **projects**, no matter where they are located. _Don't miss those important projects anymore_. 
 
 You can define your own **Projects** (also called **Favorites**), or choose for auto-detect **Git**, **Mercurial** or **SVN** repositories, **VSCode** folders, or **any** other folder.
 
