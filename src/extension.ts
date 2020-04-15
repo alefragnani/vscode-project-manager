@@ -18,6 +18,7 @@ import { WhatsNewProjectManagerContentProvider } from "./whats-new/ProjectManage
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
 import { Suggestion } from "../vscode-project-manager-core/src/model/Suggestion";
+import { isRemotePath } from "../vscode-project-manager-core/src/utils/remote";
 
 const PROJECTS_FILE = "projects.json";
 
@@ -47,7 +48,11 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;
         if (typeof node === "string") {
-            uri = vscode.Uri.file(node);
+            if (isRemotePath(node)) {
+                uri = vscode.Uri.parse(node);
+            } else {
+                uri = vscode.Uri.file(node);
+            }
         } else {
             uri = vscode.Uri.file(node.command.arguments[0]);
         }
@@ -267,7 +272,12 @@ export function activate(context: vscode.ExtensionContext) {
             aStack.push(pick.name);
             context.globalState.update("recent", aStack.toString());
 
-            const uri: vscode.Uri = vscode.Uri.file(pick.rootPath);
+            let uri: vscode.Uri;
+            if (isRemotePath(pick.rootPath)) {
+                uri = vscode.Uri.parse(pick.rootPath);
+            } else {
+                uri = vscode.Uri.file(pick.rootPath);
+            }
             vscode.commands.executeCommand("vscode.openFolder", uri, forceNewWindow)
                 .then(
                 value => ({}),  // done
@@ -365,7 +375,7 @@ export function activate(context: vscode.ExtensionContext) {
                                     return resolve(undefined);
                                 }
 
-                                if (!fs.existsSync(selected.description.toString())) {
+                                if (!isRemotePath(selected.description) && !fs.existsSync(selected.description.toString())) {
 
                                     if (selected.label.substr(0, 2) === "$(") {
                                         vscode.window.showErrorMessage("Path does not exist or is unavailable.");
