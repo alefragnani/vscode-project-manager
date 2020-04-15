@@ -102,12 +102,12 @@
 		"viewsWelcome": [
 			{
 				"view": "projectsExplorerFavorites",
-				"contents": "No projects saved yet.\nIn order to save projects, you have to open a folder or workspace first.\n[Open a Folder](command:workbench.action.files.openFileFolder)\n[Open a Workspace](command:workbench.action.openWorkspace)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager)",
+				"contents": "No projects saved yet.\nIn order to save projects, you have to open a folder or workspace first.\n[Open a Folder](command:workbench.action.files.openFileFolder)\n[Open a Workspace](command:workbench.action.openWorkspace)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager).",
 				"when": "workbenchState == empty"
 			},
 			{
 				"view": "projectsExplorerFavorites",
-				"contents": "No projects saved yet.\n[Save your First Project](command:projectManager.saveFirstProject)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager)",
+				"contents": "No projects saved yet.\n[Save your First Project](command:projectManager.saveFirstProject)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager).",
 				"when": "workbenchState != empty"
 			}
 		],
