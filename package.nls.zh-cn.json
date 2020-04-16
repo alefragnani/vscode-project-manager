@@ -20,6 +20,7 @@
     "projectManager.commands.toggleProjectEnabled.title": "禁用项目",
     "projectManager.commands.saveFirstProject.title": "保存您的第一个项目",
     "projectManager.commands.whatsNew.title": "Project Manager: 更新日志",
+    "projectManager.commands.whatsNewContextMenu.title": "更新日志",
     "projectManager.configuration.title": "Project Manager",
     "projectManager.configuration.showProjectNameInStatusBar.description": "是否应在状态栏中显示项目名称？",
     "projectManager.configuration.openInNewWindowWhenClickingInStatusBar.description": "单击状态栏时是否应该使用新窗口打开项目？",

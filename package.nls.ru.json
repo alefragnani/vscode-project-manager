@@ -20,6 +20,7 @@
     "projectManager.commands.toggleProjectEnabled.title": "Отключить проект",
     "projectManager.commands.saveFirstProject.title": "Сохраните свой первый проект",
     "projectManager.commands.whatsNew.title": "Менеджер проектов: Что нового",
+    "projectManager.commands.whatsNewContextMenu.title": "Что нового",
     "projectManager.configuration.title": "Менеджер проектов",
     "projectManager.configuration.showProjectNameInStatusBar.description": "Должно ли отображаться название проекта в строке состояния?",
     "projectManager.configuration.openInNewWindowWhenClickingInStatusBar.description": "Следует ли открывать проект в новом окне при клике в строке состояния?",
