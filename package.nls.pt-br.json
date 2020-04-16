@@ -19,6 +19,8 @@
     "projectManager.commands.addToFavorites.title": "Adicionar aos Favoritos",
     "projectManager.commands.toggleProjectEnabled.title": "Desabilitar Projeto",
     "projectManager.commands.saveFirstProject.title": "Salvar seu Primeiro Projeto",
+    "projectManager.commands.hideGitWelcome.title": "Esconder Painel de Boas Vindas Git",
+    "projectManager.commands.showGitWelcome.title": "Exibir Painel de Boas Vindas Git",
     "projectManager.commands.whatsNew.title": "Project Manager: Novidades",
     "projectManager.configuration.title": "Project Manager",
     "projectManager.configuration.showProjectNameInStatusBar.description": "Controla se deve exibir o nome do projeto na barra de status",
