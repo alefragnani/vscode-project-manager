@@ -43,6 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
     const viewer = new WhatsNewManager(context).registerContentProvider("project-manager", provider);
     viewer.showPageInActivation();
     context.subscriptions.push(vscode.commands.registerCommand("projectManager.whatsNew", () => viewer.showPage()));
+    context.subscriptions.push(vscode.commands.registerCommand("projectManager.whatsNewContextMenu", () => viewer.showPage()));
 
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;

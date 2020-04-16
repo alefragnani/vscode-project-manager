@@ -177,6 +177,10 @@
 				"title": "%projectManager.commands.whatsNew.title%"
 			},
 			{
+				"command": "projectManager.whatsNewContextMenu",
+				"title": "%projectManager.commands.whatsNewContextMenu.title%"
+			},
+			{
 				"command": "projectManager.addToFavorites",
 				"title": "%projectManager.commands.addToFavorites.title%"
 			},
@@ -209,6 +213,10 @@
 				},
 				{
 					"command": "projectManager.renameProject",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.whatsNewContextMenu",
 					"when": "false"
 				}
 			],
@@ -295,6 +303,13 @@
 					"when": "view == projectsExplorerFavorites && viewItem == ConfigNodeKind",
 					"group": "favorites"
 				}
+            ],
+            "extension/context": [
+                {
+                    "command": "projectManager.whatsNewContextMenu",
+                    "group": "projectManager",
+                    "when": "extension == alefragnani.project-manager && extensionStatus == installed"
+                }
 			]
 		},
 		"configuration": {
