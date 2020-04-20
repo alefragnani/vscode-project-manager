@@ -303,13 +303,13 @@
 					"when": "view == projectsExplorerFavorites && viewItem == ConfigNodeKind",
 					"group": "favorites"
 				}
-            ],
-            "extension/context": [
-                {
-                    "command": "projectManager.whatsNewContextMenu",
-                    "group": "projectManager",
-                    "when": "extension == alefragnani.project-manager && extensionStatus == installed"
-                }
+			],
+			"extension/context": [
+				{
+					"command": "projectManager.whatsNewContextMenu",
+					"group": "projectManager",
+					"when": "extension == alefragnani.project-manager && extensionStatus == installed"
+				}
 			]
 		},
 		"configuration": {
@@ -485,12 +485,12 @@
 		"vscode:prepublish": "webpack --mode production",
 		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch",
-		"compile": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install"
+		"compile": "tsc -watch -p ./"
 	},
 	"devDependencies": {
-		"@types/node": "^6.0.40",
-		"typescript": "^3.1.6",
+		"@types/node": "^10.14.17",
+		"@types/vscode": "^1.42.0",
+		"typescript": "^3.5.1",
 		"vscode": "^1.1.36",
 		"webpack": "^4.19.1",
 		"webpack-cli": "^3.1.0",
