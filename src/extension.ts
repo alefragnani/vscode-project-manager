@@ -18,8 +18,7 @@ import { WhatsNewProjectManagerContentProvider } from "./whats-new/ProjectManage
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
 import { Suggestion } from "../vscode-project-manager-core/src/model/Suggestion";
-
-const PROJECTS_FILE = "projects.json";
+import { CommandLocation, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -59,7 +58,8 @@ export function activate(context: vscode.ExtensionContext) {
     });
     vscode.commands.registerCommand("projectManager.openInNewWindow", node => {
         const uri: vscode.Uri = vscode.Uri.file(node.command.arguments[0]);
-        vscode.commands.executeCommand("vscode.openFolder", uri, true)
+        const openInNewWindow = shouldOpenInNewWindow(true, CommandLocation.SideBar);
+        vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
             .then(
             value => ({}),  // done
             value => vscode.window.showInformationMessage("Could not open the project!"));
@@ -269,13 +269,43 @@ export function activate(context: vscode.ExtensionContext) {
             context.globalState.update("recent", aStack.toString());
 
             const uri: vscode.Uri = vscode.Uri.file(pick.rootPath);
-            vscode.commands.executeCommand("vscode.openFolder", uri, forceNewWindow)
+            const openInNewWindow = shouldOpenInNewWindow(forceNewWindow, CommandLocation.CommandPalette);
+            vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
                 .then(
                 value => ({}),  // done
                 value => vscode.window.showInformationMessage("Could not open the project!"));
             return;
         }
 
+    }
+
+    function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: CommandLocation): boolean {
+        if (!openInNewWindow) {
+            return false;
+        }
+
+        if (vscode.workspace.workspaceFolders || vscode.window.activeTextEditor) {
+            return openInNewWindow;
+        }
+
+        const config = vscode.workspace.getConfiguration("projectManager").get<string>("openInCurrenWindowIfEmpty");
+        if (config === OpenInCurrentWindowIfEmptyMode.always) {
+            return false;
+        }
+        if (config === OpenInCurrentWindowIfEmptyMode.never) {
+            return openInNewWindow;
+        }
+
+        switch (config) {
+            case OpenInCurrentWindowIfEmptyMode.always:
+                return false;
+            case OpenInCurrentWindowIfEmptyMode.never:
+                return openInNewWindow;
+            case OpenInCurrentWindowIfEmptyMode.onlyUsingCommandPalette:
+                return calledFrom !== CommandLocation.CommandPalette;
+            case OpenInCurrentWindowIfEmptyMode.onlyUsingSideBar:
+                return calledFrom !== CommandLocation.SideBar;
+        }
     }
 
     function loadProjectsFile() {
