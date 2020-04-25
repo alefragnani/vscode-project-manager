@@ -45,5 +45,6 @@
     "projectManager.configuration.any.maxDepthRecursion.description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Should cache the VSCode, Git and SVN projects found?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Should check for invalid paths before listing, showing a message below the project name?",
-    "projectManager.configuration.filterOnFullPath.description": "Should filter projects through full path?"
+    "projectManager.configuration.filterOnFullPath.description": "Should filter projects through full path?",
+    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty."
 }
