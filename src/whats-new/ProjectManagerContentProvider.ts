@@ -23,6 +23,9 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         changeLog.push({kind: ChangeLogKind.NEW, message: "Increases <b>Remote Development</b> support"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds support to save <b>Workspaces</b> as projects"});
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Add Project to Workspace</b> command to <b>Command Palette</b>`});
+        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds setting to decide how <b>Open in New Window</b> command works on empty windows 
+            (<a title=\"Open Issue #188\" href=\"https://github.com/alefragnani/vscode-project-manager/issues/188\">
+            Issue #188</a>)`});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Portable Mode</b> support"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Save</b> button in <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Disable Project</b>, <b>Add to Workspace</b>, 
@@ -34,9 +37,12 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
             href=\"https://github.com/alefragnani/vscode-project-manager/pull/250\">
             PR #250</a>)`});    
         changeLog.push({kind: ChangeLogKind.NEW, message: "Faster startup (Side Bar)"});
-        changeLog.push({kind: ChangeLogKind.FIXED, message: `The projects in the <b>Side Bar</b> should not be sorted case-sensitive (<a title=\"Open Issue #243\" 
-            href=\"https://github.com/alefragnani/vscode-project-manager/issues/243\">
-            Issue #243</a>)`});
+        changeLog.push({kind: ChangeLogKind.FIXED, message: `Typo in README (<a title=\"Open Issue #337\" 
+            href=\"https://github.com/alefragnani/vscode-project-manager/issues/337\">
+            Issue #337</a>)`});
+        changeLog.push({kind: ChangeLogKind.FIXED, message: `Typo in README (Thanks to @1st<a title=\"Open PR #348\" 
+            href=\"https://github.com/alefragnani/vscode-project-manager/pull/348\">
+            Issue #348</a>)`});
         return changeLog;
     }
 

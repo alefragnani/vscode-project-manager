@@ -1,3 +1,15 @@
+## [10.12.0] - 2019-04-25
+### Added
+- Setting to decide if the `Open in New Window` command should open in the current window, if empty (issue [#188](https://github.com/alefragnani/vscode-project-manager/issues/188))
+
+### Fixed
+- Typo in README (Thanks to @1st [PR #348](https://github.com/alefragnani/vscode-project-manager/pull/348))
+- Typo in README (issue [#337](https://github.com/alefragnani/vscode-project-manager/issues/337))
+
+## Internal
+- Support VS Code package split  (issue [#361](https://github.com/alefragnani/vscode-project-manager/issues/361))
+- Support Extension View Context Menu (issue [#327](https://github.com/alefragnani/vscode-project-manager/issues/327))
+
 ## [10.11.0] - 2019-03-06
 ### Added
 - Increase **Remote Development** support (issues [#323](https://github.com/alefragnani/vscode-project-manager/issues/323) and (Thanks to @egamma [PR #331](https://github.com/alefragnani/vscode-project-manager/pull/331))
