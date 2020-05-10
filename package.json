@@ -107,7 +107,7 @@
 			},
 			{
 				"view": "projectsExplorerFavorites",
-				"contents": "No projects saved yet.\n[Save your First Project](command:projectManager.saveFirstProject)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager).",
+				"contents": "No projects saved yet.\nIn order to save the current folder/workspace as a project, execute the command:\n[Project Manager: Save Project](command:projectManager.saveProject)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager).",
 				"when": "workbenchState != empty"
 			},
 			{
