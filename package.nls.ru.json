@@ -18,7 +18,6 @@
     "projectManager.commands.renameProject.title": "Переименовать проект",
     "projectManager.commands.addToFavorites.title": "Добавить в избранное",
     "projectManager.commands.toggleProjectEnabled.title": "Отключить проект",
-    "projectManager.commands.saveFirstProject.title": "Сохраните свой первый проект",
     "projectManager.commands.hideGitWelcome.title": "Скрыть панель приветствия Git",
     "projectManager.commands.showGitWelcome.title": "Показать панель приветствия Git",
     "projectManager.commands.whatsNew.title": "Менеджер проектов: Что нового",

@@ -201,10 +201,6 @@
 				"title": "%projectManager.commands.toggleProjectEnabled.title%"
 			},
 			{
-				"command": "projectManager.saveFirstProject",
-				"title": "%projectManager.commands.saveFirstProject.title%"
-			},
-			{
 				"command": "projectManager.hideGitWelcome",
 				"title": "%projectManager.commands.hideGitWelcome.title%"
 			},

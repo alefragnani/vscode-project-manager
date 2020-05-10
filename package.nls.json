@@ -18,7 +18,6 @@
     "projectManager.commands.renameProject.title": "Rename Project",
     "projectManager.commands.addToFavorites.title": "Add to Favorites",
     "projectManager.commands.toggleProjectEnabled.title": "Disable Project",
-    "projectManager.commands.saveFirstProject.title": "Save your First Project",
     "projectManager.commands.hideGitWelcome.title": "Hide Git Welcome Panel",
     "projectManager.commands.showGitWelcome.title": "Show Git Welcome Panel",
     "projectManager.commands.whatsNew.title": "Project Manager: What's New",

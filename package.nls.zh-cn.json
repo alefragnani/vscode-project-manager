@@ -18,7 +18,6 @@
     "projectManager.commands.renameProject.title": "重命名项目",
     "projectManager.commands.addToFavorites.title": "添加到收藏夹",
     "projectManager.commands.toggleProjectEnabled.title": "禁用项目",
-    "projectManager.commands.saveFirstProject.title": "保存您的第一个项目",
     "projectManager.commands.hideGitWelcome.title": "隐藏Git欢迎面板",
     "projectManager.commands.showGitWelcome.title": "显示Git欢迎面板",
     "projectManager.commands.whatsNew.title": "Project Manager: 更新日志",
