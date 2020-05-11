@@ -471,19 +471,19 @@
 				},
 				"projectManager.openInCurrenWindowIfEmpty": {
 					"type": "string",
-                    "default": "always",
-                    "enum": [
-                        "always",
+					"default": "always",
+					"enum": [
+						"always",
 						"onlyUsingCommandPalette",
 						"onlyUsingSideBar",
 						"never"
-                    ],
-                    "enumDescriptions": [
-                        "Whenever you call the Open in New Window command, it will open in the current window, if empty",
-                        "Only open in the current window if you use the Command Palette",
-                        "Only open in the current window if you use the Side Bar",
-                        "Works as today. The Open in New Window command will always open in New Window"
-                    ],
+					],
+					"enumDescriptions": [
+						"Whenever you call the Open in New Window command, it will open in the current window, if empty",
+						"Only open in the current window if you use the Command Palette",
+						"Only open in the current window if you use the Side Bar",
+						"Works as today. The Open in New Window command will always open in New Window"
+					],
 					"description": "%projectManager.configuration.openInCurrenWindowIfEmpty.description%"
 				}
 			}
@@ -507,12 +507,11 @@
 	"devDependencies": {
 		"@types/node": "^10.14.17",
 		"@types/vscode": "^1.42.0",
-		"typescript": "^3.5.1",
-		"vscode": "^1.1.36",
-		"webpack": "^4.19.1",
-		"webpack-cli": "^3.1.0",
+		"terser-webpack-plugin": "^1.2.1",
 		"ts-loader": "^4.4.2",
-		"terser-webpack-plugin": "^1.2.1"
+		"typescript": "^3.5.1",
+		"webpack": "^4.43.0",
+		"webpack-cli": "^3.3.11"
 	},
 	"dependencies": {
 		"walker": "^1.0.7"
