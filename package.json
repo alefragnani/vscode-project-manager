@@ -2,14 +2,14 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "10.12.0",
+	"version": "11.0.0",
 	"publisher": "alefragnani",
 	"galleryBanner": {
 		"color": "#000000",
 		"theme": "dark"
 	},
 	"engines": {
-		"vscode": "^1.42.0"
+		"vscode": "^1.45.0"
 	},
 	"categories": [
 		"Other"
@@ -534,7 +534,7 @@
 	},
 	"devDependencies": {
 		"@types/node": "^10.14.17",
-		"@types/vscode": "^1.42.0",
+		"@types/vscode": "^1.45.0",
 		"terser-webpack-plugin": "^1.2.1",
 		"ts-loader": "^4.4.2",
 		"typescript": "^3.5.1",
