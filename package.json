@@ -99,6 +99,22 @@
 				}
 			]
 		},
+		"viewsWelcome": [
+			{
+				"view": "projectsExplorerFavorites",
+				"contents": "No projects saved yet.\nIn order to save projects, you have to open a folder or workspace first.\n[Open a Folder](command:workbench.action.files.openFileFolder)\n[Open a Workspace](command:workbench.action.openWorkspace)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager).",
+				"when": "workbenchState == empty"
+			},
+			{
+				"view": "projectsExplorerFavorites",
+				"contents": "No projects saved yet.\nIn order to save the current folder/workspace as a project, execute the command:\n[Project Manager: Save Project](command:projectManager.saveProject)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager).",
+				"when": "workbenchState != empty"
+			},
+			{
+				"view": "projectsExplorerGit",
+				"contents": "No projects detected.\nIn order to detect Git projects, you have to configure the `baseFolders` where the Git projects are.\n[Open Settings](command:workbench.action.openSettings?%5B%22projectManager.git.baseFolders%22%5D)\n[I don't need Git projects](command:projectManager.hideGitWelcome)\nIt also supports detection of SVN or Mercurial repositories, VS Code or any other folder.\nTo learn more about how to use Project Manager in VS Code [read the docs](https://github.com/alefragnani/vscode-project-manager/#available-settings)."
+			}
+		],
 		"commands": [
 			{
 				"command": "projectManager.saveProject",
@@ -189,8 +205,12 @@
 				"title": "%projectManager.commands.toggleProjectEnabled.title%"
 			},
 			{
-				"command": "projectManager.saveFirstProject",
-				"title": "%projectManager.commands.saveFirstProject.title%"
+				"command": "projectManager.hideGitWelcome",
+				"title": "%projectManager.commands.hideGitWelcome.title%"
+			},
+			{
+				"command": "projectManager.showGitWelcome",
+				"title": "%projectManager.commands.showGitWelcome.title%"
 			}
 		],
 		"menus": {
@@ -218,6 +238,14 @@
 				{
 					"command": "projectManager.whatsNewContextMenu",
 					"when": "false"
+				},
+				{
+					"command": "projectManager.hideGitWelcome",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.showGitWelcome",
+					"when": "false"
 				}
 			],
 			"view/title": [
@@ -230,6 +258,11 @@
 					"command": "projectManager.editProjects",
 					"when": "view == projectsExplorerFavorites",
 					"group": "navigation@11"
+				},
+				{
+					"command": "projectManager.showGitWelcome",
+					"when": "view == projectsExplorerFavorites && projectManager.hiddenGitWelcome",
+					"group": "2_projectManager"
 				},
 				{
 					"command": "projectManager.refreshVSCodeProjects",
@@ -296,11 +329,6 @@
 				{
 					"command": "projectManager.toggleProjectEnabled",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
-					"group": "favorites"
-				},
-				{
-					"command": "projectManager.saveFirstProject",
-					"when": "view == projectsExplorerFavorites && viewItem == ConfigNodeKind",
 					"group": "favorites"
 				}
 			],

@@ -44,6 +44,19 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand("projectManager.whatsNew", () => viewer.showPage()));
     context.subscriptions.push(vscode.commands.registerCommand("projectManager.whatsNewContextMenu", () => viewer.showPage()));
 
+    context.subscriptions.push(vscode.commands.registerCommand("projectManager.hideGitWelcome", () => {
+        context.globalState.update("hideGitWelcome", true);
+        providerManager.showTreeViewFromAllProviders();
+        vscode.commands.executeCommand("setContext", "projectManager.hiddenGitWelcome", true);
+    }));
+    context.subscriptions.push(vscode.commands.registerCommand("projectManager.showGitWelcome", () => {
+        context.globalState.update("hideGitWelcome", false);
+        providerManager.showTreeViewFromAllProviders();
+        vscode.commands.executeCommand("setContext", "projectManager.hiddenGitWelcome", false);
+    }));
+    const hideGitWelcome = context.globalState.get<boolean>("hideGitWelcome", false);
+    vscode.commands.executeCommand("setContext", "projectManager.hiddenGitWelcome", hideGitWelcome);
+
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;
         if (typeof node === "string") {
@@ -72,7 +85,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
-    vscode.commands.registerCommand("projectManager.saveFirstProject", () => saveProject());
 
     // new commands (ActivityBar)
     vscode.commands.registerCommand("projectManager.addToWorkspace#sideBar", (node) => addProjectToWorkspace(node));
