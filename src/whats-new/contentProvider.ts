@@ -18,7 +18,7 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     }
 
     public provideChangeLog(): ChangeLogItem[] {
-        const changeLog: ChangeLogItem[] = [];
+        const changeLog: ChangeLogItem[] = []; 
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds an all-new Project Manager <b>Side Bar</b>"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Increases <b>Remote Development</b> support"});
         changeLog.push({kind: ChangeLogKind.NEW, message: "Adds support to save <b>Workspaces</b> as projects"});

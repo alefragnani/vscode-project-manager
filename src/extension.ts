@@ -13,18 +13,20 @@ import { Project, ProjectStorage } from "../vscode-project-manager-core/src/mode
 import { PathUtils } from "../vscode-project-manager-core/src/utils/PathUtils";
 
 import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
-import { WhatsNewManager } from "../vscode-whats-new/src/Manager";
-import { WhatsNewProjectManagerContentProvider } from "./whats-new/ProjectManagerContentProvider";
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
 import { Suggestion } from "../vscode-project-manager-core/src/model/Suggestion";
 import { CommandLocation, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
 import { isRemotePath } from "../vscode-project-manager-core/src/utils/remote";
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
+import { Container } from "../vscode-project-manager-core/src/container";
+import { registerWhatsNew } from "./whats-new/commands";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+
+    Container.context = context;
 
     // Sets storage path if recommended path provided by current version of VS Code.  
     PathUtils.setExtensionContext(context);
@@ -40,11 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
     const providerManager: Providers = new Providers(context, locators, projectStorage);
     locators.setProviderManager(providerManager);
 
-    const provider = new WhatsNewProjectManagerContentProvider();
-    const viewer = new WhatsNewManager(context).registerContentProvider("project-manager", provider);
-    viewer.showPageInActivation();
-    context.subscriptions.push(vscode.commands.registerCommand("projectManager.whatsNew", () => viewer.showPage()));
-    context.subscriptions.push(vscode.commands.registerCommand("projectManager.whatsNewContextMenu", () => viewer.showPage()));
+    registerWhatsNew();
 
     context.subscriptions.push(vscode.commands.registerCommand("projectManager.hideGitWelcome", () => {
         context.globalState.update("hideGitWelcome", true);
