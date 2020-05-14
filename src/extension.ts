@@ -19,6 +19,8 @@ import { WhatsNewProjectManagerContentProvider } from "./whats-new/ProjectManage
 import { showStatusBar, updateStatusBar } from "./statusBar";
 import { Suggestion } from "../vscode-project-manager-core/src/model/Suggestion";
 import { CommandLocation, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
+import { isRemotePath } from "../vscode-project-manager-core/src/utils/remote";
+import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -60,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
         let uri: vscode.Uri;
         if (typeof node === "string") {
-            uri = vscode.Uri.file(node);
+            uri = buildProjectUri(node);
         } else {
             uri = vscode.Uri.file(node.command.arguments[0]);
         }
@@ -70,7 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
             value => vscode.window.showInformationMessage("Could not open the project!"));
     });
     vscode.commands.registerCommand("projectManager.openInNewWindow", node => {
-        const uri: vscode.Uri = vscode.Uri.file(node.command.arguments[0]);
+        const uri = buildProjectUri(node.command.arguments[0]);
         const openInNewWindow = shouldOpenInNewWindow(true, CommandLocation.SideBar);
         vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
             .then(
@@ -280,15 +282,14 @@ export function activate(context: vscode.ExtensionContext) {
             aStack.push(pick.name);
             context.globalState.update("recent", aStack.toString());
 
-            const uri: vscode.Uri = vscode.Uri.file(pick.rootPath);
             const openInNewWindow = shouldOpenInNewWindow(forceNewWindow, CommandLocation.CommandPalette);
+            const uri = buildProjectUri(pick.rootPath);
             vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
                 .then(
                 value => ({}),  // done
                 value => vscode.window.showInformationMessage("Could not open the project!"));
             return;
         }
-
     }
 
     function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: CommandLocation): boolean {
@@ -408,7 +409,7 @@ export function activate(context: vscode.ExtensionContext) {
                                     return resolve(undefined);
                                 }
 
-                                if (!fs.existsSync(selected.description.toString())) {
+                                if (!isRemotePath(selected.description) && !fs.existsSync(selected.description.toString())) {
 
                                     if (selected.label.substr(0, 2) === "$(") {
                                         vscode.window.showErrorMessage("Path does not exist or is unavailable.");
