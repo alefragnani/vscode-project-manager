@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 // tslint:disable-next-line:max-line-length
-import { ChangeLogItem, ChangeLogKind, ContentProvider, Header, Image, Sponsor } from "../../vscode-whats-new/src/ContentProvider";
+import { ChangeLogItem, ChangeLogKind, ContentProvider, Header, Image, Sponsor, IssueKind } from "../../vscode-whats-new/src/ContentProvider";
 
 export class WhatsNewProjectManagerContentProvider implements ContentProvider {
 
@@ -18,31 +18,103 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     }
 
     public provideChangeLog(): ChangeLogItem[] {
-        const changeLog: ChangeLogItem[] = []; 
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds an all-new Project Manager <b>Side Bar</b>"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Increases <b>Remote Development</b> support"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds support to save <b>Workspaces</b> as projects"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Add Project to Workspace</b> command to <b>Command Palette</b>`});
-        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds setting to decide how <b>Open in New Window</b> command works on empty windows 
-            (<a title=\"Open Issue #188\" href=\"https://github.com/alefragnani/vscode-project-manager/issues/188\">
-            Issue #188</a>)`});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Portable Mode</b> support"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Save</b> button in <b>Side Bar</b>"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Disable Project</b>, <b>Add to Workspace</b>, 
-            <b>Add to Favorites</b> and <b>Refresh Project</b> commands in <b>Side Bar</b>`});
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Adds <b>Open in New Window</b> hover command in <b>Side Bar</b>"});
-        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds <b>Localization</b> support - <b>Russian</b>, <b>Portuguese (Brazil)</b> and <b>Simplified Chinese</b>`});    
-        changeLog.push({kind: ChangeLogKind.NEW, message: `Adds support to <b>GlobalStoragePath</b> (Thanks to 
-            @Chuxel - <a title=\"Open PR #250\" 
-            href=\"https://github.com/alefragnani/vscode-project-manager/pull/250\">
-            PR #250</a>)`});    
-        changeLog.push({kind: ChangeLogKind.NEW, message: "Faster startup (Side Bar)"});
-        changeLog.push({kind: ChangeLogKind.FIXED, message: `Typo in README (<a title=\"Open Issue #337\" 
-            href=\"https://github.com/alefragnani/vscode-project-manager/issues/337\">
-            Issue #337</a>)`});
-        changeLog.push({kind: ChangeLogKind.FIXED, message: `Typo in README (Thanks to @1st<a title=\"Open PR #348\" 
-            href=\"https://github.com/alefragnani/vscode-project-manager/pull/348\">
-            Issue #348</a>)`});
+        const changeLog: ChangeLogItem[] = [];
+
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.0.0", releaseDate: "May 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support open <b>Remote Projects</b>",
+                id: 345,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "<b>Side bar</b> welcome message",
+                id: 353,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.INTERNAL,
+            detail: {
+                message: "Remove <b>vscode</b> module dependency",
+                id: 369,
+                kind: IssueKind.Issue
+            }
+        });
+
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "10.12.0", releaseDate: "April 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Setting to choose how <b>Open in New Window</b> command work on empty windows",
+                id: 188,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Typo in README",
+                id: 348,
+                kind: IssueKind.PR,
+                kudos: "@1st"
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Typo in README",
+                id: 337,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.INTERNAL,
+            detail: {
+                message: "Support VS Code package split",
+                id: 361,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.INTERNAL,
+            detail: {
+                message: "Support VS Code Extension view Context Menu",
+                id: 327,
+                kind: IssueKind.Issue
+            }
+        });
+
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.11.0", releaseDate: "March 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Increase <b>Remote Development</b> support",
+                id: 323,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "<b>Add Project to Workspace</b> command in Command Palette",
+                id: 283,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.INTERNAL,
+            detail: {
+                message: "Support <b>ThemeIcon</b>",
+                id: 326,
+                kind: IssueKind.Issue
+            }
+        });
+
         return changeLog;
     }
 
