@@ -1,4 +1,12 @@
-## [10.12.0] - 2019-04-25
+## [11.0.0] - 2020-05-14
+### Added
+- Support open **Remote Projects** from your local installation (issue [#345](https://github.com/alefragnani/vscode-project-manager/issues/345))
+- **Side Bar** welcome message (issue [#353](https://github.com/alefragnani/vscode-project-manager/issues/353))
+
+### Internal
+- Remove `vscode` module dependency (issue [#369](https://github.com/alefragnani/vscode-project-manager/issues/369))
+
+## [10.12.0] - 2020-04-25
 ### Added
 - Setting to decide if the `Open in New Window` command should open in the current window, if empty (issue [#188](https://github.com/alefragnani/vscode-project-manager/issues/188))
 
@@ -10,7 +18,7 @@
 - Support VS Code package split  (issue [#361](https://github.com/alefragnani/vscode-project-manager/issues/361))
 - Support Extension View Context Menu (issue [#327](https://github.com/alefragnani/vscode-project-manager/issues/327))
 
-## [10.11.0] - 2019-03-06
+## [10.11.0] - 2020-03-06
 ### Added
 - Increase **Remote Development** support (issues [#323](https://github.com/alefragnani/vscode-project-manager/issues/323) and (Thanks to @egamma [PR #331](https://github.com/alefragnani/vscode-project-manager/pull/331))
 - `Add Project to Workspace` command in Command Palette (issues [#283](https://github.com/alefragnani/vscode-project-manager/issues/283)
@@ -18,7 +26,7 @@
 ## Internal
 - Support **ThemeIcon** (issues [#326](https://github.com/alefragnani/vscode-project-manager/issues/326)
 
-## [10.10.0] - 2019-01-25
+## [10.10.0] - 2020-01-25
 ### Added
 - Support **Remote Development** (issues [#284](https://github.com/alefragnani/vscode-project-manager/issues/284) and [#318](https://github.com/alefragnani/vscode-project-manager/issues/318))
 

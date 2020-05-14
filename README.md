@@ -3,10 +3,11 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 10.12
+# What's new in Project Manager 11.0
 
 * Adds an all-new **Side Bar**
-* Increases **Remote Development** support
+* Support **Remote Development** support
+* Support open **Remote Projects** from local installation
 * Adds support to save **Workspaces** as Projects
 * Adds `Add Project to Workspace` command to **Command Palette**
 * Adds **Portable Mode** support
