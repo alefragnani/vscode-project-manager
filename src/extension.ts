@@ -58,12 +58,9 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.executeCommand("setContext", "projectManager.hiddenGitWelcome", hideGitWelcome);
 
     vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
-        let uri: vscode.Uri;
-        if (typeof node === "string") {
-            uri = buildProjectUri(node);
-        } else {
-            uri = vscode.Uri.file(node.command.arguments[0]);
-        }
+        const uri = typeof node === "string" 
+                    ? buildProjectUri(node)
+                    : buildProjectUri(node.command.arguments[0]);
         vscode.commands.executeCommand("vscode.openFolder", uri, false)
             .then(
             value => ({}),  // done
