@@ -20,6 +20,32 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.0.1", releaseDate: "May 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Path does not exists for SSH remote project",
+                id: 375,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "<b>Open</b> command in Side Bar's context menu does not work",
+                id: 376,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Path does not exists for Docker remote project on Windows",
+                id: 377,
+                kind: IssueKind.Issue
+            }
+        });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.0.0", releaseDate: "May 2020" } });
         changeLog.push({
             kind: ChangeLogKind.NEW,

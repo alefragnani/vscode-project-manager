@@ -1,3 +1,9 @@
+## [11.0.1] - 2020-05-19
+### Fixed
+- Path does not exists for SSH remote project (issue [#375](https://github.com/alefragnani/vscode-project-manager/issues/375))
+- `Open` command in Side Bar's context menu does not work (issue [#376](https://github.com/alefragnani/vscode-project-manager/issues/376))
+- Path does not exists for Docker remote project on Windows (issue [#377](https://github.com/alefragnani/vscode-project-manager/issues/377))
+
 ## [11.0.0] - 2020-05-14
 ### Added
 - Support open **Remote Projects** from your local installation (issue [#345](https://github.com/alefragnani/vscode-project-manager/issues/345))
