@@ -1,6 +1,7 @@
 import { StatusBarAlignment, StatusBarItem, window, workspace } from "vscode"; 
 import { Locators } from "../vscode-project-manager-core/src/model/locators";
 import { Project, ProjectStorage } from "../vscode-project-manager-core/src/model/storage";
+import { codicons } from "vscode-ext-codicons";
 
 let statusItem: StatusBarItem;
 
@@ -22,7 +23,7 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
   if (!statusItem) {
       statusItem = window.createStatusBarItem(StatusBarAlignment.Left);
   }
-  statusItem.text = "$(file-directory) ";
+  statusItem.text = codicons.file_directory + " ";
   statusItem.tooltip = currentProjectPath;
 
   const openInNewWindow: boolean = workspace.getConfiguration("projectManager").get("openInNewWindowWhenClickingInStatusBar", false);
@@ -66,7 +67,7 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
 }
 
 export function updateStatusBar(oldName: string, oldPath: string, newName: string): void {
-  if (statusItem.text === "$(file-directory) " + oldName && statusItem.tooltip === oldPath) {
-      statusItem.text = "$(file-directory) " + newName;
+  if (statusItem.text === codicons.file_directory + " " + oldName && statusItem.tooltip === oldPath) {
+      statusItem.text = codicons.file_directory + " " + newName;
   }
 }
