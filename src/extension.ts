@@ -472,7 +472,7 @@ export function activate(context: vscode.ExtensionContext) {
         projectStorage.pop(node.command.arguments[1]);
         projectStorage.save();
         vscode.window.showInformationMessage("Project successfully deleted!");
-    };
+    }
 
     function renameProject(node: any) {
         const oldName: string = node.command.arguments[1];
@@ -505,9 +505,9 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showErrorMessage("Project already exists!");
             }
         });
-    };
+    }
 
-    function toggleProjectEnabled(node: any, askForUndo: boolean = true) {
+    function toggleProjectEnabled(node: any, askForUndo = true) {
         const projectName: string = node.command.arguments[1];
         const enabled: boolean = projectStorage.toggleEnabled(projectName);
         
@@ -535,5 +535,5 @@ export function activate(context: vscode.ExtensionContext) {
             });
         }
             
-    };
+    }
 }

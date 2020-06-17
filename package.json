@@ -524,17 +524,27 @@
 			}
 		]
 	},
+	"eslintConfig": {
+		"extends": [
+			"vscode-ext"
+		]
+	},
 	"scripts": {
 		"build": "webpack --mode development",
 		"watch": "webpack --watch --mode development --info-verbosity verbose",
 		"vscode:prepublish": "webpack --mode production",
 		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch",
-		"compile": "tsc -watch -p ./"
+		"compile": "tsc -watch -p ./",
+		"lint": "eslint -c package.json --ext .ts src vscode-project-manager-core vscode-whats-new"
 	},
 	"devDependencies": {
 		"@types/node": "^10.14.17",
 		"@types/vscode": "^1.45.0",
+		"@typescript-eslint/eslint-plugin": "^3.3.0",
+		"@typescript-eslint/parser": "^3.3.0",
+		"eslint": "^7.2.0",
+		"eslint-config-vscode-ext": "^1.0.0",
 		"terser-webpack-plugin": "^1.2.1",
 		"ts-loader": "^4.4.2",
 		"typescript": "^3.5.1",
