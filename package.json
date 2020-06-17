@@ -552,6 +552,7 @@
 		"webpack-cli": "^3.3.11"
 	},
 	"dependencies": {
+		"vscode-ext-codicons": "^1.0.1",
 		"walker": "^1.0.7"
 	}
 }
