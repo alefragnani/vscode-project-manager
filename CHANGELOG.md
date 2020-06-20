@@ -1,3 +1,16 @@
+## [11.1.0] - 2020-06-19
+### Changed
+- Internal commands can't be customisable (issue [#388](https://github.com/alefragnani/vscode-project-manager/issues/388))
+
+### Fixed
+- Status bar not working on remotes (issue [#379](https://github.com/alefragnani/vscode-project-manager/issues/379))
+- `Command Palette` showing ”Path does not exists” for remote projects (issue [#380](https://github.com/alefragnani/vscode-project-manager/issues/380))
+- `Open Folder` command in Welcome view not working on Windows (issue [#387](https://github.com/alefragnani/vscode-project-manager/issues/387))
+
+### Internal
+- Migrate from TSLint to ESLint (issue [#360](https://github.com/alefragnani/vscode-project-manager/issues/360))
+- Use `vscode-ext-codicons` package (issue [#386](https://github.com/alefragnani/vscode-project-manager/issues/386))
+
 ## [11.0.1] - 2020-05-19
 ### Fixed
 - Path does not exists for SSH remote project (issue [#375](https://github.com/alefragnani/vscode-project-manager/issues/375))

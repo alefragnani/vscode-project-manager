@@ -20,6 +20,56 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.1.0", releaseDate: "June 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.CHANGED,
+            detail: {
+                message: "Internal commands can't be customisable",
+                id: 388,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Status bar not working on remotes",
+                id: 379,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "<b>Command Palette</b> showing ”Path does not exists” for remote projects",
+                id: 380,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "<b>Open Folder</b> command in Welcome view not working on Windows",
+                id: 387,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.INTERNAL,
+            detail: {
+                message: "Migrate from TSLint to ESLint",
+                id: 360,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.INTERNAL,
+            detail: {
+                message: "Use <b>vscode-ext-codicons</b> package",
+                id: 386,
+                kind: IssueKind.Issue
+            }
+        });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.0.1", releaseDate: "May 2020" } });
         changeLog.push({
             kind: ChangeLogKind.FIXED,
@@ -115,7 +165,7 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
             }
         });
 
-        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.11.0", releaseDate: "March 2020" } });
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "10.11.0", releaseDate: "March 2020" } });
         changeLog.push({
             kind: ChangeLogKind.NEW,
             detail: {
