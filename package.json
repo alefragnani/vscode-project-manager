@@ -214,7 +214,7 @@
 			},
 			{
 				"command": "_projectManager.openFolderWelcome",
-				"title": "%projectManager.commands._openFolderWelcome.title%"
+				"title": "%projectManager.commands.openFolderWelcome.title%"
 			}
 		],
 		"menus": {

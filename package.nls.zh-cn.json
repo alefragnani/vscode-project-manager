@@ -20,6 +20,7 @@
     "projectManager.commands.toggleProjectEnabled.title": "禁用项目",
     "projectManager.commands.hideGitWelcome.title": "隐藏Git欢迎面板",
     "projectManager.commands.showGitWelcome.title": "显示Git欢迎面板",
+    "projectManager.commands.openFolderWelcome.title": "打开文件夹",
     "projectManager.commands.whatsNew.title": "Project Manager: 更新日志",
     "projectManager.commands.whatsNewContextMenu.title": "更新日志",
     "projectManager.configuration.title": "Project Manager",
