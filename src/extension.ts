@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
     const hideGitWelcome = context.globalState.get<boolean>("hideGitWelcome", false);
     vscode.commands.executeCommand("setContext", "projectManager.hiddenGitWelcome", hideGitWelcome);
 
-    vscode.commands.registerCommand("projectManager.open", (node: string | any) => {
+    vscode.commands.registerCommand("_projectManager.open", (node: string | any) => {
         const uri = typeof node === "string" 
                     ? buildProjectUri(node)
                     : buildProjectUri(node.command.arguments[0]);
@@ -70,7 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
             value => ({}),  // done
             value => vscode.window.showInformationMessage("Could not open the project!"));
     });
-    vscode.commands.registerCommand("projectManager.openInNewWindow", node => {
+    vscode.commands.registerCommand("_projectManager.openInNewWindow", node => {
         const uri = buildProjectUri(node.command.arguments[0]);
         const openInNewWindow = shouldOpenInNewWindow(true, CommandLocation.SideBar);
         vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
@@ -90,10 +90,10 @@ export function activate(context: vscode.ExtensionContext) {
     // new commands (ActivityBar)
     vscode.commands.registerCommand("projectManager.addToWorkspace#sideBar", (node) => addProjectToWorkspace(node));
     vscode.commands.registerCommand("projectManager.addToWorkspace", () => addProjectToWorkspace(undefined));
-    vscode.commands.registerCommand("projectManager.deleteProject", (node) => deleteProject(node));
-    vscode.commands.registerCommand("projectManager.renameProject", (node) => renameProject(node));
+    vscode.commands.registerCommand("_projectManager.deleteProject", (node) => deleteProject(node));
+    vscode.commands.registerCommand("_projectManager.renameProject", (node) => renameProject(node));
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
-    vscode.commands.registerCommand("projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
+    vscode.commands.registerCommand("_projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
 
     loadProjectsFile();
 

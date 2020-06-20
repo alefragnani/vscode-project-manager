@@ -13,5 +13,5 @@ export function registerWhatsNew() {
     const viewer = new WhatsNewManager(Container.context).registerContentProvider("project-manager", provider);
     viewer.showPageInActivation();
     Container.context.subscriptions.push(commands.registerCommand("projectManager.whatsNew", () => viewer.showPage()));
-    Container.context.subscriptions.push(commands.registerCommand("projectManager.whatsNewContextMenu", () => viewer.showPage()));
+    Container.context.subscriptions.push(commands.registerCommand("_projectManager.whatsNewContextMenu", () => viewer.showPage()));
 }

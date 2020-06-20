@@ -164,11 +164,11 @@
 				"icon": "$(refresh)"
 			},
 			{
-				"command": "projectManager.open",
+				"command": "_projectManager.open",
 				"title": "%projectManager.commands.open.title%"
 			},
 			{
-				"command": "projectManager.openInNewWindow",
+				"command": "_projectManager.openInNewWindow",
 				"title": "%projectManager.commands.openInNewWindow.title%",
 				"icon": "$(link-external)"
 			},
@@ -181,11 +181,11 @@
 				"title": "%projectManager.commands.addToWorkspace.title%"
 			},
 			{
-				"command": "projectManager.deleteProject",
+				"command": "_projectManager.deleteProject",
 				"title": "%projectManager.commands.deleteProject.title%"
 			},
 			{
-				"command": "projectManager.renameProject",
+				"command": "_projectManager.renameProject",
 				"title": "%projectManager.commands.renameProject.title%"
 			},
 			{
@@ -193,7 +193,7 @@
 				"title": "%projectManager.commands.whatsNew.title%"
 			},
 			{
-				"command": "projectManager.whatsNewContextMenu",
+				"command": "_projectManager.whatsNewContextMenu",
 				"title": "%projectManager.commands.whatsNewContextMenu.title%"
 			},
 			{
@@ -201,7 +201,7 @@
 				"title": "%projectManager.commands.addToFavorites.title%"
 			},
 			{
-				"command": "projectManager.toggleProjectEnabled",
+				"command": "_projectManager.toggleProjectEnabled",
 				"title": "%projectManager.commands.toggleProjectEnabled.title%"
 			},
 			{
@@ -220,11 +220,11 @@
 		"menus": {
 			"commandPalette": [
 				{
-					"command": "projectManager.open",
+					"command": "_projectManager.open",
 					"when": "false"
 				},
 				{
-					"command": "projectManager.openInNewWindow",
+					"command": "_projectManager.openInNewWindow",
 					"when": "false"
 				},
 				{
@@ -232,15 +232,15 @@
 					"when": "false"
 				},
 				{
-					"command": "projectManager.deleteProject",
+					"command": "_projectManager.deleteProject",
 					"when": "false"
 				},
 				{
-					"command": "projectManager.renameProject",
+					"command": "_projectManager.renameProject",
 					"when": "false"
 				},
 				{
-					"command": "projectManager.whatsNewContextMenu",
+					"command": "_projectManager.whatsNewContextMenu",
 					"when": "false"
 				},
 				{
@@ -300,17 +300,17 @@
 			],
 			"view/item/context": [
 				{
-					"command": "projectManager.open",
+					"command": "_projectManager.open",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "navigation"
 				},
 				{
-					"command": "projectManager.openInNewWindow",
+					"command": "_projectManager.openInNewWindow",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "navigation"
 				},
 				{
-					"command": "projectManager.openInNewWindow",
+					"command": "_projectManager.openInNewWindow",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "inline"
 				},
@@ -325,24 +325,24 @@
 					"group": "favorites"
 				},
 				{
-					"command": "projectManager.deleteProject",
+					"command": "_projectManager.deleteProject",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},
 				{
-					"command": "projectManager.renameProject",
+					"command": "_projectManager.renameProject",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},
 				{
-					"command": "projectManager.toggleProjectEnabled",
+					"command": "_projectManager.toggleProjectEnabled",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				}
 			],
 			"extension/context": [
 				{
-					"command": "projectManager.whatsNewContextMenu",
+					"command": "_projectManager.whatsNewContextMenu",
 					"group": "projectManager",
 					"when": "extension == alefragnani.project-manager && extensionStatus == installed"
 				}
