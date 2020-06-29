@@ -11,7 +11,7 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideHeader(logoUrl: string): Header {
         return <Header> {logo: <Image> {src: logoUrl, height: 50, width: 50}, 
             message: `<b>Project Manager</b> helps you to easily access your <b>projects</b>,
-            no matter where they are located. <i>Don't miss that important projects anymore</i>.
+            no matter where they are located. <i>Don't miss those important projects anymore</i>.
             <br><br>You can define your own <b>Projects</b> (also called <b>Favorites</b>), or choose 
             for auto-detect <b>Git</b>, <b>Mercurial</b> or <b>SVN</b> repositories, <b>VSCode</b> 
             folders or <b>any</b> other folder.`};
