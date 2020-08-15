@@ -4,6 +4,7 @@
 	"recommendations": [
 		// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
 		"alefragnani.Bookmarks",
-		"ms-vscode.vscode-typescript-tslint-plugin"
+		"dbaeumer.vscode-eslint",
+		"eamodio.tsl-problem-matcher",
 	]
 }
