@@ -1,3 +1,9 @@
+## [11.1.1] - 2020-08-??
+### Fixed
+- maxDepthRecursion worried about extra trailing path separator (issue [#404](https://github.com/alefragnani/vscode-project-manager/issues/404))
+- Localization - Simplified Chinese (Thanks to @loniceras [PR #403](https://github.com/alefragnani/vscode-project-manager/pull/403))
+- Typo in What's New (Thanks to @geauxtigers [PR #390](https://github.com/alefragnani/vscode-project-manager/pull/390))
+
 ## [11.1.0] - 2020-06-19
 ### Changed
 - Internal commands can't be customisable (issue [#388](https://github.com/alefragnani/vscode-project-manager/issues/388))

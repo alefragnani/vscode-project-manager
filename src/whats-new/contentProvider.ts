@@ -20,6 +20,34 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.1.1", releaseDate: "August 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "maxDepthRecursion worried about extra trailing path separator",
+                id: 404,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Localization - Simplified Chinese",
+                id: 403,
+                kind: IssueKind.PR,
+                kudos: "@loniceras"
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Typo in What's New",
+                id: 390,
+                kind: IssueKind.PR,
+                kudos: "@geauxtigers"
+            }
+        });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.1.0", releaseDate: "June 2020" } });
         changeLog.push({
             kind: ChangeLogKind.CHANGED,
