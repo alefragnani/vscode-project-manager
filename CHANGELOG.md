@@ -1,6 +1,7 @@
 ## [11.2.0] - 2020-08-??
 ### Added
 - Support string array in Settings UI (issue [#410](https://github.com/alefragnani/vscode-project-manager/issues/410))
+- Use new remote codicon (issue [#396](https://github.com/alefragnani/vscode-project-manager/issues/396))
 
 ### Fixed
 - maxDepthRecursion worried about extra trailing path separator (issue [#404](https://github.com/alefragnani/vscode-project-manager/issues/404))

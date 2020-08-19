@@ -30,6 +30,14 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
             }
         });
         changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Use new <b>remote</b> codicon",
+                id: 396,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
             kind: ChangeLogKind.FIXED,
             detail: {
                 message: "maxDepthRecursion worried about extra trailing path separator",
