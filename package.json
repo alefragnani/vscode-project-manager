@@ -387,6 +387,9 @@
 				"projectManager.vscode.baseFolders": {
 					"type": "array",
 					"default": [],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.vscode.baseFolders.description%"
 				},
 				"projectManager.vscode.ignoredFolders": {
@@ -397,6 +400,9 @@
 						"typings",
 						"test"
 					],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.vscode.ignoredFolders.description%"
 				},
 				"projectManager.vscode.maxDepthRecursion": {
@@ -407,6 +413,9 @@
 				"projectManager.git.baseFolders": {
 					"type": "array",
 					"default": [],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.git.baseFolders.description%"
 				},
 				"projectManager.git.ignoredFolders": {
@@ -418,6 +427,9 @@
 						"test",
 						".haxelib"
 					],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.git.ignoredFolders.description%"
 				},
 				"projectManager.git.maxDepthRecursion": {
@@ -428,6 +440,9 @@
 				"projectManager.hg.baseFolders": {
 					"type": "array",
 					"default": [],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.hg.baseFolders.description%"
 				},
 				"projectManager.hg.ignoredFolders": {
@@ -439,6 +454,9 @@
 						"test",
 						".haxelib"
 					],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.hg.ignoredFolders.description%"
 				},
 				"projectManager.hg.maxDepthRecursion": {
@@ -449,6 +467,9 @@
 				"projectManager.svn.baseFolders": {
 					"type": "array",
 					"default": [],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.svn.baseFolders.description%"
 				},
 				"projectManager.svn.ignoredFolders": {
@@ -459,6 +480,9 @@
 						"typings",
 						"test"
 					],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.svn.ignoredFolders.description%"
 				},
 				"projectManager.svn.maxDepthRecursion": {
@@ -469,6 +493,9 @@
 				"projectManager.any.baseFolders": {
 					"type": "array",
 					"default": [],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.any.baseFolders.description%"
 				},
 				"projectManager.any.ignoredFolders": {
@@ -479,6 +506,9 @@
 						"typings",
 						"test"
 					],
+					"items": {
+						"type": "string"						
+					},
 					"description": "%projectManager.configuration.any.ignoredFolders.description%"
 				},
 				"projectManager.any.maxDepthRecursion": {
