@@ -1,4 +1,7 @@
-## [11.1.1] - 2020-08-??
+## [11.2.0] - 2020-08-??
+### Added
+- Support string array in Settings UI (issue [#410](https://github.com/alefragnani/vscode-project-manager/issues/410))
+
 ### Fixed
 - maxDepthRecursion worried about extra trailing path separator (issue [#404](https://github.com/alefragnani/vscode-project-manager/issues/404))
 - Localization - Simplified Chinese (Thanks to @loniceras [PR #403](https://github.com/alefragnani/vscode-project-manager/pull/403))

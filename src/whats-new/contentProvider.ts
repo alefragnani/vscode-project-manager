@@ -20,7 +20,15 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
-        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.1.1", releaseDate: "August 2020" } });
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.2.0", releaseDate: "August 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support string array in Settings UI",
+                id: 410,
+                kind: IssueKind.Issue
+            }
+        });
         changeLog.push({
             kind: ChangeLogKind.FIXED,
             detail: {
