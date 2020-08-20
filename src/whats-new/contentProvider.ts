@@ -40,6 +40,14 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         changeLog.push({
             kind: ChangeLogKind.FIXED,
             detail: {
+                message: "Weird icon behaviour when no ThemeIcon is selected",
+                id: 392,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
                 message: "maxDepthRecursion worried about extra trailing path separator",
                 id: 404,
                 kind: IssueKind.Issue

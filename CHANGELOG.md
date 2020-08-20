@@ -1,9 +1,10 @@
-## [11.2.0] - 2020-08-??
+## [11.2.0] - 2020-08-19
 ### Added
 - Support string array in Settings UI (issue [#410](https://github.com/alefragnani/vscode-project-manager/issues/410))
 - Use new remote codicon (issue [#396](https://github.com/alefragnani/vscode-project-manager/issues/396))
 
 ### Fixed
+- Weird icon behaviour when no ThemeIcon is selected (issue [#392](https://github.com/alefragnani/vscode-project-manager/issues/392))
 - maxDepthRecursion worried about extra trailing path separator (issue [#404](https://github.com/alefragnani/vscode-project-manager/issues/404))
 - Localization - Simplified Chinese (Thanks to @loniceras [PR #403](https://github.com/alefragnani/vscode-project-manager/pull/403))
 - Typo in What's New (Thanks to @geauxtigers [PR #390](https://github.com/alefragnani/vscode-project-manager/pull/390))
