@@ -112,6 +112,10 @@ export function activate(context: vscode.ExtensionContext) {
             cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
             refreshProjects();
         }
+
+        if (cfg.affectsConfiguration("workbench.iconTheme")) {
+            providerManager.refreshTreeViews()
+        }
     }));
 
     showStatusBar(projectStorage, locators);
