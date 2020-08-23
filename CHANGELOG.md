@@ -1,3 +1,7 @@
+## [11.3.0] - 2020-??-??
+### Added
+- Localization - Czech (Thanks to @Amereyeu [PR #412](https://github.com/alefragnani/vscode-project-manager/pull/412))
+
 ## [11.2.0] - 2020-08-19
 ### Added
 - Support string array in Settings UI (issue [#410](https://github.com/alefragnani/vscode-project-manager/issues/410))

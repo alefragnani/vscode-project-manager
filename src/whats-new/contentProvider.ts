@@ -20,6 +20,17 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.3.0", releaseDate: "??? 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Czech - Simplified Chinese",
+                id: 412,
+                kind: IssueKind.PR,
+                kudos: "@Amereyeu"
+            }
+        });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.2.0", releaseDate: "August 2020" } });
         changeLog.push({
             kind: ChangeLogKind.NEW,
