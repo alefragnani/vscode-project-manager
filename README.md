@@ -203,9 +203,12 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
         "out", 
         "typings", 
         "test"
+        "fork*"
     ],
 ```
-> Define which folders should be ignored (inside the BaseFolders)
+> Define which folders should be ignored (inside the BaseFolders).
+
+> It supports `glob` patterns
 
 ```json
     "projectManager.git.maxDepthRecursion": 4
