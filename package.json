@@ -586,6 +586,7 @@
 		"webpack-cli": "^3.3.11"
 	},
 	"dependencies": {
+		"minimatch": "^3.0.4",
 		"vscode-ext-codicons": "^1.1.0",
 		"walker": "^1.0.7"
 	}

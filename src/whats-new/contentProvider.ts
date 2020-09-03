@@ -20,7 +20,15 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
-        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.3.0", releaseDate: "??? 2020" } });
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.3.0", releaseDate: "September 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support <b>glob</> patterns in <b>ignoredFolders</b> settings",
+                id: 278,
+                kind: IssueKind.Issue
+            }
+        });
         changeLog.push({
             kind: ChangeLogKind.NEW,
             detail: {

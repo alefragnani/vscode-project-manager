@@ -1,5 +1,6 @@
-## [11.3.0] - 2020-??-??
+## [11.3.0] - 2020-09-??
 ### Added
+- Support `glob` patterns in `ignoredFolders` settings (issue [#278](https://github.com/alefragnani/vscode-project-manager/issues/278))
 - Localization - Czech (Thanks to @Amereyeu [PR #412](https://github.com/alefragnani/vscode-project-manager/pull/412))
 
 ## [11.2.0] - 2020-08-19
