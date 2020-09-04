@@ -351,7 +351,7 @@ export function activate(context: vscode.ExtensionContext) {
         let projectFile: string;
         const projectsLocation: string = vscode.workspace.getConfiguration("projectManager").get<string>("projectsLocation");
         if (projectsLocation !== "") {
-            projectFile = path.join(projectsLocation, PROJECTS_FILE);
+            projectFile = path.join(PathUtils.expandHomePath(projectsLocation), PROJECTS_FILE);
         } else {
             projectFile = PathUtils.getFilePathFromAppData(PROJECTS_FILE);
         }
