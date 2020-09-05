@@ -1,5 +1,7 @@
 ## [11.3.0] - 2020-09-??
 ### Added
+- Support `$home` and `~` (tilde) symbol on `projectLocation` setting (issue [#384](https://github.com/alefragnani/vscode-project-manager/issues/384))
+- Support `~` (tilde) symbol on any path related setting (issue [#414](https://github.com/alefragnani/vscode-project-manager/issues/414))
 - Support `glob` patterns in `ignoredFolders` settings (issue [#278](https://github.com/alefragnani/vscode-project-manager/issues/278))
 - Localization - Czech (Thanks to @Amereyeu [PR #412](https://github.com/alefragnani/vscode-project-manager/pull/412))
 

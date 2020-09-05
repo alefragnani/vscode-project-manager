@@ -24,7 +24,23 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         changeLog.push({
             kind: ChangeLogKind.NEW,
             detail: {
-                message: "Support <b>glob</> patterns in <b>ignoredFolders</b> settings",
+                message: "Support <b>$home</b> and <b>\"~\" (tilde)</b> symbol on projectLocation setting",
+                id: 384,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support <b>~</b> (tilde) symbol on any path related setting",
+                id: 414,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support <b>glob</b> patterns in <b>ignoredFolders</b> settings",
                 id: 278,
                 kind: IssueKind.Issue
             }

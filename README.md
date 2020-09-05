@@ -98,7 +98,7 @@ For easier customization of your project list, you can edit the `projects.json` 
     },
     {
         "name": "Numbered Bookmarks",
-        "rootPath": "$home\\Documents\\GitHub\\vscode-numbered-bookmarks",
+        "rootPath": "~\\Documents\\GitHub\\vscode-numbered-bookmarks",
         "paths": [],
         "group": "",
         "enabled": false
@@ -107,7 +107,8 @@ For easier customization of your project list, you can edit the `projects.json` 
 ```
 
 For now, only `name`, `rootPath`, and `enabled` fields are used.
-> Use a special variable called `$home` while defining any `path`. It will be replaced by the HOME folder.
+
+> You can use `~` or `$home` while defining any path. It will be replaced by your HOME folder.
 
 > Projects that are *not* `enabled` will be hidden from project listings until re-enabled.
 
@@ -185,6 +186,8 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 ```json
     "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
+
+> You can use `~` or `$home` while defining the path. It will be replaced by your HOME folder.
 
 * Automatic Detection of Projects (**Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png), **SVN** ![svn](images/ico_svn.png) and **VSCode** ![vscode](images/ico_file_code.png))
 
