@@ -1,4 +1,4 @@
-## [11.3.0] - 2020-09-??
+## [11.3.0] - 2020-09-06
 ### Added
 - Support `$home` and `~` (tilde) symbol on `projectLocation` setting (issue [#384](https://github.com/alefragnani/vscode-project-manager/issues/384))
 - Support `~` (tilde) symbol on any path related setting (issue [#414](https://github.com/alefragnani/vscode-project-manager/issues/414))
