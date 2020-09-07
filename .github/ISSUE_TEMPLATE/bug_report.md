@@ -13,8 +13,8 @@ assignees: ''
 **Environment/version**
 
 - Extension version:
-- OS version: 
 - VSCode version: 
+- OS version: 
 
 **Steps to reproduce**
 
