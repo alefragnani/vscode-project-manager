@@ -284,15 +284,16 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideSponsors(): Sponsor[] {
         const sponsors: Sponsor[] = [];
         const sponsorCodeStream: Sponsor = <Sponsor> {
-            title: "Try Codestream",
+            title: "Learn more about CodeStream",
             link: "https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner",
             image: "https://alt-images.codestream.com/codestream_logo_projectmanager.png",
             width: 35,
-            message: `<p>Discussing code is now as easy as highlighting a block and typing a comment right 
-                      from your IDE. Take the pain out of code reviews and improve code quality.</p>`,
+            message: `<p>Eliminate context switching and costly distractions. 
+                Create and merge PRs and perform code reviews from inside your 
+                IDE while using jump-to-definition, your keybindings, and other IDE favorites.</p>`,
             extra: 
-                `<a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner">
-                 Try it free</a>` 
+                `<a title="Learn more about CodeStream" href="https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner">
+                 Learn more</a>` 
         };
         sponsors.push(sponsorCodeStream);
         return sponsors
