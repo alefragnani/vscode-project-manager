@@ -1,3 +1,7 @@
+## [11.3.1] - 2020-10-16
+### Internal
+- Update CodeStream sponsorship details
+
 ## [11.3.0] - 2020-09-06
 ### Added
 - Support `$home` and `~` (tilde) symbol on `projectLocation` setting (issue [#384](https://github.com/alefragnani/vscode-project-manager/issues/384))
