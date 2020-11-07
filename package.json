@@ -92,6 +92,11 @@
 					"id": "projectsExplorerVSCode",
 					"name": "VSCode",
 					"when": "projectManager.canShowTreeViewVSCode"
+				},
+				{
+					"id": "projectManagerHelpAndFeedback",
+					"name": "Help and Feedback",
+					"visibility": "collapsed"
 				}
 			]
 		},
@@ -211,6 +216,10 @@
 			{
 				"command": "_projectManager.openFolderWelcome",
 				"title": "%projectManager.commands.openFolderWelcome.title%"
+			},
+			{
+				"command": "projectManager.supportProjectManager",
+				"title": "%projectManager.commands.supportProjectManager.title%"
 			}
 		],
 		"menus": {
