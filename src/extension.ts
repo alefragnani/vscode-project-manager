@@ -21,6 +21,8 @@ import { isRemotePath, isWindows } from "../vscode-project-manager-core/src/util
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
 import { Container } from "../vscode-project-manager-core/src/container";
 import { registerWhatsNew } from "./whats-new/commands";
+import { registerSupportProjectManager } from "./commands/supportProjectManager";
+import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -41,6 +43,9 @@ export function activate(context: vscode.ExtensionContext) {
     const locators: Locators = new Locators(aStack);
     const providerManager: Providers = new Providers(context, locators, projectStorage);
     locators.setProviderManager(providerManager);
+
+    registerSupportProjectManager();
+    registerHelpAndFeedbackView(context);
 
     registerWhatsNew();
 

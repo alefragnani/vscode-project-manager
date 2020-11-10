@@ -21,6 +21,7 @@
     "projectManager.commands.hideGitWelcome.title": "Скрыть панель приветствия Git",
     "projectManager.commands.showGitWelcome.title": "Показать панель приветствия Git",
     "projectManager.commands.openFolderWelcome.title": "Открыть папку",
+    "projectManager.commands.supportProjectManager.title": "Менеджер проекта: Менеджер проекта поддержки",
     "projectManager.commands.whatsNew.title": "Менеджер проектов: Что нового",
     "projectManager.commands.whatsNewContextMenu.title": "Что нового",
     "projectManager.configuration.title": "Менеджер проектов",

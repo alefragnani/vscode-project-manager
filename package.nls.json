@@ -21,6 +21,7 @@
     "projectManager.commands.hideGitWelcome.title": "Hide Git Welcome Panel",
     "projectManager.commands.showGitWelcome.title": "Show Git Welcome Panel",
     "projectManager.commands.openFolderWelcome.title": "Open Folder",
+    "projectManager.commands.supportProjectManager.title": "Project Manager: Support Project Manager",
     "projectManager.commands.whatsNew.title": "Project Manager: What's New",
     "projectManager.commands.whatsNewContextMenu.title": "What's New",
     "projectManager.configuration.title": "Project Manager",
