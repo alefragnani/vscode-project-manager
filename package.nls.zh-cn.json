@@ -46,6 +46,7 @@
     "projectManager.configuration.any.ignoredFolders.description": "指定要忽略的文件夹，例如 \"node_modules\"、\"out\"、\"typings\"、\"test\"。",
     "projectManager.configuration.any.maxDepthRecursion.description": "指定搜索项目的文件夹递归的最大深度。小于 1 的任何值表示没有限制。",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "是否应该缓存找到的 VSCode、Git 和 SVN 项目？",
+    "projectManager.configuration.ignoreProjectsWithinProjects.description": "应该忽略其他项目中找到的项目吗？",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "列出之前是否应该检查无效路径，并在项目名称下方显示一条消息？",
     "projectManager.configuration.filterOnFullPath.description": "是否应该通过完整路径过滤项目？",
     "projectManager.configuration.openInCurrenWindowIfEmpty.description": "当本窗口为空时，执行在新窗口中打开项目的命令后是否应该打开新窗口？"
