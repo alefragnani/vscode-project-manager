@@ -521,6 +521,11 @@
 					"default": true,
 					"description": "%projectManager.configuration.cacheProjectsBetweenSessions.description%"
 				},
+				"projectManager.ignoreProjectsWithinProjects": {
+					"type": "boolean",
+					"default": false,
+					"description": "%projectManager.configuration.ignoreProjectsWithinProjects.description%"
+				},
 				"projectManager.checkInvalidPathsBeforeListing": {
 					"type": "boolean",
 					"default": true,

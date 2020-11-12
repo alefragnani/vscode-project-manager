@@ -109,6 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (cfg.affectsConfiguration("projectManager.git") || cfg.affectsConfiguration("projectManager.hg") ||
             cfg.affectsConfiguration("projectManager.vscode") || cfg.affectsConfiguration("projectManager.svn") || 
             cfg.affectsConfiguration("projectManager.any") || 
+            cfg.affectsConfiguration("projectManager.ignoreProjectsWithinProjects") || 
             cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
             refreshProjects();
         }

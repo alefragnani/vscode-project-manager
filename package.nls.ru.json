@@ -46,6 +46,7 @@
     "projectManager.configuration.any.ignoredFolders.description": "Укажите папки которые следует игнорировать, например \"node_modules\", \"out\", \"typings\", \"test\"",
     "projectManager.configuration.any.maxDepthRecursion.description": "Укажите максимальную глубину вложенности папок для поиска проектов. Любое значение ниже 1 означает отсутствие ограничений",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Нужно ли кэшировать VSCode, Git и SVN найденные проекты?",
+    "projectManager.configuration.ignoreProjectsWithinProjects.description": "Следует игнорировать проекты, найденные внутри других проектов?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Следует ли проверять наличие недопустимых путей перед выводом списка, показывая сообщение под именем проекта?",
     "projectManager.configuration.filterOnFullPath.description": "Следует ли фильтровать проекты по полному пути?"
 }

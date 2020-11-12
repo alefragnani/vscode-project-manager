@@ -46,6 +46,7 @@
     "projectManager.configuration.any.ignoredFolders.description": "Indica pastas a serem ignoradas, como \"node_modules\", \"out\", \"typings\", \"test\"",
     "projectManager.configuration.any.maxDepthRecursion.description": "Indica a profundidade máxima de pastas recursivas na procura por projetos. Qualquer valor abaixo de 1 significa sem limites",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Controla se deve armazenar em cache os projetos VSCode, Git e SVN encontrados",
+    "projectManager.configuration.ignoreProjectsWithinProjects.description": "Controla se deve ignorar projetos localizados dentro de outros projetos",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Controla se deve verificar por pastas inválidas antes de listá-las, apresentando uma mensagem abaixo do nome do projeto",
     "projectManager.configuration.filterOnFullPath.description": "Controla se deve filtrar projetos pelo caminho completo"
 }
