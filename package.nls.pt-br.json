@@ -21,6 +21,7 @@
     "projectManager.commands.hideGitWelcome.title": "Esconder Painel de Boas Vindas Git",
     "projectManager.commands.showGitWelcome.title": "Exibir Painel de Boas Vindas Git",
     "projectManager.commands.openFolderWelcome.title": "Abrir Pasta",
+    "projectManager.commands.supportProjectManager.title": "Project Manager: Suporte Project Manager",
     "projectManager.commands.whatsNew.title": "Project Manager: Novidades",
     "projectManager.commands.whatsNewContextMenu.title": "Novidades",
     "projectManager.configuration.title": "Project Manager",

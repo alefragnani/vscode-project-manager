@@ -21,6 +21,7 @@
     "projectManager.commands.hideGitWelcome.title": "隐藏 Git 欢迎面板",
     "projectManager.commands.showGitWelcome.title": "显示 Git 欢迎面板",
     "projectManager.commands.openFolderWelcome.title": "打开文件夹",
+    "projectManager.commands.supportProjectManager.title": "项目经理：支持项目经理",
     "projectManager.commands.whatsNew.title": "项目管理器: 更新日志",
     "projectManager.commands.whatsNewContextMenu.title": "更新日志",
     "projectManager.configuration.title": "项目管理器",

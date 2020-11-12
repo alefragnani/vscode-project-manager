@@ -21,6 +21,7 @@
   "projectManager.commands.hideGitWelcome.title": "Skrýt uvítací panel Git",
   "projectManager.commands.showGitWelcome.title": "Zobrazit uvítací panel Git",
   "projectManager.commands.openFolderWelcome.title": "Otevřít složku",
+  "projectManager.commands.supportProjectManager.title": "Projektový manažer: Podpora projektového manažera",
   "projectManager.commands.whatsNew.title": "Projektový manažer: Co je nového",
   "projectManager.commands.whatsNewContextMenu.title": "Co je nového",
   "projectManager.configuration.title": "Projektový manažer",
