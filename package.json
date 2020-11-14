@@ -165,6 +165,30 @@
 				"icon": "$(refresh)"
 			},
 			{
+				"command": "projectManager.openSettings#sideBarFavorites",
+				"title": "%projectManager.commands.openSettings#sideBarFavorites.title%"
+			},
+			{
+				"command": "projectManager.openSettings#sideBarVSCode",
+				"title": "%projectManager.commands.openSettings#sideBarVSCode.title%"
+			},
+			{
+				"command": "projectManager.openSettings#sideBarGit",
+				"title": "%projectManager.commands.openSettings#sideBarGit.title%"
+			},
+			{
+				"command": "projectManager.openSettings#sideBarSVN",
+				"title": "%projectManager.commands.openSettings#sideBarSVN.title%"
+			},
+			{
+				"command": "projectManager.openSettings#sideBarAny",
+				"title": "%projectManager.commands.openSettings#sideBarAny.title%"
+			},
+			{
+				"command": "projectManager.openSettings#sideBarMercurial",
+				"title": "%projectManager.commands.openSettings#sideBarMercurial.title%"
+			},
+			{
 				"command": "_projectManager.open",
 				"title": "%projectManager.commands.open.title%"
 			},
@@ -261,6 +285,30 @@
 					"when": "false"
 				},
 				{
+					"command": "projectManager.openSettings#sideBarFavorites",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarVSCode",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarSVN",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarGit",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarAny",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarMercurial",
+					"when": "false"
+				},
+				{
 					"command": "_projectManager.whatsNewContextMenu",
 					"when": "false"
 				},
@@ -289,6 +337,11 @@
 					"group": "navigation@11"
 				},
 				{
+					"command": "projectManager.openSettings#sideBarFavorites",
+					"when": "view == projectsExplorerFavorites",
+					"group": "2_projectManager"
+				},
+				{
 					"command": "projectManager.showGitWelcome",
 					"when": "view == projectsExplorerFavorites && projectManager.hiddenGitWelcome",
 					"group": "2_projectManager"
@@ -299,9 +352,19 @@
 					"group": "navigation"
 				},
 				{
+					"command": "projectManager.openSettings#sideBarVSCode",
+					"when": "view == projectsExplorerVSCode",
+					"group": "2_projectManager"
+				},
+				{
 					"command": "projectManager.refreshGitProjects",
 					"when": "view == projectsExplorerGit",
 					"group": "navigation"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarGit",
+					"when": "view == projectsExplorerGit",
+					"group": "2_projectManager"
 				},
 				{
 					"command": "projectManager.refreshSVNProjects",
@@ -309,14 +372,29 @@
 					"group": "navigation"
 				},
 				{
+					"command": "projectManager.openSettings#sideBarSVN",
+					"when": "view == projectsExplorerSVN",
+					"group": "2_projectManager"
+				},
+				{
 					"command": "projectManager.refreshAnyProjects",
 					"when": "view == projectsExplorerAny",
 					"group": "navigation"
 				},
 				{
+					"command": "projectManager.openSettings#sideBarAny",
+					"when": "view == projectsExplorerAny",
+					"group": "2_projectManager"
+				},
+				{
 					"command": "projectManager.refreshMercurialProjects",
 					"when": "view == projectsExplorerMercurial",
 					"group": "navigation"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarMercurial",
+					"when": "view == projectsExplorerMercurial",
+					"group": "2_projectManager"
 				}
 			],
 			"view/item/context": [
