@@ -24,6 +24,7 @@ import { registerWhatsNew } from "./whats-new/commands";
 import { registerSupportProjectManager } from "./commands/supportProjectManager";
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
+import { registerOpenSettings } from "./commands/openSettings";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -46,6 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
     locators.setProviderManager(providerManager);
 
     registerRevealFileInOS();
+    registerOpenSettings();
     registerSupportProjectManager();
     registerHelpAndFeedbackView(context);
 
