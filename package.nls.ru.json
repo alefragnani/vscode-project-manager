@@ -12,6 +12,8 @@
     "projectManager.commands.refreshMercurialProjects.title": "Менеджер проектов: Обновить проекты Mercurial",
     "projectManager.commands.open.title": "Открыть",
     "projectManager.commands.openInNewWindow.title": "Открыть в новом окне",
+    "projectManager.commands.revealInFinder#sideBar.title": "Показать в Finder",
+    "projectManager.commands.revealInExplorer#sideBar.title": "Показать в Explorer",
     "projectManager.commands.addToWorkspace#sideBar.title": "Добавить в рабочую область",
     "projectManager.commands.addToWorkspace.title": "Менеджер проектов: Добавить проект в рабочую область",
     "projectManager.commands.deleteProject.title": "Удалить проект",

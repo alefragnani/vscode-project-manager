@@ -12,6 +12,8 @@
     "projectManager.commands.refreshMercurialProjects.title": "Project Manager: Atualizar Projetos Mercurial",
     "projectManager.commands.open.title": "Abrir",
     "projectManager.commands.openInNewWindow.title": "Abrir em uma Nova Janela",
+    "projectManager.commands.revealInFinder#sideBar.title": "Revelar no Finder",
+    "projectManager.commands.revealInExplorer#sideBar.title": "Revelar no Explorer",
     "projectManager.commands.addToWorkspace#sideBar.title": "Adicionar ao Espaço de Trabalho",
     "projectManager.commands.addToWorkspace.title": "Project Manager: Adicionar Projeto ao Espaço de Trabalho",
     "projectManager.commands.deleteProject.title": "Excluir Projeto",

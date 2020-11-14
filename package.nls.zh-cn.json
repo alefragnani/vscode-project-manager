@@ -12,6 +12,8 @@
     "projectManager.commands.refreshMercurialProjects.title": "项目管理器: 刷新 Mercurial 项目",
     "projectManager.commands.open.title": "打开",
     "projectManager.commands.openInNewWindow.title": "在新窗口中打开",
+    "projectManager.commands.revealInFinder#sideBar.title": "在Finder中显示",
+    "projectManager.commands.revealInExplorer#sideBar.title": "在资源管理器中显示",
     "projectManager.commands.addToWorkspace#sideBar.title": "添加到工作区",
     "projectManager.commands.addToWorkspace.title": "项目管理器: 将项目添加到工作区",
     "projectManager.commands.deleteProject.title": "删除项目",

@@ -23,6 +23,7 @@ import { Container } from "../vscode-project-manager-core/src/container";
 import { registerWhatsNew } from "./whats-new/commands";
 import { registerSupportProjectManager } from "./commands/supportProjectManager";
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
+import { registerRevealFileInOS } from "./commands/revealFileInOS";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -44,6 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
     const providerManager: Providers = new Providers(context, locators, projectStorage);
     locators.setProviderManager(providerManager);
 
+    registerRevealFileInOS();
     registerSupportProjectManager();
     registerHelpAndFeedbackView(context);
 
@@ -99,6 +101,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("_projectManager.renameProject", (node) => renameProject(node));
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
     vscode.commands.registerCommand("_projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
+
 
     loadProjectsFile();
 

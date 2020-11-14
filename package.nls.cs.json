@@ -12,6 +12,8 @@
   "projectManager.commands.refreshMercurialProjects.title": "Projektový manažer: aktualizovat Mercurial projekty",
   "projectManager.commands.open.title": "Otevřít",
   "projectManager.commands.openInNewWindow.title": "Otevřít v novém okně",
+  "projectManager.commands.revealInFinder#sideBar.title": "Odhalit ve vyhledávači",
+  "projectManager.commands.revealInExplorer#sideBar.title": "Odhalit v Průzkumníkovi",
   "projectManager.commands.addToWorkspace#sideBar.title": "Přidat do pracovního prostoru",
   "projectManager.commands.addToWorkspace.title": "Projektový manažer: přidat projekt do pracovního prostoru",
   "projectManager.commands.deleteProject.title": "Smazat projekt",
