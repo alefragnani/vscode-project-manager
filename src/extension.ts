@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
     const locators: Locators = new Locators(aStack);
-    const providerManager: Providers = new Providers(context, locators, projectStorage);
+    const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
 
     registerRevealFileInOS();
