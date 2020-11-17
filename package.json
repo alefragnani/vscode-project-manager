@@ -5,7 +5,7 @@
 	"version": "11.3.1",
 	"publisher": "alefragnani",
 	"engines": {
-		"vscode": "^1.45.0"
+		"vscode": "^1.50.0"
 	},
 	"categories": [
 		"Other"
@@ -207,7 +207,7 @@
 			},
 			{
 				"command": "_projectManager.revealInExplorer#sideBar",
-				"title": "%projectManager.commands.revealInExplorer#sideBar.title%"				
+				"title": "%projectManager.commands.revealInExplorer#sideBar.title%"
 			},
 			{
 				"command": "projectManager.addToWorkspace",
@@ -422,7 +422,7 @@
 					"command": "_projectManager.revealInExplorer#sideBar",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind && isWindows",
 					"group": "navigation@2"
-				},				
+				},
 				{
 					"command": "_projectManager.deleteProject",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
@@ -447,7 +447,7 @@
 					"command": "projectManager.addToFavorites",
 					"when": "view =~ /projectsExplorer(VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
 					"group": "workspace"
-				}				
+				}
 			],
 			"extension/context": [
 				{
@@ -697,7 +697,7 @@
 	"devDependencies": {
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^10.14.17",
-		"@types/vscode": "^1.45.0",
+		"@types/vscode": "^1.50.0",
 		"@typescript-eslint/eslint-plugin": "^3.3.0",
 		"@typescript-eslint/parser": "^3.3.0",
 		"eslint": "^7.2.0",
