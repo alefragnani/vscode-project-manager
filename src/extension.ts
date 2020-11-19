@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
     const locators: Locators = new Locators(aStack);
-    const providerManager: Providers = new Providers(context, locators, projectStorage);
+    const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
 
     registerRevealFileInOS();
@@ -113,6 +113,7 @@ export function activate(context: vscode.ExtensionContext) {
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
         providerManager.projectProviderStorage.refresh();
+        providerManager.updateTreeViewStorage();
     });
 
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
@@ -197,6 +198,7 @@ export function activate(context: vscode.ExtensionContext) {
                 if (option.title === "Yes, edit manually") {
                     projectStorage.push("Project Name", "Root Path", "");
                     projectStorage.save();
+                    providerManager.updateTreeViewStorage();
                     vscode.commands.executeCommand("projectManager.editProjects");
                 } else {
                     return;
@@ -244,6 +246,7 @@ export function activate(context: vscode.ExtensionContext) {
                 context.globalState.update("recent", aStack.toString());
                 projectStorage.push(projectName, rootPath, "");
                 projectStorage.save();
+                providerManager.updateTreeViewStorage();
                 vscode.window.showInformationMessage("Project saved!");
                 if (!node) {
                     showStatusBar(projectStorage, locators, projectName);
@@ -267,6 +270,7 @@ export function activate(context: vscode.ExtensionContext) {
                         context.globalState.update("recent", aStack.toString());
                         projectStorage.updateRootPath(projectName, rootPath);
                         projectStorage.save();
+                        providerManager.updateTreeViewStorage();
                         vscode.window.showInformationMessage("Project saved!");
                         if (!node) {
                             showStatusBar(projectStorage, locators, projectName);
@@ -490,6 +494,7 @@ export function activate(context: vscode.ExtensionContext) {
         aStack.pop(node.command.arguments[1]);
         projectStorage.pop(node.command.arguments[1]);
         projectStorage.save();
+        providerManager.updateTreeViewStorage();
         vscode.window.showInformationMessage("Project successfully deleted!");
     }
 
@@ -535,6 +540,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         projectStorage.save();
+        providerManager.updateTreeViewStorage();
 
         if (!askForUndo) {
             return;
