@@ -3,17 +3,13 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 11.3
+# What's new in Project Manager 12.0
 
-* Adds an all-new **Side Bar**
-* Support **Remote Development** support
-* Support open **Remote Projects** from local installation
-* Adds support to save **Workspaces** as Projects
-* Adds `Add Project to Workspace` command to **Command Palette**
-* Adds **Portable Mode** support
-* Adds `Disable Project`, `Add to Workspace`, `Add to Favorites` and `Refresh Project` commands in **Side Bar**
-* Adds `Open in New Window` hover command in **Side Bar**
-* Adds **Localization** support
+* Improved **Side Bar** usability
+* Full **Remote Development** support
+* Support for **˜** _(tilde)_ symbol on settings
+* Support for `glob` patterns
+* Improved **Localization** options
 
 # Support
 
@@ -48,8 +44,7 @@ You can define your own **Projects** (also called **Favorites**), or choose for 
 
 Here are some of the features that **Project Manager** provides:
 
-* Save any folder as a **Project**
-* Save any workspace as a **Project**
+* Save any folder or workspace as a **Project**
 * Auto-detect **Git**, **Mercurial** or **SVN** repositiories
 * Open projects in the same or new window
 * Identify _deleted/renamed_ projects
@@ -249,15 +244,9 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 ## Side Bar
 
-The **Projects** are now presented in its own **Side Bar**, giving you more free space in your Explorer view. You will have a few extra commands available:
+The **Project Manager** extension has its own **Side Bar**, with a variety of commands to improve you productivity. 
 
-* Open a project, simply clicking in the project item
-* Open a project in a New Window, right clicking in the project item, or using the hover button
-* Add a project to the current Workspace
-
-![Side Bar](images/vscode-project-manager-side-bar.gif)
-
-> If you don't want to see the **Project Manager** icon in the Activity Bar, right-click and uncheck it from the context menu. 
+![Side Bar](images/vscode-project-manager-side-bar.png)
 
 ## Installation and Configuration
 
