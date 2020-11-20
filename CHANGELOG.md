@@ -1,3 +1,13 @@
+## [12.0.0] - 2020-11-19
+### Added
+- `Open Settings` command to the Side Bar (issue [#434](https://github.com/alefragnani/vscode-project-manager/issues/434))
+- Concatenates the "Number of Projects" on each Panel in the Side Bar (issue [#267](https://github.com/alefragnani/vscode-project-manager/issues/267))
+- `Reveal in Finder/Explorer` command in the Side Bar's context menu (issue [#322](https://github.com/alefragnani/vscode-project-manager/issues/322))
+- Setting to decide if auto-detected projects should ignore projects found inside other projects (issue [#189](https://github.com/alefragnani/vscode-project-manager/issues/189))
+
+### Internal
+- Use `vscode-ext-help-and-feedback` package (issue [#432](https://github.com/alefragnani/vscode-project-manager/issues/432))
+
 ## [11.3.1] - 2020-10-16
 ### Internal
 - Update CodeStream sponsorship details

@@ -20,6 +20,48 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.0.0", releaseDate: "November 2020" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Adds <b>Open Settings</b> command to the Side Bar",
+                id: 434,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Concatenates the \"Number of Projects\" on each Panel in the Side Bar",
+                id: 267,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Adds <b>Reveal in Finder/Explorer</b> command in the Side Bar's context menu",
+                id: 322,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Adds setting to decide if auto-detected projects should ignore projects found inside other projects",
+                id: 189,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.INTERNAL,
+            detail: {
+                message: "Use <b>vscode-ext-help-and-feedback</b> package",
+                id: 432,
+                kind: IssueKind.Issue
+            }
+        });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.3.0", releaseDate: "September 2020" } });
         changeLog.push({
             kind: ChangeLogKind.NEW,
@@ -205,75 +247,6 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
             detail: {
                 message: "Remove <b>vscode</b> module dependency",
                 id: 369,
-                kind: IssueKind.Issue
-            }
-        });
-
-        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "10.12.0", releaseDate: "April 2020" } });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Setting to choose how <b>Open in New Window</b> command work on empty windows",
-                id: 188,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.FIXED,
-            detail: {
-                message: "Typo in README",
-                id: 348,
-                kind: IssueKind.PR,
-                kudos: "@1st"
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.FIXED,
-            detail: {
-                message: "Typo in README",
-                id: 337,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.INTERNAL,
-            detail: {
-                message: "Support VS Code package split",
-                id: 361,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.INTERNAL,
-            detail: {
-                message: "Support VS Code Extension view Context Menu",
-                id: 327,
-                kind: IssueKind.Issue
-            }
-        });
-
-        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "10.11.0", releaseDate: "March 2020" } });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Increase <b>Remote Development</b> support",
-                id: 323,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "<b>Add Project to Workspace</b> command in Command Palette",
-                id: 283,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.INTERNAL,
-            detail: {
-                message: "Support <b>ThemeIcon</b>",
-                id: 326,
                 kind: IssueKind.Issue
             }
         });
