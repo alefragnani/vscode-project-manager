@@ -213,6 +213,12 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 ```
 > Define how deeps it should search for projects
 
+* Should ignore projects found inside other projects? (`false` by default)
+
+```json 
+    "projectManager.ignoreProjectsWithinProjects": true
+```
+
 * Cache automatically detected projects (`true` by default)
 
 ```json 
