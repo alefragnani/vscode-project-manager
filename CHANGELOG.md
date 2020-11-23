@@ -1,3 +1,7 @@
+## [12.0.1] - 2020-11-23
+### Fixed
+- Conflict with non-unique command (issue [#441](https://github.com/alefragnani/vscode-project-manager/issues/441))
+
 ## [12.0.0] - 2020-11-19
 ### Added
 - `Open Settings` command to the Side Bar (issue [#434](https://github.com/alefragnani/vscode-project-manager/issues/434))
