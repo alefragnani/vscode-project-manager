@@ -252,7 +252,12 @@
 			{
 				"command": "projectManager.supportProjectManager",
 				"title": "%projectManager.commands.supportProjectManager.title%"
-			}
+			},
+			{
+				"command": "git.clone",
+				"title": "Clone Repo",
+				"icon": "$(repo-clone)"
+		    	},
 		],
 		"menus": {
 			"commandPalette": [
@@ -395,7 +400,12 @@
 					"command": "projectManager.openSettings#sideBarMercurial",
 					"when": "view == projectsExplorerMercurial",
 					"group": "2_projectManager"
-				}
+				},
+				{
+				    	"command": "git.clone",
+				    	"when": "view =~ /(projectsExplorerVSCode|projectsExplorerGit|projectsExplorerSVN|projectsExplorerAny|projectsExplorerMercurial)/",
+				    	"group": "navigation"
+				},
 			],
 			"view/item/context": [
 				{
