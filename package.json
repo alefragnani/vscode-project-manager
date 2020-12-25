@@ -403,7 +403,7 @@
 				},
 				{
 				    	"command": "git.clone",
-				    	"when": "view =~ /(projectsExplorerVSCode|projectsExplorerGit|projectsExplorerSVN|projectsExplorerAny|projectsExplorerMercurial)/",
+				    	"when": "view == projectsExplorerGit",
 				    	"group": "navigation"
 				},
 			],
