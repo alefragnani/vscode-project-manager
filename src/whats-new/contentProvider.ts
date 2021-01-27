@@ -4,9 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 // tslint:disable-next-line:max-line-length
-import { ChangeLogItem, ChangeLogKind, ContentProvider, Header, Image, Sponsor, IssueKind } from "../../vscode-whats-new/src/ContentProvider";
+import { ChangeLogItem, ChangeLogKind, ContentProvider, Header, Image, Sponsor, IssueKind, SupportChannel, SponsorProvider, SocialMediaProvider } from "../../vscode-whats-new/src/ContentProvider";
 
-export class WhatsNewProjectManagerContentProvider implements ContentProvider {
+export class ProjectManagerContentProvider implements ContentProvider {
 
     public provideHeader(logoUrl: string): Header {
         return <Header> {logo: <Image> {src: logoUrl, height: 50, width: 50}, 
@@ -254,12 +254,32 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         return changeLog;
     }
 
+    public provideSupportChannels(): SupportChannel[] {
+        const supportChannels: SupportChannel[] = [];
+        supportChannels.push({
+            title: "Become a sponsor on Patreon",
+            link: "https://www.patreon.com/alefragnani",
+            message: "Become a Sponsor"
+        });
+        supportChannels.push({
+            title: "Donate via PayPal",
+            link: "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted",
+            message: "Donate via PayPal"
+        });
+        return supportChannels;
+    }
+}
+
+export class ProjectManagerSponsorProvider implements SponsorProvider {
     public provideSponsors(): Sponsor[] {
         const sponsors: Sponsor[] = [];
         const sponsorCodeStream: Sponsor = <Sponsor> {
             title: "Learn more about CodeStream",
             link: "https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner",
-            image: "https://alt-images.codestream.com/codestream_logo_projectmanager.png",
+            image: {
+                dark: "https://alt-images.codestream.com/codestream_logo_projectmanager.png",
+                light: "https://alt-images.codestream.com/codestream_logo_projectmanager.png"
+            },
             width: 35,
             message: `<p>Eliminate context switching and costly distractions. 
                 Create and merge PRs and perform code reviews from inside your 
@@ -271,5 +291,13 @@ export class WhatsNewProjectManagerContentProvider implements ContentProvider {
         sponsors.push(sponsorCodeStream);
         return sponsors
     }
-   
+}
+
+export class ProjectManagerSocialMediaProvider implements SocialMediaProvider {
+    public provideSocialMedias() {
+        return [{
+            title: "Follow me on Twitter",
+            link: "https://www.twitter.com/alefragnani"
+        }];
+    }
 }
