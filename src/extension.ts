@@ -25,6 +25,7 @@ import { registerSupportProjectManager } from "./commands/supportProjectManager"
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
+import { editProjectPicker } from "./quickpick/editProjectPicker";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -101,6 +102,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.addToWorkspace", () => addProjectToWorkspace(undefined));
     vscode.commands.registerCommand("_projectManager.deleteProject", (node) => deleteProject(node));
     vscode.commands.registerCommand("_projectManager.renameProject", (node) => renameProject(node));
+    vscode.commands.registerCommand("_projectManager.editProject", (node) => editProject(node));
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
     vscode.commands.registerCommand("_projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
 
@@ -529,6 +531,30 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showErrorMessage("Project already exists!");
             }
         });
+    }
+    async function editProject(node: any) {
+
+        const project = projectStorage.existsWithRootPath(node.command.arguments[0]);
+        if (!project) {
+            return;
+        }
+
+        const picked = await editProjectPicker({
+            name: project.name,
+            group: project.group,
+            enabled: project.enabled,
+            paths: project.paths,
+            rootPath: project.rootPath
+        });
+
+        // needs to update "every field"
+        if (picked) {
+            aStack.rename(project.name, picked.name)
+            projectStorage.rename(project.name, picked.name);
+            projectStorage.save();
+            vscode.window.showInformationMessage("Project updated!");
+            updateStatusBar(project.name, project.rootPath, picked.name);
+        }
     }
 
     function toggleProjectEnabled(node: any, askForUndo = true) {

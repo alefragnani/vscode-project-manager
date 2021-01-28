@@ -71,7 +71,11 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
 }
 
 export function updateStatusBar(oldName: string, oldPath: string, newName: string): void {
-  if (statusItem.text === codicons.file_directory + " " + oldName && statusItem.tooltip === oldPath) {
-      statusItem.text = codicons.file_directory + " " + newName;
-  }
+    if (!statusItem) {
+        return;
+    }
+
+    if (statusItem.text === codicons.file_directory + " " + oldName && statusItem.tooltip === oldPath) {
+        statusItem.text = codicons.file_directory + " " + newName;
+    }
 }
