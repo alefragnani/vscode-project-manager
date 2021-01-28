@@ -222,6 +222,10 @@
 				"title": "%projectManager.commands.renameProject.title%"
 			},
 			{
+				"command": "_projectManager.editProject",
+				"title": "%projectManager.commands.editProject.title%"
+			},
+			{
 				"command": "projectManager.whatsNew",
 				"title": "%projectManager.commands.whatsNew.title%"
 			},
@@ -282,6 +286,10 @@
 				},
 				{
 					"command": "_projectManager.renameProject",
+					"when": "false"
+				},
+				{
+					"command": "_projectManager.editProject",
 					"when": "false"
 				},
 				{
@@ -430,6 +438,11 @@
 				},
 				{
 					"command": "_projectManager.renameProject",
+					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
+					"group": "favorites"
+				},
+				{
+					"command": "_projectManager.editProject",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},
