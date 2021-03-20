@@ -9,7 +9,7 @@ import * as vscode from "vscode";
 import stack = require("../vscode-project-manager-core/src/utils/stack");
 
 import { Locators } from "../vscode-project-manager-core/src/model/locators";
-import { Project, ProjectStorage } from "../vscode-project-manager-core/src/model/storage";
+import { Storage } from "../vscode-project-manager-core/src/model/storage";
 import { PathUtils } from "../vscode-project-manager-core/src/utils/PathUtils";
 
 import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
@@ -26,6 +26,7 @@ import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
 import { editProjectPicker } from "./quickpick/editProjectPicker";
+import { Project } from "../vscode-project-manager-core/src/project";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -41,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
     aStack.fromString(recentProjects);
 
     // load the projects
-    const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
+    const projectStorage: Storage = new Storage(getProjectFilePath());
 
     const locators: Locators = new Locators(aStack);
     const providerManager: Providers = new Providers(locators, projectStorage);
@@ -198,7 +199,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 if (option.title === "Yes, edit manually") {
-                    projectStorage.push("Project Name", "Root Path", "");
+                    projectStorage.push("Project Name", "Root Path");
                     projectStorage.save();
                     providerManager.updateTreeViewStorage();
                     vscode.commands.executeCommand("projectManager.editProjects");
@@ -246,7 +247,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (!projectStorage.exists(projectName)) {
                 aStack.push(projectName);
                 context.globalState.update("recent", aStack.toString());
-                projectStorage.push(projectName, rootPath, "");
+                projectStorage.push(projectName, rootPath);
                 projectStorage.save();
                 providerManager.updateTreeViewStorage();
                 vscode.window.showInformationMessage("Project saved!");

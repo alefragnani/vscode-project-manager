@@ -1,12 +1,13 @@
 import { StatusBarAlignment, StatusBarItem, window, workspace } from "vscode"; 
 import { Locators } from "../vscode-project-manager-core/src/model/locators";
-import { Project, ProjectStorage } from "../vscode-project-manager-core/src/model/storage";
+import { Storage } from "../vscode-project-manager-core/src/model/storage";
 import { codicons } from "vscode-ext-codicons";
 import { isRemoteUri } from "../vscode-project-manager-core/src/utils/remote";
+import { Project } from "../vscode-project-manager-core/src/project";
 
 let statusItem: StatusBarItem;
 
-export function showStatusBar(projectStorage: ProjectStorage, locators: Locators, projectName?: string) {
+export function showStatusBar(projectStorage: Storage, locators: Locators, projectName?: string) {
 
   const showStatusConfig = workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
 

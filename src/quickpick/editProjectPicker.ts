@@ -6,7 +6,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { QuickInputButton, QuickPickItem, ThemeIcon } from "vscode";
-import { Project } from "../../vscode-project-manager-core/src/model/storage";
+import { Project } from "../../vscode-project-manager-core/src/project";
 import { MultiStepInput } from "./multiStepInput";
 
 let tagList = ['Personal', 'Work'];
