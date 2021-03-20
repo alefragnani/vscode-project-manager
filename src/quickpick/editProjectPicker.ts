@@ -28,6 +28,13 @@ interface State {
     totalSteps: number;
 }
 
+function shouldResume() {
+    // Could show a notification with the option to resume.
+    return new Promise<boolean>((resolve, reject) => {
+        // noop
+    });
+}
+
 async function validateTagNameIsUnique(name: string) {
     return tagList.includes(name) ? 'Tag already exists' : undefined;
 }
@@ -58,7 +65,7 @@ export async function editProjectPicker(project: Project) {
 			items: tags,
 			activeItem: typeof state.tags !== 'string' ? state.tags : undefined,
 			buttons: [createTagButton],
-			shouldResume: undefined
+			shouldResume: shouldResume
 		});
 		if (pick instanceof Button) {
 			return (input: MultiStepInput) => inputTagName(input, state);
@@ -76,7 +83,7 @@ export async function editProjectPicker(project: Project) {
 			value: typeof state.tags === 'string' ? state.tags : '',
 			prompt: 'Choose a unique name for the tag',
 			validate: validateTagNameIsUnique,
-			shouldResume: undefined
+			shouldResume: shouldResume
 		});
 		tagList.push(state.tags);
 		return (input: MultiStepInput) => inputName(input, state);
@@ -93,7 +100,7 @@ export async function editProjectPicker(project: Project) {
 			value: state.name || '',
 			prompt: 'Type a name for your project',
 			validate: validateProjectNameIsDefined,
-			shouldResume: undefined
+			shouldResume: shouldResume
 		});
 		// return (input: MultiStepInput) => pickRuntime(input, state);
 	}
