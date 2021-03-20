@@ -541,7 +541,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         const picked = await editProjectPicker({
             name: project.name,
-            group: project.group,
+            tags: project.tags,
             enabled: project.enabled,
             paths: project.paths,
             rootPath: project.rootPath
