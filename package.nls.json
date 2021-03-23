@@ -4,6 +4,8 @@
     "projectManager.commands.listProjects.title": "Project Manager: List Projects to Open",
     "projectManager.commands.listProjectsNewWindow.title": "Project Manager: List Projects to Open in New Window",
     "projectManager.commands.editProjects.title": "Project Manager: Edit Projects",
+    "projectManager.commands.viewAsTags.title": "View as Tags",
+    "projectManager.commands.viewAsList.title": "View as List",
     "projectManager.commands.refreshProjects.title": "Project Manager: Refresh Projects",
     "projectManager.commands.refreshVSCodeProjects.title": "Project Manager: Refresh VSCode Projects",
     "projectManager.commands.refreshGitProjects.title": "Project Manager: Refresh Git Projects",
