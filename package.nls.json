@@ -6,6 +6,8 @@
     "projectManager.commands.editProjects.title": "Project Manager: Edit Projects",
     "projectManager.commands.viewAsTags.title": "View as Tags",
     "projectManager.commands.viewAsList.title": "View as List",
+    "projectManager.commands.filterProjectsByTag#sideBar.title": "Filter Projects by Tag",
+    "projectManager.commands.filterProjectsByTag.title": "Project Manager: Filter Projects by Tag",
     "projectManager.commands.refreshProjects.title": "Project Manager: Refresh Projects",
     "projectManager.commands.refreshVSCodeProjects.title": "Project Manager: Refresh VSCode Projects",
     "projectManager.commands.refreshGitProjects.title": "Project Manager: Refresh Git Projects",

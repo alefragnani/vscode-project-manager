@@ -28,6 +28,7 @@ import { registerOpenSettings } from "./commands/openSettings";
 import { editProjectPicker } from "./quickpick/editProjectPicker";
 import { Project } from "../vscode-project-manager-core/src/project";
 import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
+import { pickTags } from "./quickpick/tagsPicker";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -112,6 +113,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.executeCommand("setContext", "projectManager.viewAsList", viewAsList);
     vscode.commands.registerCommand("_projectManager.viewAsTags", () => toggleViewAsFavoriteProjects(ViewFavoritesAs.VIEW_AS_TAGS));
     vscode.commands.registerCommand("_projectManager.viewAsList", () => toggleViewAsFavoriteProjects(ViewFavoritesAs.VIEW_AS_LIST));
+    vscode.commands.registerCommand("projectManager.filterProjectsByTag", () => filterProjectsByTag());
+    vscode.commands.registerCommand("projectManager.filterProjectsByTag#sideBar", () => filterProjectsByTag());
 
     function toggleViewAsFavoriteProjects(view: ViewFavoritesAs) {
         if (view === ViewFavoritesAs.VIEW_AS_LIST) {
@@ -120,6 +123,19 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.commands.executeCommand("setContext", "projectManager.viewAsList", false);
         }
         Container.context.globalState.update("viewAsList", view === ViewFavoritesAs.VIEW_AS_LIST);
+        providerManager.refreshTreeViews();
+    }
+
+    async function filterProjectsByTag() {
+        const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
+
+        const tags = await pickTags(projectStorage, filterByTags);
+
+        if (!tags) {
+            return;
+        }
+
+        Container.context.globalState.update("filterByTags", tags);
         providerManager.refreshTreeViews();
     }
 
