@@ -7,14 +7,32 @@ import { QuickPickItem, window } from "vscode";
 import { NO_TAGS_DEFINED } from "../../vscode-project-manager-core/src/sidebar/constants";
 import { Storage } from "../../vscode-project-manager-core/src/storage";
 
-export async function pickTags(storage: Storage, preselected: string[]): Promise<string[] | undefined> {
+export const DEFAULT_TAGS = ['Personal', 'Work'];
+
+export interface PickTagOptions {
+    useDefaultTags: boolean,
+    useNoTagsDefined: boolean
+}
+
+export async function pickTags(storage: Storage, preselected: string[], options?: PickTagOptions): Promise<string[] | undefined> {
 
     const tags = storage.getAvailableTags();
+
+    if (options?.useDefaultTags) {
+        DEFAULT_TAGS.forEach(tag => {
+            if (!tags.includes(tag)) {
+                tags.push(tag);
+            }
+        });
+    }
+
     if (tags.length === 0) {
         return undefined;
     }
 
-    tags.push(NO_TAGS_DEFINED);
+    if (options?.useNoTagsDefined) {
+        tags.push(NO_TAGS_DEFINED);
+    }
 
     const items: QuickPickItem[] = tags.map(tag => {
         return {
