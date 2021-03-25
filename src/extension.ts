@@ -137,6 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         Container.context.globalState.update("filterByTags", tags);
         providerManager.refreshTreeViews();
+        providerManager.updateTreeViewStorage();
     }
 
     loadProjectsFile();
