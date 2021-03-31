@@ -574,42 +574,42 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         
-        const picked = await pickTags(projectStorage, project.tags, {useDefaultTags: true, useNoTagsDefined: false});
+        // const picked = await pickTags(projectStorage, project.tags, {useDefaultTags: true, useNoTagsDefined: false});
 
-        if (!picked) {
-            return;
-        }
-
-        projectStorage.edit(project.name, { name: project.name, tags: picked });
-        projectStorage.save();
-        vscode.window.showInformationMessage("Project updated!");
-
-        // const picked = await editProjectPicker({
-        //     name: project.name,
-        //     tags: project.tags,
-        //     enabled: project.enabled,
-        //     paths: project.paths,
-        //     rootPath: project.rootPath
-        // });
-
-        // // needs to update "every field"
-        // if (picked) {
-        //     aStack.rename(project.name, picked.name)
-        //     // projectStorage.rename(project.name, picked.name);
-        //     const tt: string[] = [];
-
-        //     if (typeof picked.tags === 'string') {
-        //         tt.push(picked.tags)
-        //     } else {
-        //         for (const tag of picked.tags) {
-        //             tt.push(tag.label);
-        //         }
-        //     }
-        //     projectStorage.edit(project.name, { name: picked.name, tags: tt });
-        //     projectStorage.save();
-        //     vscode.window.showInformationMessage("Project updated!");
-        //     updateStatusBar(project.name, project.rootPath, picked.name);
+        // if (!picked) {
+        //     return;
         // }
+
+        // projectStorage.edit(project.name, { name: project.name, tags: picked });
+        // projectStorage.save();
+        // vscode.window.showInformationMessage("Project updated!");
+
+        const picked = await editProjectPicker({
+            name: project.name,
+            tags: project.tags,
+            enabled: project.enabled,
+            paths: project.paths,
+            rootPath: project.rootPath
+        });
+
+        // needs to update "every field"
+        if (picked) {
+            aStack.rename(project.name, picked.name)
+            // projectStorage.rename(project.name, picked.name);
+            const tt: string[] = [];
+
+            if (typeof picked.tags === 'string') {
+                tt.push(picked.tags)
+            } else {
+                for (const tag of picked.tags) {
+                    tt.push(tag.label);
+                }
+            }
+            projectStorage.edit(project.name, { name: picked.name, tags: tt });
+            projectStorage.save();
+            vscode.window.showInformationMessage("Project updated!");
+            updateStatusBar(project.name, project.rootPath, picked.name);
+        }
     }
 
     function toggleProjectEnabled(node: any, askForUndo = true) {
