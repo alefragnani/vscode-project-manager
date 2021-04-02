@@ -207,7 +207,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function saveProject(node?: any) {
+    async function saveProject(node?: any) {
         let wpath: string;
         let rootPath: string;
 
@@ -215,7 +215,7 @@ export function activate(context: vscode.ExtensionContext) {
             wpath = node.label; 
             rootPath = node.command.arguments[0];
         } else {
-            const projectDetails = Suggestion.getProjectDetails();
+            const projectDetails = await Suggestion.getProjectDetails();
             if (!projectDetails) {
                 return;
             }
