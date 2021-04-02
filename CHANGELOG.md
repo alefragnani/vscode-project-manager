@@ -1,3 +1,19 @@
+## [12.1.0] - 2021-04-02
+### Added
+- Save GitHub Codespaces projects always as "remote project" (issue [#479](https://github.com/alefragnani/vscode-project-manager/issues/479))
+
+### Changed
+- Do not show welcome message if installed by Settings Sync (issue [#459](https://github.com/alefragnani/vscode-project-manager/issues/459))
+
+### Fixed
+- Mercurial projects not found (issue [#438](https://github.com/alefragnani/vscode-project-manager/issues/438))
+
+### Internal
+- Update whats-new submodule API (issue [#456](https://github.com/alefragnani/vscode-project-manager/issues/456))
+- Add badges to Readme (issue [#359](https://github.com/alefragnani/vscode-project-manager/issues/359))
+- Security Alert: y18n (dependabot [PR #482](https://github.com/alefragnani/vscode-project-manager/pull/482))
+- Security Alert: elliptic (dependabot [PR #472](https://github.com/alefragnani/vscode-project-manager/pull/472))
+
 ## [12.0.1] - 2020-11-23
 ### Fixed
 - Conflict with non-unique command (issue [#441](https://github.com/alefragnani/vscode-project-manager/issues/441))
