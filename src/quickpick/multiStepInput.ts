@@ -137,11 +137,12 @@ export class MultiStepInput {
 				input.step = step;
 				input.totalSteps = totalSteps;
 				input.placeholder = placeholder;
-				input.items = items;
+				input.items = items,//items.map(i => <T>{label: i.label, picked: selectedItems.filter(si => si.label === i.label).length === 1});
 				input.canSelectMany = true;
-				if (selectedItems) {
-					input.activeItems = [...selectedItems];
-				}
+				// if (items) {
+				// 	input.activeItems = [...items];
+				// }
+                input.selectedItems = items.filter(i => i.picked)
 				input.buttons = [
 					...(this.steps.length > 1 ? [QuickInputButtons.Back] : []),
 					...(buttons || [])
