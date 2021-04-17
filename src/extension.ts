@@ -574,7 +574,10 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         
-        // const picked = await pickTags(projectStorage, project.tags, {useDefaultTags: true, useNoTagsDefined: false});
+        // const picked = await pickTags(projectStorage, project.tags, 
+        //     {useDefaultTags: true, 
+        //     useNoTagsDefined: false,
+        //     canAddTag: true});
 
         // if (!picked) {
         //     return;
@@ -590,7 +593,7 @@ export function activate(context: vscode.ExtensionContext) {
             enabled: project.enabled,
             paths: project.paths,
             rootPath: project.rootPath
-        });
+        }, projectStorage, {useDefaultTags: true, useNoTagsDefined: false});
 
         // needs to update "every field"
         if (picked) {
