@@ -63,5 +63,6 @@
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Should ignore projects found inside other projects?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Should check for invalid paths before listing, showing a message below the project name?",
     "projectManager.configuration.filterOnFullPath.description": "Should filter projects through full path?",
-    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty."
+    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty.",
+    "projectManager.configuration.tags.description": "Indicates the default Tags"
 }

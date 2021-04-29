@@ -720,7 +720,18 @@
 						"Works as today. The Open in New Window command will always open in New Window"
 					],
 					"description": "%projectManager.configuration.openInCurrenWindowIfEmpty.description%"
-				}
+				},
+                "projectManager.tags": {
+                    "type": "array",
+					"default": [
+						"Personal",
+						"Work"
+					],
+					"items": {
+						"type": "string"
+					},
+					"description": "%projectManager.configuration.tags.description%"
+                }
 			}
 		},
 		"keybindings": [

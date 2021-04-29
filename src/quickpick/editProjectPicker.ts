@@ -9,9 +9,10 @@ import { QuickInputButton, QuickPickItem, ThemeIcon } from "vscode";
 import { Project } from "../../vscode-project-manager-core/src/project";
 import { NO_TAGS_DEFINED } from "../../vscode-project-manager-core/src/sidebar/constants";
 import { Storage } from "../../vscode-project-manager-core/src/storage";
+import { addTags, availableTags, tagExists } from "../tags";
 import { MultiStepInput } from "./multiStepInput";
 
-let tagList = ['Personal', 'Work'];
+// let tagList = ['Personal', 'Work'];
 
 export interface PickTagOptions {
     useDefaultTags: boolean,
@@ -43,7 +44,7 @@ function shouldResume() {
 }
 
 async function validateTagNameIsUnique(name: string) {
-    return tagList.includes(name) ? 'Tag already exists' : undefined;
+    return tagExists(name) ? 'Tag already exists' : undefined;
 }
 
 async function validateProjectNameIsDefined(name: string) {
@@ -69,10 +70,10 @@ export async function editProjectPicker(project: Project, storage: Storage, opti
     const title = 'Edit Project';
     async function pickTag(input: MultiStepInput, state: Partial<State>) {
 
-        const storageTags = storage.getAvailableTags();
+        let storageTags = storage.getAvailableTags();
         
         if (options?.useDefaultTags) {
-            tagList.forEach(tag => {
+            availableTags().forEach(tag => {
                 if (!storageTags.includes(tag)) {
                     storageTags.push(tag);
                 }
@@ -86,6 +87,18 @@ export async function editProjectPicker(project: Project, storage: Storage, opti
                 }
             });
         }
+
+        storageTags = storageTags.sort((n1, n2) => {
+            if (n1.toLowerCase() > n2.toLowerCase()) {
+                return 1;
+            }
+
+            if (n1.toLowerCase() < n2.toLowerCase()) {
+                return -1;
+            }
+
+            return 0;
+        });
 
         if (options?.useNoTagsDefined) {
             storageTags.push(NO_TAGS_DEFINED);
@@ -131,7 +144,7 @@ export async function editProjectPicker(project: Project, storage: Storage, opti
 			shouldResume: shouldResume
 		});
         state.tags.push({label: statetags, picked: true})
-		tagList.push(...state.tags.map(item => item.label));
+		addTags(...state.tags.map(item => item.label));
 		return (input: MultiStepInput) => pickTag(input, state);
 		// return (input: MultiStepInput) => inputName(input, state);
 	}
