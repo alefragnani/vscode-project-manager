@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "12.1.0",
+	"version": "12.2.0",
 	"publisher": "alefragnani",
 	"engines": {
 		"vscode": "^1.51.0"
@@ -25,12 +25,12 @@
 		"ui",
 		"workspace"
 	],
-    "capabilities": {
-        "virtualWorkspaces": true,
+	"capabilities": {
+		"virtualWorkspaces": true,
 		"untrustedWorkspaces": {
 			"supported": true
 		}
-    },
+	},
 	"icon": "images/icon.png",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"homepage": "https://github.com/alefragnani/vscode-project-manager/blob/master/README.md",

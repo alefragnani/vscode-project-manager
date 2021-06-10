@@ -1,3 +1,16 @@
+## [12.2.0] - 2021-06-10
+### Added
+- Support **Virtual Workspaces** (issue [#500](https://github.com/alefragnani/vscode-project-manager/issues/500))
+- Support **Workspace Trust** (issue [#499](https://github.com/alefragnani/vscode-project-manager/issues/499))
+- Support `.code-workspace` projects ocated on remotes (issue [#486](https://github.com/alefragnani/vscode-project-manager/issues/486))
+
+### Fixed
+- Favorite projects missing icons for Folders when using None or Seti Icon Theme (issue [#496](https://github.com/alefragnani/vscode-project-manager/issues/496))
+
+### Internal
+- Security Alert: lodash (dependabot [PR #503](https://github.com/alefragnani/vscode-project-manager/pull/503))
+- Security Alert: ssri (dependabot [PR #495](https://github.com/alefragnani/vscode-project-manager/pull/495))
+
 ## [12.1.0] - 2021-04-02
 ### Added
 - Save GitHub Codespaces projects always as "remote project" (issue [#479](https://github.com/alefragnani/vscode-project-manager/issues/479))

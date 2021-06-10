@@ -7,13 +7,12 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 12.1
+# What's new in Project Manager 12.2
 
+* Adds **Virtual Workspaces** support
+* Adds **Workspace Trust** support
 * Improved **Side Bar** usability
 * Full **Remote Development** support
-* Support for **˜** _(tilde)_ symbol on settings
-* Support for `glob` patterns
-* Improved **Localization** options
 
 # Support
 
