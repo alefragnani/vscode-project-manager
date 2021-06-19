@@ -8,14 +8,14 @@ import path = require("path");
 import * as vscode from "vscode";
 import stack = require("../vscode-project-manager-core/src/utils/stack");
 
-import { Locators } from "../vscode-project-manager-core/src/model/locators";
-import { Project, ProjectStorage } from "../vscode-project-manager-core/src/model/storage";
-import { PathUtils } from "../vscode-project-manager-core/src/utils/PathUtils";
+import { Locators } from "../vscode-project-manager-core/src/autodetect/locators";
+import { Project, ProjectStorage } from "../vscode-project-manager-core/src/storage";
+import { PathUtils } from "../vscode-project-manager-core/src/utils/path";
 
 import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
-import { getProjectDetails } from "../vscode-project-manager-core/src/model/Suggestion";
+import { getProjectDetails } from "../vscode-project-manager-core/src/suggestion";
 import { CommandLocation, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
 import { isRemotePath, isWindows } from "../vscode-project-manager-core/src/utils/remote";
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
