@@ -15,7 +15,7 @@ import { PathUtils } from "../vscode-project-manager-core/src/utils/PathUtils";
 import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
-import { Suggestion } from "../vscode-project-manager-core/src/model/Suggestion";
+import { getProjectDetails } from "../vscode-project-manager-core/src/model/Suggestion";
 import { CommandLocation, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
 import { isRemotePath, isWindows } from "../vscode-project-manager-core/src/utils/remote";
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
@@ -215,7 +215,7 @@ export function activate(context: vscode.ExtensionContext) {
             wpath = node.label; 
             rootPath = node.command.arguments[0];
         } else {
-            const projectDetails = await Suggestion.getProjectDetails();
+            const projectDetails = await getProjectDetails();
             if (!projectDetails) {
                 return;
             }
