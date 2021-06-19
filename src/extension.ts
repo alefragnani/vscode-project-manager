@@ -112,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
-        providerManager.projectProviderStorage.refresh();
+        providerManager.storageProvider.refresh();
         providerManager.updateTreeViewStorage();
     });
 
@@ -157,19 +157,19 @@ export function activate(context: vscode.ExtensionContext) {
             if (rvscode || rgit || rmercurial || rsvn || rany || forceRefresh) {
                 progress.report({ message: "Activity Bar"});
                 if (rvscode || forceRefresh) {
-                    providerManager.projectProviderVSCode.refresh();
+                    providerManager.vscodeProvider.refresh();
                 }
                 if (rgit || forceRefresh) {
-                    providerManager.projectProviderGit.refresh();
+                    providerManager.gitProvider.refresh();
                 }
                 if (rmercurial || forceRefresh) {
-                    providerManager.projectProviderMercurial.refresh();
+                    providerManager.mercurialProvider.refresh();
                 }
                 if (rsvn || forceRefresh) {
-                    providerManager.projectProviderSVN.refresh();
+                    providerManager.svnProvider.refresh();
                 }
                 if (rany || forceRefresh) {
-                    providerManager.projectProviderAny.refresh();
+                    providerManager.anyProvider.refresh();
                 }
                 providerManager.showTreeViewFromAllProviders();
             }
