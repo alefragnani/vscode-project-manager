@@ -6,7 +6,7 @@
 import fs = require("fs");
 import path = require("path");
 import * as vscode from "vscode";
-import stack = require("../vscode-project-manager-core/src/utils/stack");
+import { Stack } from "../vscode-project-manager-core/src/utils/stack";
 
 import { Locators } from "../vscode-project-manager-core/src/autodetect/locators";
 import { Project, ProjectStorage } from "../vscode-project-manager-core/src/storage";
@@ -36,13 +36,13 @@ export function activate(context: vscode.ExtensionContext) {
     PathUtils.setExtensionContext(context);
 
     const recentProjects: string = context.globalState.get<string>("recent", "");
-    const aStack: stack.StringStack = new stack.StringStack();
-    aStack.fromString(recentProjects);
+    const stack: Stack = new Stack();
+    stack.fromString(recentProjects);
 
     // load the projects
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
-    const locators: Locators = new Locators(aStack);
+    const locators: Locators = new Locators(stack);
     const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
 
@@ -242,8 +242,8 @@ export function activate(context: vscode.ExtensionContext) {
             }
    
             if (!projectStorage.exists(projectName)) {
-                aStack.push(projectName);
-                context.globalState.update("recent", aStack.toString());
+                stack.push(projectName);
+                context.globalState.update("recent", stack.toString());
                 projectStorage.push(projectName, rootPath, "");
                 projectStorage.save();
                 providerManager.updateTreeViewStorage();
@@ -266,8 +266,8 @@ export function activate(context: vscode.ExtensionContext) {
                     }
 
                     if (option.title === "Update") {
-                        aStack.push(projectName);
-                        context.globalState.update("recent", aStack.toString());
+                        stack.push(projectName);
+                        context.globalState.update("recent", stack.toString());
                         projectStorage.updateRootPath(projectName, rootPath);
                         projectStorage.save();
                         providerManager.updateTreeViewStorage();
@@ -297,8 +297,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         const pick = await showListProjectsQuickPick(folderNotFound); 
         if (pick) {
-            aStack.push(pick.name);
-            context.globalState.update("recent", aStack.toString());
+            stack.push(pick.name);
+            context.globalState.update("recent", stack.toString());
 
             const openInNewWindow = shouldOpenInNewWindow(forceNewWindow, CommandLocation.CommandPalette);
             const uri = buildProjectUri(pick.rootPath);
@@ -491,7 +491,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function deleteProject(node: any) {
-        aStack.pop(node.command.arguments[1]);
+        stack.pop(node.command.arguments[1]);
         projectStorage.pop(node.command.arguments[1]);
         projectStorage.save();
         providerManager.updateTreeViewStorage();
@@ -520,7 +520,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             if (!projectStorage.exists(newName)) {
-                aStack.rename(oldName, newName)
+                stack.rename(oldName, newName)
                 projectStorage.rename(oldName, newName);
                 projectStorage.save();
                 vscode.window.showInformationMessage("Project renamed!");

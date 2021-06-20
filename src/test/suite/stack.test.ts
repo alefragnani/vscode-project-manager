@@ -14,10 +14,10 @@ import * as myStack from "../../../vscode-project-manager-core/src/utils/stack";
 // Defines a Mocha test suite to group tests of similar kind together
 suite("Stack Tests", () => {
     
-    let stack: myStack.StringStack;
+    let stack: myStack.Stack;
     
     setup( () => {
-        stack = new myStack.StringStack();        
+        stack = new myStack.Stack();        
     })
 
     // Defines a Mocha unit test
