@@ -9,7 +9,7 @@ import * as vscode from "vscode";
 import { Stack } from "../vscode-project-manager-core/src/utils/stack";
 
 import { Locators } from "../vscode-project-manager-core/src/autodetect/locators";
-import { Project, ProjectStorage } from "../vscode-project-manager-core/src/storage";
+import { ProjectStorage } from "../vscode-project-manager-core/src/storage";
 import { PathUtils } from "../vscode-project-manager-core/src/utils/path";
 
 import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
@@ -25,6 +25,7 @@ import { registerSupportProjectManager } from "./commands/supportProjectManager"
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
+import { Project } from "../vscode-project-manager-core/src/project";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -196,7 +197,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 if (option.title === "Yes, edit manually") {
-                    projectStorage.push("Project Name", "Root Path", "");
+                    projectStorage.push("Project Name", "Root Path");
                     projectStorage.save();
                     providerManager.updateTreeViewStorage();
                     vscode.commands.executeCommand("projectManager.editProjects");
@@ -244,7 +245,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (!projectStorage.exists(projectName)) {
                 stack.push(projectName);
                 context.globalState.update("recent", stack.toString());
-                projectStorage.push(projectName, rootPath, "");
+                projectStorage.push(projectName, rootPath);
                 projectStorage.save();
                 providerManager.updateTreeViewStorage();
                 vscode.window.showInformationMessage("Project saved!");

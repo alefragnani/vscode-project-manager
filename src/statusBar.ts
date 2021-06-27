@@ -1,9 +1,10 @@
 import { StatusBarAlignment, StatusBarItem, window, workspace } from "vscode"; 
 import { Locators } from "../vscode-project-manager-core/src/autodetect/locators";
-import { Project, ProjectStorage } from "../vscode-project-manager-core/src/storage";
+import { ProjectStorage } from "../vscode-project-manager-core/src/storage";
 import { codicons } from "vscode-ext-codicons";
 import { isRemoteUri } from "../vscode-project-manager-core/src/utils/remote";
 import { getCodiconFromUri } from "../vscode-project-manager-core/src/icons";
+import { Project } from "../vscode-project-manager-core/src/project";
 
 let statusItem: StatusBarItem;
 
