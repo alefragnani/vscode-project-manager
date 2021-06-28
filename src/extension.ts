@@ -6,16 +6,16 @@
 import fs = require("fs");
 import path = require("path");
 import * as vscode from "vscode";
-import stack = require("../vscode-project-manager-core/src/utils/stack");
+import { Stack } from "../vscode-project-manager-core/src/utils/stack";
 
-import { Locators } from "../vscode-project-manager-core/src/model/locators";
-import { Project, ProjectStorage } from "../vscode-project-manager-core/src/model/storage";
-import { PathUtils } from "../vscode-project-manager-core/src/utils/PathUtils";
+import { Locators } from "../vscode-project-manager-core/src/autodetect/locators";
+import { ProjectStorage } from "../vscode-project-manager-core/src/storage";
+import { PathUtils } from "../vscode-project-manager-core/src/utils/path";
 
 import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
-import { Suggestion } from "../vscode-project-manager-core/src/model/Suggestion";
+import { getProjectDetails } from "../vscode-project-manager-core/src/suggestion";
 import { CommandLocation, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
 import { isRemotePath, isWindows } from "../vscode-project-manager-core/src/utils/remote";
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
@@ -25,6 +25,7 @@ import { registerSupportProjectManager } from "./commands/supportProjectManager"
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
+import { Project } from "../vscode-project-manager-core/src/project";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -36,13 +37,13 @@ export function activate(context: vscode.ExtensionContext) {
     PathUtils.setExtensionContext(context);
 
     const recentProjects: string = context.globalState.get<string>("recent", "");
-    const aStack: stack.StringStack = new stack.StringStack();
-    aStack.fromString(recentProjects);
+    const stack: Stack = new Stack();
+    stack.fromString(recentProjects);
 
     // load the projects
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
-    const locators: Locators = new Locators(aStack);
+    const locators: Locators = new Locators(stack);
     const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
 
@@ -112,7 +113,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
         loadProjectsFile();
-        providerManager.projectProviderStorage.refresh();
+        providerManager.storageProvider.refresh();
         providerManager.updateTreeViewStorage();
     });
 
@@ -157,19 +158,19 @@ export function activate(context: vscode.ExtensionContext) {
             if (rvscode || rgit || rmercurial || rsvn || rany || forceRefresh) {
                 progress.report({ message: "Activity Bar"});
                 if (rvscode || forceRefresh) {
-                    providerManager.projectProviderVSCode.refresh();
+                    providerManager.vscodeProvider.refresh();
                 }
                 if (rgit || forceRefresh) {
-                    providerManager.projectProviderGit.refresh();
+                    providerManager.gitProvider.refresh();
                 }
                 if (rmercurial || forceRefresh) {
-                    providerManager.projectProviderMercurial.refresh();
+                    providerManager.mercurialProvider.refresh();
                 }
                 if (rsvn || forceRefresh) {
-                    providerManager.projectProviderSVN.refresh();
+                    providerManager.svnProvider.refresh();
                 }
                 if (rany || forceRefresh) {
-                    providerManager.projectProviderAny.refresh();
+                    providerManager.anyProvider.refresh();
                 }
                 providerManager.showTreeViewFromAllProviders();
             }
@@ -196,7 +197,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 if (option.title === "Yes, edit manually") {
-                    projectStorage.push("Project Name", "Root Path", "");
+                    projectStorage.push("Project Name", "Root Path");
                     projectStorage.save();
                     providerManager.updateTreeViewStorage();
                     vscode.commands.executeCommand("projectManager.editProjects");
@@ -215,7 +216,7 @@ export function activate(context: vscode.ExtensionContext) {
             wpath = node.label; 
             rootPath = node.command.arguments[0];
         } else {
-            const projectDetails = await Suggestion.getProjectDetails();
+            const projectDetails = await getProjectDetails();
             if (!projectDetails) {
                 return;
             }
@@ -242,9 +243,9 @@ export function activate(context: vscode.ExtensionContext) {
             }
    
             if (!projectStorage.exists(projectName)) {
-                aStack.push(projectName);
-                context.globalState.update("recent", aStack.toString());
-                projectStorage.push(projectName, rootPath, "");
+                stack.push(projectName);
+                context.globalState.update("recent", stack.toString());
+                projectStorage.push(projectName, rootPath);
                 projectStorage.save();
                 providerManager.updateTreeViewStorage();
                 vscode.window.showInformationMessage("Project saved!");
@@ -266,8 +267,8 @@ export function activate(context: vscode.ExtensionContext) {
                     }
 
                     if (option.title === "Update") {
-                        aStack.push(projectName);
-                        context.globalState.update("recent", aStack.toString());
+                        stack.push(projectName);
+                        context.globalState.update("recent", stack.toString());
                         projectStorage.updateRootPath(projectName, rootPath);
                         projectStorage.save();
                         providerManager.updateTreeViewStorage();
@@ -297,8 +298,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         const pick = await showListProjectsQuickPick(folderNotFound); 
         if (pick) {
-            aStack.push(pick.name);
-            context.globalState.update("recent", aStack.toString());
+            stack.push(pick.name);
+            context.globalState.update("recent", stack.toString());
 
             const openInNewWindow = shouldOpenInNewWindow(forceNewWindow, CommandLocation.CommandPalette);
             const uri = buildProjectUri(pick.rootPath);
@@ -491,7 +492,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function deleteProject(node: any) {
-        aStack.pop(node.command.arguments[1]);
+        stack.pop(node.command.arguments[1]);
         projectStorage.pop(node.command.arguments[1]);
         projectStorage.save();
         providerManager.updateTreeViewStorage();
@@ -520,7 +521,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             if (!projectStorage.exists(newName)) {
-                aStack.rename(oldName, newName)
+                stack.rename(oldName, newName)
                 projectStorage.rename(oldName, newName);
                 projectStorage.save();
                 vscode.window.showInformationMessage("Project renamed!");
