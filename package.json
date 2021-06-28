@@ -5,7 +5,7 @@
 	"version": "12.2.0",
 	"publisher": "alefragnani",
 	"engines": {
-		"vscode": "^1.51.0"
+		"vscode": "^1.56.0"
 	},
 	"categories": [
 		"Other"
@@ -718,7 +718,7 @@
 	},
 	"dependencies": {
 		"minimatch": "^3.0.4",
-		"vscode-ext-codicons": "^1.1.0",
+		"vscode-ext-codicons": "^1.4.0",
 		"vscode-ext-help-and-feedback-view": "^1.0.1",
 		"walker": "^1.0.7"
 	}
