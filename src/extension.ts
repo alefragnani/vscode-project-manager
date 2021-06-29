@@ -420,7 +420,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     function showListProjectsQuickPick(folderNotFound: (name: string, path: string) => void): Promise<Project | undefined> {
         let items = [];
-        items = projectStorage.map();
+        const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
+        items = projectStorage.getProjectsByTags(filterByTags);
         items = locators.sortGroupedList(items);
 
         return new Promise<Project | undefined>((resolve, reject) => {
