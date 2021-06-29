@@ -152,6 +152,15 @@
 				"icon": "$(list-flat)"
 			},
 			{
+                "command": "projectManager.filterProjectsByTag",
+				"title": "%projectManager.commands.filterProjectsByTag.title%"
+			},
+			{
+                "command": "projectManager.filterProjectsByTag#sideBar",
+				"title": "%projectManager.commands.filterProjectsByTag#sideBar.title%",
+                "icon": "$(tag)"
+			},
+			{
 				"command": "projectManager.refreshProjects",
 				"title": "%projectManager.commands.refreshProjects.title%"
 			},
@@ -377,6 +386,11 @@
 					"command": "_projectManager.viewAsList",
 					"when": "view == projectsExplorerFavorites && !projectManager.viewAsList",
 					"group": "navigation@13"
+				},
+				{
+                    "command": "projectManager.filterProjectsByTag#sideBar",
+					"when": "view == projectsExplorerFavorites",
+					"group": "navigation@14"
 				},
 				{
                     "command": "projectManager.openSettings#sideBarFavorites",

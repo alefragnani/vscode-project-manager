@@ -112,6 +112,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.executeCommand("setContext", "projectManager.viewAsList", viewAsList);
     vscode.commands.registerCommand("_projectManager.viewAsTags", () => toggleViewAsFavoriteProjects(ViewFavoritesAs.VIEW_AS_TAGS));
     vscode.commands.registerCommand("_projectManager.viewAsList", () => toggleViewAsFavoriteProjects(ViewFavoritesAs.VIEW_AS_LIST));
+    vscode.commands.registerCommand("projectManager.filterProjectsByTag", () => filterProjectsByTag());
+    vscode.commands.registerCommand("projectManager.filterProjectsByTag#sideBar", () => filterProjectsByTag());
 
     function toggleViewAsFavoriteProjects(view: ViewFavoritesAs) {
         if (view === ViewFavoritesAs.VIEW_AS_LIST) {
@@ -121,6 +123,22 @@ export function activate(context: vscode.ExtensionContext) {
         }
         Container.context.globalState.update("viewAsList", view === ViewFavoritesAs.VIEW_AS_LIST);
         providerManager.refreshTreeViews();
+    }
+
+    async function filterProjectsByTag() {
+        const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
+
+        const tags = await pickTags(projectStorage, filterByTags, {
+            useDefaultTags: false,
+            useNoTagsDefined: true
+        });
+
+        if (!tags) {
+            return;
+        }
+
+        Container.context.globalState.update("filterByTags", tags);
+        providerManager.refreshStorageTreeView();
     }
 
     loadProjectsFile();

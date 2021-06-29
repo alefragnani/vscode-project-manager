@@ -27,6 +27,8 @@
     "projectManager.commands.editTags.title": "Edit Tags",
     "projectManager.commands.viewAsTags.title": "View as Tags",
     "projectManager.commands.viewAsList.title": "View as List",
+    "projectManager.commands.filterProjectsByTag#sideBar.title": "Filter Projects by Tag",
+    "projectManager.commands.filterProjectsByTag.title": "Project Manager: Filter Projects by Tag",
     "projectManager.commands.addToFavorites.title": "Add to Favorites",
     "projectManager.commands.toggleProjectEnabled.title": "Disable Project",
     "projectManager.commands.hideGitWelcome.title": "Hide Git Welcome Panel",
