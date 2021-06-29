@@ -228,6 +228,10 @@
 				"title": "%projectManager.commands.renameProject.title%"
 			},
 			{
+				"command": "_projectManager.editTags",
+				"title": "%projectManager.commands.editTags.title%"
+			},
+			{
 				"command": "projectManager.whatsNew",
 				"title": "%projectManager.commands.whatsNew.title%"
 			},
@@ -291,7 +295,11 @@
 					"when": "false"
 				},
 				{
-					"command": "projectManager.openSettings#sideBarFavorites",
+					"command": "_projectManager.editTags",
+					"when": "false"
+				},
+				{
+                    "command": "projectManager.openSettings#sideBarFavorites",
 					"when": "false"
 				},
 				{
@@ -440,7 +448,12 @@
 					"group": "favorites"
 				},
 				{
-					"command": "_projectManager.toggleProjectEnabled",
+					"command": "_projectManager.editTags",
+					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
+					"group": "favorites"
+				},
+				{
+                    "command": "_projectManager.toggleProjectEnabled",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},

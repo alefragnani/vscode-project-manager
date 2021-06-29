@@ -24,6 +24,7 @@
     "projectManager.commands.addToWorkspace.title": "Project Manager: Add Project to Workspace",
     "projectManager.commands.deleteProject.title": "Delete Project",
     "projectManager.commands.renameProject.title": "Rename Project",
+    "projectManager.commands.editTags.title": "Edit Tags",
     "projectManager.commands.addToFavorites.title": "Add to Favorites",
     "projectManager.commands.toggleProjectEnabled.title": "Disable Project",
     "projectManager.commands.hideGitWelcome.title": "Hide Git Welcome Panel",
