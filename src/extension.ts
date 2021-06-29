@@ -27,6 +27,7 @@ import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
 import { Project } from "../vscode-project-manager-core/src/project";
 import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
+import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -107,6 +108,20 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
     vscode.commands.registerCommand("_projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
 
+    const viewAsList = Container.context.globalState.get<boolean>("viewAsList", true);
+    vscode.commands.executeCommand("setContext", "projectManager.viewAsList", viewAsList);
+    vscode.commands.registerCommand("_projectManager.viewAsTags", () => toggleViewAsFavoriteProjects(ViewFavoritesAs.VIEW_AS_TAGS));
+    vscode.commands.registerCommand("_projectManager.viewAsList", () => toggleViewAsFavoriteProjects(ViewFavoritesAs.VIEW_AS_LIST));
+
+    function toggleViewAsFavoriteProjects(view: ViewFavoritesAs) {
+        if (view === ViewFavoritesAs.VIEW_AS_LIST) {
+            vscode.commands.executeCommand("setContext", "projectManager.viewAsList", true);
+        } else {
+            vscode.commands.executeCommand("setContext", "projectManager.viewAsList", false);
+        }
+        Container.context.globalState.update("viewAsList", view === ViewFavoritesAs.VIEW_AS_LIST);
+        providerManager.refreshTreeViews();
+    }
 
     loadProjectsFile();
 

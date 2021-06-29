@@ -142,6 +142,16 @@
 				"icon": "$(edit)"
 			},
 			{
+                "command": "_projectManager.viewAsTags",
+				"title": "%projectManager.commands.viewAsTags.title%",
+				"icon": "$(list-tree)"
+			},
+			{
+				"command": "_projectManager.viewAsList",
+				"title": "%projectManager.commands.viewAsList.title%",
+				"icon": "$(list-flat)"
+			},
+			{
 				"command": "projectManager.refreshProjects",
 				"title": "%projectManager.commands.refreshProjects.title%"
 			},
@@ -299,6 +309,14 @@
 					"when": "false"
 				},
 				{
+                    "command": "_projectManager.viewAsTags",
+					"when": "false"
+				},
+				{
+					"command": "_projectManager.viewAsList",
+					"when": "false"
+				},
+				{
                     "command": "projectManager.openSettings#sideBarFavorites",
 					"when": "false"
 				},
@@ -351,7 +369,17 @@
 					"group": "navigation@11"
 				},
 				{
-					"command": "projectManager.openSettings#sideBarFavorites",
+                    "command": "_projectManager.viewAsTags",
+					"when": "view == projectsExplorerFavorites && projectManager.viewAsList",
+					"group": "navigation@12"
+				},
+				{
+					"command": "_projectManager.viewAsList",
+					"when": "view == projectsExplorerFavorites && !projectManager.viewAsList",
+					"group": "navigation@13"
+				},
+				{
+                    "command": "projectManager.openSettings#sideBarFavorites",
 					"when": "view == projectsExplorerFavorites",
 					"group": "2_projectManager"
 				},
