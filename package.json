@@ -326,6 +326,10 @@
 					"when": "false"
 				},
 				{
+					"command": "projectManager.filterProjectsByTag#sideBar",
+					"when": "false"
+				},
+				{
                     "command": "projectManager.openSettings#sideBarFavorites",
 					"when": "false"
 				},
