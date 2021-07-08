@@ -24,6 +24,11 @@
     "projectManager.commands.addToWorkspace.title": "Project Manager: Add Project to Workspace",
     "projectManager.commands.deleteProject.title": "Delete Project",
     "projectManager.commands.renameProject.title": "Rename Project",
+    "projectManager.commands.editTags.title": "Edit Tags",
+    "projectManager.commands.viewAsTags.title": "View as Tags",
+    "projectManager.commands.viewAsList.title": "View as List",
+    "projectManager.commands.filterProjectsByTag#sideBar.title": "Filter Projects by Tag",
+    "projectManager.commands.filterProjectsByTag.title": "Project Manager: Filter Projects by Tag",
     "projectManager.commands.addToFavorites.title": "Add to Favorites",
     "projectManager.commands.toggleProjectEnabled.title": "Disable Project",
     "projectManager.commands.hideGitWelcome.title": "Hide Git Welcome Panel",
@@ -58,5 +63,6 @@
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Should ignore projects found inside other projects?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Should check for invalid paths before listing, showing a message below the project name?",
     "projectManager.configuration.filterOnFullPath.description": "Should filter projects through full path?",
-    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty."
+    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty.",
+    "projectManager.configuration.tags.description": "Indicates the default Tags"
 }

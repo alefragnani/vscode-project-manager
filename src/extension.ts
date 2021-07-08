@@ -26,6 +26,8 @@ import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
 import { Project } from "../vscode-project-manager-core/src/project";
+import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
+import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -102,9 +104,43 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.addToWorkspace", () => addProjectToWorkspace(undefined));
     vscode.commands.registerCommand("_projectManager.deleteProject", (node) => deleteProject(node));
     vscode.commands.registerCommand("_projectManager.renameProject", (node) => renameProject(node));
+    vscode.commands.registerCommand("_projectManager.editTags", (node) => editTags(node));
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
     vscode.commands.registerCommand("_projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
 
+    const viewAsList = Container.context.globalState.get<boolean>("viewAsList", true);
+    vscode.commands.executeCommand("setContext", "projectManager.viewAsList", viewAsList);
+    vscode.commands.registerCommand("_projectManager.viewAsTags", () => toggleViewAsFavoriteProjects(ViewFavoritesAs.VIEW_AS_TAGS));
+    vscode.commands.registerCommand("_projectManager.viewAsList", () => toggleViewAsFavoriteProjects(ViewFavoritesAs.VIEW_AS_LIST));
+    vscode.commands.registerCommand("projectManager.filterProjectsByTag", () => filterProjectsByTag());
+    vscode.commands.registerCommand("projectManager.filterProjectsByTag#sideBar", () => filterProjectsByTag());
+
+    function toggleViewAsFavoriteProjects(view: ViewFavoritesAs) {
+        if (view === ViewFavoritesAs.VIEW_AS_LIST) {
+            vscode.commands.executeCommand("setContext", "projectManager.viewAsList", true);
+        } else {
+            vscode.commands.executeCommand("setContext", "projectManager.viewAsList", false);
+        }
+        Container.context.globalState.update("viewAsList", view === ViewFavoritesAs.VIEW_AS_LIST);
+        providerManager.refreshTreeViews();
+    }
+
+    async function filterProjectsByTag() {
+        const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
+
+        const tags = await pickTags(projectStorage, filterByTags, {
+            useDefaultTags: false,
+            useNoTagsDefined: true,
+            showWarningWhenHasNoTagsToPick: true
+        });
+
+        if (!tags) {
+            return;
+        }
+
+        Container.context.globalState.update("filterByTags", tags);
+        providerManager.refreshStorageTreeView();
+    }
 
     loadProjectsFile();
 
@@ -385,7 +421,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     function showListProjectsQuickPick(folderNotFound: (name: string, path: string) => void): Promise<Project | undefined> {
         let items = [];
-        items = projectStorage.map();
+        const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
+        items = projectStorage.getProjectsByTags(filterByTags);
         items = locators.sortGroupedList(items);
 
         return new Promise<Project | undefined>((resolve, reject) => {
@@ -530,6 +567,25 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showErrorMessage("Project already exists!");
             }
         });
+    }
+
+    async function editTags(node: any) {
+
+        const project = projectStorage.existsWithRootPath(node.command.arguments[0]);
+        if (!project) {
+            return;
+        }
+
+        const picked = await pickTags(projectStorage, project.tags, {
+            useDefaultTags: true,
+            useNoTagsDefined: false
+        });
+
+        if (picked) {
+            projectStorage.editTags(project.name, picked);
+            projectStorage.save();
+            vscode.window.showInformationMessage("Project updated!");
+        }
     }
 
     function toggleProjectEnabled(node: any, askForUndo = true) {
