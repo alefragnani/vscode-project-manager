@@ -130,7 +130,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         const tags = await pickTags(projectStorage, filterByTags, {
             useDefaultTags: false,
-            useNoTagsDefined: true
+            useNoTagsDefined: true,
+            showWarningWhenHasNoTagsToPick: true
         });
 
         if (!tags) {
