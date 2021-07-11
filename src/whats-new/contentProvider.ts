@@ -20,6 +20,32 @@ export class ProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.3.0", releaseDate: "June 2021" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Organize your projects with <b>Tags</b>",
+                id: 50,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Documentation about how to use the extension on Remote Development",
+                id: 477,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Use specific icons for each kind of remote project",
+                id: 483,
+                kind: IssueKind.Issue
+            }
+        });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.2.0", releaseDate: "May 2021" } });
         changeLog.push({
             kind: ChangeLogKind.NEW,

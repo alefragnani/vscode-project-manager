@@ -7,8 +7,9 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 12.2
+# What's new in Project Manager 12.3
 
+* Organize your projects with **Tags**
 * Adds **Virtual Workspaces** support
 * Adds **Workspace Trust** support
 * Improved **Side Bar** usability
@@ -49,6 +50,7 @@ Here are some of the features that **Project Manager** provides:
 
 * Save any folder or workspace as a **Project**
 * Auto-detect **Git**, **Mercurial** or **SVN** repositiories
+* Organize your projects using **Tags**
 * Open projects in the same or new window
 * Identify _deleted/renamed_ projects
 * A **Status Bar** which identifies the current project

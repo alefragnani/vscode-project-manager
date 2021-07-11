@@ -1,3 +1,9 @@
+## [12.3.0] - 2021-07-11
+### Added
+- Organize your projects with **Tags** (issue [#50](https://github.com/alefragnani/vscode-project-manager/issues/50))
+- Documentation about how to use the extension on Remote Development (issue [#477](https://github.com/alefragnani/vscode-project-manager/issues/477))
+- Use specific icons for each kind of remote project (issue [#483](https://github.com/alefragnani/vscode-project-manager/issues/483))
+
 ## [12.2.0] - 2021-06-10
 ### Added
 - Support **Virtual Workspaces** (issue [#500](https://github.com/alefragnani/vscode-project-manager/issues/500))

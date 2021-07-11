@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "12.2.0",
+	"version": "12.3.0",
 	"publisher": "alefragnani",
 	"engines": {
 		"vscode": "^1.56.0"
