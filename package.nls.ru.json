@@ -24,6 +24,11 @@
     "projectManager.commands.addToWorkspace.title": "Менеджер проектов: Добавить проект в рабочую область",
     "projectManager.commands.deleteProject.title": "Удалить проект",
     "projectManager.commands.renameProject.title": "Переименовать проект",
+    "projectManager.commands.editTags.title": "Отредактировать тэги",
+    "projectManager.commands.viewAsTags.title": "Просмотреть как теги",
+    "projectManager.commands.viewAsList.title": "Просмотреть как список",
+    "projectManager.commands.filterProjectsByTag#sideBar.title": "Фильтровать проекты по тегу",
+    "projectManager.commands.filterProjectsByTag.title": "Менеджер проектов: Фильтровать проекты по тегу",
     "projectManager.commands.addToFavorites.title": "Добавить в избранное",
     "projectManager.commands.toggleProjectEnabled.title": "Отключить проект",
     "projectManager.commands.hideGitWelcome.title": "Скрыть панель приветствия Git",
@@ -57,5 +62,7 @@
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Нужно ли кэшировать VSCode, Git и SVN найденные проекты?",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Следует игнорировать проекты, найденные внутри других проектов?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Следует ли проверять наличие недопустимых путей перед выводом списка, показывая сообщение под именем проекта?",
-    "projectManager.configuration.filterOnFullPath.description": "Следует ли фильтровать проекты по полному пути?"
+    "projectManager.configuration.filterOnFullPath.description": "Следует ли фильтровать проекты по полному пути?",
+    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Указывает, открывает ли команда «Новое окно» проект в текущем пустом окне.",
+    "projectManager.configuration.tags.description": "Указывает список тегов, которые вы можете использовать для организации ваших проектов."
 }

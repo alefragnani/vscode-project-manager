@@ -24,6 +24,11 @@
     "projectManager.commands.addToWorkspace.title": "Project Manager: Adicionar Projeto ao Espaço de Trabalho",
     "projectManager.commands.deleteProject.title": "Excluir Projeto",
     "projectManager.commands.renameProject.title": "Renomear Projeto",
+    "projectManager.commands.editTags.title": "Editar Etiquetas",
+    "projectManager.commands.viewAsTags.title": "Exibir como Etiquetas",
+    "projectManager.commands.viewAsList.title": "Exibir como Lista",
+    "projectManager.commands.filterProjectsByTag#sideBar.title": "Filtrar Projetos por Etiqueta",
+    "projectManager.commands.filterProjectsByTag.title": "Project Manager: Filtrar Projetos por Etiqueta",
     "projectManager.commands.addToFavorites.title": "Adicionar aos Favoritos",
     "projectManager.commands.toggleProjectEnabled.title": "Desabilitar Projeto",
     "projectManager.commands.hideGitWelcome.title": "Esconder Painel de Boas Vindas Git",
@@ -57,5 +62,7 @@
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Controla se deve armazenar em cache os projetos VSCode, Git e SVN encontrados",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Controla se deve ignorar projetos localizados dentro de outros projetos",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Controla se deve verificar por pastas inválidas antes de listá-las, apresentando uma mensagem abaixo do nome do projeto",
-    "projectManager.configuration.filterOnFullPath.description": "Controla se deve filtrar projetos pelo caminho completo"
+    "projectManager.configuration.filterOnFullPath.description": "Controla se deve filtrar projetos pelo caminho completo",
+    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Indica se o comando Nova Janela abre o projeto na janela corrente, quando vazia",
+    "projectManager.configuration.tags.description": "Indica a lista de etiquetas que você pode usar para organizar seus projetos"
 }
