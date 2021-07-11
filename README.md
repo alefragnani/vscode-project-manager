@@ -62,7 +62,7 @@ Here are some of the features that **Project Manager** provides:
 * `Project Manager: Edit Project` Edit your projects manually (`projects.json`)
 * `Project Manager: List Projects to Open` List all saved/detected projects and pick one
 * `Project Manager: List Projects to Open in New Window` List all saved/detected projects and pick one to be opened in New Window
-* `Project Manager: Refresh Projects` Refresh the cached projects
+* `Project Manager: Filter Projects by Tag` Filter the Favorite projects by selected tags
 
 ## Manage your projects
 
@@ -83,32 +83,31 @@ For easier customization of your project list, you can edit the `projects.json` 
     {
         "name": "Pascal MI",
         "rootPath": "c:\\PascalProjects\\pascal-menu-insight",
-        "paths": [],
-        "group": "",
+        "tags": [],
         "enabled": true
     },
     {
         "name": "Bookmarks",
         "rootPath": "$home\\Documents\\GitHub\\vscode-bookmarks",
-        "paths": [],
-        "group": "",
+        "tags": [
+            "Personal",
+            "VS Code"
+        ],
         "enabled": true
     },
     {
         "name": "Numbered Bookmarks",
         "rootPath": "~\\Documents\\GitHub\\vscode-numbered-bookmarks",
-        "paths": [],
-        "group": "",
+        "tags": [
+            "Personal",
+            "VS Code"
+        ],
         "enabled": false
     }
 ]
 ```
 
-For now, only `name`, `rootPath`, and `enabled` fields are used.
-
 > You can use `~` or `$home` while defining any path. It will be replaced by your HOME folder.
-
-> Projects that are *not* `enabled` will be hidden from project listings until re-enabled.
 
 > Be sure that the JSON file is well-formed. Otherwise, **Project Manager** will not be able to open it, and an error message like this should appear. In this case, you should use the `Open File` button to fix it.
 
@@ -279,11 +278,30 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.openInCurrenWindowIfEmpty": "always"
 ```
 
+* Indicates the list of tags you can use to organize your projects _(`Personal` and `Work` by default)_
+
+```json
+    "projectManager.tags": [
+        "Personal", 
+        "Work",
+        "VS Code",
+        "Learning"
+    ]
+```
+
 ## Side Bar
 
 The **Project Manager** extension has its own **Side Bar**, with a variety of commands to improve you productivity. 
 
 ![Side Bar](images/vscode-project-manager-side-bar.png)
+
+### Project Tags - View and Filter
+
+Starting in v12.3, you can now organize your Projects with **Tags**. 
+
+You can define your custom tags (via `projectManager.tags` setting), define multiple **tags** for each project, and filter the projects baded on their **tags**. 
+
+![Side Bar](images/vscode-project-manager-side-bar-tags.gif)
 
 ## Installation and Configuration
 
