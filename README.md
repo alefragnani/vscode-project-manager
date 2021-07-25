@@ -49,7 +49,7 @@ You can define your own **Projects** (also called **Favorites**), or choose for 
 Here are some of the features that **Project Manager** provides:
 
 * Save any folder or workspace as a **Project**
-* Auto-detect **Git**, **Mercurial** or **SVN** repositiories
+* Auto-detect **Git**, **Mercurial** or **SVN** repositories
 * Organize your projects using **Tags**
 * Open projects in the same or new window
 * Identify _deleted/renamed_ projects
@@ -271,9 +271,9 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 * Indicates if the `New Window` command should open the project in current window, when empty (`always` by default)
 
-  * `always`: Whenever you call the Open in New Window command, it will open in the current window, if empty"
-  * `onlyUsingCommandPalette`: Only open in the current window if you use the Command Palette"
-  * `onlyUsingSideBar`: Only open in the current window if you use the Side Bar"
+  * `always`: Whenever you call the Open in New Window command, it will open in the current window, if empty
+  * `onlyUsingCommandPalette`: Only open in the current window if you use the Command Palette
+  * `onlyUsingSideBar`: Only open in the current window if you use the Side Bar
   * `never`: Works as today. The Open in New Window command will always open in New Window
 
 ```json 
