@@ -161,6 +161,11 @@ export function activate(context: vscode.ExtensionContext) {
         if (cfg.affectsConfiguration("workbench.iconTheme")) {
             providerManager.refreshTreeViews()
         }
+
+        if (cfg.affectsConfiguration("projectManager.sortList")) {
+            providerManager.storageProvider.refresh();
+            providerManager.updateTreeViewStorage();
+        }
     }));
 
     showStatusBar(projectStorage, locators);
