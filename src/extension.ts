@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
     // load the projects
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
-    const locators: Locators = new Locators(Container.stack);
+    const locators: Locators = new Locators();
     const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
 
