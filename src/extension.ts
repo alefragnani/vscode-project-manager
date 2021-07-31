@@ -28,6 +28,7 @@ import { registerOpenSettings } from "./commands/openSettings";
 import { Project } from "../vscode-project-manager-core/src/project";
 import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
 import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
+import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -49,6 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
     registerOpenSettings();
     registerSupportProjectManager();
     registerHelpAndFeedbackView(context);
+    registerSortBy();
 
     registerWhatsNew();
 
