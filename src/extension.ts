@@ -28,24 +28,21 @@ import { registerOpenSettings } from "./commands/openSettings";
 import { Project } from "../vscode-project-manager-core/src/project";
 import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
 import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
+import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-    Container.context = context;
+    Container.initialize(context);
 
     // Sets storage path if recommended path provided by current version of VS Code.  
     PathUtils.setExtensionContext(context);
 
-    const recentProjects: string = context.globalState.get<string>("recent", "");
-    const stack: Stack = new Stack();
-    stack.fromString(recentProjects);
-
     // load the projects
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
-    const locators: Locators = new Locators(stack);
+    const locators: Locators = new Locators();
     const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
 
@@ -53,6 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
     registerOpenSettings();
     registerSupportProjectManager();
     registerHelpAndFeedbackView(context);
+    registerSortBy();
 
     registerWhatsNew();
 
@@ -164,6 +162,12 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (cfg.affectsConfiguration("workbench.iconTheme")) {
             providerManager.refreshTreeViews()
+        }
+
+        if (cfg.affectsConfiguration("projectManager.sortList")) {
+            updateSortByContext();
+            providerManager.storageProvider.refresh();
+            providerManager.updateTreeViewStorage();
         }
     }));
 
@@ -279,8 +283,8 @@ export function activate(context: vscode.ExtensionContext) {
             }
    
             if (!projectStorage.exists(projectName)) {
-                stack.push(projectName);
-                context.globalState.update("recent", stack.toString());
+                Container.stack.push(projectName);
+                context.globalState.update("recent", Container.stack.toString());
                 projectStorage.push(projectName, rootPath);
                 projectStorage.save();
                 providerManager.updateTreeViewStorage();
@@ -303,8 +307,8 @@ export function activate(context: vscode.ExtensionContext) {
                     }
 
                     if (option.title === "Update") {
-                        stack.push(projectName);
-                        context.globalState.update("recent", stack.toString());
+                        Container.stack.push(projectName);
+                        context.globalState.update("recent", Container.stack.toString());
                         projectStorage.updateRootPath(projectName, rootPath);
                         projectStorage.save();
                         providerManager.updateTreeViewStorage();
@@ -334,8 +338,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         const pick = await showListProjectsQuickPick(folderNotFound); 
         if (pick) {
-            stack.push(pick.name);
-            context.globalState.update("recent", stack.toString());
+            Container.stack.push(pick.name);
+            context.globalState.update("recent", Container.stack.toString());
 
             const openInNewWindow = shouldOpenInNewWindow(forceNewWindow, CommandLocation.CommandPalette);
             const uri = buildProjectUri(pick.rootPath);
@@ -529,7 +533,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     function deleteProject(node: any) {
-        stack.pop(node.command.arguments[1]);
+        Container.stack.pop(node.command.arguments[1]);
         projectStorage.pop(node.command.arguments[1]);
         projectStorage.save();
         providerManager.updateTreeViewStorage();
@@ -558,7 +562,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             if (!projectStorage.exists(newName)) {
-                stack.rename(oldName, newName)
+                Container.stack.rename(oldName, newName)
                 projectStorage.rename(oldName, newName);
                 projectStorage.save();
                 vscode.window.showInformationMessage("Project renamed!");
