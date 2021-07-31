@@ -615,7 +615,8 @@
 						"Name",
 						"Path",
 						"Recent"
-					]
+					],
+                    "scope": "application"
 				},
 				"projectManager.groupList": {
 					"type": "boolean",
