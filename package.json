@@ -584,7 +584,7 @@
         "submenus": [
             {
                 "id": "projectManager.sideBar.favorites.title",
-                "label": "View & Sort"
+                "label": "%projectManager.submenus.viewAndSort#sideBarFavorites.title%"
             }
         ],
 		"configuration": {

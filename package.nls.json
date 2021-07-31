@@ -27,6 +27,7 @@
     "projectManager.commands.editTags.title": "Edit Tags",
     "projectManager.commands.viewAsTags.title": "View as Tags",
     "projectManager.commands.viewAsList.title": "View as List",
+    "projectManager.submenus.viewAndSort#sideBarFavorites.title": "View & Sort",
     "projectManager.commands.sortBySaved#sideBarFavorites.title": "Sort by Saved",
     "projectManager.commands.sortByName#sideBarFavorites.title": "Sort by Name",
     "projectManager.commands.sortByPath#sideBarFavorites.title": "Sort by Path",
