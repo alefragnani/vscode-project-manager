@@ -165,6 +165,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         if (cfg.affectsConfiguration("projectManager.sortList")) {
+            updateSortByContext();
             providerManager.storageProvider.refresh();
             providerManager.updateTreeViewStorage();
         }
