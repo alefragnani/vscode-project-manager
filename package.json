@@ -144,12 +144,14 @@
 			{
                 "command": "_projectManager.viewAsTags",
 				"title": "%projectManager.commands.viewAsTags.title%",
-				"icon": "$(list-tree)"
+				"icon": "$(list-tree)",
+                "enablement": "projectManager.viewAsList"
 			},
 			{
 				"command": "_projectManager.viewAsList",
 				"title": "%projectManager.commands.viewAsList.title%",
-				"icon": "$(list-flat)"
+				"icon": "$(list-flat)",
+                "enablement": "!projectManager.viewAsList"
 			},
 			{
 				"command": "_projectManager.sortBySaved#sideBarFavorites",
@@ -564,20 +566,28 @@
 			],
             "projectManager.sideBar.favorites.title": [
                 {
+                    "command": "_projectManager.viewAsList",
+                    "group": "1_projectManager#sideBarFavorites"
+                },
+                {
+                    "command": "_projectManager.viewAsTags",
+                    "group": "1_projectManager#sideBarFavorites"
+                },
+                {
                     "command": "_projectManager.sortBySaved#sideBarFavorites",
-                    "group": "projectManager#sideBarFavorites.view@1"
+                    "group": "2_projectManager#sideBarFavorites"
                 },
                 {
                     "command": "_projectManager.sortByName#sideBarFavorites",
-                    "group": "projectManager#sideBarFavorites.view@1"
+                    "group": "2_projectManager#sideBarFavorites"
                 },
                 {
                     "command": "_projectManager.sortByPath#sideBarFavorites",
-                    "group": "projectManager#sideBarFavorites.view@1"
+                    "group": "2_projectManager#sideBarFavorites"
                 },
                 {
                     "command": "_projectManager.sortByRecent#sideBarFavorites",
-                    "group": "projectManager#sideBarFavorites.view@1"
+                    "group": "2_projectManager#sideBarFavorites"
                 }
             ]
 		},
