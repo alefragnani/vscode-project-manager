@@ -142,14 +142,14 @@
 				"icon": "$(edit)"
 			},
 			{
-                "command": "_projectManager.viewAsTags",
-				"title": "%projectManager.commands.viewAsTags.title%",
+                "command": "_projectManager.viewAsTags#sideBarFavorites",
+				"title": "%projectManager.commands.viewAsTags#sideBarFavorites.title%",
 				"icon": "$(list-tree)",
                 "enablement": "projectManager.viewAsList"
 			},
 			{
-				"command": "_projectManager.viewAsList",
-				"title": "%projectManager.commands.viewAsList.title%",
+				"command": "_projectManager.viewAsList#sideBarFavorites",
+				"title": "%projectManager.commands.viewAsList#sideBarFavorites.title%",
 				"icon": "$(list-flat)",
                 "enablement": "!projectManager.viewAsList"
 			},
@@ -340,11 +340,11 @@
 					"when": "false"
 				},
 				{
-                    "command": "_projectManager.viewAsTags",
+                    "command": "_projectManager.viewAsTags#sideBarFavorites",
 					"when": "false"
 				},
 				{
-					"command": "_projectManager.viewAsList",
+					"command": "_projectManager.viewAsList#sideBarFavorites",
 					"when": "false"
 				},
 				{
@@ -420,12 +420,12 @@
 					"group": "navigation@11"
 				},
 				{
-                    "command": "_projectManager.viewAsTags",
+                    "command": "_projectManager.viewAsTags#sideBarFavorites",
 					"when": "view == projectsExplorerFavorites && projectManager.viewAsList",
 					"group": "navigation@12"
 				},
 				{
-					"command": "_projectManager.viewAsList",
+					"command": "_projectManager.viewAsList#sideBarFavorites",
 					"when": "view == projectsExplorerFavorites && !projectManager.viewAsList",
 					"group": "navigation@13"
                 },
@@ -566,11 +566,11 @@
 			],
             "projectManager.sideBar.favorites.title": [
                 {
-                    "command": "_projectManager.viewAsList",
+                    "command": "_projectManager.viewAsList#sideBarFavorites",
                     "group": "1_projectManager#sideBarFavorites"
                 },
                 {
-                    "command": "_projectManager.viewAsTags",
+                    "command": "_projectManager.viewAsTags#sideBarFavorites",
                     "group": "1_projectManager#sideBarFavorites"
                 },
                 {
