@@ -169,6 +169,10 @@ export function activate(context: vscode.ExtensionContext) {
             providerManager.storageProvider.refresh();
             providerManager.updateTreeViewStorage();
         }
+
+        if (cfg.affectsConfiguration("projectManager.showParentFolderInfoOnDuplicates")) {
+            providerManager.refreshTreeViews();
+        }
     }));
 
     showStatusBar(projectStorage, locators);
