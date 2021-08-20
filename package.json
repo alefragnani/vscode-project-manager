@@ -785,6 +785,11 @@
 					"default": true,
 					"description": "%projectManager.configuration.checkInvalidPathsBeforeListing.description%"
 				},
+				"projectManager.showParentFolderInfoOnDuplicates": {
+					"type": "boolean",
+					"default": false,
+					"description": "%projectManager.configuration.showParentFolderInfoOnDuplicates.description%"
+				},
 				"projectManager.filterOnFullPath": {
 					"type": "boolean",
 					"default": false,
