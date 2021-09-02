@@ -349,7 +349,12 @@ export function activate(context: vscode.ExtensionContext) {
             const uri = buildProjectUri(pick.rootPath);
             vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
                 .then(
-                value => ({}),  // done
+                value => {
+                    if (openInNewWindow) {
+                        vscode.commands.executeCommand("workbench.view.explorer")
+                    }
+                    return {} // done
+                },  
                 value => vscode.window.showInformationMessage("Could not open the project!"));
             return;
         }
