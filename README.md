@@ -7,7 +7,7 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 12.3
+# What's new in Project Manager 12.4
 
 * Organize your projects with **Tags**
 * Adds **Virtual Workspaces** support
@@ -198,6 +198,12 @@ You can choose how your projects are sorted
 
 ```json 
     "projectManager.checkInvalidPathsBeforeListing": false
+```
+
+* Should show the parent folder info when projects with same name are detected? (`false` by default)
+
+```json 
+    "projectManager.showParentFolderInfoOnDuplicates": true
 ```
 
 * Filter Projects Through Full Path (`false` by default)

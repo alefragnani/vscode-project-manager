@@ -1,3 +1,16 @@
+## [12.4.0] - 2021-09-08
+### Added
+- `View as` option to Favorites View (issue [#534](https://github.com/alefragnani/vscode-project-manager/issues/534))
+- `Sort by` option to Favorites View (issue [#484](https://github.com/alefragnani/vscode-project-manager/issues/484))
+- Setting to display the parent folder on duplicate (same-name) projects (issue [#306](https://github.com/alefragnani/vscode-project-manager/issues/306))
+
+### Changed
+- Side Bar tooltips now in Markdown (issue [#540](https://github.com/alefragnani/vscode-project-manager/issues/540))
+- Side Bar following `sortList` setting (issue [#366](https://github.com/alefragnani/vscode-project-manager/issues/366))
+
+### Fixed
+- Typos in README (Thanks to @kant [PR #532](https://github.com/alefragnani/vscode-project-manager/pull/532))
+
 ## [12.3.0] - 2021-07-11
 ### Added
 - Organize your projects with **Tags** (issue [#50](https://github.com/alefragnani/vscode-project-manager/issues/50))
