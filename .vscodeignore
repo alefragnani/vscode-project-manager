@@ -11,5 +11,8 @@ test/**
 *.vsix
 package-lock.json
 webpack.config.js
-.github/
+**/.github/
+**/.git/**
+**/.git
+**/.gitmodules
 .devcontainer/
