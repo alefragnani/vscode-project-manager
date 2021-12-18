@@ -25,7 +25,7 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
 
   if (!statusItem) {
       statusItem = window.createStatusBarItem("projectManager.statusBar", StatusBarAlignment.Left);
-      statusItem.name = "Project Manager"
+      statusItem.name = "Project Manager";
   }
   statusItem.text = getCodiconFromUri(workspace0) + " ";
   statusItem.tooltip = currentProjectPath;
