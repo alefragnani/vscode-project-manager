@@ -17,7 +17,7 @@ import { Providers } from "../vscode-project-manager-core/src/sidebar/providers"
 import { showStatusBar, updateStatusBar } from "./statusBar";
 import { getProjectDetails } from "../vscode-project-manager-core/src/suggestion";
 import { CommandLocation, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
-import { isRemotePath, isWindows } from "../vscode-project-manager-core/src/utils/remote";
+import { isMacOS, isRemotePath, isWindows } from "../vscode-project-manager-core/src/utils/remote";
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
 import { Container } from "../vscode-project-manager-core/src/container";
 import { registerWhatsNew } from "./whats-new/commands";
@@ -55,7 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
     registerWhatsNew();
 
     context.subscriptions.push(vscode.commands.registerCommand("_projectManager.openFolderWelcome", () => {
-        const openFolderCommand = isWindows ? "workbench.action.files.openFolder" : "workbench.action.files.openFileFolder"
+        const openFolderCommand = isWindows || isMacOS ? "workbench.action.files.openFolder" : "workbench.action.files.openFileFolder"
         vscode.commands.executeCommand(openFolderCommand)
     }));
     context.subscriptions.push(vscode.commands.registerCommand("projectManager.hideGitWelcome", () => {
