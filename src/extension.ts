@@ -145,7 +145,7 @@ export function activate(context: vscode.ExtensionContext) {
     // // new place to register TreeView
     providerManager.showTreeViewFromAllProviders();
 
-    fs.watchFile(getProjectFilePath(), {interval: 100}, (prev, next) => {
+    fs.watchFile(getProjectFilePath(), (prev, next) => {
         loadProjectsFile();
         providerManager.storageProvider.refresh();
         providerManager.updateTreeViewStorage();
