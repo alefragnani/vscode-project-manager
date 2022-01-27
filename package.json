@@ -785,6 +785,11 @@
 					"default": true,
 					"description": "%projectManager.configuration.checkInvalidPathsBeforeListing.description%"
 				},
+				"projectManager.supportSymlinksOnBaseFolders": {
+					"type": "boolean",
+					"default": false,
+					"description": "%projectManager.configuration.supportSymlinksOnBaseFolders.description%"
+				},
 				"projectManager.showParentFolderInfoOnDuplicates": {
 					"type": "boolean",
 					"default": false,
