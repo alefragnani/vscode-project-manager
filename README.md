@@ -200,6 +200,12 @@ You can choose how your projects are sorted
     "projectManager.checkInvalidPathsBeforeListing": false
 ```
 
+* Should support symlinks on `baseFolders`? (`false` by default)
+
+```json 
+    "projectManager.supportSymlinksOnBaseFolders": true
+```
+
 * Should show the parent folder info when projects with same name are detected? (`false` by default)
 
 ```json 
