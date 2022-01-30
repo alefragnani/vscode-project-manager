@@ -67,6 +67,7 @@
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Controla se deve armazenar em cache os projetos VSCode, Git e SVN encontrados",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Controla se deve ignorar projetos localizados dentro de outros projetos",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Controla se deve verificar por pastas inválidas antes de listá-las, apresentando uma mensagem abaixo do nome do projeto",
+    "projectManager.configuration.supportSymlinksOnBaseFolders.description": "Controla se deve suportar links simbólicos em `baseFolders`?",
     "projectManager.configuration.filterOnFullPath.description": "Controla se deve filtrar projetos pelo caminho completo",
     "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Indica se o comando Nova Janela abre o projeto na janela corrente, quando vazia",
     "projectManager.configuration.tags.description": "Indica a lista de etiquetas que você pode usar para organizar seus projetos"

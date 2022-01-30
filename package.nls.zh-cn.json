@@ -67,6 +67,7 @@
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "是否应该缓存找到的 VSCode、Git 和 SVN 项目？",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "应该忽略其他项目中找到的项目吗？",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "列出之前是否应该检查无效路径，并在项目名称下方显示一条消息？",
+    "projectManager.configuration.supportSymlinksOnBaseFolders.description": "应该支持“baseFolders”上的符号链接吗？",
     "projectManager.configuration.filterOnFullPath.description": "是否应该通过完整路径过滤项目？",
     "projectManager.configuration.openInCurrenWindowIfEmpty.description": "当本窗口为空时，执行在新窗口中打开项目的命令后是否应该打开新窗口？",
     "projectManager.configuration.tags.description": "表示可用于组织项目的标签列表"
