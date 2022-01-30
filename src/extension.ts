@@ -156,6 +156,7 @@ export function activate(context: vscode.ExtensionContext) {
             cfg.affectsConfiguration("projectManager.vscode") || cfg.affectsConfiguration("projectManager.svn") || 
             cfg.affectsConfiguration("projectManager.any") || 
             cfg.affectsConfiguration("projectManager.ignoreProjectsWithinProjects") || 
+            cfg.affectsConfiguration("projectManager.supportSymlinksOnBaseFolders") || 
             cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
             refreshProjects();
         }
