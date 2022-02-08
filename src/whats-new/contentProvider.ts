@@ -46,16 +46,16 @@ export class ProjectManagerContentProvider implements ContentProvider {
             }
         });
         changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: "<b>Duckly</b> becomes a Sponsor"
-        });
-        changeLog.push({
             kind: ChangeLogKind.CHANGED,
             detail: {
                 message: "Remove watchFile interval",
                 id: 575,
                 kind: IssueKind.Issue
             }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.INTERNAL,
+            detail: "<b>Duckly</b> becomes a Sponsor"
         });
 
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.4.0", releaseDate: "August 2021" } });
