@@ -39,6 +39,11 @@
 Eliminate context switching and costly distractions. Create and merge PRs and perform code reviews from inside your IDE while using jump-to-definition, your keybindings, and other IDE favorites.<br> <a title="Learn more about CodeStream" href="https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner">Learn more</a>
 
 <br>
+<a title="Try it out for free" href="https://bit.ly/3usnjZj"><img src="https://storage.googleapis.com/gitduck/img/duckly-sponsor-vsc-opt.png" width="25%"/></a></br>
+Easy pair programming with any IDE. Duckly enables you to talk, share your code in real-time, server and terminal with people using different IDEs.<br> <a title="Try it out for free" href="https://bit.ly/3usnjZj">Try it out for free</a>
+
+<br>
+<br>
 
 # Project Manager
 
