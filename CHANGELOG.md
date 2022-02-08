@@ -1,3 +1,13 @@
+## [12.5.0] - 2022-02-08
+### Added
+- New setting to support symlinks on `baseFolder` setting (issue [#583](https://github.com/alefragnani/vscode-project-manager/issues/583))
+- Support new MacOS File Menu API (issue [#555](https://github.com/alefragnani/vscode-project-manager/issues/555))
+- Support new `createStatusBarItem` API (issue [#521](https://github.com/alefragnani/vscode-project-manager/issues/521))
+- Duckly becomes a Sponsor
+
+### Changed
+- Remove `watchFile` interval (issue [#575](https://github.com/alefragnani/vscode-project-manager/issues/575))
+
 ## [12.4.0] - 2021-09-08
 ### Added
 - `View as` option to Favorites View (issue [#534](https://github.com/alefragnani/vscode-project-manager/issues/534))

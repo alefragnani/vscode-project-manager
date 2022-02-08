@@ -20,6 +20,44 @@ export class ProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.5.0", releaseDate: "January 2022" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "New setting to support symlinks on baseFolder setting",
+                id: 583,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support new MacOS File Menu API",
+                id: 555,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support new createStatusBarItem API",
+                id: 521,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: "<b>Duckly</b> becomes a Sponsor"
+        });
+        changeLog.push({
+            kind: ChangeLogKind.CHANGED,
+            detail: {
+                message: "Remove watchFile interval",
+                id: 575,
+                kind: IssueKind.Issue
+            }
+        });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.4.0", releaseDate: "August 2021" } });
         changeLog.push({
             kind: ChangeLogKind.NEW,
@@ -249,41 +287,6 @@ export class ProjectManagerContentProvider implements ContentProvider {
                 message: "Use <b>vscode-ext-help-and-feedback</b> package",
                 id: 432,
                 kind: IssueKind.Issue
-            }
-        });
-
-        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "11.3.0", releaseDate: "September 2020" } });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Support <b>$home</b> and <b>\"~\" (tilde)</b> symbol on projectLocation setting",
-                id: 384,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Support <b>~</b> (tilde) symbol on any path related setting",
-                id: 414,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Support <b>glob</b> patterns in <b>ignoredFolders</b> settings",
-                id: 278,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Czech - Simplified Chinese",
-                id: 412,
-                kind: IssueKind.PR,
-                kudos: "@Amereyeu"
             }
         });
 
