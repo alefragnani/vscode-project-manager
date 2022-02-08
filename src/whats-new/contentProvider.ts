@@ -325,6 +325,23 @@ export class ProjectManagerSponsorProvider implements SponsorProvider {
                  Learn more</a>` 
         };
         sponsors.push(sponsorCodeStream);
+        const sponsorDuckly: Sponsor = <Sponsor>{
+            title: "Try it out for free",
+            link: "https://bit.ly/3usnjZj",
+            image: {
+                dark: "https://storage.googleapis.com/gitduck/img/duckly-sponsor-vsc-opt.png",
+                light: "https://storage.googleapis.com/gitduck/img/duckly-sponsor-vsc-opt.png"
+            },
+            width: 27,
+            message: `<p>Easy pair programming with any IDE. 
+                Duckly enables you to talk, share your code in real-time, server and terminal 
+                with people using different IDEs.<p>`,
+            extra: 
+                `<a title="Try it out for free" href="https://bit.ly/3usnjZj">
+                Try it out for free</a>` 
+
+        };
+        sponsors.push(sponsorDuckly);
         return sponsors
     }
 }
