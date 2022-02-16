@@ -800,7 +800,7 @@
 					"default": false,
 					"description": "%projectManager.configuration.filterOnFullPath.description%"
 				},
-				"projectManager.openInCurrenWindowIfEmpty": {
+				"projectManager.openInCurrentWindowIfEmpty": {
 					"type": "string",
 					"default": "always",
 					"enum": [
@@ -815,7 +815,7 @@
 						"Only open in the current window if you use the Side Bar",
 						"Works as today. The Open in New Window command will always open in New Window"
 					],
-					"description": "%projectManager.configuration.openInCurrenWindowIfEmpty.description%"
+					"description": "%projectManager.configuration.openInCurrentWindowIfEmpty.description%"
 				},
                 "projectManager.tags": {
                     "type": "array",

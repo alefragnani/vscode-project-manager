@@ -365,7 +365,7 @@ export function activate(context: vscode.ExtensionContext) {
             return openInNewWindow;
         }
 
-        const config = vscode.workspace.getConfiguration("projectManager").get<string>("openInCurrenWindowIfEmpty");
+        const config = vscode.workspace.getConfiguration("projectManager").get<string>("openInCurrentWindowIfEmpty");
         if (config === OpenInCurrentWindowIfEmptyMode.always) {
             return false;
         }

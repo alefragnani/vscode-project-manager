@@ -69,6 +69,6 @@
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Следует ли проверять наличие недопустимых путей перед выводом списка, показывая сообщение под именем проекта?",
     "projectManager.configuration.supportSymlinksOnBaseFolders.description": "Должны ли поддерживаться символические ссылки на `baseFolders`?",
     "projectManager.configuration.filterOnFullPath.description": "Следует ли фильтровать проекты по полному пути?",
-    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Указывает, открывает ли команда «Новое окно» проект в текущем пустом окне.",
+    "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Указывает, открывает ли команда «Новое окно» проект в текущем пустом окне.",
     "projectManager.configuration.tags.description": "Указывает список тегов, которые вы можете использовать для организации ваших проектов."
 }
