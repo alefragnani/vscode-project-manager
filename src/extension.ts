@@ -438,7 +438,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             const options = <vscode.QuickPickOptions> {
                 matchOnDescription: vscode.workspace.getConfiguration("projectManager").get("filterOnFullPath", false),
-                matchOnDetail: false,
+                matchOnDetail: true,
                 placeHolder: "Loading Projects (pick one...)"
             };
     
