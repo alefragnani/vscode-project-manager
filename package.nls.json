@@ -70,6 +70,6 @@
     "projectManager.configuration.supportSymlinksOnBaseFolders.description": "Should support symlinks on `baseFolders`?",
     "projectManager.configuration.showParentFolderInfoOnDuplicates.description": "Should show the parent folder info when projects with same name are detected?",
     "projectManager.configuration.filterOnFullPath.description": "Should filter projects through full path?",
-    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty.",
+    "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty.",
     "projectManager.configuration.tags.description": "Indicates the list of tags you can use to organize your projects"
 }

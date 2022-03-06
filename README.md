@@ -295,7 +295,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
   * `never`: Works as today. The Open in New Window command will always open in New Window
 
 ```json 
-    "projectManager.openInCurrenWindowIfEmpty": "always"
+    "projectManager.openInCurrentWindowIfEmpty": "always"
 ```
 
 * Indicates the list of tags you can use to organize your projects _(`Personal` and `Work` by default)_
