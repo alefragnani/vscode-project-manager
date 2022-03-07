@@ -800,6 +800,24 @@
 					"default": false,
 					"description": "%projectManager.configuration.filterOnFullPath.description%"
 				},
+				"projectManager.openInCurrenWindowIfEmpty": {
+					"type": "string",
+					"default": "always",
+					"enum": [
+						"always",
+						"onlyUsingCommandPalette",
+						"onlyUsingSideBar",
+						"never"
+					],
+					"enumDescriptions": [
+						"Whenever you call the Open in New Window command, it will open in the current window, if empty",
+						"Only open in the current window if you use the Command Palette",
+						"Only open in the current window if you use the Side Bar",
+						"Works as today. The Open in New Window command will always open in New Window"
+					],
+					"description": "%projectManager.configuration.openInCurrenWindowIfEmpty.description%",
+                    "deprecationMessage": "%projectManager.configuration.openInCurrenWindowIfEmpty.deprecation%"
+				},
 				"projectManager.openInCurrentWindowIfEmpty": {
 					"type": "string",
 					"default": "always",

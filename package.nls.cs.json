@@ -69,6 +69,8 @@
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Před výpisem zkontrolovat neplatné cesty a zobrazit zprávu pod názvem projektu?",
     "projectManager.configuration.supportSymlinksOnBaseFolders.description": "Měly by podporovat symbolické odkazy na `baseFolders`?",
     "projectManager.configuration.filterOnFullPath.description": "Filtrovat projekty celou cestou?",
+    "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Označuje, zda příkaz \"Nové okno\" otevře projekt v aktuálním okně, je-li prázdný.",
+    "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Místo toho použijte `openInCurrentWindowIfEmpty`",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Označuje, zda příkaz \"Nové okno\" otevře projekt v aktuálním okně, je-li prázdný.",
     "projectManager.configuration.tags.description": "Označuje seznam značek, které můžete použít k uspořádání projektů"
 }

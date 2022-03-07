@@ -366,8 +366,16 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         // Check for setting name before and after typo was corrected
-        const config = vscode.workspace.getConfiguration("projectManager").get<string>("openInCurrenWindowIfEmpty")
-            || vscode.workspace.getConfiguration("projectManager").get<string>("openInCurrentWindowIfEmpty");
+        const oldValue =  vscode.workspace.getConfiguration("projectManager").inspect("openInCurrenWindowIfEmpty");
+        const newValue =  vscode.workspace.getConfiguration("projectManager").inspect("openInCurrentWindowIfEmpty");
+
+        let config: string | unknown;
+        if (oldValue.globalValue) {
+            config = newValue.globalValue === undefined ? oldValue.globalValue : newValue.globalValue;
+        } else {
+            config = vscode.workspace.getConfiguration("projectManager").get<string>("openInCurrentWindowIfEmpty")
+        }
+        
         if (config === OpenInCurrentWindowIfEmptyMode.always) {
             return false;
         }
