@@ -16,7 +16,7 @@ import { Providers } from "../vscode-project-manager-core/src/sidebar/providers"
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
 import { getProjectDetails } from "../vscode-project-manager-core/src/suggestion";
-import { CommandLocation, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
+import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
 import { isMacOS, isRemotePath, isWindows } from "../vscode-project-manager-core/src/utils/remote";
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
 import { Container } from "../vscode-project-manager-core/src/container";
@@ -71,10 +71,13 @@ export function activate(context: vscode.ExtensionContext) {
     const hideGitWelcome = context.globalState.get<boolean>("hideGitWelcome", false);
     vscode.commands.executeCommand("setContext", "projectManager.hiddenGitWelcome", hideGitWelcome);
 
-    vscode.commands.registerCommand("_projectManager.open", (node: string | any) => {
+    vscode.commands.registerCommand("_projectManager.open", async (node: string | any) => {
         const uri = typeof node === "string" 
                     ? buildProjectUri(node)
                     : buildProjectUri(node.command.arguments[0]);
+        if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
+            return;
+        }
         vscode.commands.executeCommand("vscode.openFolder", uri, false)
             .then(
             value => ({}),  // done
@@ -343,6 +346,11 @@ export function activate(context: vscode.ExtensionContext) {
 
         const pick = await showListProjectsQuickPick(folderNotFound); 
         if (pick) {
+
+            if (!forceNewWindow && !await canSwitchOnActiveWindow(CommandLocation.CommandPalette)) {
+                return;
+            }
+
             Container.stack.push(pick.name);
             context.globalState.update("recent", Container.stack.toString());
 
@@ -354,6 +362,34 @@ export function activate(context: vscode.ExtensionContext) {
                 value => vscode.window.showInformationMessage("Could not open the project!"));
             return;
         }
+    }
+
+    function shouldConfirmSwitchOnActiveWindow(calledFrom: CommandLocation): boolean {
+        const config = vscode.workspace.getConfiguration("projectManager").get<string>("confirmSwitchOnActiveWindow", ConfirmSwitchOnActiveWindowMode.never);
+        
+        switch (config) {
+            case ConfirmSwitchOnActiveWindowMode.never:
+                return false;
+            case ConfirmSwitchOnActiveWindowMode.onlyUsingCommandPalette:
+                return calledFrom === CommandLocation.CommandPalette;
+            case ConfirmSwitchOnActiveWindowMode.onlyUsingSideBar:
+                return calledFrom === CommandLocation.SideBar;
+            case ConfirmSwitchOnActiveWindowMode.always:
+                return true;
+        }
+    }
+
+    async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Promise<boolean> {
+        const showConfirmation = shouldConfirmSwitchOnActiveWindow(calledFrom);
+        if (!showConfirmation) {
+            return true;
+        }
+
+        const optionOpenProject = <vscode.MessageItem> {
+            title: "Open Project"
+        };
+        const answer = await vscode.window.showWarningMessage("Do you want to open the project in the active window?", {modal: true}, optionOpenProject);
+        return answer === optionOpenProject;
     }
 
     function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: CommandLocation): boolean {

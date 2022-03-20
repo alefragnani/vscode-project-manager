@@ -8,3 +8,10 @@ export enum OpenInCurrentWindowIfEmptyMode {
     onlyUsingSideBar = "onlyUsingSideBar",
     never = "never"
 }
+
+export enum ConfirmSwitchOnActiveWindowMode {
+    never = "never",
+    onlyUsingCommandPalette = "onlyUsingCommandPalette",
+    onlyUsingSideBar = "onlyUsingSideBar",
+    always = "always"
+}
