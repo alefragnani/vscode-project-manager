@@ -15,7 +15,7 @@ import { Providers } from "../vscode-project-manager-core/src/sidebar/providers"
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
 import { getProjectDetails } from "../vscode-project-manager-core/src/suggestion";
-import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
+import { CommandLocation, PROJECTS_FILE } from "./constants";
 import { isMacOS, isWindows } from "../vscode-project-manager-core/src/utils/remote";
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
 import { Container } from "../vscode-project-manager-core/src/container";
@@ -27,7 +27,7 @@ import { registerOpenSettings } from "./commands/openSettings";
 import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
 import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
 import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
-import { pickProjects } from "./quickpick/projectsPicker";
+import { canSwitchOnActiveWindow, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -334,7 +334,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     async function listProjects(forceNewWindow: boolean) {
 
-        const pick = await pickProjects(projectStorage, locators, folderNotFound); 
+        const pick = await pickProjects(projectStorage, locators); 
         if (pick) {
 
             if (!forceNewWindow && !await canSwitchOnActiveWindow(CommandLocation.CommandPalette)) {
@@ -351,73 +351,6 @@ export function activate(context: vscode.ExtensionContext) {
                 value => ({}),  // done
                 value => vscode.window.showInformationMessage("Could not open the project!"));
             return;
-        }
-    }
-
-    function shouldConfirmSwitchOnActiveWindow(calledFrom: CommandLocation): boolean {
-        const config = vscode.workspace.getConfiguration("projectManager").get<string>("confirmSwitchOnActiveWindow", ConfirmSwitchOnActiveWindowMode.never);
-        
-        switch (config) {
-            case ConfirmSwitchOnActiveWindowMode.never:
-                return false;
-            case ConfirmSwitchOnActiveWindowMode.onlyUsingCommandPalette:
-                return calledFrom === CommandLocation.CommandPalette;
-            case ConfirmSwitchOnActiveWindowMode.onlyUsingSideBar:
-                return calledFrom === CommandLocation.SideBar;
-            case ConfirmSwitchOnActiveWindowMode.always:
-                return true;
-        }
-    }
-
-    async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Promise<boolean> {
-        const showConfirmation = shouldConfirmSwitchOnActiveWindow(calledFrom);
-        if (!showConfirmation) {
-            return true;
-        }
-
-        const optionOpenProject = <vscode.MessageItem> {
-            title: "Open Project"
-        };
-        const answer = await vscode.window.showWarningMessage("Do you want to open the project in the active window?", {modal: true}, optionOpenProject);
-        return answer === optionOpenProject;
-    }
-
-    function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: CommandLocation): boolean {
-        if (!openInNewWindow) {
-            return false;
-        }
-
-        if (vscode.workspace.workspaceFolders || vscode.window.activeTextEditor) {
-            return openInNewWindow;
-        }
-
-        // Check for setting name before and after typo was corrected
-        const oldValue =  vscode.workspace.getConfiguration("projectManager").inspect("openInCurrenWindowIfEmpty");
-        const newValue =  vscode.workspace.getConfiguration("projectManager").inspect("openInCurrentWindowIfEmpty");
-
-        let config: string | unknown;
-        if (oldValue.globalValue) {
-            config = newValue.globalValue === undefined ? oldValue.globalValue : newValue.globalValue;
-        } else {
-            config = vscode.workspace.getConfiguration("projectManager").get<string>("openInCurrentWindowIfEmpty")
-        }
-        
-        if (config === OpenInCurrentWindowIfEmptyMode.always) {
-            return false;
-        }
-        if (config === OpenInCurrentWindowIfEmptyMode.never) {
-            return openInNewWindow;
-        }
-
-        switch (config) {
-            case OpenInCurrentWindowIfEmptyMode.always:
-                return false;
-            case OpenInCurrentWindowIfEmptyMode.never:
-                return openInNewWindow;
-            case OpenInCurrentWindowIfEmptyMode.onlyUsingCommandPalette:
-                return calledFrom !== CommandLocation.CommandPalette;
-            case OpenInCurrentWindowIfEmptyMode.onlyUsingSideBar:
-                return calledFrom !== CommandLocation.SideBar;
         }
     }
 
@@ -464,38 +397,13 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(projectPath)});
     }
 
-    function folderNotFound(name, path: string) {
-
-        const optionUpdateProject = <vscode.MessageItem> {
-            title: "Update Project"
-        };
-        const optionDeleteProject = <vscode.MessageItem> {
-            title: "Delete Project"
-        };
-
-        vscode.window.showErrorMessage("The project has an invalid path. What would you like to do?", optionUpdateProject, optionDeleteProject).then(option => {
-            // nothing selected
-            if (typeof option === "undefined") {
-                return;
-            }
-
-            if (option.title === "Update Project") {
-                vscode.commands.executeCommand("projectManager.editProjects");
-            } else { // Update Project
-                projectStorage.pop(name);
-                projectStorage.save();
-                return;
-            }
-        });
-    }
-
     async function addProjectToWorkspace(node: any) {
         if (node) {
             addProjectPathToWorkspace(node.command.arguments[0]);
             return;
         }
 
-        const pick = await pickProjects(projectStorage, locators, folderNotFound); 
+        const pick = await pickProjects(projectStorage, locators); 
         if (pick) {
             addProjectPathToWorkspace(pick.rootPath);
         }

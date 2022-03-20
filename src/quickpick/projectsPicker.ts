@@ -4,13 +4,14 @@
 *--------------------------------------------------------------------------------------------*/
 
 import fs = require("fs");
-import { commands, QuickPickOptions, window, workspace } from "vscode";
+import { commands, MessageItem, QuickPickOptions, window, workspace } from "vscode";
 import { Locators } from "../../vscode-project-manager-core/src/autodetect/locators";
 import { Container } from "../../vscode-project-manager-core/src/container";
 import { Project } from "../../vscode-project-manager-core/src/project";
 import { ProjectStorage } from "../../vscode-project-manager-core/src/storage";
 import { PathUtils } from "../../vscode-project-manager-core/src/utils/path";
 import { isRemotePath } from "../../vscode-project-manager-core/src/utils/remote";
+import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode } from "../constants";
 
 function getProjects(itemsSorted: any[]): Promise<{}> {
 
@@ -21,7 +22,32 @@ function getProjects(itemsSorted: any[]): Promise<{}> {
     });
 }
 
-export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, folderNotFound: (name: string, path: string) => void): Promise<Project | undefined> {
+function folderNotFound(name: string, projectStorage: ProjectStorage) {
+
+    const optionUpdateProject = <MessageItem> {
+        title: "Update Project"
+    };
+    const optionDeleteProject = <MessageItem> {
+        title: "Delete Project"
+    };
+
+    window.showErrorMessage("The project has an invalid path. What would you like to do?", optionUpdateProject, optionDeleteProject).then(option => {
+        // nothing selected
+        if (typeof option === "undefined") {
+            return;
+        }
+
+        if (option.title === "Update Project") {
+            commands.executeCommand("projectManager.editProjects");
+        } else { // Update Project
+            projectStorage.pop(name);
+            projectStorage.save();
+            return;
+        }
+    });
+}
+
+export async function pickProjects(projectStorage: ProjectStorage, locators: Locators): Promise<Project | undefined> {
     let items = [];
     const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
     items = projectStorage.getProjectsByTags(filterByTags);
@@ -74,9 +100,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                                     return resolve(undefined);
                                 }
 
-                                if (folderNotFound) {
-                                    folderNotFound(selected.label, selected.description);
-                                }
+                                folderNotFound(selected.label, projectStorage);
                             } else {
                                 // project path
                                 return resolve(<Project> {
@@ -91,4 +115,71 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                 }
             });
     });
+}
+
+export function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: CommandLocation): boolean {
+    if (!openInNewWindow) {
+        return false;
+    }
+
+    if (workspace.workspaceFolders || window.activeTextEditor) {
+        return openInNewWindow;
+    }
+
+    // Check for setting name before and after typo was corrected
+    const oldValue =  workspace.getConfiguration("projectManager").inspect("openInCurrenWindowIfEmpty");
+    const newValue =  workspace.getConfiguration("projectManager").inspect("openInCurrentWindowIfEmpty");
+
+    let config: string | unknown;
+    if (oldValue.globalValue) {
+        config = newValue.globalValue === undefined ? oldValue.globalValue : newValue.globalValue;
+    } else {
+        config = workspace.getConfiguration("projectManager").get<string>("openInCurrentWindowIfEmpty")
+    }
+    
+    if (config === OpenInCurrentWindowIfEmptyMode.always) {
+        return false;
+    }
+    if (config === OpenInCurrentWindowIfEmptyMode.never) {
+        return openInNewWindow;
+    }
+
+    switch (config) {
+        case OpenInCurrentWindowIfEmptyMode.always:
+            return false;
+        case OpenInCurrentWindowIfEmptyMode.never:
+            return openInNewWindow;
+        case OpenInCurrentWindowIfEmptyMode.onlyUsingCommandPalette:
+            return calledFrom !== CommandLocation.CommandPalette;
+        case OpenInCurrentWindowIfEmptyMode.onlyUsingSideBar:
+            return calledFrom !== CommandLocation.SideBar;
+    }
+}
+
+function shouldConfirmSwitchOnActiveWindow(calledFrom: CommandLocation): boolean {
+    const config = workspace.getConfiguration("projectManager").get<string>("confirmSwitchOnActiveWindow", ConfirmSwitchOnActiveWindowMode.never);
+    
+    switch (config) {
+        case ConfirmSwitchOnActiveWindowMode.never:
+            return false;
+        case ConfirmSwitchOnActiveWindowMode.onlyUsingCommandPalette:
+            return calledFrom === CommandLocation.CommandPalette;
+        case ConfirmSwitchOnActiveWindowMode.onlyUsingSideBar:
+            return calledFrom === CommandLocation.SideBar;
+        case ConfirmSwitchOnActiveWindowMode.always:
+            return true;
+    }
+}
+
+export async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Promise<boolean> {
+    const showConfirmation = shouldConfirmSwitchOnActiveWindow(calledFrom);
+    if (!showConfirmation) {
+        return true;
+    }
+
+    const optionOpenProject = <MessageItem> {
+        title: "Open Project"
+    };
+    const answer = await window.showWarningMessage("Do you want to open the project in the active window?", {modal: true}, optionOpenProject);
+    return answer === optionOpenProject;
 }
