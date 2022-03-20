@@ -6,7 +6,6 @@
 import fs = require("fs");
 import path = require("path");
 import * as vscode from "vscode";
-import { Stack } from "../vscode-project-manager-core/src/utils/stack";
 
 import { Locators } from "../vscode-project-manager-core/src/autodetect/locators";
 import { ProjectStorage } from "../vscode-project-manager-core/src/storage";
@@ -17,7 +16,7 @@ import { Providers } from "../vscode-project-manager-core/src/sidebar/providers"
 import { showStatusBar, updateStatusBar } from "./statusBar";
 import { getProjectDetails } from "../vscode-project-manager-core/src/suggestion";
 import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode, PROJECTS_FILE } from "./constants";
-import { isMacOS, isRemotePath, isWindows } from "../vscode-project-manager-core/src/utils/remote";
+import { isMacOS, isWindows } from "../vscode-project-manager-core/src/utils/remote";
 import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
 import { Container } from "../vscode-project-manager-core/src/container";
 import { registerWhatsNew } from "./whats-new/commands";
@@ -25,10 +24,10 @@ import { registerSupportProjectManager } from "./commands/supportProjectManager"
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
-import { Project } from "../vscode-project-manager-core/src/project";
 import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
 import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
 import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
+import { pickProjects } from "./quickpick/projectsPicker";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -333,18 +332,9 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    function getProjects(itemsSorted: any[]): Promise<{}> {
-
-        return new Promise((resolve, reject) => {
-
-            resolve(itemsSorted);
-
-        });
-    }
-
     async function listProjects(forceNewWindow: boolean) {
 
-        const pick = await showListProjectsQuickPick(folderNotFound); 
+        const pick = await pickProjects(projectStorage, locators, folderNotFound); 
         if (pick) {
 
             if (!forceNewWindow && !await canSwitchOnActiveWindow(CommandLocation.CommandPalette)) {
@@ -474,78 +464,6 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(projectPath)});
     }
 
-    function showListProjectsQuickPick(folderNotFound: (name: string, path: string) => void): Promise<Project | undefined> {
-        let items = [];
-        const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
-        items = projectStorage.getProjectsByTags(filterByTags);
-        items = locators.sortGroupedList(items);
-
-        return new Promise<Project | undefined>((resolve, reject) => {
-
-            const options = <vscode.QuickPickOptions> {
-                matchOnDescription: vscode.workspace.getConfiguration("projectManager").get("filterOnFullPath", false),
-                matchOnDetail: false,
-                placeHolder: "Loading Projects (pick one...)"
-            };
-    
-            getProjects(items)
-                .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.vscLocator);
-                })
-                .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.gitLocator);
-                })
-                .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.mercurialLocator);
-                })
-                .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.svnLocator);
-                })
-                .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.anyLocator);
-                })
-                .then((folders) => { // sort
-                    if ((<any[]> folders).length === 0) {
-                        vscode.window.showInformationMessage("No projects saved yet!");
-                        return resolve(undefined);
-                    } else {
-                        if (!vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
-                            folders = locators.sortProjectList(folders);
-                        }
-                        vscode.commands.executeCommand("setContext", "inProjectManagerList", true);
-                        vscode.window.showQuickPick(<any[]> folders, options)
-                            .then((selected) => {
-                                vscode.commands.executeCommand("setContext", "inProjectManagerList", false);
-                                if (!selected) {
-                                    return resolve(undefined);
-                                }
-
-                                if (!isRemotePath(selected.description) && !fs.existsSync(selected.description.toString())) {
-
-                                    if (selected.label.substr(0, 2) === "$(") {
-                                        vscode.window.showErrorMessage("Path does not exist or is unavailable.");
-                                        return resolve(undefined);
-                                    }
-
-                                    if (folderNotFound) {
-                                        folderNotFound(selected.label, selected.description);
-                                    }
-                                } else {
-                                    // project path
-                                    return resolve(<Project> {
-                                        name: selected.label,
-                                        rootPath: PathUtils.normalizePath(selected.description)
-                                    });
-                                }
-                            }, (reason) => {
-                                vscode.commands.executeCommand("setContext", "inProjectManagerList", false);
-                                return resolve(undefined);          
-                            });
-                    }
-                });
-        })
-    }
-
     function folderNotFound(name, path: string) {
 
         const optionUpdateProject = <vscode.MessageItem> {
@@ -577,7 +495,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        const pick = await showListProjectsQuickPick(folderNotFound); 
+        const pick = await pickProjects(projectStorage, locators, folderNotFound); 
         if (pick) {
             addProjectPathToWorkspace(pick.rootPath);
         }
