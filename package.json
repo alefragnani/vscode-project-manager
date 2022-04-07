@@ -32,7 +32,7 @@
 		}
 	},
 	"icon": "images/icon.png",
-	"license": "SEE LICENSE IN LICENSE.md",
+	"license": "GPL-3.0",
 	"homepage": "https://github.com/alefragnani/vscode-project-manager/blob/master/README.md",
 	"repository": {
 		"type": "git",
