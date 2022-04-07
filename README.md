@@ -332,4 +332,4 @@ You should follow the official documentation to:
 
 # License
 
-[MIT](LICENSE.md) &copy; Alessandro Fragnani
+[GPL-3.0](LICENSE.md) &copy; Alessandro Fragnani
