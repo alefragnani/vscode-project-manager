@@ -157,6 +157,10 @@ export function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: Comm
 }
 
 function shouldConfirmSwitchOnActiveWindow(calledFrom: CommandLocation): boolean {
+    if (!workspace.workspaceFolders || !window.activeTextEditor) {
+        return false;
+    }
+
     const config = workspace.getConfiguration("projectManager").get<string>("confirmSwitchOnActiveWindow", ConfirmSwitchOnActiveWindowMode.never);
     
     switch (config) {
