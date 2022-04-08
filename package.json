@@ -835,6 +835,23 @@
 					],
 					"description": "%projectManager.configuration.openInCurrentWindowIfEmpty.description%"
 				},
+                "projectManager.confirmSwitchOnActiveWindow": {
+                    "type": "string",
+					"default": "never",
+					"enum": [
+                        "never",
+                        "onlyUsingCommandPalette",
+						"onlyUsingSideBar",
+						"always"
+					],
+					"enumDescriptions": [
+						"Whenever you call the Open command, it will ask for confirmation",
+						"Only ask for confirmation if you use the Command Palette",
+						"Only ask for confirmation if you use the Side Bar",
+						"Works as today. No confirmation is required"
+					],
+					"description": "%projectManager.configuration.confirmSwitchOnSameWindow.description%"
+                },
                 "projectManager.tags": {
                     "type": "array",
 					"default": [
