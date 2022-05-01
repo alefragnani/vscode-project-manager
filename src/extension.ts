@@ -337,15 +337,17 @@ export function activate(context: vscode.ExtensionContext) {
         const pick = await pickProjects(projectStorage, locators); 
         if (pick) {
 
-            if (!forceNewWindow && !await canSwitchOnActiveWindow(CommandLocation.CommandPalette)) {
-                return;
+            if (!pick.button) {
+                if (!forceNewWindow && !await canSwitchOnActiveWindow(CommandLocation.CommandPalette)) {
+                    return;
+                }
             }
 
-            Container.stack.push(pick.name);
+            Container.stack.push(pick.item.name);
             context.globalState.update("recent", Container.stack.toString());
 
-            const openInNewWindow = shouldOpenInNewWindow(forceNewWindow, CommandLocation.CommandPalette);
-            const uri = buildProjectUri(pick.rootPath);
+            const openInNewWindow = shouldOpenInNewWindow(forceNewWindow || !!pick.button, CommandLocation.CommandPalette);
+            const uri = buildProjectUri(pick.item.rootPath);
             vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
                 .then(
                 value => ({}),  // done
@@ -405,7 +407,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         const pick = await pickProjects(projectStorage, locators); 
         if (pick) {
-            addProjectPathToWorkspace(pick.rootPath);
+            addProjectPathToWorkspace(pick.item.rootPath);
         }
     }
 
