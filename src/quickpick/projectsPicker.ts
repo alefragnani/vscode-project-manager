@@ -59,7 +59,7 @@ export interface Picked<T> {
     button: QuickInputButton | undefined
 }
 
-export async function pickProjects(projectStorage: ProjectStorage, locators: Locators): Promise<Picked<Project> | undefined> {
+export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, showOpenInNewWindowButton: boolean): Promise<Picked<Project> | undefined> {
     const disposables: Disposable[] = [];
 
     try {
@@ -100,7 +100,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                             return {
                                 label: folder.label,
                                 description: folder.description,
-                                buttons: [openInNewWindowButton]
+                                buttons: showOpenInNewWindowButton ? [openInNewWindowButton] : []
                             }
                         });
                         const input = window.createQuickPick();

@@ -334,7 +334,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     async function listProjects(forceNewWindow: boolean) {
 
-        const pick = await pickProjects(projectStorage, locators); 
+        const pick = await pickProjects(projectStorage, locators, !forceNewWindow); 
         if (pick) {
 
             if (!pick.button) {
@@ -405,7 +405,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        const pick = await pickProjects(projectStorage, locators); 
+        const pick = await pickProjects(projectStorage, locators, false); 
         if (pick) {
             addProjectPathToWorkspace(pick.item.rootPath);
         }
