@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import fs = require("fs");
-import { commands, Disposable, MessageItem, QuickInputButton, QuickPickItem, QuickPickOptions, ThemeIcon, window, workspace } from "vscode";
+import { commands, Disposable, MessageItem, QuickInputButton, QuickPickItem, ThemeIcon, window, workspace } from "vscode";
 import { ThemeIcons } from "vscode-ext-codicons";
 import { Locators } from "../../vscode-project-manager-core/src/autodetect/locators";
 import { Container } from "../../vscode-project-manager-core/src/container";
@@ -171,32 +171,6 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         })
                         input.show();
 
-                        // window.showQuickPick(<any[]> folders, options)
-                        //     .then((selected) => {
-                        //         commands.executeCommand("setContext", "inProjectManagerList", false);
-                        //         if (!selected) {
-                        //             return resolve(undefined);
-                        //         }
-
-                        //         if (!isRemotePath(selected.description) && !fs.existsSync(selected.description.toString())) {
-
-                        //             if (selected.label.substr(0, 2) === "$(") {
-                        //                 window.showErrorMessage("Path does not exist or is unavailable.");
-                        //                 return resolve(undefined);
-                        //             }
-
-                        //             folderNotFound(selected.label, projectStorage);
-                        //         } else {
-                        //             // project path
-                        //             return resolve(<Project> {
-                        //                 name: selected.label,
-                        //                 rootPath: PathUtils.normalizePath(selected.description)
-                        //             });
-                        //         }
-                        //     }, (reason) => {
-                        //         commands.executeCommand("setContext", "inProjectManagerList", false);
-                        //         return resolve(undefined);          
-                        //     });
                     }
                 });
         });
