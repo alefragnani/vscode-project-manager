@@ -4,7 +4,8 @@
 *--------------------------------------------------------------------------------------------*/
 
 import fs = require("fs");
-import { commands, MessageItem, QuickPickOptions, window, workspace } from "vscode";
+import { commands, Disposable, MessageItem, QuickInputButton, QuickPickItem, ThemeIcon, window, workspace } from "vscode";
+import { ThemeIcons } from "vscode-ext-codicons";
 import { Locators } from "../../vscode-project-manager-core/src/autodetect/locators";
 import { Container } from "../../vscode-project-manager-core/src/container";
 import { Project } from "../../vscode-project-manager-core/src/project";
@@ -47,74 +48,137 @@ function folderNotFound(name: string, projectStorage: ProjectStorage) {
     });
 }
 
-export async function pickProjects(projectStorage: ProjectStorage, locators: Locators): Promise<Project | undefined> {
-    let items = [];
-    const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
-    items = projectStorage.getProjectsByTags(filterByTags);
-    items = locators.sortGroupedList(items);
+function canPickSelectedProject(item: QuickPickItem, projectStorage: ProjectStorage): boolean {
 
-    return new Promise<Project | undefined>((resolve, reject) => {
+    if (isRemotePath(item.description)) {
+        return true;
+    }
 
-        const options = <QuickPickOptions> {
-            matchOnDescription: workspace.getConfiguration("projectManager").get("filterOnFullPath", false),
-            matchOnDetail: false,
-            placeHolder: "Loading Projects (pick one...)"
-        };
+    if (fs.existsSync(item.description.toString())) {
+        return true;
+    }
 
-        getProjects(items)
-            .then((folders) => {
-                return locators.getLocatorProjects(<any[]> folders, locators.vscLocator);
-            })
-            .then((folders) => {
-                return locators.getLocatorProjects(<any[]> folders, locators.gitLocator);
-            })
-            .then((folders) => {
-                return locators.getLocatorProjects(<any[]> folders, locators.mercurialLocator);
-            })
-            .then((folders) => {
-                return locators.getLocatorProjects(<any[]> folders, locators.svnLocator);
-            })
-            .then((folders) => {
-                return locators.getLocatorProjects(<any[]> folders, locators.anyLocator);
-            })
-            .then((folders) => { // sort
-                if ((<any[]> folders).length === 0) {
-                    window.showInformationMessage("No projects saved yet!");
-                    return resolve(undefined);
-                } else {
-                    if (!workspace.getConfiguration("projectManager").get("groupList", false)) {
-                        folders = locators.sortProjectList(folders);
-                    }
-                    commands.executeCommand("setContext", "inProjectManagerList", true);
-                    window.showQuickPick(<any[]> folders, options)
-                        .then((selected) => {
-                            commands.executeCommand("setContext", "inProjectManagerList", false);
-                            if (!selected) {
-                                return resolve(undefined);
+    if (item.label.substr(0, 2) === "$(") {
+        window.showErrorMessage("Path does not exist or is unavailable.");
+        return false;
+    }
+
+    folderNotFound(item.label, projectStorage);
+}
+
+class OpenInNewWindowButton implements QuickInputButton {
+    constructor(public iconPath: ThemeIcon, public tooltip: string) { }
+}
+
+const openInNewWindowButton = new OpenInNewWindowButton(ThemeIcons.link_external, 'Open in New Window');
+
+export interface Picked<T> {
+    item: T;
+    button: QuickInputButton | undefined
+}
+
+export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, showOpenInNewWindowButton: boolean): Promise<Picked<Project> | undefined> {
+    const disposables: Disposable[] = [];
+
+    try {
+        return await new Promise<Picked<Project> | undefined>((resolve, reject) => {
+            let items = [];
+            const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
+            items = projectStorage.getProjectsByTags(filterByTags);
+            items = locators.sortGroupedList(items);
+
+            getProjects(items)
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.vscLocator);
+                })
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.gitLocator);
+                })
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.mercurialLocator);
+                })
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.svnLocator);
+                })
+                .then((folders) => {
+                    return locators.getLocatorProjects(<any[]> folders, locators.anyLocator);
+                })
+                .then((folders) => { // sort
+                    if ((<any[]> folders).length === 0) {
+                        window.showInformationMessage("No projects saved yet!");
+                        return resolve(undefined);
+                    } else {
+                        if (!workspace.getConfiguration("projectManager").get("groupList", false)) {
+                            folders = locators.sortProjectList(folders);
+                        }
+                        commands.executeCommand("setContext", "inProjectManagerList", true);
+
+                        //
+                        folders =  (<any[]> folders).map(folder => {
+                            return {
+                                label: folder.label,
+                                description: folder.description,
+                                buttons: showOpenInNewWindowButton ? [openInNewWindowButton] : []
                             }
-
-                            if (!isRemotePath(selected.description) && !fs.existsSync(selected.description.toString())) {
-
-                                if (selected.label.substr(0, 2) === "$(") {
-                                    window.showErrorMessage("Path does not exist or is unavailable.");
-                                    return resolve(undefined);
+                        });
+                        const input = window.createQuickPick();
+                        input.placeholder = "Loading projects (pick one)...";
+                        input.matchOnDescription = workspace.getConfiguration("projectManager").get("filterOnFullPath", false);
+                        input.matchOnDetail = false;
+                        input.items = <any[]> folders;
+                        input.onDidChangeSelection(items => {
+                            const item = items[0];
+                            if (item) {
+                                if (!canPickSelectedProject(item, projectStorage)) {
+                                    resolve(undefined);
+                                    input.hide();
+                                    return;
                                 }
 
-                                folderNotFound(selected.label, projectStorage);
-                            } else {
-                                // project path
-                                return resolve(<Project> {
-                                    name: selected.label,
-                                    rootPath: PathUtils.normalizePath(selected.description)
+                                resolve(<Picked<Project>>{
+                                    item: {
+                                        name: item.label,
+                                        rootPath: PathUtils.normalizePath(item.description)
+                                    }, button: undefined
                                 });
+                                input.hide();
+                                return;
                             }
-                        }, (reason) => {
+                        }),
+                        input.onDidTriggerItemButton(item => {
+                            if (item) {
+                                if (!canPickSelectedProject(item.item, projectStorage)) {
+                                    resolve(undefined);
+                                    input.hide();
+                                    return;
+                                }
+
+                                resolve(<Picked<Project>>{
+                                    item: {
+                                        name: item.item.label,
+                                        rootPath: PathUtils.normalizePath(item.item.description)
+                                    }, button: item.button
+                                });
+                                input.hide();
+                                return;
+                            }
+                        }),
+                        input.onDidHide(() => {
                             commands.executeCommand("setContext", "inProjectManagerList", false);
-                            return resolve(undefined);          
-                        });
-                }
-            });
-    });
+                            resolve(undefined);
+                            input.dispose();
+                            return
+                        })
+                        input.show();
+
+                    }
+                });
+        });
+
+    } finally {
+        disposables.forEach(d => d.dispose());
+    }
+
 }
 
 export function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: CommandLocation): boolean {
