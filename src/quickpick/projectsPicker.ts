@@ -48,6 +48,24 @@ function folderNotFound(name: string, projectStorage: ProjectStorage) {
     });
 }
 
+function canPickSelectedProject(item: QuickPickItem, projectStorage: ProjectStorage): boolean {
+
+    if (isRemotePath(item.description)) {
+        return true;
+    }
+
+    if (fs.existsSync(item.description.toString())) {
+        return true;
+    }
+
+    if (item.label.substr(0, 2) === "$(") {
+        window.showErrorMessage("Path does not exist or is unavailable.");
+        return false;
+    }
+
+    folderNotFound(item.label, projectStorage);
+}
+
 class OpenInNewWindowButton implements QuickInputButton {
     constructor(public iconPath: ThemeIcon, public tooltip: string) { }
 }
@@ -111,17 +129,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         input.onDidChangeSelection(items => {
                             const item = items[0];
                             if (item) {
-                                // resolve(item.uri);
-                                
-                                if (!isRemotePath(item.description) && !fs.existsSync(item.description.toString())) {
-
-                                    if (item.label.substr(0, 2) === "$(") {
-                                        window.showErrorMessage("Path does not exist or is unavailable.");
-                                        return resolve(undefined);
-                                    }
-
-                                    folderNotFound(item.label, projectStorage);
-
+                                if (!canPickSelectedProject(item, projectStorage)) {
                                     resolve(undefined);
                                     input.hide();
                                     return;
@@ -139,17 +147,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         }),
                         input.onDidTriggerItemButton(item => {
                             if (item) {
-                                console.log(`item: ${item.button.tooltip}`);
-
-                                if (!isRemotePath(item.item.description) && !fs.existsSync(item.item.description.toString())) {
-
-                                    if (item.item.label.substr(0, 2) === "$(") {
-                                        window.showErrorMessage("Path does not exist or is unavailable.");
-                                        return resolve(undefined);
-                                    }
-
-                                    folderNotFound(item.item.label, projectStorage);
-
+                                if (!canPickSelectedProject(item.item, projectStorage)) {
                                     resolve(undefined);
                                     input.hide();
                                     return;
