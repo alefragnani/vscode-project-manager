@@ -112,6 +112,21 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                             const item = items[0];
                             if (item) {
                                 // resolve(item.uri);
+                                
+                                if (!isRemotePath(item.description) && !fs.existsSync(item.description.toString())) {
+
+                                    if (item.label.substr(0, 2) === "$(") {
+                                        window.showErrorMessage("Path does not exist or is unavailable.");
+                                        return resolve(undefined);
+                                    }
+
+                                    folderNotFound(item.label, projectStorage);
+
+                                    resolve(undefined);
+                                    input.hide();
+                                    return;
+                                }
+
                                 resolve(<Picked<Project>>{
                                     item: {
                                         name: item.label,
@@ -125,6 +140,21 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         input.onDidTriggerItemButton(item => {
                             if (item) {
                                 console.log(`item: ${item.button.tooltip}`);
+
+                                if (!isRemotePath(item.item.description) && !fs.existsSync(item.item.description.toString())) {
+
+                                    if (item.item.label.substr(0, 2) === "$(") {
+                                        window.showErrorMessage("Path does not exist or is unavailable.");
+                                        return resolve(undefined);
+                                    }
+
+                                    folderNotFound(item.item.label, projectStorage);
+
+                                    resolve(undefined);
+                                    input.hide();
+                                    return;
+                                }
+
                                 resolve(<Picked<Project>>{
                                     item: {
                                         name: item.item.label,
@@ -136,7 +166,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                             }
                         }),
                         input.onDidHide(() => {
-                            // rgs.forEach(rg => rg.kill());
+                            commands.executeCommand("setContext", "inProjectManagerList", false);
                             resolve(undefined);
                             input.dispose();
                             return
