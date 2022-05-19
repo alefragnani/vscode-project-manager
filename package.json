@@ -597,274 +597,306 @@
                 "label": "%projectManager.submenus.viewAndSort#sideBarFavorites.title%"
             }
         ],
-		"configuration": {
-			"type": "object",
-			"title": "%projectManager.configuration.title%",
-			"properties": {
-				"projectManager.showProjectNameInStatusBar": {
-					"type": "boolean",
-					"default": true,
-					"description": "%projectManager.configuration.showProjectNameInStatusBar.description%"
-				},
-				"projectManager.openInNewWindowWhenClickingInStatusBar": {
-					"type": "boolean",
-					"default": false,
-					"description": "%projectManager.configuration.openInNewWindowWhenClickingInStatusBar.description%"
-				},
-				"projectManager.removeCurrentProjectFromList": {
-					"type": "boolean",
-					"default": true,
-					"description": "%projectManager.configuration.removeCurrentProjectFromList.description%"
-				},
-				"projectManager.sortList": {
-					"type": "string",
-					"default": "Name",
-					"description": "%projectManager.configuration.sortList.description%",
-					"enum": [
-						"Saved",
-						"Name",
-						"Path",
-						"Recent"
-					],
-                    "scope": "application"
-				},
-				"projectManager.groupList": {
-					"type": "boolean",
-					"default": false,
-					"description": "%projectManager.configuration.groupList.description%"
-				},
-				"projectManager.projectsLocation": {
-					"type": "string",
-					"default": "",
-					"description": "%projectManager.configuration.projectsLocation.description%"
-				},
-				"projectManager.vscode.baseFolders": {
-					"type": "array",
-					"default": [],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.vscode.baseFolders.description%"
-				},
-				"projectManager.vscode.ignoredFolders": {
-					"type": "array",
-					"default": [
-						"node_modules",
-						"out",
-						"typings",
-						"test"
-					],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.vscode.ignoredFolders.description%"
-				},
-				"projectManager.vscode.maxDepthRecursion": {
-					"type": "integer",
-					"default": 4,
-					"description": "%projectManager.configuration.vscode.maxDepthRecursion.description%"
-				},
-				"projectManager.git.baseFolders": {
-					"type": "array",
-					"default": [],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.git.baseFolders.description%"
-				},
-				"projectManager.git.ignoredFolders": {
-					"type": "array",
-					"default": [
-						"node_modules",
-						"out",
-						"typings",
-						"test",
-						".haxelib"
-					],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.git.ignoredFolders.description%"
-				},
-				"projectManager.git.maxDepthRecursion": {
-					"type": "integer",
-					"default": 4,
-					"description": "%projectManager.configuration.git.maxDepthRecursion.description%"
-				},
-				"projectManager.hg.baseFolders": {
-					"type": "array",
-					"default": [],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.hg.baseFolders.description%"
-				},
-				"projectManager.hg.ignoredFolders": {
-					"type": "array",
-					"default": [
-						"node_modules",
-						"out",
-						"typings",
-						"test",
-						".haxelib"
-					],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.hg.ignoredFolders.description%"
-				},
-				"projectManager.hg.maxDepthRecursion": {
-					"type": "integer",
-					"default": 4,
-					"description": "%projectManager.configuration.hg.maxDepthRecursion.description%"
-				},
-				"projectManager.svn.baseFolders": {
-					"type": "array",
-					"default": [],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.svn.baseFolders.description%"
-				},
-				"projectManager.svn.ignoredFolders": {
-					"type": "array",
-					"default": [
-						"node_modules",
-						"out",
-						"typings",
-						"test"
-					],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.svn.ignoredFolders.description%"
-				},
-				"projectManager.svn.maxDepthRecursion": {
-					"type": "integer",
-					"default": 4,
-					"description": "%projectManager.configuration.svn.maxDepthRecursion.description%"
-				},
-				"projectManager.any.baseFolders": {
-					"type": "array",
-					"default": [],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.any.baseFolders.description%"
-				},
-				"projectManager.any.ignoredFolders": {
-					"type": "array",
-					"default": [
-						"node_modules",
-						"out",
-						"typings",
-						"test"
-					],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.any.ignoredFolders.description%"
-				},
-				"projectManager.any.maxDepthRecursion": {
-					"type": "integer",
-					"default": 4,
-					"description": "%projectManager.configuration.any.maxDepthRecursion.description%"
-				},
-				"projectManager.cacheProjectsBetweenSessions": {
-					"type": "boolean",
-					"default": true,
-					"description": "%projectManager.configuration.cacheProjectsBetweenSessions.description%"
-				},
-				"projectManager.ignoreProjectsWithinProjects": {
-					"type": "boolean",
-					"default": false,
-					"description": "%projectManager.configuration.ignoreProjectsWithinProjects.description%"
-				},
-				"projectManager.checkInvalidPathsBeforeListing": {
-					"type": "boolean",
-					"default": true,
-					"description": "%projectManager.configuration.checkInvalidPathsBeforeListing.description%"
-				},
-				"projectManager.supportSymlinksOnBaseFolders": {
-					"type": "boolean",
-					"default": false,
-					"description": "%projectManager.configuration.supportSymlinksOnBaseFolders.description%"
-				},
-				"projectManager.showParentFolderInfoOnDuplicates": {
-					"type": "boolean",
-					"default": false,
-					"description": "%projectManager.configuration.showParentFolderInfoOnDuplicates.description%"
-				},
-				"projectManager.filterOnFullPath": {
-					"type": "boolean",
-					"default": false,
-					"description": "%projectManager.configuration.filterOnFullPath.description%"
-				},
-				"projectManager.openInCurrenWindowIfEmpty": {
-					"type": "string",
-					"default": "always",
-					"enum": [
-						"always",
-						"onlyUsingCommandPalette",
-						"onlyUsingSideBar",
-						"never"
-					],
-					"enumDescriptions": [
-						"Whenever you call the Open in New Window command, it will open in the current window, if empty",
-						"Only open in the current window if you use the Command Palette",
-						"Only open in the current window if you use the Side Bar",
-						"Works as today. The Open in New Window command will always open in New Window"
-					],
-					"description": "%projectManager.configuration.openInCurrenWindowIfEmpty.description%",
-                    "deprecationMessage": "%projectManager.configuration.openInCurrenWindowIfEmpty.deprecation%"
-				},
-				"projectManager.openInCurrentWindowIfEmpty": {
-					"type": "string",
-					"default": "always",
-					"enum": [
-						"always",
-						"onlyUsingCommandPalette",
-						"onlyUsingSideBar",
-						"never"
-					],
-					"enumDescriptions": [
-						"Whenever you call the Open in New Window command, it will open in the current window, if empty",
-						"Only open in the current window if you use the Command Palette",
-						"Only open in the current window if you use the Side Bar",
-						"Works as today. The Open in New Window command will always open in New Window"
-					],
-					"description": "%projectManager.configuration.openInCurrentWindowIfEmpty.description%"
-				},
-                "projectManager.confirmSwitchOnActiveWindow": {
-                    "type": "string",
-					"default": "never",
-					"enum": [
-                        "never",
-                        "onlyUsingCommandPalette",
-						"onlyUsingSideBar",
-						"always"
-					],
-					"enumDescriptions": [
-						"Whenever you call the Open command, it will ask for confirmation",
-						"Only ask for confirmation if you use the Command Palette",
-						"Only ask for confirmation if you use the Side Bar",
-						"Works as today. No confirmation is required"
-					],
-					"description": "%projectManager.configuration.confirmSwitchOnSameWindow.description%"
-                },
-                "projectManager.tags": {
-                    "type": "array",
-					"default": [
-						"Personal",
-						"Work"
-					],
-					"items": {
-						"type": "string"
-					},
-					"description": "%projectManager.configuration.tags.description%"
+		"configuration": [
+            {
+                "id": "projectManager-general",
+                "title": "%projectManager.configuration.title%",
+                "properties": {
+                    "projectManager.showProjectNameInStatusBar": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "%projectManager.configuration.showProjectNameInStatusBar.description%"
+                    },
+                    "projectManager.openInNewWindowWhenClickingInStatusBar": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%projectManager.configuration.openInNewWindowWhenClickingInStatusBar.description%"
+                    },
+                    "projectManager.removeCurrentProjectFromList": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "%projectManager.configuration.removeCurrentProjectFromList.description%"
+                    },
+                    "projectManager.sortList": {
+                        "type": "string",
+                        "default": "Name",
+                        "description": "%projectManager.configuration.sortList.description%",
+                        "enum": [
+                            "Saved",
+                            "Name",
+                            "Path",
+                            "Recent"
+                        ],
+                        "scope": "application"
+                    },
+                    "projectManager.groupList": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%projectManager.configuration.groupList.description%"
+                    },
+                    "projectManager.projectsLocation": {
+                        "type": "string",
+                        "default": "",
+                        "description": "%projectManager.configuration.projectsLocation.description%"
+                    },
+                    "projectManager.cacheProjectsBetweenSessions": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "%projectManager.configuration.cacheProjectsBetweenSessions.description%"
+                    },
+                    "projectManager.ignoreProjectsWithinProjects": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%projectManager.configuration.ignoreProjectsWithinProjects.description%"
+                    },
+                    "projectManager.checkInvalidPathsBeforeListing": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "%projectManager.configuration.checkInvalidPathsBeforeListing.description%"
+                    },
+                    "projectManager.supportSymlinksOnBaseFolders": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%projectManager.configuration.supportSymlinksOnBaseFolders.description%"
+                    },
+                    "projectManager.showParentFolderInfoOnDuplicates": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%projectManager.configuration.showParentFolderInfoOnDuplicates.description%"
+                    },
+                    "projectManager.filterOnFullPath": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%projectManager.configuration.filterOnFullPath.description%"
+                    },
+                    "projectManager.openInCurrenWindowIfEmpty": {
+                        "type": "string",
+                        "default": "always",
+                        "enum": [
+                            "always",
+                            "onlyUsingCommandPalette",
+                            "onlyUsingSideBar",
+                            "never"
+                        ],
+                        "enumDescriptions": [
+                            "Whenever you call the Open in New Window command, it will open in the current window, if empty",
+                            "Only open in the current window if you use the Command Palette",
+                            "Only open in the current window if you use the Side Bar",
+                            "Works as today. The Open in New Window command will always open in New Window"
+                        ],
+                        "description": "%projectManager.configuration.openInCurrenWindowIfEmpty.description%",
+                        "deprecationMessage": "%projectManager.configuration.openInCurrenWindowIfEmpty.deprecation%"
+                    },
+                    "projectManager.openInCurrentWindowIfEmpty": {
+                        "type": "string",
+                        "default": "always",
+                        "enum": [
+                            "always",
+                            "onlyUsingCommandPalette",
+                            "onlyUsingSideBar",
+                            "never"
+                        ],
+                        "enumDescriptions": [
+                            "Whenever you call the Open in New Window command, it will open in the current window, if empty",
+                            "Only open in the current window if you use the Command Palette",
+                            "Only open in the current window if you use the Side Bar",
+                            "Works as today. The Open in New Window command will always open in New Window"
+                        ],
+                        "description": "%projectManager.configuration.openInCurrentWindowIfEmpty.description%"
+                    },
+                    "projectManager.confirmSwitchOnActiveWindow": {
+                        "type": "string",
+                        "default": "never",
+                        "enum": [
+                            "never",
+                            "onlyUsingCommandPalette",
+                            "onlyUsingSideBar",
+                            "always"
+                        ],
+                        "enumDescriptions": [
+                            "Whenever you call the Open command, it will ask for confirmation",
+                            "Only ask for confirmation if you use the Command Palette",
+                            "Only ask for confirmation if you use the Side Bar",
+                            "Works as today. No confirmation is required"
+                        ],
+                        "description": "%projectManager.configuration.confirmSwitchOnSameWindow.description%"
+                    },
+                    "projectManager.tags": {
+                        "type": "array",
+                        "default": [
+                            "Personal",
+                            "Work"
+                        ],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.tags.description%"
+                    }
                 }
-			}
-		},
+            },
+            {
+                "id": "projectManager-git",
+                "title": "Git",
+                "properties": {
+                    "projectManager.git.baseFolders": {
+                        "type": "array",
+                        "default": [],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.git.baseFolders.description%"
+                    },
+                    "projectManager.git.ignoredFolders": {
+                        "type": "array",
+                        "default": [
+                            "node_modules",
+                            "out",
+                            "typings",
+                            "test",
+                            ".haxelib"
+                        ],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.git.ignoredFolders.description%"
+                    },
+                    "projectManager.git.maxDepthRecursion": {
+                        "type": "integer",
+                        "default": 4,
+                        "description": "%projectManager.configuration.git.maxDepthRecursion.description%"
+                    }
+                }
+            },
+            {
+                "id": "projectManager-hg",
+                "title": "Mercurial",
+                "properties": {
+                    "projectManager.hg.baseFolders": {
+                        "type": "array",
+                        "default": [],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.hg.baseFolders.description%"
+                    },
+                    "projectManager.hg.ignoredFolders": {
+                        "type": "array",
+                        "default": [
+                            "node_modules",
+                            "out",
+                            "typings",
+                            "test",
+                            ".haxelib"
+                        ],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.hg.ignoredFolders.description%"
+                    },
+                    "projectManager.hg.maxDepthRecursion": {
+                        "type": "integer",
+                        "default": 4,
+                        "description": "%projectManager.configuration.hg.maxDepthRecursion.description%"
+                    }
+                }
+            },
+            {
+                "id": "projectManager-svn",
+                "title": "SVN",
+                "properties": {
+                    "projectManager.svn.baseFolders": {
+                        "type": "array",
+                        "default": [],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.svn.baseFolders.description%"
+                    },
+                    "projectManager.svn.ignoredFolders": {
+                        "type": "array",
+                        "default": [
+                            "node_modules",
+                            "out",
+                            "typings",
+                            "test"
+                        ],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.svn.ignoredFolders.description%"
+                    },
+                    "projectManager.svn.maxDepthRecursion": {
+                        "type": "integer",
+                        "default": 4,
+                        "description": "%projectManager.configuration.svn.maxDepthRecursion.description%"
+                    }
+                }
+            },
+            {
+                "id": "projectManager-vscode",
+                "title": "VS Code",
+                "properties": {
+                    "projectManager.vscode.baseFolders": {
+                        "type": "array",
+                        "default": [],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.vscode.baseFolders.description%"
+                    },
+                    "projectManager.vscode.ignoredFolders": {
+                        "type": "array",
+                        "default": [
+                            "node_modules",
+                            "out",
+                            "typings",
+                            "test"
+                        ],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.vscode.ignoredFolders.description%"
+                    },
+                    "projectManager.vscode.maxDepthRecursion": {
+                        "type": "integer",
+                        "default": 4,
+                        "description": "%projectManager.configuration.vscode.maxDepthRecursion.description%"
+                    }
+                }
+            },
+            {
+                "id": "projectManager-any",
+                "title": "Any",
+                "properties": {
+                    "projectManager.any.baseFolders": {
+                        "type": "array",
+                        "default": [],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.any.baseFolders.description%"
+                    },
+                    "projectManager.any.ignoredFolders": {
+                        "type": "array",
+                        "default": [
+                            "node_modules",
+                            "out",
+                            "typings",
+                            "test"
+                        ],
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "%projectManager.configuration.any.ignoredFolders.description%"
+                    },
+                    "projectManager.any.maxDepthRecursion": {
+                        "type": "integer",
+                        "default": 4,
+                        "description": "%projectManager.configuration.any.maxDepthRecursion.description%"
+                    }
+                }
+            }
+        ],
 		"keybindings": [
 			{
 				"command": "projectManager.listProjects",
