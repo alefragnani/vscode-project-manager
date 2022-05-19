@@ -719,7 +719,7 @@
                             "Only ask for confirmation if you use the Side Bar",
                             "Works as today. No confirmation is required"
                         ],
-                        "description": "%projectManager.configuration.confirmSwitchOnSameWindow.description%"
+                        "description": "%projectManager.configuration.confirmSwitchOnActiveWindow.description%"
                     },
                     "projectManager.tags": {
                         "type": "array",
