@@ -68,9 +68,11 @@
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "应该忽略其他项目中找到的项目吗？",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "列出之前是否应该检查无效路径，并在项目名称下方显示一条消息？",
     "projectManager.configuration.supportSymlinksOnBaseFolders.description": "应该支持“baseFolders”上的符号链接吗？",
+    "projectManager.configuration.showParentFolderInfoOnDuplicates.description": "檢測到同名項目時是否應顯示父文件夾信息？",
     "projectManager.configuration.filterOnFullPath.description": "是否应该通过完整路径过滤项目？",
     "projectManager.configuration.openInCurrenWindowIfEmpty.description": "当本窗口为空时，执行在新窗口中打开项目的命令后是否应该打开新窗口？",
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "改用`openInCurrentWindowIfEmpty`",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "当本窗口为空时，执行在新窗口中打开项目的命令后是否应该打开新窗口？",
+    "projectManager.configuration.confirmSwitchOnActiveWindow.description": "控制在活動窗口中打開項目時擴展是否應要求確認。",
     "projectManager.configuration.tags.description": "表示可用于组织项目的标签列表"
 }

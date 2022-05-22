@@ -67,10 +67,12 @@
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Uložit do paměti nalezené VSCode, Git and SVN projekty?",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Měli byste ignorovat projekty nalezené v jiných projektech?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Před výpisem zkontrolovat neplatné cesty a zobrazit zprávu pod názvem projektu?",
+    "projectManager.configuration.showParentFolderInfoOnDuplicates.description": "Měly by se při zjištění projektů se stejným názvem zobrazovat informace o nadřazené složce?",
     "projectManager.configuration.supportSymlinksOnBaseFolders.description": "Měly by podporovat symbolické odkazy na `baseFolders`?",
     "projectManager.configuration.filterOnFullPath.description": "Filtrovat projekty celou cestou?",
     "projectManager.configuration.openInCurrenWindowIfEmpty.description": "Označuje, zda příkaz \"Nové okno\" otevře projekt v aktuálním okně, je-li prázdný.",
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Místo toho použijte `openInCurrentWindowIfEmpty`",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Označuje, zda příkaz \"Nové okno\" otevře projekt v aktuálním okně, je-li prázdný.",
+    "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Řídí, zda má rozšíření žádat o potvrzení při otevírání projektů v aktivním okně.",
     "projectManager.configuration.tags.description": "Označuje seznam značek, které můžete použít k uspořádání projektů"
 }
