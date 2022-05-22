@@ -7,7 +7,7 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 12.5
+# What's new in Project Manager 12.6
 
 * Organize your projects with **Tags**
 * Adds **Virtual Workspaces** support

@@ -1,3 +1,12 @@
+## [12.6.0] - 2022-05-21
+### Added
+- Setting to decide if switching projects on same window should ask for confirmation (issue [#346](https://github.com/alefragnani/vscode-project-manager/issues/346))
+- `Open in New Window` button in Project List picker (issue [#570](https://github.com/alefragnani/vscode-project-manager/issues/570))
+- Support Settings Categories API (issue [#554](https://github.com/alefragnani/vscode-project-manager/issues/554))
+
+### Fixed
+- Typo in `openInCurrenWindowIfEmpty` setting (Thanks to @apettenati [PR #587](https://github.com/alefragnani/vscode-project-manager/pull/587))
+
 ## [12.5.0] - 2022-02-08
 ### Added
 - New setting to support symlinks on `baseFolder` setting (issue [#583](https://github.com/alefragnani/vscode-project-manager/issues/583))

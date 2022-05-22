@@ -20,6 +20,41 @@ export class ProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.6.0", releaseDate: "May 2022" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Setting to decide if switching projects on same window should ask for confirmation",
+                id: 346,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "<b>Open in New Window</b> button in Project List picker",
+                id: 570,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support Settings Categories API",
+                id: 554,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Typo in <b>openInCurrenWindowIfEmpty</b> setting",
+                id: 587,
+                kind: IssueKind.PR,
+                kudos: "@apettenati"
+            }
+        });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.5.0", releaseDate: "January 2022" } });
         changeLog.push({
             kind: ChangeLogKind.NEW,
@@ -244,49 +279,6 @@ export class ProjectManagerContentProvider implements ContentProvider {
                 id: 472,
                 kind: IssueKind.PR,
                 kudos: "dependabot"
-            }
-        });
-
-
-        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "12.0.0", releaseDate: "November 2020" } });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Adds <b>Open Settings</b> command to the Side Bar",
-                id: 434,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Concatenates the \"Number of Projects\" on each Panel in the Side Bar",
-                id: 267,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Adds <b>Reveal in Finder/Explorer</b> command in the Side Bar's context menu",
-                id: 322,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.NEW,
-            detail: {
-                message: "Adds setting to decide if auto-detected projects should ignore projects found inside other projects",
-                id: 189,
-                kind: IssueKind.Issue
-            }
-        });
-        changeLog.push({
-            kind: ChangeLogKind.INTERNAL,
-            detail: {
-                message: "Use <b>vscode-ext-help-and-feedback</b> package",
-                id: 432,
-                kind: IssueKind.Issue
             }
         });
 
