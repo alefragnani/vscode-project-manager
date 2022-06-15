@@ -41,6 +41,9 @@
 	"bugs": {
 		"url": "https://github.com/alefragnani/vscode-project-manager/issues"
 	},
+    "sponsor": {
+        "url": "https://github.com/sponsors/alefragnani"
+    },
 	"activationEvents": [
 		"*",
 		"onCommand:projectManager.saveProject",
