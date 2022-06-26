@@ -16,7 +16,7 @@ export function registerSupportProjectManager() {
         find it useful, please consider supporting it. Thank you!`, ...actions);
     let uri: Uri;
     if (option === actions[ 0 ]) {
-      uri = Uri.parse('https://www.patreon.com/alefragnani');
+      uri = Uri.parse('https://github.com/sponsors/alefragnani');
     }
     if (option === actions[ 1 ]) {
       uri = Uri.parse('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted');
