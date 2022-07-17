@@ -430,7 +430,7 @@ export function activate(context: vscode.ExtensionContext) {
         };
 
         vscode.window.showInputBox(ibo).then(newName => {
-            if (typeof newName === "undefined") {
+            if (typeof newName === "undefined" || newName === oldName) {
                 return;
             }
 
@@ -440,7 +440,7 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            if (!projectStorage.exists(newName)) {
+            if (!projectStorage.exists(newName) || newName.toLowerCase() === oldName.toLowerCase()) {
                 Container.stack.rename(oldName, newName)
                 projectStorage.rename(oldName, newName);
                 projectStorage.save();
