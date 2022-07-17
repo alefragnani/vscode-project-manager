@@ -1,3 +1,7 @@
+## [12.6.1] - 2022-07-17
+### Internal
+- Add GitHub Sponsors support (PR [#613](https://github.com/alefragnani/vscode-project-manager/pull/613))
+
 ## [12.6.0] - 2022-05-21
 ### Added
 - Setting to decide if switching projects on same window should ask for confirmation (issue [#346](https://github.com/alefragnani/vscode-project-manager/issues/346))
