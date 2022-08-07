@@ -29,6 +29,8 @@ import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/cons
 import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
 import { canSwitchOnActiveWindow, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
 
+const locators: Locators = new Locators();
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -41,7 +43,6 @@ export function activate(context: vscode.ExtensionContext) {
     // load the projects
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
-    const locators: Locators = new Locators();
     const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
 
@@ -501,4 +502,16 @@ export function activate(context: vscode.ExtensionContext) {
         }
             
     }
+}
+
+export function deactivate() {
+    // if (vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true)) { 
+    //     return; 
+    // }
+
+    locators.vscLocator.deleteCacheFile();
+    locators.gitLocator.deleteCacheFile();
+    locators.mercurialLocator.deleteCacheFile();
+    locators.svnLocator.deleteCacheFile();
+    locators.anyLocator.deleteCacheFile();
 }
