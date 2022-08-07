@@ -509,9 +509,5 @@ export function deactivate() {
     //     return; 
     // }
 
-    locators.vscLocator.deleteCacheFile();
-    locators.gitLocator.deleteCacheFile();
-    locators.mercurialLocator.deleteCacheFile();
-    locators.svnLocator.deleteCacheFile();
-    locators.anyLocator.deleteCacheFile();
+    locators.dispose();
 }
