@@ -33,7 +33,7 @@ let locators: Locators
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
 
     Container.initialize(context);
 
@@ -147,7 +147,7 @@ export function activate(context: vscode.ExtensionContext) {
     loadProjectsFile();
 
     // // new place to register TreeView
-    providerManager.showTreeViewFromAllProviders();
+    await providerManager.showTreeViewFromAllProviders();
 
     fs.watchFile(getProjectFilePath(), (prev, next) => {
         loadProjectsFile();
