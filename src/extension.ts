@@ -29,7 +29,7 @@ import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/cons
 import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
 import { canSwitchOnActiveWindow, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
 
-const locators: Locators = new Locators();
+let locators: Locators
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -41,6 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
     PathUtils.setExtensionContext(context);
 
     // load the projects
+    locators = new Locators();
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
     const providerManager: Providers = new Providers(locators, projectStorage);
