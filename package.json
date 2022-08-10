@@ -260,6 +260,10 @@
 				"title": "%projectManager.commands.revealInExplorer#sideBar.title%"
 			},
 			{
+				"command": "_projectManager.revealInFileManager#sideBar",
+				"title": "%projectManager.commands.revealInFileManager#sideBar.title%"
+			},
+			{
 				"command": "projectManager.addToWorkspace",
 				"title": "%projectManager.commands.addToWorkspace.title%"
 			},
@@ -328,6 +332,10 @@
 				},
 				{
 					"command": "_projectManager.revealInExplorer#sideBar",
+					"when": "false"
+				},
+				{
+					"command": "_projectManager.revealInFileManager#sideBar",
 					"when": "false"
 				},
 				{
@@ -517,16 +525,21 @@
 				{
 					"command": "_projectManager.openInNewWindow",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
-					"group": "navigation"
+                    "group": "navigation"
 				},
 				{
 					"command": "_projectManager.revealInFinder#sideBar",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind && !isWindows",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind && isMac",
 					"group": "navigation@2"
 				},
 				{
 					"command": "_projectManager.revealInExplorer#sideBar",
 					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind && isWindows",
+					"group": "navigation@2"
+				},
+				{
+					"command": "_projectManager.revealInFileManager#sideBar",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind && isLinux",
 					"group": "navigation@2"
 				},
 				{
