@@ -20,6 +20,7 @@
     "projectManager.commands.openInNewWindow.title": "Open in New Window",
     "projectManager.commands.revealInFinder#sideBar.title": "Reveal in Finder",
     "projectManager.commands.revealInExplorer#sideBar.title": "Reveal in Explorer",
+    "projectManager.commands.revealInFileManager#sideBar.title": "Reveal in File Manager",
     "projectManager.commands.addToWorkspace#sideBar.title": "Add to Workspace",
     "projectManager.commands.addToWorkspace.title": "Project Manager: Add Project to Workspace",
     "projectManager.commands.deleteProject.title": "Delete Project",
