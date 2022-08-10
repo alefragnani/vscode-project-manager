@@ -29,9 +29,11 @@ import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/cons
 import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
 import { canSwitchOnActiveWindow, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
 
+let locators: Locators
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
 
     Container.initialize(context);
 
@@ -39,9 +41,9 @@ export function activate(context: vscode.ExtensionContext) {
     PathUtils.setExtensionContext(context);
 
     // load the projects
+    locators = new Locators();
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
 
-    const locators: Locators = new Locators();
     const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
 
@@ -145,7 +147,7 @@ export function activate(context: vscode.ExtensionContext) {
     loadProjectsFile();
 
     // // new place to register TreeView
-    providerManager.showTreeViewFromAllProviders();
+    await providerManager.showTreeViewFromAllProviders();
 
     fs.watchFile(getProjectFilePath(), (prev, next) => {
         loadProjectsFile();
@@ -158,8 +160,7 @@ export function activate(context: vscode.ExtensionContext) {
             cfg.affectsConfiguration("projectManager.vscode") || cfg.affectsConfiguration("projectManager.svn") || 
             cfg.affectsConfiguration("projectManager.any") || 
             cfg.affectsConfiguration("projectManager.ignoreProjectsWithinProjects") || 
-            cfg.affectsConfiguration("projectManager.supportSymlinksOnBaseFolders") || 
-            cfg.affectsConfiguration("projectManager.cacheProjectsBetweenSessions")) {
+            cfg.affectsConfiguration("projectManager.supportSymlinksOnBaseFolders")) {
             refreshProjects();
         }
 
@@ -501,4 +502,12 @@ export function activate(context: vscode.ExtensionContext) {
         }
             
     }
+}
+
+export function deactivate() {
+    // if (vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true)) { 
+    //     return; 
+    // }
+
+    locators.dispose();
 }
