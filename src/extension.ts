@@ -179,7 +179,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }));
 
-    showStatusBar(projectStorage, locators);
+    const currentProjectName = showStatusBar(projectStorage, locators);
+    providerManager.reveal(currentProjectName);
     
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
