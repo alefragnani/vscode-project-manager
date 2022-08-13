@@ -100,6 +100,8 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
+    vscode.commands.registerCommand("projectManager.listGitProjects", () => listGitProjects());
+    vscode.commands.registerCommand("projectManager.listVSCodeProjects", () => listVSCodeProjects());
 
     // new commands (ActivityBar)
     vscode.commands.registerCommand("projectManager.addToWorkspace#sideBar", (node) => addProjectToWorkspace(node));
@@ -335,7 +337,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     async function listProjects(forceNewWindow: boolean) {
 
-        const pick = await pickProjects(projectStorage, locators, !forceNewWindow); 
+        const pick = await pickProjects(projectStorage, locators, !forceNewWindow, undefined); 
         if (pick) {
 
             if (!pick.button) {
@@ -348,6 +350,38 @@ export async function activate(context: vscode.ExtensionContext) {
             context.globalState.update("recent", Container.stack.toString());
 
             const openInNewWindow = shouldOpenInNewWindow(forceNewWindow || !!pick.button, CommandLocation.CommandPalette);
+            const uri = buildProjectUri(pick.item.rootPath);
+            vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
+                .then(
+                value => ({}),  // done
+                value => vscode.window.showInformationMessage("Could not open the project!"));
+            return;
+        }
+    }
+
+    async function listVSCodeProjects() {
+        const pick = await pickProjects(undefined, locators, false, locators.vscLocator); 
+        if (pick) {
+            Container.stack.push(pick.item.name);
+            context.globalState.update("recent", Container.stack.toString());
+
+            const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.CommandPalette);
+            const uri = buildProjectUri(pick.item.rootPath);
+            vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
+                .then(
+                value => ({}),  // done
+                value => vscode.window.showInformationMessage("Could not open the project!"));
+            return;
+        }
+    }
+
+    async function listGitProjects() {
+        const pick = await pickProjects(projectStorage, locators, false, locators.gitLocator); 
+        if (pick) {
+            Container.stack.push(pick.item.name);
+            context.globalState.update("recent", Container.stack.toString());
+
+            const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.CommandPalette);
             const uri = buildProjectUri(pick.item.rootPath);
             vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
                 .then(
@@ -406,7 +440,7 @@ export async function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        const pick = await pickProjects(projectStorage, locators, false); 
+        const pick = await pickProjects(projectStorage, locators, false, undefined); 
         if (pick) {
             addProjectPathToWorkspace(pick.item.rootPath);
         }

@@ -6,6 +6,7 @@
 import fs = require("fs");
 import { commands, Disposable, MessageItem, QuickInputButton, QuickPickItem, ThemeIcon, window, workspace } from "vscode";
 import { ThemeIcons } from "vscode-ext-codicons";
+import { CustomProjectLocator } from "../../vscode-project-manager-core/src/autodetect/abstractLocator";
 import { Locators } from "../../vscode-project-manager-core/src/autodetect/locators";
 import { Container } from "../../vscode-project-manager-core/src/container";
 import { Project } from "../../vscode-project-manager-core/src/project";
@@ -77,30 +78,38 @@ export interface Picked<T> {
     button: QuickInputButton | undefined
 }
 
-export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, showOpenInNewWindowButton: boolean): Promise<Picked<Project> | undefined> {
+export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, showOpenInNewWindowButton: boolean,
+    locatorToFilter: CustomProjectLocator): Promise<Picked<Project> | undefined> {
     const disposables: Disposable[] = [];
 
     try {
         return await new Promise<Picked<Project> | undefined>((resolve, reject) => {
             let items = [];
             const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
-            items = projectStorage.getProjectsByTags(filterByTags);
-            items = locators.sortGroupedList(items);
+            if (projectStorage) {
+                items = projectStorage.getProjectsByTags(filterByTags);
+                items = locators.sortGroupedList(items);
+            }
 
             getProjects(items)
                 .then((folders) => {
+                    if (locatorToFilter && locatorToFilter !== locators.vscLocator) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.vscLocator);
                 })
                 .then((folders) => {
+                    if (locatorToFilter && locatorToFilter !== locators.gitLocator) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.gitLocator);
                 })
                 .then((folders) => {
+                    if (locatorToFilter && locatorToFilter !== locators.mercurialLocator) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.mercurialLocator);
                 })
                 .then((folders) => {
+                    if (locatorToFilter && locatorToFilter !== locators.svnLocator) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.svnLocator);
                 })
                 .then((folders) => {
+                    if (locatorToFilter && locatorToFilter !== locators.anyLocator) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.anyLocator);
                 })
                 .then((folders) => { // sort

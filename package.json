@@ -195,9 +195,19 @@
 				"icon": "$(refresh)"
 			},
 			{
+				"command": "projectManager.listVSCodeProjects",
+				"title": "%projectManager.commands.listVSCodeProjects.title%",
+				"icon": "$(search)"
+			},
+			{
 				"command": "projectManager.refreshGitProjects",
 				"title": "%projectManager.commands.refreshGitProjects.title%",
 				"icon": "$(refresh)"
+			},
+			{
+				"command": "projectManager.listGitProjects",
+				"title": "%projectManager.commands.listGitProjects.title%",
+				"icon": "$(search)"
 			},
 			{
 				"command": "projectManager.refreshSVNProjects",
@@ -466,9 +476,19 @@
 					"group": "navigation"
 				},
 				{
+					"command": "projectManager.listVSCodeProjects",
+					"when": "view == projectsExplorerVSCode",
+					"group": "navigation"
+				},
+				{
 					"command": "projectManager.openSettings#sideBarVSCode",
 					"when": "view == projectsExplorerVSCode",
 					"group": "2_projectManager"
+				},
+				{
+					"command": "projectManager.listGitProjects",
+					"when": "view == projectsExplorerGit",
+					"group": "navigation"
 				},
 				{
 					"command": "projectManager.refreshGitProjects",
