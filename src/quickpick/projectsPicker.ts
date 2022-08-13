@@ -88,28 +88,35 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
             const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
             if (projectStorage) {
                 items = projectStorage.getProjectsByTags(filterByTags);
-                items = locators.sortGroupedList(items);
+                if (locators) {
+                    items = locators?.sortGroupedList(items);
+                }
             }
 
             getProjects(items)
                 .then((folders) => {
                     if (locatorToFilter && locatorToFilter !== locators.vscLocator) { return folders }
+                    if (!locators) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.vscLocator);
                 })
                 .then((folders) => {
                     if (locatorToFilter && locatorToFilter !== locators.gitLocator) { return folders }
+                    if (!locators) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.gitLocator);
                 })
                 .then((folders) => {
                     if (locatorToFilter && locatorToFilter !== locators.mercurialLocator) { return folders }
+                    if (!locators) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.mercurialLocator);
                 })
                 .then((folders) => {
                     if (locatorToFilter && locatorToFilter !== locators.svnLocator) { return folders }
+                    if (!locators) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.svnLocator);
                 })
                 .then((folders) => {
                     if (locatorToFilter && locatorToFilter !== locators.anyLocator) { return folders }
+                    if (!locators) { return folders }
                     return locators.getLocatorProjects(<any[]> folders, locators.anyLocator);
                 })
                 .then((folders) => { // sort
@@ -118,7 +125,9 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         return resolve(undefined);
                     } else {
                         if (!workspace.getConfiguration("projectManager").get("groupList", false)) {
-                            folders = locators.sortProjectList(folders);
+                            if (locators) {
+                                folders = locators?.sortProjectList(folders);
+                            }
                         }
                         commands.executeCommand("setContext", "inProjectManagerList", true);
 

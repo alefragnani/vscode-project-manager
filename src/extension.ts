@@ -28,6 +28,7 @@ import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicke
 import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
 import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
 import { canSwitchOnActiveWindow, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
+import { CustomProjectLocator } from "../vscode-project-manager-core/src/autodetect/abstractLocator";
 
 let locators: Locators
 
@@ -100,8 +101,9 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
-    vscode.commands.registerCommand("projectManager.listGitProjects", () => listGitProjects());
-    vscode.commands.registerCommand("projectManager.listVSCodeProjects", () => listVSCodeProjects());
+    vscode.commands.registerCommand("projectManager.listFavoriteProjects#sideBarFavorites", () => listStorageProjects());
+    vscode.commands.registerCommand("projectManager.listGitProjects", () => listAutoDetectedProjects(locators.gitLocator));
+    vscode.commands.registerCommand("projectManager.listVSCodeProjects", () => listAutoDetectedProjects(locators.vscLocator));
 
     // new commands (ActivityBar)
     vscode.commands.registerCommand("projectManager.addToWorkspace#sideBar", (node) => addProjectToWorkspace(node));
@@ -359,8 +361,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    async function listVSCodeProjects() {
-        const pick = await pickProjects(undefined, locators, false, locators.vscLocator); 
+    async function listAutoDetectedProjects(locator: CustomProjectLocator) {
+        const pick = await pickProjects(undefined, locators, false, locator); 
         if (pick) {
             Container.stack.push(pick.item.name);
             context.globalState.update("recent", Container.stack.toString());
@@ -375,8 +377,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    async function listGitProjects() {
-        const pick = await pickProjects(projectStorage, locators, false, locators.gitLocator); 
+    async function listStorageProjects() {
+        const pick = await pickProjects(projectStorage, undefined, false, undefined); 
         if (pick) {
             Container.stack.push(pick.item.name);
             context.globalState.update("recent", Container.stack.toString());

@@ -186,6 +186,11 @@
                 "icon": "$(tag)"
 			},
 			{
+				"command": "projectManager.listFavoriteProjects#sideBarFavorites",
+				"title": "%projectManager.commands.listFavoriteProjects#sideBarFavorites.title%",
+				"icon": "$(search)"
+			},
+			{
 				"command": "projectManager.refreshProjects",
 				"title": "%projectManager.commands.refreshProjects.title%"
 			},
@@ -449,6 +454,11 @@
 					"command": "_projectManager.viewAsList#sideBarFavorites",
 					"when": "view == projectsExplorerFavorites && !projectManager.viewAsList",
 					"group": "navigation@13"
+				},
+				{
+					"command": "projectManager.listFavoriteProjects#sideBarFavorites",
+					"when": "view == projectsExplorerFavorites",
+					"group": "navigation@14"
                 },
 				{
                     "command": "projectManager.filterProjectsByTag#sideBar",
