@@ -200,7 +200,7 @@
 				"icon": "$(refresh)"
 			},
 			{
-				"command": "projectManager.listVSCodeProjects",
+				"command": "projectManager.listVSCodeProjects#sideBarVSCode",
 				"title": "%projectManager.commands.listVSCodeProjects.title%",
 				"icon": "$(search)"
 			},
@@ -210,7 +210,7 @@
 				"icon": "$(refresh)"
 			},
 			{
-				"command": "projectManager.listGitProjects",
+				"command": "projectManager.listGitProjects#sideBarGit",
 				"title": "%projectManager.commands.listGitProjects.title%",
 				"icon": "$(search)"
 			},
@@ -486,7 +486,7 @@
 					"group": "navigation"
 				},
 				{
-					"command": "projectManager.listVSCodeProjects",
+					"command": "projectManager.listVSCodeProjects#sideBarVSCode",
 					"when": "view == projectsExplorerVSCode",
 					"group": "navigation"
 				},
@@ -496,7 +496,7 @@
 					"group": "2_projectManager"
 				},
 				{
-					"command": "projectManager.listGitProjects",
+					"command": "projectManager.listGitProjects#sideBarGit",
 					"when": "view == projectsExplorerGit",
 					"group": "navigation"
 				},

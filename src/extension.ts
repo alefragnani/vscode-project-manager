@@ -102,8 +102,8 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
     vscode.commands.registerCommand("projectManager.listFavoriteProjects#sideBarFavorites", () => listStorageProjects());
-    vscode.commands.registerCommand("projectManager.listGitProjects", () => listAutoDetectedProjects(locators.gitLocator));
-    vscode.commands.registerCommand("projectManager.listVSCodeProjects", () => listAutoDetectedProjects(locators.vscLocator));
+    vscode.commands.registerCommand("projectManager.listGitProjects#sideBarGit", () => listAutoDetectedProjects(locators.gitLocator));
+    vscode.commands.registerCommand("projectManager.listVSCodeProjects#sideBarVSCode", () => listAutoDetectedProjects(locators.vscLocator));
 
     // new commands (ActivityBar)
     vscode.commands.registerCommand("projectManager.addToWorkspace#sideBar", (node) => addProjectToWorkspace(node));
