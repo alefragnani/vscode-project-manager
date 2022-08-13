@@ -220,14 +220,29 @@
 				"icon": "$(refresh)"
 			},
 			{
+				"command": "projectManager.listSVNProjects#sideBarSVN",
+				"title": "%projectManager.commands.listSVNProjects.title%",
+				"icon": "$(search)"
+			},
+			{
 				"command": "projectManager.refreshAnyProjects",
 				"title": "%projectManager.commands.refreshAnyProjects.title%",
 				"icon": "$(refresh)"
 			},
 			{
+				"command": "projectManager.listAnyProjects#sideBarAny",
+				"title": "%projectManager.commands.listAnyProjects.title%",
+				"icon": "$(search)"
+			},
+			{
 				"command": "projectManager.refreshMercurialProjects",
 				"title": "%projectManager.commands.refreshMercurialProjects.title%",
 				"icon": "$(refresh)"
+			},
+			{
+				"command": "projectManager.listMercurialProjects#sideBarMercurial",
+				"title": "%projectManager.commands.listMercurialProjects.title%",
+				"icon": "$(search)"
 			},
 			{
 				"command": "projectManager.openSettings#sideBarFavorites",
@@ -511,6 +526,11 @@
 					"group": "2_projectManager"
 				},
 				{
+					"command": "projectManager.listSVNProjects#sideBarSVN",
+					"when": "view == projectsExplorerSVN",
+					"group": "navigation"
+				},
+				{
 					"command": "projectManager.refreshSVNProjects",
 					"when": "view == projectsExplorerSVN",
 					"group": "navigation"
@@ -521,6 +541,11 @@
 					"group": "2_projectManager"
 				},
 				{
+					"command": "projectManager.listAnyProjects#sideBarAny",
+					"when": "view == projectsExplorerAny",
+					"group": "navigation"
+				},
+				{
 					"command": "projectManager.refreshAnyProjects",
 					"when": "view == projectsExplorerAny",
 					"group": "navigation"
@@ -529,6 +554,11 @@
 					"command": "projectManager.openSettings#sideBarAny",
 					"when": "view == projectsExplorerAny",
 					"group": "2_projectManager"
+				},
+				{
+					"command": "projectManager.listMercurialProjects#sideBarMercurial",
+					"when": "view == projectsExplorerMercurial",
+					"group": "navigation"
 				},
 				{
 					"command": "projectManager.refreshMercurialProjects",
