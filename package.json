@@ -185,11 +185,11 @@
 				"title": "%projectManager.commands.filterProjectsByTag#sideBar.title%",
                 "icon": "$(tag)"
 			},
-			{
-				"command": "projectManager.listFavoriteProjects#sideBarFavorites",
-				"title": "%projectManager.commands.listFavoriteProjects#sideBarFavorites.title%",
-				"icon": "$(search)"
-			},
+            {
+                "command": "projectManager.listFavoriteProjects#sideBarFavorites",
+                "title": "%projectManager.commands.listFavoriteProjects#sideBarFavorites.title%",
+                "icon": "$(search)"
+            },
 			{
 				"command": "projectManager.refreshProjects",
 				"title": "%projectManager.commands.refreshProjects.title%"
@@ -201,7 +201,7 @@
 			},
 			{
 				"command": "projectManager.listVSCodeProjects#sideBarVSCode",
-				"title": "%projectManager.commands.listVSCodeProjects.title%",
+				"title": "%projectManager.commands.listVSCodeProjects#sideBarVSCode.title%",
 				"icon": "$(search)"
 			},
 			{
@@ -211,7 +211,7 @@
 			},
 			{
 				"command": "projectManager.listGitProjects#sideBarGit",
-				"title": "%projectManager.commands.listGitProjects.title%",
+				"title": "%projectManager.commands.listGitProjects#sideBarGit.title%",
 				"icon": "$(search)"
 			},
 			{
@@ -221,7 +221,7 @@
 			},
 			{
 				"command": "projectManager.listSVNProjects#sideBarSVN",
-				"title": "%projectManager.commands.listSVNProjects.title%",
+				"title": "%projectManager.commands.listSVNProjects#sideBarSVN.title%",
 				"icon": "$(search)"
 			},
 			{
@@ -231,7 +231,7 @@
 			},
 			{
 				"command": "projectManager.listAnyProjects#sideBarAny",
-				"title": "%projectManager.commands.listAnyProjects.title%",
+				"title": "%projectManager.commands.listAnyProjects#sideBarAny.title%",
 				"icon": "$(search)"
 			},
 			{
@@ -241,7 +241,7 @@
 			},
 			{
 				"command": "projectManager.listMercurialProjects#sideBarMercurial",
-				"title": "%projectManager.commands.listMercurialProjects.title%",
+				"title": "%projectManager.commands.listMercurialProjects#sideBarMercurial.title%",
 				"icon": "$(search)"
 			},
 			{
@@ -406,6 +406,30 @@
 				},
 				{
 					"command": "projectManager.filterProjectsByTag#sideBar",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.listFavoriteProjects#sideBarFavorites",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.listVSCodeProjects#sideBarVSCode",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.listGitProjects#sideBarGit",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.listSVNProjects#sideBarSVN",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.listAnyProjects#sideBarAny",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.listMercurialProjects#sideBarMercurial",
 					"when": "false"
 				},
 				{
