@@ -342,37 +342,18 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     async function listProjects(forceNewWindow: boolean) {
-
         const pick = await pickProjects(projectStorage, locators, !forceNewWindow, undefined); 
-        if (pick) {
-
-            if (!pick.button) {
-                if (!forceNewWindow && !await canSwitchOnActiveWindow(CommandLocation.CommandPalette)) {
-                    return;
-                }
-            }
-
-            Container.stack.push(pick.item.name);
-            context.globalState.update("recent", Container.stack.toString());
-
-            const openInNewWindow = shouldOpenInNewWindow(forceNewWindow || !!pick.button, CommandLocation.CommandPalette);
-            const uri = buildProjectUri(pick.item.rootPath);
-            vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
-                .then(
-                value => ({}),  // done
-                value => vscode.window.showInformationMessage("Could not open the project!"));
-            return;
-        }
+        openPickedProject(pick, forceNewWindow, CommandLocation.CommandPalette);
     }
 
     async function listAutoDetectedProjects(locator: CustomProjectLocator) {
         const pick = await pickProjects(undefined, locators, true, locator); 
-        openPickedProject(pick);
+        openPickedProject(pick, false, CommandLocation.SideBar);
     }
 
     async function listStorageProjects() {
         const pick = await pickProjects(projectStorage, undefined, true, undefined); 
-        openPickedProject(pick);
+        openPickedProject(pick, false, CommandLocation.SideBar);
     }
 
     function loadProjectsFile() {

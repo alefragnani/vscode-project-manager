@@ -271,20 +271,20 @@ export async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Prom
     return answer === optionOpenProject;
 }
 
-export async function openPickedProject(pick: Picked<Project>) {
-    if (!pick) { return }
+export async function openPickedProject(picked: Picked<Project>, forceNewWindow: boolean, calledFrom: CommandLocation) {
+    if (!picked) { return }
 
-    if (!pick.button) {
-        if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
+    if (!picked.button) {
+        if (!forceNewWindow && !await canSwitchOnActiveWindow(calledFrom)) {
             return;
         }
     }
 
-    Container.stack.push(pick.item.name);
+    Container.stack.push(picked.item.name);
     Container.context.globalState.update("recent", Container.stack.toString());
 
-    const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.SideBar);
-    const uri = buildProjectUri(pick.item.rootPath);
+    const openInNewWindow = shouldOpenInNewWindow(forceNewWindow || !!picked.button, calledFrom);
+    const uri = buildProjectUri(picked.item.rootPath);
     commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
         .then(
             () => ({}),  // done
