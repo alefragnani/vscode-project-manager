@@ -366,12 +366,19 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     async function listAutoDetectedProjects(locator: CustomProjectLocator) {
-        const pick = await pickProjects(undefined, locators, false, locator); 
+        const pick = await pickProjects(undefined, locators, true, locator); 
         if (pick) {
+            
+            if (!pick.button) {
+                if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
+                    return;
+                }
+            }
+
             Container.stack.push(pick.item.name);
             context.globalState.update("recent", Container.stack.toString());
 
-            const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.CommandPalette);
+            const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.SideBar);
             const uri = buildProjectUri(pick.item.rootPath);
             vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
                 .then(
@@ -382,12 +389,19 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     async function listStorageProjects() {
-        const pick = await pickProjects(projectStorage, undefined, false, undefined); 
+        const pick = await pickProjects(projectStorage, undefined, true, undefined); 
         if (pick) {
+            
+            if (!pick.button) {
+                if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
+                    return;
+                }
+            }
+
             Container.stack.push(pick.item.name);
             context.globalState.update("recent", Container.stack.toString());
 
-            const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.CommandPalette);
+            const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.SideBar);
             const uri = buildProjectUri(pick.item.rootPath);
             vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
                 .then(
