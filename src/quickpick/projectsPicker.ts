@@ -13,6 +13,7 @@ import { Project } from "../../vscode-project-manager-core/src/project";
 import { ProjectStorage } from "../../vscode-project-manager-core/src/storage";
 import { PathUtils } from "../../vscode-project-manager-core/src/utils/path";
 import { isRemotePath } from "../../vscode-project-manager-core/src/utils/remote";
+import { buildProjectUri } from "../../vscode-project-manager-core/src/utils/uri";
 import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode } from "../constants";
 
 function getProjects(itemsSorted: any[]): Promise<{}> {
@@ -268,4 +269,24 @@ export async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Prom
     };
     const answer = await window.showWarningMessage("Do you want to open the project in the active window?", {modal: true}, optionOpenProject);
     return answer === optionOpenProject;
+}
+
+export async function openPickedProject(pick: Picked<Project>) {
+    if (!pick) { return }
+
+    if (!pick.button) {
+        if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
+            return;
+        }
+    }
+
+    Container.stack.push(pick.item.name);
+    Container.context.globalState.update("recent", Container.stack.toString());
+
+    const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.SideBar);
+    const uri = buildProjectUri(pick.item.rootPath);
+    commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
+        .then(
+            () => ({}),  // done
+            () => window.showInformationMessage("Could not open the project!"));
 }

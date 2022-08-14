@@ -27,7 +27,7 @@ import { registerOpenSettings } from "./commands/openSettings";
 import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
 import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
 import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
-import { canSwitchOnActiveWindow, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
+import { canSwitchOnActiveWindow, openPickedProject, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
 import { CustomProjectLocator } from "../vscode-project-manager-core/src/autodetect/abstractLocator";
 
 let locators: Locators
@@ -367,48 +367,12 @@ export async function activate(context: vscode.ExtensionContext) {
 
     async function listAutoDetectedProjects(locator: CustomProjectLocator) {
         const pick = await pickProjects(undefined, locators, true, locator); 
-        if (pick) {
-            
-            if (!pick.button) {
-                if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
-                    return;
-                }
-            }
-
-            Container.stack.push(pick.item.name);
-            context.globalState.update("recent", Container.stack.toString());
-
-            const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.SideBar);
-            const uri = buildProjectUri(pick.item.rootPath);
-            vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
-                .then(
-                value => ({}),  // done
-                value => vscode.window.showInformationMessage("Could not open the project!"));
-            return;
-        }
+        openPickedProject(pick);
     }
 
     async function listStorageProjects() {
         const pick = await pickProjects(projectStorage, undefined, true, undefined); 
-        if (pick) {
-            
-            if (!pick.button) {
-                if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
-                    return;
-                }
-            }
-
-            Container.stack.push(pick.item.name);
-            context.globalState.update("recent", Container.stack.toString());
-
-            const openInNewWindow = shouldOpenInNewWindow(!!pick.button, CommandLocation.SideBar);
-            const uri = buildProjectUri(pick.item.rootPath);
-            vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
-                .then(
-                value => ({}),  // done
-                value => vscode.window.showInformationMessage("Could not open the project!"));
-            return;
-        }
+        openPickedProject(pick);
     }
 
     function loadProjectsFile() {
