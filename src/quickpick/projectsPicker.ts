@@ -68,6 +68,18 @@ function canPickSelectedProject(item: QuickPickItem, projectStorage: ProjectStor
     folderNotFound(item.label, projectStorage);
 }
 
+function getProjectsFromLocator(folders: any, locators: Locators, locatorToFilter: CustomProjectLocator, locatorToGetFrom: CustomProjectLocator) {
+    if (locatorToFilter && locatorToFilter !== locatorToGetFrom) { 
+        return folders 
+    }
+    
+    if (!locators) { 
+        return folders 
+    }
+
+    return locators.getLocatorProjects(<any[]>folders, locatorToGetFrom);
+}
+
 class OpenInNewWindowButton implements QuickInputButton {
     constructor(public iconPath: ThemeIcon, public tooltip: string) { }
 }
@@ -96,29 +108,19 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
 
             getProjects(items)
                 .then((folders) => {
-                    if (locatorToFilter && locatorToFilter !== locators.vscLocator) { return folders }
-                    if (!locators) { return folders }
-                    return locators.getLocatorProjects(<any[]> folders, locators.vscLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.vscLocator);
                 })
                 .then((folders) => {
-                    if (locatorToFilter && locatorToFilter !== locators.gitLocator) { return folders }
-                    if (!locators) { return folders }
-                    return locators.getLocatorProjects(<any[]> folders, locators.gitLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.gitLocator);
                 })
                 .then((folders) => {
-                    if (locatorToFilter && locatorToFilter !== locators.mercurialLocator) { return folders }
-                    if (!locators) { return folders }
-                    return locators.getLocatorProjects(<any[]> folders, locators.mercurialLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.mercurialLocator);
                 })
                 .then((folders) => {
-                    if (locatorToFilter && locatorToFilter !== locators.svnLocator) { return folders }
-                    if (!locators) { return folders }
-                    return locators.getLocatorProjects(<any[]> folders, locators.svnLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.svnLocator);
                 })
                 .then((folders) => {
-                    if (locatorToFilter && locatorToFilter !== locators.anyLocator) { return folders }
-                    if (!locators) { return folders }
-                    return locators.getLocatorProjects(<any[]> folders, locators.anyLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.anyLocator);
                 })
                 .then((folders) => { // sort
                     if ((<any[]> folders).length === 0) {
