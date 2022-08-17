@@ -519,15 +519,15 @@
 					"when": "view == projectsExplorerFavorites && projectManager.hiddenGitWelcome",
 					"group": "2_projectManager"
 				},
+                {
+                    "command": "projectManager.listVSCodeProjects#sideBarVSCode",
+                    "when": "view == projectsExplorerVSCode",
+                    "group": "navigation@10"
+                },
 				{
 					"command": "projectManager.refreshVSCodeProjects",
 					"when": "view == projectsExplorerVSCode",
-					"group": "navigation"
-				},
-				{
-					"command": "projectManager.listVSCodeProjects#sideBarVSCode",
-					"when": "view == projectsExplorerVSCode",
-					"group": "navigation"
+					"group": "navigation@11"
 				},
 				{
 					"command": "projectManager.openSettings#sideBarVSCode",
@@ -537,12 +537,12 @@
 				{
 					"command": "projectManager.listGitProjects#sideBarGit",
 					"when": "view == projectsExplorerGit",
-					"group": "navigation"
+					"group": "navigation@10"
 				},
 				{
 					"command": "projectManager.refreshGitProjects",
 					"when": "view == projectsExplorerGit",
-					"group": "navigation"
+					"group": "navigation@11"
 				},
 				{
 					"command": "projectManager.openSettings#sideBarGit",
@@ -552,12 +552,12 @@
 				{
 					"command": "projectManager.listSVNProjects#sideBarSVN",
 					"when": "view == projectsExplorerSVN",
-					"group": "navigation"
+					"group": "navigation@10"
 				},
 				{
 					"command": "projectManager.refreshSVNProjects",
 					"when": "view == projectsExplorerSVN",
-					"group": "navigation"
+					"group": "navigation@11"
 				},
 				{
 					"command": "projectManager.openSettings#sideBarSVN",
@@ -567,12 +567,12 @@
 				{
 					"command": "projectManager.listAnyProjects#sideBarAny",
 					"when": "view == projectsExplorerAny",
-					"group": "navigation"
+					"group": "navigation@10"
 				},
 				{
 					"command": "projectManager.refreshAnyProjects",
 					"when": "view == projectsExplorerAny",
-					"group": "navigation"
+					"group": "navigation@11"
 				},
 				{
 					"command": "projectManager.openSettings#sideBarAny",
@@ -582,12 +582,12 @@
 				{
 					"command": "projectManager.listMercurialProjects#sideBarMercurial",
 					"when": "view == projectsExplorerMercurial",
-					"group": "navigation"
+					"group": "navigation@10"
 				},
 				{
 					"command": "projectManager.refreshMercurialProjects",
 					"when": "view == projectsExplorerMercurial",
-					"group": "navigation"
+					"group": "navigation@11"
 				},
 				{
 					"command": "projectManager.openSettings#sideBarMercurial",
