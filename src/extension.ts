@@ -27,7 +27,8 @@ import { registerOpenSettings } from "./commands/openSettings";
 import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
 import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
 import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
-import { canSwitchOnActiveWindow, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
+import { canSwitchOnActiveWindow, openPickedProject, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
+import { CustomProjectLocator } from "../vscode-project-manager-core/src/autodetect/abstractLocator";
 
 let locators: Locators
 
@@ -100,6 +101,13 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
+    
+    vscode.commands.registerCommand("projectManager.listFavoriteProjects#sideBarFavorites", () => listStorageProjects());
+    vscode.commands.registerCommand("projectManager.listGitProjects#sideBarGit", () => listAutoDetectedProjects(locators.gitLocator));
+    vscode.commands.registerCommand("projectManager.listVSCodeProjects#sideBarVSCode", () => listAutoDetectedProjects(locators.vscLocator));
+    vscode.commands.registerCommand("projectManager.listSVNProjects#sideBarSVN", () => listAutoDetectedProjects(locators.svnLocator));
+    vscode.commands.registerCommand("projectManager.listMercurialProjects#sideBarMercurial", () => listAutoDetectedProjects(locators.mercurialLocator));
+    vscode.commands.registerCommand("projectManager.listAnyProjects#sideBarAny", () => listAutoDetectedProjects(locators.anyLocator));
 
     // new commands (ActivityBar)
     vscode.commands.registerCommand("projectManager.addToWorkspace#sideBar", (node) => addProjectToWorkspace(node));
@@ -334,27 +342,18 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     async function listProjects(forceNewWindow: boolean) {
+        const pick = await pickProjects(projectStorage, locators, !forceNewWindow, undefined); 
+        openPickedProject(pick, forceNewWindow, CommandLocation.CommandPalette);
+    }
 
-        const pick = await pickProjects(projectStorage, locators, !forceNewWindow); 
-        if (pick) {
+    async function listAutoDetectedProjects(locator: CustomProjectLocator) {
+        const pick = await pickProjects(undefined, locators, true, locator); 
+        openPickedProject(pick, false, CommandLocation.SideBar);
+    }
 
-            if (!pick.button) {
-                if (!forceNewWindow && !await canSwitchOnActiveWindow(CommandLocation.CommandPalette)) {
-                    return;
-                }
-            }
-
-            Container.stack.push(pick.item.name);
-            context.globalState.update("recent", Container.stack.toString());
-
-            const openInNewWindow = shouldOpenInNewWindow(forceNewWindow || !!pick.button, CommandLocation.CommandPalette);
-            const uri = buildProjectUri(pick.item.rootPath);
-            vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
-                .then(
-                value => ({}),  // done
-                value => vscode.window.showInformationMessage("Could not open the project!"));
-            return;
-        }
+    async function listStorageProjects() {
+        const pick = await pickProjects(projectStorage, undefined, true, undefined); 
+        openPickedProject(pick, false, CommandLocation.SideBar);
     }
 
     function loadProjectsFile() {
@@ -406,7 +405,7 @@ export async function activate(context: vscode.ExtensionContext) {
             return;
         }
 
-        const pick = await pickProjects(projectStorage, locators, false); 
+        const pick = await pickProjects(projectStorage, locators, false, undefined); 
         if (pick) {
             addProjectPathToWorkspace(pick.item.rootPath);
         }

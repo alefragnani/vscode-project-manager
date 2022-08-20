@@ -6,12 +6,14 @@
 import fs = require("fs");
 import { commands, Disposable, MessageItem, QuickInputButton, QuickPickItem, ThemeIcon, window, workspace } from "vscode";
 import { ThemeIcons } from "vscode-ext-codicons";
+import { CustomProjectLocator } from "../../vscode-project-manager-core/src/autodetect/abstractLocator";
 import { Locators } from "../../vscode-project-manager-core/src/autodetect/locators";
 import { Container } from "../../vscode-project-manager-core/src/container";
 import { Project } from "../../vscode-project-manager-core/src/project";
 import { ProjectStorage } from "../../vscode-project-manager-core/src/storage";
 import { PathUtils } from "../../vscode-project-manager-core/src/utils/path";
 import { isRemotePath } from "../../vscode-project-manager-core/src/utils/remote";
+import { buildProjectUri } from "../../vscode-project-manager-core/src/utils/uri";
 import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode } from "../constants";
 
 function getProjects(itemsSorted: any[]): Promise<{}> {
@@ -66,6 +68,18 @@ function canPickSelectedProject(item: QuickPickItem, projectStorage: ProjectStor
     folderNotFound(item.label, projectStorage);
 }
 
+function getProjectsFromLocator(folders: any, locators: Locators, locatorToFilter: CustomProjectLocator, locatorToGetFrom: CustomProjectLocator) {
+    if (locatorToFilter && locatorToFilter !== locatorToGetFrom) { 
+        return folders 
+    }
+    
+    if (!locators) { 
+        return folders 
+    }
+
+    return locators.getLocatorProjects(<any[]>folders, locatorToGetFrom);
+}
+
 class OpenInNewWindowButton implements QuickInputButton {
     constructor(public iconPath: ThemeIcon, public tooltip: string) { }
 }
@@ -77,31 +91,36 @@ export interface Picked<T> {
     button: QuickInputButton | undefined
 }
 
-export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, showOpenInNewWindowButton: boolean): Promise<Picked<Project> | undefined> {
+export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, showOpenInNewWindowButton: boolean,
+    locatorToFilter: CustomProjectLocator): Promise<Picked<Project> | undefined> {
     const disposables: Disposable[] = [];
 
     try {
         return await new Promise<Picked<Project> | undefined>((resolve, reject) => {
             let items = [];
             const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
-            items = projectStorage.getProjectsByTags(filterByTags);
-            items = locators.sortGroupedList(items);
+            if (projectStorage) {
+                items = projectStorage.getProjectsByTags(filterByTags);
+                if (locators) {
+                    items = locators?.sortGroupedList(items);
+                }
+            }
 
             getProjects(items)
                 .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.vscLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.vscLocator);
                 })
                 .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.gitLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.gitLocator);
                 })
                 .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.mercurialLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.mercurialLocator);
                 })
                 .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.svnLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.svnLocator);
                 })
                 .then((folders) => {
-                    return locators.getLocatorProjects(<any[]> folders, locators.anyLocator);
+                    return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.anyLocator);
                 })
                 .then((folders) => { // sort
                     if ((<any[]> folders).length === 0) {
@@ -109,7 +128,9 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         return resolve(undefined);
                     } else {
                         if (!workspace.getConfiguration("projectManager").get("groupList", false)) {
-                            folders = locators.sortProjectList(folders);
+                            if (locators) {
+                                folders = locators?.sortProjectList(folders);
+                            }
                         }
                         commands.executeCommand("setContext", "inProjectManagerList", true);
 
@@ -250,4 +271,24 @@ export async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Prom
     };
     const answer = await window.showWarningMessage("Do you want to open the project in the active window?", {modal: true}, optionOpenProject);
     return answer === optionOpenProject;
+}
+
+export async function openPickedProject(picked: Picked<Project>, forceNewWindow: boolean, calledFrom: CommandLocation) {
+    if (!picked) { return }
+
+    if (!picked.button) {
+        if (!forceNewWindow && !await canSwitchOnActiveWindow(calledFrom)) {
+            return;
+        }
+    }
+
+    Container.stack.push(picked.item.name);
+    Container.context.globalState.update("recent", Container.stack.toString());
+
+    const openInNewWindow = shouldOpenInNewWindow(forceNewWindow || !!picked.button, calledFrom);
+    const uri = buildProjectUri(picked.item.rootPath);
+    commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
+        .then(
+            () => ({}),  // done
+            () => window.showInformationMessage("Could not open the project!"));
 }
