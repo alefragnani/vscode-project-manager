@@ -1,3 +1,16 @@
+## [12.7.0] - 2022-09-02
+### Added
+- Improve `List` performance (issue [#628](https://github.com/alefragnani/vscode-project-manager/issues/628))
+- Filter project in Activity Bar (issue [#213](https://github.com/alefragnani/vscode-project-manager/issues/213))
+- Accept case changes during project rename (Thanks to @gdh1995 PR [#622](https://github.com/alefragnani/vscode-project-manager/issues/622))
+
+### Fixed
+- Wrong description for `File Manager` in Linux (issue [#618](https://github.com/alefragnani/vscode-project-manager/issues/618))
+- Projects not being auto-detected if `cache` is `false` (issue [#448](https://github.com/alefragnani/vscode-project-manager/issues/448))
+
+### Internal
+- Improve extension startup (issue [#625](https://github.com/alefragnani/vscode-project-manager/issues/625))
+
 ## [12.6.1] - 2022-07-17
 ### Internal
 - Add GitHub Sponsors support (PR [#613](https://github.com/alefragnani/vscode-project-manager/pull/613))
