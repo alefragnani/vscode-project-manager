@@ -5,7 +5,7 @@
 	"version": "12.7.0",
 	"publisher": "alefragnani",
 	"engines": {
-		"vscode": "^1.61.0"
+		"vscode": "^1.74.0"
 	},
 	"categories": [
 		"Other"
@@ -45,20 +45,7 @@
         "url": "https://github.com/sponsors/alefragnani"
     },
 	"activationEvents": [
-		"onStartupFinished",
-		"onCommand:projectManager.saveProject",
-		"onCommand:projectManager.addToWorkspace#sideBar",
-		"onCommand:projectManager.addToWorkspace",
-		"onCommand:projectManager.listProjects",
-		"onCommand:projectManager.listProjectsNewWindow",
-		"onCommand:projectManager.editProjects",
-		"onCommand:projectManager.refreshProjects",
-		"onCommand:projectManager.refreshVSCodeProjects",
-		"onCommand:projectManager.refreshGitProjects",
-		"onCommand:projectManager.refreshSVNProjects",
-		"onCommand:projectManager.refreshAnyProjects",
-		"onCommand:projectManager.refreshMercurialProjects",
-		"onView:projectsExplorer"
+		"onStartupFinished"
 	],
 	"main": "./dist/extension",
 	"contributes": {
@@ -1025,7 +1012,7 @@
 	},
 	"devDependencies": {
         "@types/node": "^14.17.27",
-        "@types/vscode": "^1.61.0",
+        "@types/vscode": "^1.73.0",
         "@types/mocha": "^9.0.0",
         "@types/glob": "^7.1.4",
         "@vscode/test-electron": "^1.6.2",
