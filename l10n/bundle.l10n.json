@@ -37,5 +37,7 @@
     "{0} projects have been refreshed!": "{0} projects have been refreshed!",
     "No tags available/defined.": "No tags available/defined.",
     "Select the tags": "Select the tags",
+    "{0} disabled": "{0} disabled",
+    "filtered by tags": "filtered by tags",
     "Save the workspace first to save a project": "Save the workspace first to save a project"
 }
