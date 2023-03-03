@@ -3,7 +3,7 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { commands, env, MessageItem, Uri, window } from "vscode";
+import { commands, env, l10n, MessageItem, Uri, window } from "vscode";
 import { Container } from "../../vscode-project-manager-core/src/container";
 
 export function registerSupportProjectManager() {
@@ -12,8 +12,8 @@ export function registerSupportProjectManager() {
       { title: 'Become a Sponsor' },
       { title: 'Donate via PayPal' }
     ];
-    const option = await window.showInformationMessage(`While Project Manager is offered for free, if you 
-        find it useful, please consider supporting it. Thank you!`, ...actions);
+    const option = await window.showInformationMessage(l10n.t(`While Project Manager is offered for free, if you 
+        find it useful, please consider supporting it. Thank you!`), ...actions);
     let uri: Uri;
     if (option === actions[ 0 ]) {
       uri = Uri.parse('https://github.com/sponsors/alefragnani');

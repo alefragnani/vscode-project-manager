@@ -48,6 +48,7 @@
 		"onStartupFinished"
 	],
 	"main": "./dist/extension",
+    "l10n": "./l10n",
 	"contributes": {
 		"viewsContainers": {
 			"activitybar": [

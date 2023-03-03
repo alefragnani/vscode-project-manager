@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import fs = require("fs");
-import { commands, Disposable, MessageItem, QuickInputButton, QuickPickItem, ThemeIcon, window, workspace } from "vscode";
+import { commands, Disposable, l10n, MessageItem, QuickInputButton, QuickPickItem, ThemeIcon, window, workspace } from "vscode";
 import { ThemeIcons } from "vscode-ext-codicons";
 import { CustomProjectLocator } from "../../vscode-project-manager-core/src/autodetect/abstractLocator";
 import { Locators } from "../../vscode-project-manager-core/src/autodetect/locators";
@@ -28,19 +28,19 @@ function getProjects(itemsSorted: any[]): Promise<{}> {
 function folderNotFound(name: string, projectStorage: ProjectStorage) {
 
     const optionUpdateProject = <MessageItem> {
-        title: "Update Project"
+        title: l10n.t("Update Project")
     };
     const optionDeleteProject = <MessageItem> {
-        title: "Delete Project"
+        title: l10n.t("Delete Project")
     };
 
-    window.showErrorMessage("The project has an invalid path. What would you like to do?", optionUpdateProject, optionDeleteProject).then(option => {
+    window.showErrorMessage(l10n.t("The project has an invalid path. What would you like to do?"), optionUpdateProject, optionDeleteProject).then(option => {
         // nothing selected
         if (typeof option === "undefined") {
             return;
         }
 
-        if (option.title === "Update Project") {
+        if (option.title === l10n.t("Update Project")) {
             commands.executeCommand("projectManager.editProjects");
         } else { // Update Project
             projectStorage.pop(name);
@@ -61,7 +61,7 @@ function canPickSelectedProject(item: QuickPickItem, projectStorage: ProjectStor
     }
 
     if (item.label.substr(0, 2) === "$(") {
-        window.showErrorMessage("Path does not exist or is unavailable.");
+        window.showErrorMessage(l10n.t("Path does not exist or is unavailable."));
         return false;
     }
 
@@ -84,7 +84,7 @@ class OpenInNewWindowButton implements QuickInputButton {
     constructor(public iconPath: ThemeIcon, public tooltip: string) { }
 }
 
-const openInNewWindowButton = new OpenInNewWindowButton(ThemeIcons.link_external, 'Open in New Window');
+const openInNewWindowButton = new OpenInNewWindowButton(ThemeIcons.link_external, l10n.t('Open in New Window'));
 
 export interface Picked<T> {
     item: T;
@@ -124,7 +124,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                 })
                 .then((folders) => { // sort
                     if ((<any[]> folders).length === 0) {
-                        window.showInformationMessage("No projects saved yet!");
+                        window.showInformationMessage(l10n.t("No projects saved yet!"));
                         return resolve(undefined);
                     } else {
                         if (!workspace.getConfiguration("projectManager").get("groupList", false)) {
@@ -143,7 +143,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                             }
                         });
                         const input = window.createQuickPick();
-                        input.placeholder = "Loading projects (pick one)...";
+                        input.placeholder = l10n.t("Loading projects (pick one)...");
                         input.matchOnDescription = workspace.getConfiguration("projectManager").get("filterOnFullPath", false);
                         input.matchOnDetail = false;
                         input.items = <any[]> folders;
@@ -267,9 +267,9 @@ export async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Prom
     }
 
     const optionOpenProject = <MessageItem> {
-        title: "Open Project"
+        title: l10n.t("Open Project")
     };
-    const answer = await window.showWarningMessage("Do you want to open the project in the active window?", {modal: true}, optionOpenProject);
+    const answer = await window.showWarningMessage(l10n.t("Do you want to open the project in the active window?"), {modal: true}, optionOpenProject);
     return answer === optionOpenProject;
 }
 
@@ -290,5 +290,5 @@ export async function openPickedProject(picked: Picked<Project>, forceNewWindow:
     commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
         .then(
             () => ({}),  // done
-            () => window.showInformationMessage("Could not open the project!"));
+            () => window.showInformationMessage(l10n.t("Could not open the project!")));
 }
