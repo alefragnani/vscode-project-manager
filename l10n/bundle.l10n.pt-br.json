@@ -39,5 +39,6 @@
     "Select the tags": "Selecione as tags",
     "{0} disabled": "{0} desabilitados",
     "filtered by tags": "filtrado por tags",
-    "Save the workspace first to save a project": "Salve o workspace primeiro para salvar um projeto"
+    "Save the workspace first to save a project": "Salve o workspace primeiro para salvar um projeto",
+    "Open a folder first to save a project": "Abra um diretório antes para salvar um projeto"
 }
