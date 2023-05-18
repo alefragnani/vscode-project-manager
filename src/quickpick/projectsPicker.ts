@@ -139,6 +139,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                             return {
                                 label: folder.label,
                                 description: folder.description,
+                                profile: folder.profile,
                                 buttons: showOpenInNewWindowButton ? [openInNewWindowButton] : []
                             }
                         });
@@ -148,7 +149,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         input.matchOnDetail = false;
                         input.items = <any[]> folders;
                         input.onDidChangeSelection(items => {
-                            const item = items[0];
+                            const item = <any>items[0];
                             if (item) {
                                 if (!canPickSelectedProject(item, projectStorage)) {
                                     resolve(undefined);
@@ -159,7 +160,8 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                                 resolve(<Picked<Project>>{
                                     item: {
                                         name: item.label,
-                                        rootPath: PathUtils.normalizePath(item.description)
+                                        rootPath: PathUtils.normalizePath(item.description),
+                                        profile: item.profile,
                                     }, button: undefined
                                 });
                                 input.hide();
@@ -287,7 +289,7 @@ export async function openPickedProject(picked: Picked<Project>, forceNewWindow:
 
     const openInNewWindow = shouldOpenInNewWindow(forceNewWindow || !!picked.button, calledFrom);
     const uri = buildProjectUri(picked.item.rootPath);
-    commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
+    commands.executeCommand("vscode.openFolder", uri, { forceProfile: picked.item.profile, forceNewWindow: openInNewWindow })
         .then(
             () => ({}),  // done
             () => window.showInformationMessage(l10n.t("Could not open the project!")));
