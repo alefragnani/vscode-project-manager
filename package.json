@@ -328,7 +328,11 @@
 			{
 				"command": "projectManager.supportProjectManager",
 				"title": "%projectManager.commands.supportProjectManager.title%"
-			}
+			},
+            {
+                "command": "_projectManager.openSideBar",
+                "title": "%projectManager.commands.openSideBar.title%"
+            }
 		],
 		"menus": {
 			"commandPalette": [
@@ -459,7 +463,11 @@
 				{
 					"command": "_projectManager.openFolderWelcome",
 					"when": "false"
-				}
+				},
+                {
+                    "command": "_projectManager.openSideBar",
+                    "when": "false"
+                }
 			],
 			"view/title": [
 				{
