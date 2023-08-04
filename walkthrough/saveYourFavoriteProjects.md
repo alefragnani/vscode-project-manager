@@ -6,4 +6,4 @@ You can save the current folder or workspace as a **Project** at any time. You j
 
 It _automatically_ suggests the name of the project with the name of the folder / workspace you have opened, as a shortcut.
 
-Once you save it, it will be available in the `Command Palette` and the exclusive `Side Bar`.
+Once you save it, it will be available in the **Command Palette** and the exclusive **Side Bar**.
