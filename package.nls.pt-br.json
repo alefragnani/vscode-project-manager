@@ -47,6 +47,7 @@
     "projectManager.commands.showGitWelcome.title": "Exibir Painel de Boas Vindas Git",
     "projectManager.commands.openFolderWelcome.title": "Abrir Pasta",
     "projectManager.commands.supportProjectManager.title": "Project Manager: Suporte Project Manager",
+    "projectManager.commands.openSideBar.title": "Abrir Barra Lateral",
     "projectManager.commands.whatsNew.title": "Project Manager: Novidades",
     "projectManager.commands.whatsNewContextMenu.title": "Novidades",
     "projectManager.configuration.title": "Project Manager",
@@ -81,5 +82,21 @@
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Use `openInCurrentWindowIfEmpty` em vez disso",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Indica se o comando Nova Janela abre o projeto na janela corrente, quando vazia",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Controla se a extensão deve solicitar confirmação ao abrir projetos na janela ativa.",
-    "projectManager.configuration.tags.description": "Indica a lista de etiquetas que você pode usar para organizar seus projetos"
+    "projectManager.configuration.tags.description": "Indica a lista de etiquetas que você pode usar para organizar seus projetos",
+    "projectManager.walkthroughs.title": "Começar a trabalhar com Project Manager",
+    "projectManager.walkthroughs.description": "Aprenda mais sobre Project Manager para otimizar seu trabalho",
+    "projectManager.walkthroughs.saveYourFavoriteProjects.title": "Salve Seus Projetos Favoritos",
+    "projectManager.walkthroughs.saveYourFavoriteProjects.description": "Acesse facilmente seus projetos favoritos, não importando onde eles estão localizados.\n__Não perca mais aqueles projetos importantes__\n[Salvar Projeto](command:projectManager.saveProject)",
+    "projectManager.walkthroughs.autoDetectGitRepositories.title": "Auto-detectar Repositórios Git",
+    "projectManager.walkthroughs.autoDetectGitRepositories.description": "Defina um conjunto de pastas bases onde seus projetos Git estão localizados e a extensão os apresentará para você.\n[Abrir Configurações](command:workbench.action.openSettings?%5B%22projectManager.git.baseFolders%22%5D)",
+    "projectManager.walkthroughs.findAndOpenProjects.title": "Localize e Abra Seus Projetos",
+    "projectManager.walkthroughs.findAndOpenProjects.description": {
+        "message": "Acesse facilmente todos os seus projetos na **Paleta de Comandos** e na **Barra Lateral** exclusiva.\n[Listar Projetos para Abrir](command:projectManager.listProjects)"
+    },
+    "projectManager.walkthroughs.organizeWithTags.title": "Organize com Etiquetas",
+    "projectManager.walkthroughs.organizeWithTags.description": "Você pode organizar/categorizar seus projetos usando **Etiquetas**. Filtre seus projetos por **Etiquetas** e até mesmo escolha **Etiquetas** ativas que são mais relevantes para o trabalho que está fazendo.",
+    "projectManager.walkthroughs.exclusiveSideBar.title": "Barra Lateral Exclusiva",
+    "projectManager.walkthroughs.exclusiveSideBar.description": "Uma Barra Lateral exclusiva com tudo que você precisa para aumentar sua produtividade.\n[Abrir Barra Lateral](command:_projectManager.openSideBar)",
+    "projectManager.walkthroughs.workingWithRemotes.title": "Trabalhando com Remotos",
+    "projectManager.walkthroughs.workingWithRemotes.description": "A extensão suporta cenários de [Desenvolvimento Remoto](https://code.visualstudio.com/docs/remote/remote-overview), e você pode escolher como usar, dependendo das suas necessidades."
 }
