@@ -1,5 +1,9 @@
 ## Save your Favorite Projects
 
-The **Project Manager** extension has its own **Side Bar**, with a variety of commands to improve you productivity. 
+You can save the current folder or workspace as a **Project** at any time. You just need to type its name. 
 
-![Side Bar](../images/vscode-project-manager-side-bar.png)
+![Save](../images/project-manager-save.png)
+
+It _automatically_ suggests the name of the project with the name of the folder / workspace you have opened, as a shortcut.
+
+Once you save it, it will be available in the `Command Palette` and the exclusive `Side Bar`.
