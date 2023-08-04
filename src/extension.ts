@@ -30,6 +30,7 @@ import { registerSortBy, updateSortByContext } from "../vscode-project-manager-c
 import { canSwitchOnActiveWindow, openPickedProject, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
 import { CustomProjectLocator } from "../vscode-project-manager-core/src/autodetect/abstractLocator";
 import { l10n } from "vscode";
+import { registerWalkthrough } from "./commands/walkthrough";
 
 let locators: Locators
 
@@ -54,6 +55,7 @@ export async function activate(context: vscode.ExtensionContext) {
     registerSupportProjectManager();
     registerHelpAndFeedbackView(context);
     registerSortBy();
+    await registerWalkthrough();
 
     registerWhatsNew();
 

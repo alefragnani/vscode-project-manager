@@ -47,6 +47,7 @@
     "projectManager.commands.showGitWelcome.title": "Show Git Welcome Panel",
     "projectManager.commands.openFolderWelcome.title": "Open Folder",
     "projectManager.commands.supportProjectManager.title": "Project Manager: Support Project Manager",
+    "projectManager.commands.openSideBar.title": "Open Side Bar",
     "projectManager.commands.whatsNew.title": "Project Manager: What's New",
     "projectManager.commands.whatsNewContextMenu.title": "What's New",
     "projectManager.configuration.title": "Project Manager",
@@ -81,5 +82,21 @@
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Use `projectManager.openInCurrentWindowIfEmpty` instead",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty.",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Controls whether the extension should ask for confirmation when opening projects in the active window.",
-    "projectManager.configuration.tags.description": "Indicates the list of tags you can use to organize your projects"
+    "projectManager.configuration.tags.description": "Indicates the list of tags you can use to organize your projects",
+    "projectManager.walkthroughs.title": "Get Started with Project Manager",
+    "projectManager.walkthroughs.description": "Learn more about Project Manager to optimize your workflow",
+    "projectManager.walkthroughs.saveYourFavoriteProjects.title": "Save Your Favorite Projects",
+    "projectManager.walkthroughs.saveYourFavoriteProjects.description": "Easily acces your favorite projects, no matter where they are located.\n__Don't miss those important projects anymore__\n[Save Project](command:projectManager.saveProject)",
+    "projectManager.walkthroughs.autoDetectGitRepositories.title": "Auto-detect Git Repositories",
+    "projectManager.walkthroughs.autoDetectGitRepositories.description": "Define a set of base folders where your Git projects are located and the extension present you.\n[Open Settings](command:workbench.action.openSettings?%5B%22projectManager.git.baseFolders%22%5D)",
+    "projectManager.walkthroughs.findAndOpenProjects.title": "Find and Open Your Projects",
+    "projectManager.walkthroughs.findAndOpenProjects.description": {
+        "message": "Quickly access all your projects in the **Command Palette** and it its exclusive **Side Bar**.\n[List Projects to Open](command:projectManager.listProjects)"
+    },
+    "projectManager.walkthroughs.organizeWithTags.title": "Organize with Tags",
+    "projectManager.walkthroughs.organizeWithTags.description": "You can organize/categorize your projects using **Tags**. Filter your projects by **Tags** and even choose active **Tags** that are more relevant to the work you are doing.",
+    "projectManager.walkthroughs.exclusiveSideBar.title": "Exclusive Side Bar",
+    "projectManager.walkthroughs.exclusiveSideBar.description": "An exclusive Side Bar with everything you need for great productivity.\n[Open Side Bar](command:_projectManager.openSideBar)",
+    "projectManager.walkthroughs.workingWithRemotes.title": "Working with Remotes",
+    "projectManager.walkthroughs.workingWithRemotes.description": "The extension support [Remote Development](https://code.visualstudio.com/docs/remote/remote-overview) scenarios, and you may choose how to use it, depending on your needs."
 }

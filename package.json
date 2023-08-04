@@ -328,7 +328,11 @@
 			{
 				"command": "projectManager.supportProjectManager",
 				"title": "%projectManager.commands.supportProjectManager.title%"
-			}
+			},
+            {
+                "command": "_projectManager.openSideBar",
+                "title": "%projectManager.commands.openSideBar.title%"
+            }
 		],
 		"menus": {
 			"commandPalette": [
@@ -459,7 +463,11 @@
 				{
 					"command": "_projectManager.openFolderWelcome",
 					"when": "false"
-				}
+				},
+                {
+                    "command": "_projectManager.openSideBar",
+                    "when": "false"
+                }
 			],
 			"view/title": [
 				{
@@ -991,7 +999,64 @@
 				"key": "shift+alt+p",
 				"mac": "cmd+alt+p"
 			}
-		]
+		],
+        "walkthroughs": [
+            {
+                "id": "projectManagerWelcome",
+                "title": "%projectManager.walkthroughs.title%",
+                "description": "%projectManager.walkthroughs.description%",
+                "steps": [
+                    {
+                        "id": "saveYourFavoriteProjects",
+                        "title": "%projectManager.walkthroughs.saveYourFavoriteProjects.title%",
+                        "description": "%projectManager.walkthroughs.saveYourFavoriteProjects.description%",
+                        "media": {
+                            "markdown": "walkthrough/saveYourFavoriteProjects.md"
+                        }
+                    },
+                    {
+                        "id": "autoDetectGitRepositories",
+                        "title": "%projectManager.walkthroughs.autoDetectGitRepositories.title%",
+                        "description": "%projectManager.walkthroughs.autoDetectGitRepositories.description%",
+                        "media": {
+                            "markdown": "walkthrough/autoDetectGitRepositories.md"
+                        }
+                    },
+                    {
+                        "id": "findAndOpenProjects",
+                        "title": "%projectManager.walkthroughs.findAndOpenProjects.title%",
+                        "description": "%projectManager.walkthroughs.findAndOpenProjects.description%",
+                        "media": {
+                            "markdown": "walkthrough/findAndOpenProjects.md"
+                        }
+                    },
+                    {
+                        "id": "organizeWithTags",
+                        "title": "%projectManager.walkthroughs.organizeWithTags.title%",
+                        "description": "%projectManager.walkthroughs.organizeWithTags.description%",
+                        "media": {
+                            "markdown": "walkthrough/organizeWithTags.md"
+                        }
+                    },
+                    {
+                        "id": "exclusiveSideBar",
+                        "title": "%projectManager.walkthroughs.exclusiveSideBar.title%",
+                        "description": "%projectManager.walkthroughs.exclusiveSideBar.description%",
+                        "media": {
+                            "markdown": "walkthrough/exclusiveSideBar.md"
+                        }
+                    },
+                    {
+                        "id": "workingWithRemotes",
+                        "title": "%projectManager.walkthroughs.workingWithRemotes.title%",
+                        "description": "%projectManager.walkthroughs.workingWithRemotes.description%",
+                        "media": {
+                            "markdown": "walkthrough/workingWithRemotes.md"
+                        }
+                    }
+                ]
+            }
+        ]
 	},
 	"eslintConfig": {
 		"extends": [
