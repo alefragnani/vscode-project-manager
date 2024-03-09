@@ -34,13 +34,6 @@
   </tr>
 </table>
 
-## Sponsors
-
-<a title="Learn more about CodeStream" href="https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner"><img src="https://alt-images.codestream.com/codestream_logo_projectmanager.png" width="35%"/></a></br>
-Eliminate context switching and costly distractions. Create and merge PRs and perform code reviews from inside your IDE while using jump-to-definition, your keybindings, and other IDE favorites.<br> <a title="Learn more about CodeStream" href="https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner">Learn more</a>
-
-<br>
-
 # Project Manager
 
 It helps you to easily access your **projects**, no matter where they are located. _Don't miss those important projects anymore_. 

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 // tslint:disable-next-line:max-line-length
-import { ChangeLogItem, ChangeLogKind, ContentProvider, Header, Image, Sponsor, IssueKind, SupportChannel, SponsorProvider, SocialMediaProvider } from "../../vscode-whats-new/src/ContentProvider";
+import { ChangeLogItem, ChangeLogKind, ContentProvider, Header, Image, IssueKind, SupportChannel, SocialMediaProvider } from "../../vscode-whats-new/src/ContentProvider";
 
 export class ProjectManagerContentProvider implements ContentProvider {
 
@@ -217,29 +217,6 @@ export class ProjectManagerContentProvider implements ContentProvider {
             message: "Donate via PayPal"
         });
         return supportChannels;
-    }
-}
-
-export class ProjectManagerSponsorProvider implements SponsorProvider {
-    public provideSponsors(): Sponsor[] {
-        const sponsors: Sponsor[] = [];
-        const sponsorCodeStream: Sponsor = <Sponsor> {
-            title: "Learn more about CodeStream",
-            link: "https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner",
-            image: {
-                dark: "https://alt-images.codestream.com/codestream_logo_projectmanager.png",
-                light: "https://alt-images.codestream.com/codestream_logo_projectmanager.png"
-            },
-            width: 35,
-            message: `<p>Eliminate context switching and costly distractions. 
-                Create and merge PRs and perform code reviews from inside your 
-                IDE while using jump-to-definition, your keybindings, and other IDE favorites.</p>`,
-            extra: 
-                `<a title="Learn more about CodeStream" href="https://sponsorlink.codestream.com/?utm_source=vscmarket&utm_campaign=projectmanager&utm_medium=banner">
-                 Learn more</a>` 
-        };
-        sponsors.push(sponsorCodeStream);
-        return sponsors
     }
 }
 
