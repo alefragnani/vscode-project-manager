@@ -1,3 +1,27 @@
+## [12.8.0] - 2024-03-28
+### Added
+- Published to Open VSX (issue [#458](https://github.com/alefragnani/vscode-project-manager/issues/458))
+- Getting Started/Walkthrough (issue [#517](https://github.com/alefragnani/vscode-project-manager/issues/517))
+- Czech translations (issue [#720](https://github.com/alefragnani/vscode-project-manager/issues/720))
+
+### Changed
+- Avoid What's New when using Gitpod (issue [#724](https://github.com/alefragnani/vscode-project-manager/issues/724))
+- Avoid What's New when installing lower versions (issue [#724](https://github.com/alefragnani/vscode-project-manager/issues/724))
+
+### Fixed
+- Activation fails when `baseFolders` contains symlinks (issue [#657](https://github.com/alefragnani/vscode-project-manager/issues/657))
+- Status Bar missing with project using relative path (issue [#650](https://github.com/alefragnani/vscode-project-manager/issues/650))
+- Trying to save project with no folder opened (issue [#683](https://github.com/alefragnani/vscode-project-manager/issues/683))
+- Extension activation with invalid json (issue [#687](https://github.com/alefragnani/vscode-project-manager/issues/687))
+- What's new broken on web (issue [#677](https://github.com/alefragnani/vscode-project-manager/issues/677))
+
+### Internal
+- Localization (l10n) support (issue [#654](https://github.com/alefragnani/vscode-project-manager/issues/654))
+- Support Implicit Activation Events API (issue [#659](https://github.com/alefragnani/vscode-project-manager/issues/659))
+- Security Alert: word-wrap (dependabot [PR #695](https://github.com/alefragnani/vscode-project-manager/pull/695))
+- Security Alert: webpack (dependabot [PR #680](https://github.com/alefragnani/vscode-project-manager/pull/680))
+- Security Alert: terser (dependabot [PR #624](https://github.com/alefragnani/vscode-project-manager/pull/624))
+
 ## [12.7.0] - 2022-09-02
 ### Added
 - Improve `List` performance (issue [#628](https://github.com/alefragnani/vscode-project-manager/issues/628))

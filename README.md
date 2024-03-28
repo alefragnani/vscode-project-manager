@@ -7,14 +7,13 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 12.7
+# What's new in Project Manager 12.8
 
+* Published to **Open VSX**
+* Adds **Getting Started / Walkthrough**
 * Organize your projects with **Tags**
 * Adds **Virtual Workspaces** support
 * Adds **Workspace Trust** support
-* Improved **Side Bar** usability
-* Full **Remote Development** support
-* Adds **Symlink** support
 
 # Support
 
