@@ -1,10 +1,10 @@
 {
     "Remote projects can't be revealed in {0}": "无法在 {0} 开启远端项目",
-    "While Project Manager is offered for free, if you \n        find it useful, please consider supporting it. Thank you!": "Project Manager 是免费提供的，如您\n        觉得项目对你十分有用，请考虑支持。 谢谢！",
+    "While Project Manager is offered for free, if you \n        find it useful, please consider supporting it. Thank you!": "Project Manager 是免费提供的，如您\n        觉得项目对你十分有用，请考虑支持。谢谢！",
     "Could not open the project!": "无法开启项目！",
     "Refreshing Projects": "正在刷新项目清单",
     "The projects have been refreshed!": "项目清单已刷新！",
-    "No projects saved yet! You should open a folder and use Save Project instead. Do you really want to edit manually? ": "尚未保存任何项目！请先打开一个文件夹并使用“保存项目”。确定要手动编辑 吗？",
+    "No projects saved yet! You should open a folder and use Save Project instead. Do you really want to edit manually? ": "尚未保存任何项目！请先打开一个文件夹并使用“保存项目”。确定要手动编辑吗？",
     "Yes, edit manually": "是的，手动编辑",
     "Project Name": "项目名称",
     "Type a name for your project": "输入项目名称",
