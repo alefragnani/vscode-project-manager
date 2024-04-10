@@ -31,6 +31,7 @@ import { canSwitchOnActiveWindow, openPickedProject, pickProjects, shouldOpenInN
 import { CustomProjectLocator } from "../vscode-project-manager-core/src/autodetect/abstractLocator";
 import { l10n } from "vscode";
 import { registerWalkthrough } from "./commands/walkthrough";
+import { registerSideBarDecorations } from "../vscode-project-manager-core/src/sidebar/decoration";
 
 let locators: Locators
 
@@ -55,6 +56,7 @@ export async function activate(context: vscode.ExtensionContext) {
     registerSupportProjectManager();
     registerHelpAndFeedbackView(context);
     registerSortBy();
+    registerSideBarDecorations();
     await registerWalkthrough();
 
     registerWhatsNew();
@@ -190,7 +192,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }));
 
-    showStatusBar(projectStorage, locators);
+    const currentProject = showStatusBar(projectStorage, locators);
+    Container.currentProject = currentProject;
     
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
