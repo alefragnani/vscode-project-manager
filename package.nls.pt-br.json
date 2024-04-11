@@ -83,6 +83,7 @@
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Indica se o comando Nova Janela abre o projeto na janela corrente, quando vazia",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Controla se a extensão deve solicitar confirmação ao abrir projetos na janela ativa.",
     "projectManager.configuration.tags.description": "Indica a lista de etiquetas que você pode usar para organizar seus projetos",
+    "projectManager.colors.currentProjectHightlightForeground.description": "A cor para destacar o projeto corrente na Barra Lateral",
     "projectManager.walkthroughs.title": "Começar a trabalhar com Project Manager",
     "projectManager.walkthroughs.description": "Aprenda mais sobre Project Manager para otimizar seu trabalho",
     "projectManager.walkthroughs.saveYourFavoriteProjects.title": "Salve Seus Projetos Favoritos",

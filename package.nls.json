@@ -83,6 +83,7 @@
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty.",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Controls whether the extension should ask for confirmation when opening projects in the active window.",
     "projectManager.configuration.tags.description": "Indicates the list of tags you can use to organize your projects",
+    "projectManager.colors.currentProjectHightlightForeground.description": "The color to highlight the current project in the Side Bar",
     "projectManager.walkthroughs.title": "Get Started with Project Manager",
     "projectManager.walkthroughs.description": "Learn more about Project Manager to optimize your workflow",
     "projectManager.walkthroughs.saveYourFavoriteProjects.title": "Save Your Favorite Projects",
