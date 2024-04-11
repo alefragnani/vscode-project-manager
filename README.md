@@ -301,7 +301,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 * Choose the foreground color to highlight the current project in the Side Bar
 ```json
     "workbench.colorCustomizations": {
-      "projectManager.currentProjectHighlightForeground": "#e13015"  
+      "projectManager.sideBar.currentProjectHighlightForeground": "#e13015"  
     }
 ```
 
