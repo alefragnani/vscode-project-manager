@@ -13,7 +13,7 @@ import { Project } from "../vscode-project-manager-core/src/project";
 
 let statusItem: StatusBarItem;
 
-export function showStatusBar(projectStorage: ProjectStorage, locators: Locators, projectName?: string) {
+export function showStatusBar(projectStorage: ProjectStorage, locators: Locators, projectName?: string): Project {
 
   const showStatusConfig = workspace.getConfiguration("projectManager").get("showProjectNameInStatusBar");
 
@@ -46,7 +46,7 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
   if (projectName) {
       statusItem.text += projectName;
       statusItem.show();
-      return;
+      return undefined;
   }
 
   let foundProject: Project;
@@ -73,6 +73,7 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
   if (foundProject) {
       statusItem.text += foundProject.name;
       statusItem.show();
+      return foundProject;
   }
 }
 

@@ -296,6 +296,15 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     ]
 ```
 
+## Available Colors
+
+* Choose the foreground color to highlight the current project in the Side Bar
+```json
+    "workbench.colorCustomizations": {
+      "projectManager.sideBar.currentProjectHighlightForeground": "#e13015"  
+    }
+```
+
 ## Side Bar
 
 The **Project Manager** extension has its own **Side Bar**, with a variety of commands to improve you productivity. 

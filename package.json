@@ -993,6 +993,17 @@
                 }
             }
         ],
+		"colors": [
+            {
+                "id": "projectManager.sideBar.currentProjectHighlightForeground",
+                "description": "%projectManager.colors.sideBar.currentProjectHighlightForeground.description%",
+                "defaults": {
+                    "light": "#2fb15b",
+                    "dark": "#2fb15b",
+                    "highContrast": "#2fb15b"
+                }
+            }
+		],
 		"keybindings": [
 			{
 				"command": "projectManager.listProjects",
