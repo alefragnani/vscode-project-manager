@@ -63,36 +63,36 @@
 			"project-manager": [
 				{
 					"id": "projectsExplorerFavorites",
-					"name": "Favorites"
+					"name": "%projectManager.views.favorites.name%"
 				},
 				{
 					"id": "projectsExplorerGit",
-					"name": "Git",
+					"name": "%projectManager.views.git.name%",
 					"when": "projectManager.canShowTreeViewGit"
 				},
 				{
 					"id": "projectsExplorerSVN",
-					"name": "SVN",
+					"name": "%projectManager.views.svn.name%",
 					"when": "projectManager.canShowTreeViewSVN"
 				},
 				{
 					"id": "projectsExplorerAny",
-					"name": "Any",
+					"name": "%projectManager.views.any.name%",
 					"when": "projectManager.canShowTreeViewAny"
 				},
 				{
 					"id": "projectsExplorerMercurial",
-					"name": "Mercurial",
+					"name": "%projectManager.views.mercurial.name%",
 					"when": "projectManager.canShowTreeViewMercurial"
 				},
 				{
 					"id": "projectsExplorerVSCode",
-					"name": "VSCode",
+					"name": "%projectManager.views.vscode.name%",
 					"when": "projectManager.canShowTreeViewVSCode"
 				},
 				{
 					"id": "projectManagerHelpAndFeedback",
-					"name": "Help and Feedback",
+					"name": "%projectManager.views.helpAndFeedback.name%",
 					"visibility": "collapsed"
 				}
 			]
@@ -100,17 +100,17 @@
 		"viewsWelcome": [
 			{
 				"view": "projectsExplorerFavorites",
-				"contents": "No projects saved yet.\nIn order to save projects, you have to open a folder or workspace first.\n[Open Folder](command:_projectManager.openFolderWelcome)\n[Open Workspace from File](command:workbench.action.openWorkspace)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager).",
+				"contents": "%projectManager.viewsWelcome.favorites.contents.whenEmpty%",
 				"when": "workbenchState == empty"
 			},
 			{
 				"view": "projectsExplorerFavorites",
-				"contents": "No projects saved yet.\nIn order to save the current folder/workspace as a project, execute the command:\n[Project Manager: Save Project](command:projectManager.saveProject)\nTo learn more about how to use Project Manager in VS Code [read the docs](http://github.com/alefragnani/vscode-project-manager/#project-manager).",
+				"contents": "%projectManager.viewsWelcome.favorites.contents.whenNotEmpty%",
 				"when": "workbenchState != empty"
 			},
 			{
 				"view": "projectsExplorerGit",
-				"contents": "No projects detected.\nIn order to detect Git projects, you have to configure the `baseFolders` where the Git projects are.\n[Open Settings](command:workbench.action.openSettings?%5B%22projectManager.git.baseFolders%22%5D)\n[I don't need Git projects](command:projectManager.hideGitWelcome)\nIt also supports detection of SVN or Mercurial repositories, VS Code or any other folder.\nTo learn more about how to use Project Manager in VS Code [read the docs](https://github.com/alefragnani/vscode-project-manager/#available-settings)."
+				"contents": "%projectManager.viewsWelcome.git.contents%"
 			}
 		],
 		"commands": [
