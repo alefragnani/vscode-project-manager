@@ -369,7 +369,7 @@ export async function activate(context: vscode.ExtensionContext) {
             const optionOpenFile = <vscode.MessageItem> {
                 title: l10n.t("Open File")
             };
-            vscode.window.showErrorMessage(l10n.t("Error loading projects.json file. Message: {0}", errorLoading), optionOpenFile).then(option => {
+            vscode.window.showErrorMessage(l10n.t("Error loading projects.json file."), { modal: true, detail: l10n.t("Message: {0}", errorLoading) }, optionOpenFile).then(option => {
                 // nothing selected
                 if (typeof option === "undefined") {
                     return;
