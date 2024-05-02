@@ -78,22 +78,20 @@ export async function activate(context: vscode.ExtensionContext) {
     const hideGitWelcome = context.globalState.get<boolean>("hideGitWelcome", false);
     vscode.commands.executeCommand("setContext", "projectManager.hiddenGitWelcome", hideGitWelcome);
 
-    vscode.commands.registerCommand("_projectManager.open", async (node: string | any) => {
-        const uri = typeof node === "string" 
-                    ? buildProjectUri(node)
-                    : buildProjectUri(node.command.arguments[0]);
+    vscode.commands.registerCommand("_projectManager.open", async (projectPath: string, projectName: string, profile: string) => {
+        const uri = buildProjectUri(projectPath);
         if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
             return;
         }
-        vscode.commands.executeCommand("vscode.openFolder", uri, false)
+        vscode.commands.executeCommand("vscode.openFolder", uri, { forceProfile: profile , forceNewWindow: false } )
             .then(
             value => ({}),  // done
             value => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
     });
-    vscode.commands.registerCommand("_projectManager.openInNewWindow", node => {
+    vscode.commands.registerCommand("_projectManager.openInNewWindow", (node) => {
         const uri = buildProjectUri(node.command.arguments[0]);
         const openInNewWindow = shouldOpenInNewWindow(true, CommandLocation.SideBar);
-        vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow)
+        vscode.commands.executeCommand("vscode.openFolder", uri, { forceProfile: node.command.arguments[2] , forceNewWindow: openInNewWindow } )
             .then(
             value => ({}),  // done
             value => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
