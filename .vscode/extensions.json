@@ -6,5 +6,6 @@
 		"alefragnani.Bookmarks",
 		"dbaeumer.vscode-eslint",
 		"eamodio.tsl-problem-matcher",
+		"salesforce.salesforcedx-vscode-core",
 	]
 }
