@@ -66,7 +66,7 @@
     "projectManager.configuration.removeCurrentProjectFromList.description": "Controla se o projeto corrente deve ser suprimido da lista de projetos disponíveis",
     "projectManager.configuration.sortList.description": "Lista de projetos ordenada por ...(Salvos, Nome, Caminho ou Recente)",
     "projectManager.configuration.groupList.description": "Lista os projetos agrupados por ...(Favoritos, VSCode, Git, Mercurial e SVN)",
-    "projectManager.configuration.projectsLocation.description": "Indica uma localização alternativa onde o arquivo `projects.json` é armazenado",
+    "projectManager.configuration.projectsLocation.description": "Indica uma localização alternativa (diretório) onde o arquivo `projects.json` é armazenado",
     "projectManager.configuration.vscode.baseFolders.description": "Indica as pastas base na procura por projetos VSCode",
     "projectManager.configuration.vscode.ignoredFolders.description": "Indica pastas a serem ignoradas, como \"node_modules\", \"out\", \"typings\", \"test\"",
     "projectManager.configuration.vscode.maxDepthRecursion.description": "Indica a profundidade máxima de pastas recursivas na procura por projetos. Qualquer valor abaixo de 1 significa sem limites",

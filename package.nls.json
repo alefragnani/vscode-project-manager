@@ -66,7 +66,7 @@
     "projectManager.configuration.removeCurrentProjectFromList.description": "Should the current project be hidden in the list of available projects?",
     "projectManager.configuration.sortList.description": "List the projects sorted by...(Saved, Name, Path or Recent)",
     "projectManager.configuration.groupList.description": "List the projects grouped by...(Favorites, VSCode, Git, Mercurial and SVN)",
-    "projectManager.configuration.projectsLocation.description": "Indicates an alternative location where the `projects.json` file is stored",
+    "projectManager.configuration.projectsLocation.description": "Indicates an alternative location (folder path) where the `projects.json` file is stored",
     "projectManager.configuration.vscode.baseFolders.description": "Indicates the base folders to search for VSCode projects",
     "projectManager.configuration.vscode.ignoredFolders.description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\"",
     "projectManager.configuration.vscode.maxDepthRecursion.description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit",
