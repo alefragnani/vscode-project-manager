@@ -213,13 +213,13 @@ You can choose how your projects are sorted
 
 * Custom projects file (`projects.json`) location
 
-If you intend to _share_ projects between  **Stable** and **Insider** installations, or if you store your settings in different locations (cloud services), you can indicate an _alternative_ location for the `projects.json` file.
+If you intend to _share_ projects between  **Stable** and **Insider** installations, or if you store your settings in different locations (cloud services), you can indicate an _alternative_ location (folder path) for the `projects.json` file.
 
 ```json
     "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
-> You can use `~` or `$home` while defining the path. It will be replaced by your HOME folder.
+> You can use `~` or `$home` while defining the folder path. It will be replaced by your HOME folder.
 
 * Automatic Detection of Projects (**Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png), **SVN** ![svn](images/ico_svn.png) and **VSCode** ![vscode](images/ico_file_code.png))
 
