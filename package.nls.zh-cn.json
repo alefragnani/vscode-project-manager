@@ -3,7 +3,7 @@
     "projectManager.views.favorites.name": "收藏",
     "projectManager.views.git.name": "Git",
     "projectManager.views.svn.name": "SVN",
-    "projectManager.views.any.name": "任何",
+    "projectManager.views.any.name": "任意",
     "projectManager.views.mercurial.name": "Mercurial",
     "projectManager.views.vscode.name": "VSCode",
     "projectManager.views.helpAndFeedback.name": "帮助与反馈",
