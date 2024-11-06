@@ -42,6 +42,7 @@
     "projectManager.commands.deleteProject.title": "删除项目",
     "projectManager.commands.renameProject.title": "重命名项目",
     "projectManager.commands.editTags.title": "编辑标签",
+    "projectManager.commands.editProjectPath.title": "编辑项目路径",
     "projectManager.commands.viewAsTags#sideBarFavorites.title": "作为标签查看",
     "projectManager.commands.viewAsList#sideBarFavorites.title": "以列表形式查看",
     "projectManager.submenus.viewAndSort#sideBarFavorites.title": "查看与排序",
