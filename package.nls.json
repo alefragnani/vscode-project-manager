@@ -42,6 +42,7 @@
     "projectManager.commands.deleteProject.title": "Delete Project",
     "projectManager.commands.renameProject.title": "Rename Project",
     "projectManager.commands.editTags.title": "Edit Tags",
+    "projectManager.commands.editProjectPath.title": "Edit Project Path",
     "projectManager.commands.viewAsTags#sideBarFavorites.title": "View as Tags",
     "projectManager.commands.viewAsList#sideBarFavorites.title": "View as List",
     "projectManager.submenus.viewAndSort#sideBarFavorites.title": "View & Sort",

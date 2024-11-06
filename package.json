@@ -298,6 +298,10 @@
 				"title": "%projectManager.commands.editTags.title%"
 			},
 			{
+				"command": "_projectManager.editProjectPath",
+				"title": "%projectManager.commands.editProjectPath.title%"
+			},
+			{
 				"command": "projectManager.whatsNew",
 				"title": "%projectManager.commands.whatsNew.title%"
 			},

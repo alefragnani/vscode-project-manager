@@ -118,6 +118,7 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("_projectManager.deleteProject", (node) => deleteProject(node));
     vscode.commands.registerCommand("_projectManager.renameProject", (node) => renameProject(node));
     vscode.commands.registerCommand("_projectManager.editTags", (node) => editTags(node));
+    vscode.commands.registerCommand("_projectManager.editProjectPath", (node) => editProjectPath(node));
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
     vscode.commands.registerCommand("_projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));
 
@@ -473,6 +474,24 @@ export async function activate(context: vscode.ExtensionContext) {
             projectStorage.save();
             vscode.window.showInformationMessage(l10n.t("Project updated!"));
         }
+    }
+
+    async function editProjectPath(node: any) {
+
+        const project = projectStorage.existsWithRootPath(node.command.arguments[0]);
+        if (!project) {
+            return;
+        }
+
+        const projectDetails = await getProjectDetails(project.name, project.rootPath);
+        if (!projectDetails) {
+            return;
+        }
+
+        projectStorage.updateRootPath(project.name, projectDetails.path);
+        projectStorage.save();
+        providerManager.updateTreeViewStorage();
+        vscode.window.showInformationMessage(l10n.t("Project updated!"));
     }
 
     function toggleProjectEnabled(node: any, askForUndo = true) {
