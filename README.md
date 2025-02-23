@@ -307,7 +307,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 ## Side Bar
 
-The **Project Manager** extension has its own **Side Bar**, with a variety of commands to improve you productivity. 
+The **Project Manager** extension has its own **Side Bar**, with a variety of commands to improve your productivity. 
 
 ![Side Bar](images/vscode-project-manager-side-bar.png)
 
