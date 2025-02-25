@@ -810,10 +810,10 @@
                             "always"
                         ],
                         "enumDescriptions": [
-                            "Whenever you call the Open command, it will ask for confirmation",
+                            "Works as today. No confirmation is required",
                             "Only ask for confirmation if you use the Command Palette",
                             "Only ask for confirmation if you use the Side Bar",
-                            "Works as today. No confirmation is required"
+                            "Whenever you call the Open command, it will ask for confirmation"
                         ],
                         "description": "%projectManager.configuration.confirmSwitchOnActiveWindow.description%"
                     },
