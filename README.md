@@ -68,7 +68,11 @@ You can save the current folder/workspace as a **Project** at any time. You just
 ![Save](images/project-manager-save.png)
 
 > It suggests a name to you _automatically_ :)
- 
+
+Here is a gif on how to save/add your project to the list:
+![Adding a project in vscode project manager](https://user-images.githubusercontent.com/33565767/170954916-8166f069-5577-4e15-8a22-f8ab626bf126.gif)
+
+
 ### Edit Projects
 
 For easier customization of your project list, you can edit the `projects.json` file, directly inside **Code**. Just execute `Project Manager: Edit Projects` and the `projects.json` file is opened. Simple as this:
