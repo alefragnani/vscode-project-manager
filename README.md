@@ -129,6 +129,11 @@ Just use the `when` clause `"inProjectManagerList"`, like:
         "key": "ctrl+j",
         "command": "workbench.action.quickOpenSelectNext",
         "when": "inProjectManagerList"
+    },
+    {
+        "key": "ctrl+shift+j",
+        "command": "workbench.action.quickOpenSelectPrevious",
+        "when": "inProjectManagerList"
     }
 ```
 
