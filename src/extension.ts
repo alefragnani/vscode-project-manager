@@ -7,31 +7,31 @@ import fs = require("fs");
 import path = require("path");
 import * as vscode from "vscode";
 
-import { Locators } from "../vscode-project-manager-core/src/autodetect/locators";
-import { ProjectStorage } from "../vscode-project-manager-core/src/storage";
-import { PathUtils } from "../vscode-project-manager-core/src/utils/path";
+import { Locators } from "./autodetect/locators";
+import { ProjectStorage } from "./storage";
+import { PathUtils } from "./utils/path";
 
-import { Providers } from "../vscode-project-manager-core/src/sidebar/providers";
+import { Providers } from "./sidebar/providers";
 
 import { showStatusBar, updateStatusBar } from "./statusBar";
-import { getProjectDetails } from "../vscode-project-manager-core/src/suggestion";
+import { getProjectDetails } from "./suggestion";
 import { CommandLocation, PROJECTS_FILE } from "./constants";
-import { isMacOS, isWindows } from "../vscode-project-manager-core/src/utils/remote";
-import { buildProjectUri } from "../vscode-project-manager-core/src/utils/uri";
-import { Container } from "../vscode-project-manager-core/src/container";
+import { isMacOS, isWindows } from "./utils/remote";
+import { buildProjectUri } from "./utils/uri";
+import { Container } from "./container";
 import { registerWhatsNew } from "./whats-new/commands";
 import { registerSupportProjectManager } from "./commands/supportProjectManager";
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
-import { pickTags } from "../vscode-project-manager-core/src/quickpick/tagsPicker";
-import { ViewFavoritesAs } from "../vscode-project-manager-core/src/sidebar/constants";
-import { registerSortBy, updateSortByContext } from "../vscode-project-manager-core/src/commands/sortBy";
+import { pickTags } from "./quickpick/tagsPicker";
+import { ViewFavoritesAs } from "./sidebar/constants";
+import { registerSortBy, updateSortByContext } from "./commands/sortBy";
 import { canSwitchOnActiveWindow, openPickedProject, pickProjects, shouldOpenInNewWindow } from "./quickpick/projectsPicker";
-import { CustomProjectLocator } from "../vscode-project-manager-core/src/autodetect/abstractLocator";
+import { CustomProjectLocator } from "./autodetect/abstractLocator";
 import { l10n } from "vscode";
 import { registerWalkthrough } from "./commands/walkthrough";
-import { registerSideBarDecorations } from "../vscode-project-manager-core/src/sidebar/decoration";
+import { registerSideBarDecorations } from "./sidebar/decoration";
 
 let locators: Locators
 

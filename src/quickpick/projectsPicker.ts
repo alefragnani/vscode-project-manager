@@ -6,14 +6,14 @@
 import fs = require("fs");
 import { commands, Disposable, l10n, MessageItem, QuickInputButton, QuickPickItem, ThemeIcon, window, workspace } from "vscode";
 import { ThemeIcons } from "vscode-ext-codicons";
-import { CustomProjectLocator } from "../../vscode-project-manager-core/src/autodetect/abstractLocator";
-import { Locators } from "../../vscode-project-manager-core/src/autodetect/locators";
-import { Container } from "../../vscode-project-manager-core/src/container";
-import { Project } from "../../vscode-project-manager-core/src/project";
-import { ProjectStorage } from "../../vscode-project-manager-core/src/storage";
-import { PathUtils } from "../../vscode-project-manager-core/src/utils/path";
-import { isRemotePath } from "../../vscode-project-manager-core/src/utils/remote";
-import { buildProjectUri } from "../../vscode-project-manager-core/src/utils/uri";
+import { CustomProjectLocator } from "../autodetect/abstractLocator";
+import { Locators } from "../autodetect/locators";
+import { Container } from "../container";
+import { Project } from "../project";
+import { ProjectStorage } from "../storage";
+import { PathUtils } from "../utils/path";
+import { isRemotePath } from "../utils/remote";
+import { buildProjectUri } from "../utils/uri";
 import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode } from "../constants";
 
 function getProjects(itemsSorted: any[]): Promise<{}> {

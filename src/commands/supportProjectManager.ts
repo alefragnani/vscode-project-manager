@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { commands, env, l10n, MessageItem, Uri, window } from "vscode";
-import { Container } from "../../vscode-project-manager-core/src/container";
+import { Container } from "../container";
 
 export function registerSupportProjectManager() {
   Container.context.subscriptions.push(commands.registerCommand("projectManager.supportProjectManager", async () => {
