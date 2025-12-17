@@ -4,7 +4,7 @@
 *---------------------------------------------------------------------------------------------*/
 
 import { commands } from "vscode";
-import { Container } from "../../vscode-project-manager-core/src/container";
+import { Container } from "../core/container";
 
 function openSideBar() {
     commands.executeCommand("projectsExplorerFavorites.focus");

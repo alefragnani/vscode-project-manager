@@ -4,8 +4,8 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { commands, l10n, Uri, window } from "vscode";
-import { Container } from "../../vscode-project-manager-core/src/container";
-import { isMacOS, isRemotePath, isWindows } from "../../vscode-project-manager-core/src/utils/remote";
+import { Container } from "../core/container";
+import { isMacOS, isRemotePath, isWindows } from "../utils/remote";
 
 async function revealFileInOS(node: any) {
     if (!node) { return }

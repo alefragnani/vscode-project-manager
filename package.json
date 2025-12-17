@@ -2,7 +2,7 @@
 	"name": "project-manager",
 	"displayName": "Project Manager",
 	"description": "Easily switch between projects",
-	"version": "12.8.0",
+	"version": "13.0.0",
 	"publisher": "alefragnani",
 	"engines": {
 		"vscode": "^1.74.0"
@@ -1081,7 +1081,7 @@
 		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch",
 		"compile": "tsc -p ./",
-		"lint": "eslint -c package.json --ext .ts src vscode-project-manager-core vscode-whats-new",
+		"lint": "eslint -c package.json --ext .ts src vscode-whats-new",
 		"pretest": "npm run compile && npm run lint",
 		"test-compile": "tsc -p ./ && npm run webpack",
 		"just-test": "node ./out/src/test/runTest.js",

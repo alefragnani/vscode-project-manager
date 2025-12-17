@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { commands } from "vscode";
-import { Container } from "../../vscode-project-manager-core/src/container";
+import { Container } from "../core/container";
 
 function openSettings(kind?: string) {
     commands.executeCommand("workbench.action.openSettings", kind ? `projectManager.${kind}` : "projectManager");

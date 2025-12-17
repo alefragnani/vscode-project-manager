@@ -1,3 +1,32 @@
+## [13.0.0] - 2025-12-17
+### Added
+- Fully Open Source again (issue [#498](https://github.com/alefragnani/vscode-project-manager/issues/498))
+- Highlight the current project in the Side Bar (issue [#299](https://github.com/alefragnani/vscode-project-manager/issues/299))
+- Add localization support to Welcome Views (issue [#938](https://github.com/alefragnani/vscode-project-manager/issues/938))
+- Support Modal Message for malformed `package.json` message (issue [#531](https://github.com/alefragnani/vscode-project-manager/issues/531))
+- Supports **Profile** for projects (issue [#281](https://github.com/alefragnani/vscode-project-manager/issues/281))
+- Add French translations (Thanks to @damsfx PR [#735](https://github.com/alefragnani/vscode-project-manager/issues/735))
+- Add Simplified Chinese and Taiwainese translations (Thanks to @Chakyiu PR [#734](https://github.com/alefragnani/vscode-project-manager/issues/734))
+
+### Changed
+- Update documentation of `projectsLocation` setting (issue [#764](https://github.com/alefragnani/vscode-project-manager/issues/764))
+- Update Russian translations (PR [#841](https://github.com/alefragnani/vscode-project-manager/pull/841))
+- Update Ukrainian translations (PR [#842](https://github.com/alefragnani/vscode-project-manager/pull/842))
+- Update Chinese translations (Thanks to @Mister-Hope PR [#771](https://github.com/alefragnani/vscode-project-manager/issues/771))
+
+### Fixed
+- Favorites not shown while filtering by tags (issue [#557](https://github.com/alefragnani/vscode-project-manager/issues/557))
+- Respect `removeCurrentProjectFromList` setting no remotes (issue [#381](https://github.com/alefragnani/vscode-project-manager/issues/381))
+- Minor grammar issues (Thanks to @dphelan PR [#795](https://github.com/alefragnani/vscode-project-manager/issues/795))
+- Enum `confirmSwitchOnActiveWindow` description (Thanks to @salim-b PR [#797](https://github.com/alefragnani/vscode-project-manager/issues/797))
+
+### Internal
+- Security Alert: brace-expansion (dependabot [PR #832](https://github.com/alefragnani/vscode-project-manager/pull/832))
+- Security Alert: serialize-javascript (dependabot [PR #796](https://github.com/alefragnani/vscode-project-manager/pull/796))
+- Security Alert: webpack (dependabot [PR #761](https://github.com/alefragnani/vscode-project-manager/pull/761))
+- Security Alert: braces (dependabot [PR #746](https://github.com/alefragnani/vscode-project-manager/pull/746))
+
+
 ## [12.8.0] - 2024-03-28
 ### Added
 - Published to Open VSX (issue [#458](https://github.com/alefragnani/vscode-project-manager/issues/458))

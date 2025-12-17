@@ -7,8 +7,11 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
-# What's new in Project Manager 12.8
+# What's new in Project Manager 13.0
 
+* Fully Open Source again
+* Adds **Profile** support
+* Highlights the current project in the Side Bar
 * Published to **Open VSX**
 * Adds **Getting Started / Walkthrough**
 * Organize your projects with **Tags**
@@ -79,7 +82,8 @@ For easier customization of your project list, you can edit the `projects.json` 
         "name": "Pascal MI",
         "rootPath": "c:\\PascalProjects\\pascal-menu-insight",
         "tags": [],
-        "enabled": true
+        "enabled": true,
+        "profile": "Delphi"
     },
     {
         "name": "Bookmarks",
@@ -88,7 +92,8 @@ For easier customization of your project list, you can edit the `projects.json` 
             "Personal",
             "VS Code"
         ],
-        "enabled": true
+        "enabled": true,
+        "profile": "VSCode"
     },
     {
         "name": "Numbered Bookmarks",
@@ -97,7 +102,8 @@ For easier customization of your project list, you can edit the `projects.json` 
             "Personal",
             "VS Code"
         ],
-        "enabled": false
+        "enabled": false,
+        "profile": "VSCode"
     }
 ]
 ```
