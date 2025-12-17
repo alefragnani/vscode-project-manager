@@ -5,11 +5,11 @@
 
 import * as vscode from "vscode";
 import { Locators } from "../autodetect/locators";
-import { ProjectStorage } from "../storage";
+import { ProjectStorage } from "../storage/storage";
 import { ProjectNode, TagNode } from "./nodes";
 import { AutodetectProvider } from "./autodetectProvider";
 import { StorageProvider } from "./storageProvider";
-import { Container } from "../container";
+import { Container } from "../core/container";
 import { l10n } from "vscode";
 
 export class Providers {

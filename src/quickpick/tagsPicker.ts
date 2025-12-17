@@ -5,7 +5,7 @@
 
 import { l10n, QuickPickItem, window, workspace } from "vscode";
 import { NO_TAGS_DEFINED } from "../sidebar/constants";
-import { ProjectStorage } from "../storage";
+import { ProjectStorage } from "../storage/storage";
 
 export interface PickTagOptions {
 	useDefaultTags: boolean,

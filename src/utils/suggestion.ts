@@ -5,7 +5,7 @@
 
 import { commands, l10n, window, workspace } from "vscode";
 import path = require("path");
-import { isRunningOnCodespaces } from "./utils/remote";
+import { isRunningOnCodespaces } from "./remote";
 
 export interface ProjectDetails {
 	path: string;

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ThemeColor, window } from 'vscode';
-import { Container } from '../container';
+import { Container } from '../core/container';
 
 export function registerSideBarDecorations() {
 		window.registerFileDecorationProvider({

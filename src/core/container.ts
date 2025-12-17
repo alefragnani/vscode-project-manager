@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ExtensionContext } from "vscode";
-import { Stack } from "./utils/stack";
+import { Stack } from "../utils/stack";
 import { Project } from "./project";
 
 export class Container {

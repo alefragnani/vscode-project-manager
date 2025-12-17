@@ -6,7 +6,7 @@
 import * as vscode from "vscode";
 import { CustomProjectLocator } from "../autodetect/abstractLocator";
 import { ProjectNode } from "./nodes";
-import { Container } from "../container";
+import { Container } from "../core/container";
 import { addParentFolderToDuplicates } from "../utils/path";
 
 export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> {

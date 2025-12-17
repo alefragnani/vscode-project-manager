@@ -4,11 +4,11 @@
 *--------------------------------------------------------------------------------------------*/
 
 import fs = require("fs");
-import { PathUtils } from "./utils/path";
-import { isRemotePath } from "./utils/remote";
+import { PathUtils } from "../utils/path";
+import { isRemotePath } from "../utils/remote";
 import { Uri } from "vscode";
-import { createProject, Project } from "./project";
-import { NO_TAGS_DEFINED } from "./sidebar/constants";
+import { createProject, Project } from "../core/project";
+import { NO_TAGS_DEFINED } from "../sidebar/constants";
 
 export class ProjectStorage {
 

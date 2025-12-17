@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { commands, ConfigurationTarget, workspace } from "vscode";
-import { Container } from "../container";
+import { Container } from "../core/container";
 
 function toggleSortBy(sortBy: string) {
 	commands.executeCommand("setContext", "projectManager.sortBy", sortBy);

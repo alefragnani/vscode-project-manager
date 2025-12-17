@@ -6,8 +6,8 @@
 import path = require("path");
 import { ThemeIcon, Uri, workspace } from "vscode";
 import { codicons } from "vscode-ext-codicons";
-import { Container } from "./container";
-import { isRemoteUri, REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "./utils/remote";
+import { Container } from "../core/container";
+import { isRemoteUri, REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "./remote";
 
 export function currentIconThemeHasFolderIcon(): boolean {
 	const currentIconTheme = workspace.getConfiguration("workbench").get<string>("iconTheme", "");

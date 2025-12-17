@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { commands, l10n, Uri, window } from "vscode";
-import { Container } from "../container";
+import { Container } from "../core/container";
 import { isMacOS, isRemotePath, isWindows } from "../utils/remote";
 
 async function revealFileInOS(node: any) {

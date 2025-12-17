@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { workspace } from "vscode";
-import { Container } from "../container";
+import { Container } from "../core/container";
 import { Stack } from "./stack";
 
 function sortByName(items: any[]): any[] {

@@ -8,7 +8,7 @@ import path = require("path");
 import vscode = require("vscode");
 import walker = require("walker");
 import { PathUtils } from "../utils/path";
-import { Project } from "../project";
+import { Project } from "../core/project";
 import minimatch = require("minimatch");
 import { l10n } from "vscode";
 

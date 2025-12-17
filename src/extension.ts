@@ -8,17 +8,17 @@ import path = require("path");
 import * as vscode from "vscode";
 
 import { Locators } from "./autodetect/locators";
-import { ProjectStorage } from "./storage";
+import { ProjectStorage } from "./storage/storage";
 import { PathUtils } from "./utils/path";
 
 import { Providers } from "./sidebar/providers";
 
-import { showStatusBar, updateStatusBar } from "./statusBar";
-import { getProjectDetails } from "./suggestion";
-import { CommandLocation, PROJECTS_FILE } from "./constants";
+import { showStatusBar, updateStatusBar } from "./statusbar/statusBar";
+import { getProjectDetails } from "./utils/suggestion";
+import { CommandLocation, PROJECTS_FILE } from "./core/constants";
 import { isMacOS, isWindows } from "./utils/remote";
 import { buildProjectUri } from "./utils/uri";
-import { Container } from "./container";
+import { Container } from "./core/container";
 import { registerWhatsNew } from "./whats-new/commands";
 import { registerSupportProjectManager } from "./commands/supportProjectManager";
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";

@@ -8,13 +8,13 @@ import { commands, Disposable, l10n, MessageItem, QuickInputButton, QuickPickIte
 import { ThemeIcons } from "vscode-ext-codicons";
 import { CustomProjectLocator } from "../autodetect/abstractLocator";
 import { Locators } from "../autodetect/locators";
-import { Container } from "../container";
-import { Project } from "../project";
-import { ProjectStorage } from "../storage";
+import { Container } from "../core/container";
+import { Project } from "../core/project";
+import { ProjectStorage } from "../storage/storage";
 import { PathUtils } from "../utils/path";
 import { isRemotePath } from "../utils/remote";
 import { buildProjectUri } from "../utils/uri";
-import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode } from "../constants";
+import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode } from "../core/constants";
 
 function getProjects(itemsSorted: any[]): Promise<{}> {
 

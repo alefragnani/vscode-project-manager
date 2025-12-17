@@ -5,8 +5,8 @@
 
 import path = require("path");
 import * as vscode from "vscode";
-import { Container } from "../container";
-import { ProjectStorage } from "../storage";
+import { Container } from "../core/container";
+import { ProjectStorage } from "../storage/storage";
 import { PathUtils } from "../utils/path";
 import { isRemotePath } from "../utils/remote";
 import { sortProjects } from "../utils/sorter";
