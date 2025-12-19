@@ -12,7 +12,7 @@
 - Update documentation of `projectsLocation` setting (issue [#764](https://github.com/alefragnani/vscode-project-manager/issues/764))
 - **ru** translations (PR [#841](https://github.com/alefragnani/vscode-project-manager/pull/841))
 - **uk** translations (PR [#842](https://github.com/alefragnani/vscode-project-manager/pull/842))
-- **zh-zn** translations (Thanks to @Mister-Hope PR [#771](https://github.com/alefragnani/vscode-project-manager/issues/771))
+- **zh-cn** translations (Thanks to @Mister-Hope PR [#771](https://github.com/alefragnani/vscode-project-manager/issues/771))
 
 ### Fixed
 - Favorites not shown while filtering by tags (issue [#557](https://github.com/alefragnani/vscode-project-manager/issues/557))
@@ -170,7 +170,7 @@
 ### Fixed
 - Weird icon behaviour when no ThemeIcon is selected (issue [#392](https://github.com/alefragnani/vscode-project-manager/issues/392))
 - maxDepthRecursion worried about extra trailing path separator (issue [#404](https://github.com/alefragnani/vscode-project-manager/issues/404))
-- Localization - **zn-ch** (Thanks to @loniceras [PR #403](https://github.com/alefragnani/vscode-project-manager/pull/403))
+- Localization - **zh-cn** (Thanks to @loniceras [PR #403](https://github.com/alefragnani/vscode-project-manager/pull/403))
 - Typo in What's New (Thanks to @geauxtigers [PR #390](https://github.com/alefragnani/vscode-project-manager/pull/390))
 
 ## [11.1.0] - 2020-06-19
