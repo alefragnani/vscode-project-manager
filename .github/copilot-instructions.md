@@ -6,12 +6,12 @@
 
 ## Technology Stack
 
-- **Language**: TypeScript 4.4.4
+- **Language**: TypeScript
 - **Runtime**: Node.js (targeting ES2020)
-- **Framework**: VS Code Extension API (vscode ^1.74.0)
-- **Build Tool**: Webpack 5 with ts-loader
-- **Testing**: Mocha 11.1.0 with @vscode/test-electron
-- **Linting**: ESLint 8 with @typescript-eslint parser and eslint-config-vscode-ext
+- **Framework**: VS Code Extension API
+- **Build Tool**: Webpack with ts-loader
+- **Testing**: Mocha with @vscode/test-electron
+- **Linting**: ESLint with @typescript-eslint parser and eslint-config-vscode-ext
 
 ## Architecture & Project Structure
 
@@ -97,10 +97,10 @@ src/
 ## Key Dependencies
 
 ### Production
-- **minimatch** (^3.0.4): Glob pattern matching for ignored folders
-- **vscode-ext-codicons** (^1.4.0): Icon utilities for VS Code
-- **vscode-ext-help-and-feedback-view** (^1.0.1): Help and feedback tree view
-- **walker** (^1.0.7): Directory traversal for project detection
+- **minimatch**: Glob pattern matching for ignored folders
+- **vscode-ext-codicons**: Icon utilities for VS Code
+- **vscode-ext-help-and-feedback-view**: Help and feedback tree view
+- **walker**: Directory traversal for project detection
 
 ### Development
 - **webpack** & **ts-loader**: Bundle extension for production
@@ -239,7 +239,3 @@ All localization files follow the pattern `package.nls.{locale}.json` in the roo
 - [Extension Manifest (package.json)](https://code.visualstudio.com/api/references/extension-manifest)
 - [Testing Extensions](https://code.visualstudio.com/api/working-with-extensions/testing-extension)
 - [Publishing Extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
-
----
-
-When making changes, always ensure backward compatibility with the minimum supported VS Code version (^1.74.0) and maintain the GPL-3.0 license compliance.
