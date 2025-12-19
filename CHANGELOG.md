@@ -2,17 +2,17 @@
 ### Added
 - Fully Open Source again (issue [#498](https://github.com/alefragnani/vscode-project-manager/issues/498))
 - Highlight the current project in the Side Bar (issue [#299](https://github.com/alefragnani/vscode-project-manager/issues/299))
-- Add localization support to Welcome Views (issue [#938](https://github.com/alefragnani/vscode-project-manager/issues/938))
+- Localization support to Welcome Views (issue [#938](https://github.com/alefragnani/vscode-project-manager/issues/938))
 - Support Modal Message for malformed `package.json` message (issue [#531](https://github.com/alefragnani/vscode-project-manager/issues/531))
 - Supports **Profile** for projects (issue [#281](https://github.com/alefragnani/vscode-project-manager/issues/281))
-- Add French translations (Thanks to @damsfx PR [#735](https://github.com/alefragnani/vscode-project-manager/issues/735))
-- Add Simplified Chinese and Taiwainese translations (Thanks to @Chakyiu PR [#734](https://github.com/alefragnani/vscode-project-manager/issues/734))
+- **fr** translations (Thanks to @damsfx PR [#735](https://github.com/alefragnani/vscode-project-manager/issues/735))
+- **zh-tw** and **zh-cn** translations (Thanks to @Chakyiu PR [#734](https://github.com/alefragnani/vscode-project-manager/issues/734))
 
 ### Changed
 - Update documentation of `projectsLocation` setting (issue [#764](https://github.com/alefragnani/vscode-project-manager/issues/764))
-- Update Russian translations (PR [#841](https://github.com/alefragnani/vscode-project-manager/pull/841))
-- Update Ukrainian translations (PR [#842](https://github.com/alefragnani/vscode-project-manager/pull/842))
-- Update Chinese translations (Thanks to @Mister-Hope PR [#771](https://github.com/alefragnani/vscode-project-manager/issues/771))
+- **ru** translations (PR [#841](https://github.com/alefragnani/vscode-project-manager/pull/841))
+- **uk** translations (PR [#842](https://github.com/alefragnani/vscode-project-manager/pull/842))
+- **zh-cn** translations (Thanks to @Mister-Hope PR [#771](https://github.com/alefragnani/vscode-project-manager/issues/771))
 
 ### Fixed
 - Favorites not shown while filtering by tags (issue [#557](https://github.com/alefragnani/vscode-project-manager/issues/557))
@@ -31,7 +31,7 @@
 ### Added
 - Published to Open VSX (issue [#458](https://github.com/alefragnani/vscode-project-manager/issues/458))
 - Getting Started/Walkthrough (issue [#517](https://github.com/alefragnani/vscode-project-manager/issues/517))
-- Czech translations (issue [#720](https://github.com/alefragnani/vscode-project-manager/issues/720))
+- **cs** translations (issue [#720](https://github.com/alefragnani/vscode-project-manager/issues/720))
 
 ### Changed
 - Avoid What's New when using Gitpod (issue [#724](https://github.com/alefragnani/vscode-project-manager/issues/724))
@@ -160,7 +160,7 @@
 - Support `$home` and `~` (tilde) symbol on `projectLocation` setting (issue [#384](https://github.com/alefragnani/vscode-project-manager/issues/384))
 - Support `~` (tilde) symbol on any path related setting (issue [#414](https://github.com/alefragnani/vscode-project-manager/issues/414))
 - Support `glob` patterns in `ignoredFolders` settings (issue [#278](https://github.com/alefragnani/vscode-project-manager/issues/278))
-- Localization - Czech (Thanks to @Amereyeu [PR #412](https://github.com/alefragnani/vscode-project-manager/pull/412))
+- Localization - **cs** (Thanks to @Amereyeu [PR #412](https://github.com/alefragnani/vscode-project-manager/pull/412))
 
 ## [11.2.0] - 2020-08-19
 ### Added
@@ -170,7 +170,7 @@
 ### Fixed
 - Weird icon behaviour when no ThemeIcon is selected (issue [#392](https://github.com/alefragnani/vscode-project-manager/issues/392))
 - maxDepthRecursion worried about extra trailing path separator (issue [#404](https://github.com/alefragnani/vscode-project-manager/issues/404))
-- Localization - Simplified Chinese (Thanks to @loniceras [PR #403](https://github.com/alefragnani/vscode-project-manager/pull/403))
+- Localization - **zh-cn** (Thanks to @loniceras [PR #403](https://github.com/alefragnani/vscode-project-manager/pull/403))
 - Typo in What's New (Thanks to @geauxtigers [PR #390](https://github.com/alefragnani/vscode-project-manager/pull/390))
 
 ## [11.1.0] - 2020-06-19
@@ -230,7 +230,7 @@
 
 ## [10.9.0] - 2019-11-18
 ### Added
-- Localization support - Simplified Chinese (Thanks to @L1cardo [PR #300](https://github.com/alefragnani/vscode-project-manager/pull/300))
+- Localization support - **zn-ch** Chinese (Thanks to @L1cardo [PR #300](https://github.com/alefragnani/vscode-project-manager/pull/300))
 - `Open in New Window` hover command in Side Bar
 
 ## [10.8.0] - 2019-09-25
@@ -244,7 +244,7 @@
 ## [10.6.0] - 2019-07-28
 ### Added
 - Support for _auto-detected_ projects only scenario
-- Localization support - Portuguese (Brazil)
+- Localization support - **pt-br**
 - `Save Button` button in Side Bar
 
 ## [10.5.2] - 2019-05-28
@@ -262,7 +262,7 @@
 ## [10.4.0] - 2019-03-14
 ### Added
 - `GlobalStoragePath` Support (Thanks to @Chuxel [PR #250](https://github.com/alefragnani/vscode-project-manager/pull/250))
-- Localization support - Russian (Thanks to @Inter-Net-Pro [PR #222](https://github.com/alefragnani/vscode-project-manager/pull/222))
+- Localization support - **ru** (Thanks to @Inter-Net-Pro [PR #222](https://github.com/alefragnani/vscode-project-manager/pull/222))
 
 ### Fixed
 - What's New page broken in VS Code 1.32 due to CSS API changes

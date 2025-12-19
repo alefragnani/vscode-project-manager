@@ -64,7 +64,7 @@ export class ProjectManagerContentProvider implements ContentProvider {
         changeLog.push({
             kind: ChangeLogKind.NEW,
             detail: {
-                message: "Add French translations",
+                message: "<b>fr</b> translations",
                 id: 735,
                 kind: IssueKind.PR,
                 kudos: "@damsfx"
@@ -73,7 +73,7 @@ export class ProjectManagerContentProvider implements ContentProvider {
         changeLog.push({
             kind: ChangeLogKind.NEW,
             detail: {
-                message: "Add Simplified Chinese and Taiwainese translations",
+                message: "<b>zh-tw</b> and <b>zh-cn</b> translations",
                 id: 734,
                 kind: IssueKind.PR,
                 kudos: "@Chakyiu"
@@ -90,7 +90,7 @@ export class ProjectManagerContentProvider implements ContentProvider {
         changeLog.push({
             kind: ChangeLogKind.CHANGED,
             detail: {
-                message: "Update Russian translations",
+                message: "<b>ru</b> translations",
                 id: 841,
                 kind: IssueKind.PR
             }
@@ -98,7 +98,7 @@ export class ProjectManagerContentProvider implements ContentProvider {
         changeLog.push({
             kind: ChangeLogKind.CHANGED,
             detail: {
-                message: "Update Ukrainian translations",
+                message: "<b>uk</b> translations",
                 id: 842,
                 kind: IssueKind.PR
             }
@@ -106,7 +106,7 @@ export class ProjectManagerContentProvider implements ContentProvider {
         changeLog.push({
             kind: ChangeLogKind.CHANGED,
             detail: {
-                message: "Update Chinese translations",
+                message: "<b>zh-cn</b> translations",
                 id: 771,
                 kind: IssueKind.PR,
                 kudos: "@Mister-Hope"
@@ -204,7 +204,7 @@ export class ProjectManagerContentProvider implements ContentProvider {
         changeLog.push({
             kind: ChangeLogKind.NEW,
             detail: {
-                message: "Czech translations",
+                message: "<b>cs</b> translations",
                 id: 720,
                 kind: IssueKind.Issue
             }
