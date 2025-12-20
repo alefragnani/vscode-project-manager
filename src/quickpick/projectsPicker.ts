@@ -16,7 +16,7 @@ import { isRemotePath } from "../utils/remote";
 import { buildProjectUri } from "../utils/uri";
 import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode } from "../core/constants";
 
-function getProjects(itemsSorted: any[]): Promise<{}> {
+function getProjects(itemsSorted: any[]): Promise<any[]> {
 
     return new Promise((resolve, reject) => {
 

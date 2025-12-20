@@ -220,8 +220,8 @@ export class CustomProjectLocator {
 			}
 			this.alreadyLocated = false;
 			this.locateProjects()
-			  .then(() => {
-				  resolve(true);
+                .then(() => {
+                    resolve(true);
 				})
 				.catch(error => {
 					reject(error)
