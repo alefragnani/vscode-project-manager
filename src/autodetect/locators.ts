@@ -56,7 +56,7 @@ export class Locators implements vscode.Disposable {
 		this.providerManager = providerManager;
 	}
 
-	public getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator): Promise<{}> {
+	public getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator): Promise<any[]> {
 
 		return new Promise((resolve, reject) => {
 

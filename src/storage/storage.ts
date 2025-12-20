@@ -88,7 +88,7 @@ export class ProjectStorage {
 		for (const element of this.projects) {
 			const elementPath = PathUtils.expandHomePath(element.rootPath);
 			if ((elementPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase()) || 
-			  (elementPath === rootPath)) {
+                (elementPath === rootPath)) {
 				return element;
 			}
 		} 
@@ -190,8 +190,8 @@ export class ProjectStorage {
 	public getProjectsByTag(tag: string): any {
 		const newItems = this.projects.filter(item => item.enabled && (item.tags.includes(tag) || (tag === '' && item.tags.length === 0))).map(item => {
 			return {
-			  label: item.name,
-			  description: item.rootPath  
+                label: item.name,
+                description: item.rootPath  
 			};
 		});
 		return newItems;
@@ -205,9 +205,9 @@ export class ProjectStorage {
 						))
 			).map(item => {
 			return {
-			  label: item.name,
-			  description: item.rootPath,
-			  profile: item.profile 
+                label: item.name,
+                description: item.rootPath,
+                profile: item.profile 
 			};
 		});
 		return newItems;

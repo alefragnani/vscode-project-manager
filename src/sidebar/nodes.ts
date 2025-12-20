@@ -3,7 +3,7 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Command, MarkdownString, ThemeColor, ThemeIcon, TreeItem, TreeItemCollapsibleState, Uri } from "vscode";
+import { Command, IconPath, MarkdownString, ThemeColor, ThemeIcon, TreeItem, TreeItemCollapsibleState, Uri } from "vscode";
 import { ThemeIcons } from "vscode-ext-codicons";
 import { currentIconThemeHasFolderIcon, getProjectIcon, getIconDetailsFromProjectPath } from "../utils/icons";
 import { REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "../utils/remote";
@@ -42,7 +42,7 @@ export class ProjectNode extends TreeItem {
 			this.description = preview.detail;
 		}
   
-		private getIconPath(icon: string, projectPath: string): { light: string; dark: string } | ThemeIcon {
+		private getIconPath(icon: string, projectPath: string): string | IconPath {
 			if (currentIconThemeHasFolderIcon()) {
 					return getProjectIcon(icon, projectPath);
 			} else {
