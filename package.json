@@ -55,7 +55,7 @@
 				{
 					"id": "project-manager",
 					"title": "%projectManager.activitybar.title%",
-					"icon": "images/project-manager-side-bar.svg"
+					"icon": "$(folder)"
 				}
 			]
 		},
