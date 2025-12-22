@@ -126,14 +126,24 @@ Just use the `when` clause `"inProjectManagerList"`, like:
 
 ```json
     {
+        "key": "cmd+j",
+        "command": "workbench.action.quickOpenSelectNext",
+        "when": "inProjectManagerList && isMac"
+    },
+    {
+        "key": "cmd+shift+j",
+        "command": "workbench.action.quickOpenSelectPrevious",
+        "when": "inProjectManagerList && isMac"
+    },
+    {
         "key": "ctrl+j",
         "command": "workbench.action.quickOpenSelectNext",
-        "when": "inProjectManagerList"
+        "when": "inProjectManagerList && (isWindows || isLinux)"
     },
     {
         "key": "ctrl+shift+j",
         "command": "workbench.action.quickOpenSelectPrevious",
-        "when": "inProjectManagerList"
+        "when": "inProjectManagerList && (isWindows || isLinux)"
     }
 ```
 
