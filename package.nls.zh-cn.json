@@ -81,6 +81,7 @@
     "projectManager.configuration.svn.maxDepthRecursion.description": "指定搜索项目时文件夹递归的最大深度。小于 1 的任何值表示没有限制。",
     "projectManager.configuration.any.baseFolders.description": "指定要搜索任意项目的其实文件夹。",
     "projectManager.configuration.any.ignoredFolders.description": "指定要忽略的文件夹，例如 \"node_modules\"、\"out\"、\"typings\"、\"test\"。",
+    "projectManager.configuration.any.excludeBaseFoldersFromResults.description": "将基础文件夹本身从自动检测到的项目列表中排除。",
     "projectManager.configuration.any.maxDepthRecursion.description": "指定搜索项目的文件夹递归的最大深度。小于 1 的任何值表示没有限制。",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "是否缓存找到的 VSCode、Git 和 SVN 项目？",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "是否忽略其他项目中找到的项目？",

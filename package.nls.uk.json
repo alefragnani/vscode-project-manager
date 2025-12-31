@@ -81,6 +81,7 @@
     "projectManager.configuration.svn.maxDepthRecursion.description": "Вказує максимальну глибину рекурсії папок для пошуку проєктів. Значення менше 1 означає відсутність обмежень",
     "projectManager.configuration.any.baseFolders.description": "Вказує базові папки для пошуку будь-яких проєктів",
     "projectManager.configuration.any.ignoredFolders.description": "Вказує папки, які потрібно ігнорувати, наприклад, \"node_modules\", \"out\", \"typings\", \"test\"",
+    "projectManager.configuration.any.excludeBaseFoldersFromResults.description": "Виключає самі базові папки зі списку автоматично виявлених проєктів",
     "projectManager.configuration.any.maxDepthRecursion.description": "Вказує максимальну глибину рекурсії папок для пошуку проєктів. Значення менше 1 означає відсутність обмежень",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Кешувати знайдені проєкти VSCode, Git та SVN?",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Ігнорувати проєкти, знайдені всередині інших проєктів?",
