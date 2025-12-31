@@ -271,6 +271,13 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 ```
 > Define how deeps it should search for projects
 
+* Exclude the base folders themselves from the auto-detected projects list (`false` by default)
+
+```json
+    "projectManager.any.excludeBaseFoldersFromResults": true
+```
+> When enabled, the **Any** base folders configured in `projectManager.any.baseFolders` are not returned as projects themselves, only their matching subfolders are.
+
 * Should ignore projects found inside other projects? (`false` by default)
 
 ```json 

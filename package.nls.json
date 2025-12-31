@@ -81,6 +81,7 @@
     "projectManager.configuration.svn.maxDepthRecursion.description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit",
     "projectManager.configuration.any.baseFolders.description": "Indicates the base folders to search for any folder projects",
     "projectManager.configuration.any.ignoredFolders.description": "Indicates folders to be ignored, like \"node_modules\", \"out\", \"typings\", \"test\"",
+    "projectManager.configuration.any.excludeBaseFoldersFromResults.description": "Exclude the base folders themselves from the auto-detected projects list",
     "projectManager.configuration.any.maxDepthRecursion.description": "Indicates the maximum depth of folder recursion to search for projects. Any value below 1 means there is no limit",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Should cache the VSCode, Git and SVN projects found?",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Should ignore projects found inside other projects?",

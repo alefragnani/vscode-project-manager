@@ -71,6 +71,7 @@
     "projectManager.configuration.any.baseFolders.description": "Označuje výchozí složky k hledání jakýchkoli projektů",
     "projectManager.configuration.any.ignoredFolders.description": "Označuje složky, které mají být ignorovány, například \"node_modules\", \"out\", \"typings\", \"test\"",
     "projectManager.configuration.any.maxDepthRecursion.description": "Označuje maximální hloubku rekurze složek při hledání projektů. Jakákoli hodnota pod 1 znamená, že neexistuje žádný limit",
+        "projectManager.configuration.any.excludeBaseFoldersFromResults.description": "Vynechá samotné výchozí složky ze seznamu automaticky zjištěných projektů",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Uložit do paměti nalezené VSCode, Git and SVN projekty?",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Měli byste ignorovat projekty nalezené v jiných projektech?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Před výpisem zkontrolovat neplatné cesty a zobrazit zprávu pod názvem projektu?",

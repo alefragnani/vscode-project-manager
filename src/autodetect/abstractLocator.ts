@@ -51,6 +51,7 @@ export class CustomProjectLocator {
 	private ignoreProjectsWithinProjects: boolean;
 	private alreadyLocated: boolean;
 	private baseFolders: string[];
+    private excludeBaseFoldersFromResults: boolean;
 
 	constructor(public kind: string, public displayName: string,
 				public icon: string, public repositoryDetector: RepositoryDetector) {
@@ -60,6 +61,7 @@ export class CustomProjectLocator {
 		this.ignoreProjectsWithinProjects = false;
 		this.alreadyLocated = false;
 		this.baseFolders = [];
+		this.excludeBaseFoldersFromResults = false;
 		this.refreshConfig();
 		this.initializeCfg();
 	}
@@ -195,6 +197,9 @@ export class CustomProjectLocator {
 
 	public processDirectory = (absPath: string, stat: any) => {
 		// vscode.window.setStatusBarMessage(absPath, 600);
+		if (this.excludeBaseFoldersFromResults && this.isBaseFolder(absPath)) {
+			return;
+		}
 		if (this.repositoryDetector.isRepoDir(absPath)) {
 			this.addToList(absPath, this.repositoryDetector.decideProjectName(absPath));
 		}
@@ -271,6 +276,12 @@ export class CustomProjectLocator {
 			refreshedSomething = true;
 		}        
 
+		currentValue = config.get(this.kind + ".excludeBaseFoldersFromResults", false);
+		if (this.excludeBaseFoldersFromResults !== currentValue) {
+			this.excludeBaseFoldersFromResults = currentValue;
+			refreshedSomething = true;
+		}
+
 		currentValue = config.get(this.kind + ".maxDepthRecursion", -1);
 		if (this.maxDepth !== currentValue) {
 			this.maxDepth = currentValue;
@@ -290,6 +301,15 @@ export class CustomProjectLocator {
 		}
 
 		return refreshedSomething;
+	}
+
+	private isBaseFolder(folder: string): boolean {
+		if (!this.baseFolders || this.baseFolders.length === 0) {
+			return false;
+		}
+
+		const normalized = PathUtils.updateWithPathSeparator([folder])[0].toLowerCase();
+		return this.baseFolders.some(base => base.toLowerCase() === normalized);
 	}
 
 	private arraysAreEquals(array1, array2): boolean {

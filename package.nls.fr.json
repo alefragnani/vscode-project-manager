@@ -72,6 +72,7 @@
     "projectManager.configuration.any.baseFolders.description": "Indique les dossiers de base dans lesquels rechercher les projets de dossiers",
     "projectManager.configuration.any.ignoredFolders.description": "Précise les dossiers à ignorer, comme \"node_modules\", \"out\", \"typings\", \"test\".",
     "projectManager.configuration.any.maxDepthRecursion.description": "Précise la profondeur maximale des dossiers pour la recherche de projets. Toute valeur inférieure à 1 signifie qu'il n'y a pas de limite",
+    "projectManager.configuration.any.excludeBaseFoldersFromResults.description": "Exclut les dossiers de base eux-mêmes de la liste des projets détectés automatiquement",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Faut-il mettre en cache les projets VSCode, Git et SVN trouvés ?",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Faut-il ignorer les projets qui se trouvent à l'intérieur d'autres projets ?",
     "projectManager.configuration.checkInvalidPathsBeforeListing.description": "Faut-il vérifier les chemins non valides avant de lister les projets, en affichant un message sous le nom du projet ?",

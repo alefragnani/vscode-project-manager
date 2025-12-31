@@ -81,6 +81,7 @@
     "projectManager.configuration.svn.maxDepthRecursion.description": "Indica a profundidade máxima de pastas recursivas na procura por projetos. Qualquer valor abaixo de 1 significa sem limites",
     "projectManager.configuration.any.baseFolders.description": "Indica as pastas base na procura por projetos Any (qualquer pasta)",
     "projectManager.configuration.any.ignoredFolders.description": "Indica pastas a serem ignoradas, como \"node_modules\", \"out\", \"typings\", \"test\"",
+    "projectManager.configuration.any.excludeBaseFoldersFromResults.description": "Exclui as próprias pastas base da lista de projetos detectados automaticamente",
     "projectManager.configuration.any.maxDepthRecursion.description": "Indica a profundidade máxima de pastas recursivas na procura por projetos. Qualquer valor abaixo de 1 significa sem limites",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Controla se deve armazenar em cache os projetos VSCode, Git e SVN encontrados",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Controla se deve ignorar projetos localizados dentro de outros projetos",

@@ -70,6 +70,7 @@
     "projectManager.configuration.svn.maxDepthRecursion.description": "Укажите максимальную глубину вложенности папок для поиска проектов. Любое значение ниже 1 означает отсутствие ограничений",
     "projectManager.configuration.any.baseFolders.description": "Укажите базовые папки для поиска папок любых проектов",
     "projectManager.configuration.any.ignoredFolders.description": "Укажите папки которые следует игнорировать, например \"node_modules\", \"out\", \"typings\", \"test\"",
+    "projectManager.configuration.any.excludeBaseFoldersFromResults.description": "Исключает сами базовые папки из списка автоматически обнаруженных проектов",
     "projectManager.configuration.any.maxDepthRecursion.description": "Укажите максимальную глубину вложенности папок для поиска проектов. Любое значение ниже 1 означает отсутствие ограничений",
     "projectManager.configuration.cacheProjectsBetweenSessions.description": "Нужно ли кэшировать VSCode, Git и SVN найденные проекты?",
     "projectManager.configuration.ignoreProjectsWithinProjects.description": "Следует игнорировать проекты, найденные внутри других проектов?",
