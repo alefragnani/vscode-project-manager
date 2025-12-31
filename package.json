@@ -985,6 +985,11 @@
                         },
                         "description": "%projectManager.configuration.any.ignoredFolders.description%"
                     },
+					"projectManager.any.excludeBaseFoldersFromResults": {
+						"type": "boolean",
+						"default": false,
+						"description": "%projectManager.configuration.any.excludeBaseFoldersFromResults.description%"
+					},
                     "projectManager.any.maxDepthRecursion": {
                         "type": "integer",
                         "default": 4,
