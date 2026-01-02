@@ -247,11 +247,11 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 ```json
     "projectManager.git.baseFolders": [
         "c:\\Projects\\code",
-        "d:\\MoreProjects\\code-testing",
+        "d:\\MoreProjects\\code-*",
         "$home\\personal-coding"
     ]
 ```
-> Define the folders which contains the projects
+> Indicates folders or [glob patterns](https://code.visualstudio.com/docs/editor/glob-patterns) to search for projects
 
 ```json
     "projectManager.git.ignoredFolders": [
@@ -262,9 +262,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
         "fork*"
     ],
 ```
-> Define which folders should be ignored (inside the BaseFolders).
-
-> It supports `glob` patterns
+> Indicates folders or [glob patterns](https://code.visualstudio.com/docs/editor/glob-patterns) to be ignored when searching for projects
 
 ```json
     "projectManager.git.maxDepthRecursion": 4
