@@ -12,6 +12,7 @@ import { env, ExtensionContext, workspace } from "vscode";
 import { codicons } from "vscode-ext-codicons";
 import { DirList } from "../autodetect/abstractLocator";
 import { isRemotePath } from "./remote";
+import { glob } from "glob";
 
 export const homeDir = os.homedir();
 export const HOME_PATH_VARIABLE = "$home";
@@ -21,7 +22,6 @@ export const HOME_PATH_TILDE = "~";
 let extensionStoragePath = ""
 
 export class PathUtils {
-
 	/** 
 	 * Sets storage path if recommended path provided by current version of VS Code.  
 	 */
@@ -202,6 +202,49 @@ export class PathUtils {
 		}
 		return newItems;
 	}
+
+    public static hasGlobPattern(value: string): boolean {
+        return /[*?[\]{}()!]/.test(value);
+    }
+
+    public static async expandWithGlobPatterns(projectsDirList: string[]): Promise<string[]> {
+        const resolved: string[] = [];
+        const globAsync = (pattern: string): Promise<string[]> =>
+            new Promise((resolve, reject) => {
+                glob(pattern, { nodir: false, dot: false }, (err, matches) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(matches);
+                    }
+                });
+            });
+
+        for (const pattern of projectsDirList || []) {
+            const expanded = PathUtils.expandHomePath(pattern);
+
+            if (PathUtils.hasGlobPattern(expanded)) {
+                try {
+                    const matches = await globAsync(expanded);
+                    for (const match of matches) {
+                        try {
+                            const stat = fs.statSync(match);
+                            if (stat.isDirectory()) {
+                                resolved.push(match);
+                            }
+                        } catch {
+                            // ignore invalid entries
+                        }
+                    }
+                } catch {
+                    // ignore glob errors for this pattern
+                }
+            } else if (fs.existsSync(expanded)) {
+                resolved.push(expanded);
+            }
+        }
+        return resolved;
+    }
 }
 
 interface ProjectDetail {

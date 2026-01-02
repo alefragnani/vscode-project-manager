@@ -840,7 +840,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.git.baseFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.git.baseFolders.description%"
                     },
                     "projectManager.git.ignoredFolders": {
                         "type": "array",
@@ -854,7 +854,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.git.ignoredFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.git.ignoredFolders.description%"
                     },
                     "projectManager.git.maxDepthRecursion": {
                         "type": "integer",
@@ -873,7 +873,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.hg.baseFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.hg.baseFolders.description%"
                     },
                     "projectManager.hg.ignoredFolders": {
                         "type": "array",
@@ -887,7 +887,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.hg.ignoredFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.hg.ignoredFolders.description%"
                     },
                     "projectManager.hg.maxDepthRecursion": {
                         "type": "integer",
@@ -906,7 +906,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.svn.baseFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.svn.baseFolders.description%"
                     },
                     "projectManager.svn.ignoredFolders": {
                         "type": "array",
@@ -919,7 +919,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.svn.ignoredFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.svn.ignoredFolders.description%"
                     },
                     "projectManager.svn.maxDepthRecursion": {
                         "type": "integer",
@@ -938,7 +938,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.vscode.baseFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.vscode.baseFolders.description%"
                     },
                     "projectManager.vscode.ignoredFolders": {
                         "type": "array",
@@ -951,7 +951,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.vscode.ignoredFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.vscode.ignoredFolders.description%"
                     },
                     "projectManager.vscode.maxDepthRecursion": {
                         "type": "integer",
@@ -970,7 +970,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.any.baseFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.any.baseFolders.description%"
                     },
                     "projectManager.any.ignoredFolders": {
                         "type": "array",
@@ -983,7 +983,7 @@
                         "items": {
                             "type": "string"
                         },
-                        "description": "%projectManager.configuration.any.ignoredFolders.description%"
+                        "markdownDescription": "%projectManager.configuration.any.ignoredFolders.description%"
                     },
 					"projectManager.any.excludeBaseFoldersFromResults": {
 						"type": "boolean",

@@ -124,9 +124,10 @@ export class CustomProjectLocator {
 		}
 	}
 
-	public locateProjects() {
+	public async locateProjects(): Promise<DirList> {
 
 		let projectsDirList = this.baseFolders;
+        projectsDirList = await PathUtils.expandWithGlobPatterns(projectsDirList);
 		projectsDirList = PathUtils.updateWithPathSeparator(projectsDirList);
 		projectsDirList = PathUtils.handleSymlinks(projectsDirList);
 		this.baseFolders = projectsDirList.slice();
