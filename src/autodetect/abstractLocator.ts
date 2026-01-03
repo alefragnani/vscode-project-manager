@@ -10,7 +10,7 @@ import walker = require("walker");
 import { PathUtils } from "../utils/path";
 import { Project } from "../core/project";
 import minimatch = require("minimatch");
-import { l10n } from "vscode";
+import { l10n, workspace } from "vscode";
 
 const CACHE_FILE = "projects_cache_";
 
@@ -166,6 +166,17 @@ export class CustomProjectLocator {
 									this.isProjectWithinProjectIgnored(dir))
 							})
 							.on("dir", this.processDirectory)
+                            .on("symlink", (link, stat) => {
+                                if (!workspace.getConfiguration("projectManager").get<boolean>("supportSymlinksOnBaseFolders", false)) {
+                                    return;
+                                }
+                                if (this.isFolderIgnored(path.basename(link)) ||
+                                    this.isMaxDepthReached(this.getPathDepth(link), depth) ||
+                                    this.isProjectWithinProjectIgnored(link)) {
+                                    return;
+                                }
+                                this.processDirectory(link, stat);
+                            })
 							.on("error", this.handleError)
 							.on("end", () => {
 								resolve();
