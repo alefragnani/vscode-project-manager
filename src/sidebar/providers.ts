@@ -77,8 +77,6 @@ export class Providers {
 
 	private handleStorageTreeViewExpansionChange(event: vscode.TreeViewExpansionEvent<ProjectNode | TagNode>, state: "expanded" | "collapsed") {
 		const element = event.element;
-		const elementLabel = element.label;
-		console.log(`[Project Manager] storageTreeView ${state}: ${elementLabel}`);
 		if (element instanceof TagNode) {
 			const behavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
 			const shouldPersistExpansion = behavior === "startExpanded" || behavior === "startCollapsed";
@@ -87,8 +85,6 @@ export class Providers {
 				StorageProvider.setTagExpanded(tagId, state === "expanded");
 			}
 		}
-		const messageKey = state === "expanded" ? "expanded" : "collapsed";
-		vscode.window.showInformationMessage(l10n.t(messageKey));
 	}
 
 	public async showTreeViewFromAllProviders() {
