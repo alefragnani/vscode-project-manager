@@ -80,8 +80,12 @@ export class Providers {
 		const elementLabel = element.label;
 		console.log(`[Project Manager] storageTreeView ${state}: ${elementLabel}`);
 		if (element instanceof TagNode) {
-			const tagId = (element.label as string) || (element.description as string) || "";
-			StorageProvider.setTagExpanded(tagId, state === "expanded");
+			const behavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
+			const shouldPersistExpansion = behavior === "startExpanded" || behavior === "startCollapsed";
+			if (shouldPersistExpansion) {
+				const tagId = (element.label as string) || (element.description as string) || "";
+				StorageProvider.setTagExpanded(tagId, state === "expanded");
+			}
 		}
 		const messageKey = state === "expanded" ? "expanded" : "collapsed";
 		vscode.window.showInformationMessage(l10n.t(messageKey));

@@ -827,6 +827,23 @@
                             "type": "string"
                         },
                         "description": "%projectManager.configuration.tags.description%"
+                    },
+                    "projectManager.tags.collapseItems": {
+                        "type": "string",
+                        "default": "startExpanded",
+                        "enum": [
+                            "alwaysExpanded",
+                            "alwaysCollapsed",
+                            "startExpanded",
+                            "startCollapsed"
+                        ],
+                        "enumDescriptions": [
+                            "%projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded%",
+                            "%projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed%",
+                            "%projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded%",
+                            "%projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed%"
+                        ],
+                        "description": "%projectManager.configuration.tags.collapseItems.description%"
                     }
                 }
             },

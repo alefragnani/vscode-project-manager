@@ -40,12 +40,25 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 	}
 
 	public static getTagCollapsibleState(tagId: string): vscode.TreeItemCollapsibleState {
-		const expansionState = StorageProvider.getTagExpansionState();
-		const isExpanded = expansionState[tagId];
-		if (isExpanded === undefined) {
-			return vscode.TreeItemCollapsibleState.Expanded;
+		const behavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
+
+		switch (behavior) {
+			case "alwaysExpanded":
+				return vscode.TreeItemCollapsibleState.Expanded;
+			case "alwaysCollapsed":
+				return vscode.TreeItemCollapsibleState.Collapsed;
+			case "startExpanded":
+			case "startCollapsed": {
+				const expansionState = StorageProvider.getTagExpansionState();
+				const isExpanded = expansionState[tagId];
+				if (isExpanded === undefined) {
+					return behavior === "startExpanded" ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed;
+				}
+				return isExpanded ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed;
+			}
+			default:
+				return vscode.TreeItemCollapsibleState.Expanded;
 		}
-		return isExpanded ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed;
 	}
 
 	public static setTagExpanded(tagId: string, expanded: boolean): void {
