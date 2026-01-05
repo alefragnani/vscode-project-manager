@@ -41,5 +41,7 @@
     "{0} disabled": "{0} 已禁用",
     "filtered by tags": "按标签过滤",
     "Save the workspace first to save a project": "先保存工作区以保存项目",
-    "Open a folder first to save a project": "先打开一个文件夹以保存项目"
+    "Open a folder first to save a project": "先打开一个文件夹以保存项目",
+    "expanded": "已展开",
+    "collapsed": "已折叠"
 }

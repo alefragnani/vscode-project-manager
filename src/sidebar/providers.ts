@@ -60,8 +60,26 @@ export class Providers {
 		this.anyTreeView = vscode.window.createTreeView("projectsExplorerAny", { 
 			treeDataProvider: this.anyProvider, 
 			showCollapseAll: false } );
-      
 
+		this.registerStorageTreeViewListeners();
+	}
+
+	private registerStorageTreeViewListeners() {
+		Container.context.subscriptions.push(
+			this.storageTreeView.onDidExpandElement(event => {
+				this.handleStorageTreeViewExpansionChange(event, "expanded");
+			}),
+			this.storageTreeView.onDidCollapseElement(event => {
+				this.handleStorageTreeViewExpansionChange(event, "collapsed");
+			})
+		);
+	}
+
+	private handleStorageTreeViewExpansionChange(event: vscode.TreeViewExpansionEvent<ProjectNode | TagNode>, state: "expanded" | "collapsed") {
+		const elementLabel = event.element.label;
+		console.log(`[Project Manager] storageTreeView ${state}: ${elementLabel}`);
+		const messageKey = state === "expanded" ? "expanded" : "collapsed";
+		vscode.window.showInformationMessage(l10n.t(messageKey));
 	}
 
 	public async showTreeViewFromAllProviders() {
