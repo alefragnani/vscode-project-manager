@@ -41,7 +41,5 @@
     "{0} disabled": "{0} отключен",
     "filtered by tags": "отфильтровано по тегам",
     "Save the workspace first to save a project": "Сначала сохраните рабочую область, чтобы сохранить проект",
-    "Open a folder first to save a project": "Сначала откройте папку, чтобы сохранить проект",
-    "expanded": "развернуто",
-    "collapsed": "свернуто"
+    "Open a folder first to save a project": "Сначала откройте папку, чтобы сохранить проект"
 }
