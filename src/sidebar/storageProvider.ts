@@ -43,9 +43,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 		await Container.context.globalState.update(StorageProvider.TAGS_EXPANSION_STATE_KEY, {});
 	}
 
-	public static getTagCollapsibleState(tagId: string): vscode.TreeItemCollapsibleState {
-		const behavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
-
+	public static getTagCollapsibleState(tagId: string, behavior: string): vscode.TreeItemCollapsibleState {
 		switch (behavior) {
 			case "alwaysExpanded":
 				return vscode.TreeItemCollapsibleState.Expanded;
@@ -133,14 +131,15 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 				if (!viewAsList) {
 						let nodes: TagNode[] = [];
 
+						const tagsCollapseBehavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
 						const tags = this.projectSource.getAvailableTags().sort();
 						for (const tag of tags) {
-								nodes.push(new TagNode(tag, StorageProvider.getTagCollapsibleState(tag)));
+								nodes.push(new TagNode(tag, StorageProvider.getTagCollapsibleState(tag, tagsCollapseBehavior)));
 						}
 
 						// has any, then OK
 						if (nodes.length > 0) {
-								nodes.push(new NoTagNode(NO_TAGS_DEFINED, StorageProvider.getTagCollapsibleState(NO_TAGS_DEFINED)));
+								nodes.push(new NoTagNode(NO_TAGS_DEFINED, StorageProvider.getTagCollapsibleState(NO_TAGS_DEFINED, tagsCollapseBehavior)));
 
 								// should filter ?
 								const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
