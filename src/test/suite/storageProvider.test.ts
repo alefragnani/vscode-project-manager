@@ -75,8 +75,8 @@ suite("StorageProvider Tag Expansion Tests", () => {
             assert.strictEqual(state, vscode.TreeItemCollapsibleState.Collapsed);
         });
 
-        test("should return Expanded as default for unknown behavior", () => {
-            const state = StorageProvider.getTagCollapsibleState("tag1", "unknownBehavior");
+        test("should return Expanded as default for empty string behavior", () => {
+            const state = StorageProvider.getTagCollapsibleState("tag1", "");
             assert.strictEqual(state, vscode.TreeItemCollapsibleState.Expanded);
         });
 
