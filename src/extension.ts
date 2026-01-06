@@ -12,6 +12,7 @@ import { ProjectStorage } from "./storage/storage";
 import { PathUtils } from "./utils/path";
 
 import { Providers } from "./sidebar/providers";
+import { StorageProvider } from "./sidebar/storageProvider";
 
 import { showStatusBar, updateStatusBar } from "./statusbar/statusBar";
 import { getProjectDetails } from "./utils/suggestion";
@@ -166,7 +167,7 @@ export async function activate(context: vscode.ExtensionContext) {
         providerManager.updateTreeViewStorage();
     });
 
-    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(cfg => {
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(async cfg => {
         if (cfg.affectsConfiguration("projectManager.git") || cfg.affectsConfiguration("projectManager.hg") ||
             cfg.affectsConfiguration("projectManager.vscode") || cfg.affectsConfiguration("projectManager.svn") || 
             cfg.affectsConfiguration("projectManager.any") || 
@@ -188,6 +189,11 @@ export async function activate(context: vscode.ExtensionContext) {
         if (cfg.affectsConfiguration("projectManager.showParentFolderInfoOnDuplicates")) {
             providerManager.refreshTreeViews();
         }
+
+		if (cfg.affectsConfiguration("projectManager.tags.collapseItems")) {
+			await StorageProvider.resetTagExpansionState();
+			providerManager.refreshStorageTreeView();
+		}
     }));
 
     const currentProject = showStatusBar(projectStorage, locators);

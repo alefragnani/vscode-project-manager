@@ -44,7 +44,7 @@ export class Providers {
 
 		this.storageTreeView = vscode.window.createTreeView("projectsExplorerFavorites", { 
 			treeDataProvider: this.storageProvider, 
-			showCollapseAll: false } );
+			showCollapseAll: true } );
 		this.vscodeTreeView = vscode.window.createTreeView("projectsExplorerVSCode", { 
 			treeDataProvider: this.vscodeProvider, 
 			showCollapseAll: false } );
@@ -60,8 +60,31 @@ export class Providers {
 		this.anyTreeView = vscode.window.createTreeView("projectsExplorerAny", { 
 			treeDataProvider: this.anyProvider, 
 			showCollapseAll: false } );
-      
 
+		this.registerStorageTreeViewListeners();
+	}
+
+	private registerStorageTreeViewListeners() {
+		Container.context.subscriptions.push(
+			this.storageTreeView.onDidExpandElement(async event => {
+				await this.handleStorageTreeViewExpansionChange(event, "expanded");
+			}),
+			this.storageTreeView.onDidCollapseElement(async event => {
+				await this.handleStorageTreeViewExpansionChange(event, "collapsed");
+			})
+		);
+	}
+
+	private async handleStorageTreeViewExpansionChange(event: vscode.TreeViewExpansionEvent<ProjectNode | TagNode>, state: "expanded" | "collapsed") {
+		const element = event.element;
+		if (element instanceof TagNode) {
+			const behavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
+			const shouldPersistExpansion = behavior === "startExpanded" || behavior === "startCollapsed";
+			if (shouldPersistExpansion) {
+				const tagId = (element.label as string) || (element.description as string) || "";
+				await StorageProvider.setTagExpanded(tagId, state === "expanded");
+			}
+		}
 	}
 
 	public async showTreeViewFromAllProviders() {

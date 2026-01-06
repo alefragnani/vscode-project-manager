@@ -322,6 +322,17 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     ]
 ```
 
+* Controls how tag groups in the Favorites view are expanded or collapsed, and whether their state is remembered (`startExpanded` by default)
+
+  * `alwaysExpanded`: Tag groups are always expanded
+  * `alwaysCollapsed`: Tag groups are always collapsed
+  * `startExpanded`: Tag groups start expanded and remember your last expand/collapse state
+  * `startCollapsed`: Tag groups start collapsed and remember your last expand/collapse state
+
+```json
+    "projectManager.tags.collapseItems": "startExpanded"
+```
+
 ## Available Colors
 
 * Choose the foreground color to highlight the current project in the Side Bar

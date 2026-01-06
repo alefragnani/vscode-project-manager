@@ -28,10 +28,45 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
   
 	private projectSource: ProjectStorage;
 	private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | TagNode | void> = new vscode.EventEmitter<ProjectNode | void>();
+	private static readonly TAGS_EXPANSION_STATE_KEY = "projectsExplorerFavorites.tagsExpansionState";
 
 	constructor(projectSource: ProjectStorage) {
 		this.projectSource = projectSource;
 		this.onDidChangeTreeData = this.internalOnDidChangeTreeData.event;
+	}
+
+	private static getTagExpansionState(): Record<string, boolean> {
+		return Container.context.globalState.get<Record<string, boolean>>(StorageProvider.TAGS_EXPANSION_STATE_KEY, {});
+	}
+
+	public static async resetTagExpansionState(): Promise<void> {
+		await Container.context.globalState.update(StorageProvider.TAGS_EXPANSION_STATE_KEY, {});
+	}
+
+	public static getTagCollapsibleState(tagId: string, behavior: string): vscode.TreeItemCollapsibleState {
+		switch (behavior) {
+			case "alwaysExpanded":
+				return vscode.TreeItemCollapsibleState.Expanded;
+			case "alwaysCollapsed":
+				return vscode.TreeItemCollapsibleState.Collapsed;
+			case "startExpanded":
+			case "startCollapsed": {
+				const expansionState = StorageProvider.getTagExpansionState();
+				const isExpanded = expansionState[tagId];
+				if (isExpanded === undefined) {
+					return behavior === "startExpanded" ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed;
+				}
+				return isExpanded ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed;
+			}
+			default:
+				return vscode.TreeItemCollapsibleState.Expanded;
+		}
+	}
+
+	public static async setTagExpanded(tagId: string, expanded: boolean): Promise<void> {
+		const expansionState = StorageProvider.getTagExpansionState();
+		const newExpansionState = { ...expansionState, [tagId]: expanded };
+		await Container.context.globalState.update(StorageProvider.TAGS_EXPANSION_STATE_KEY, newExpansionState);
 	}
 
 	public refresh(): void {
@@ -96,14 +131,15 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 				if (!viewAsList) {
 						let nodes: TagNode[] = [];
 
+						const tagsCollapseBehavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
 						const tags = this.projectSource.getAvailableTags().sort();
 						for (const tag of tags) {
-								nodes.push(new TagNode(tag, vscode.TreeItemCollapsibleState.Expanded));
+								nodes.push(new TagNode(tag, StorageProvider.getTagCollapsibleState(tag, tagsCollapseBehavior)));
 						}
 
 						// has any, then OK
 						if (nodes.length > 0) {
-								nodes.push(new NoTagNode(NO_TAGS_DEFINED, vscode.TreeItemCollapsibleState.Expanded));
+								nodes.push(new NoTagNode(NO_TAGS_DEFINED, StorageProvider.getTagCollapsibleState(NO_TAGS_DEFINED, tagsCollapseBehavior)));
 
 								// should filter ?
 								const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);

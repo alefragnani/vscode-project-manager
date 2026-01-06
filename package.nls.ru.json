@@ -82,5 +82,10 @@
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Вместо этого используйте `openInCurrentWindowIfEmpty`",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Указывает, открывает ли команда «Новое окно» проект в текущем пустом окне.",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Определяет, должно ли расширение запрашивать подтверждение при открытии проектов в активном окне.",
-    "projectManager.configuration.tags.description": "Указывает список тегов, которые вы можете использовать для организации ваших проектов."
+    "projectManager.configuration.tags.description": "Указывает список тегов, которые вы можете использовать для организации ваших проектов.",
+    "projectManager.configuration.tags.collapseItems.description": "Определяет, как группы тегов в представлении ""Избранное"" сворачиваются или разворачиваются по умолчанию и запоминается ли их состояние.",
+    "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Группы тегов всегда развёрнуты.",
+    "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "Группы тегов всегда свёрнуты.",
+    "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "Группы тегов изначально развёрнуты, но запоминают последнее состояние свёртывания/разворачивания.",
+    "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Группы тегов изначально свёрнуты, но запоминают последнее состояние свёртывания/разворачивания."
 }
