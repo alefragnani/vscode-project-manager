@@ -39,8 +39,8 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 		return Container.context.globalState.get<Record<string, boolean>>(StorageProvider.TAGS_EXPANSION_STATE_KEY, {});
 	}
 
-	public static resetTagExpansionState(): void {
-		Container.context.globalState.update(StorageProvider.TAGS_EXPANSION_STATE_KEY, {});
+	public static async resetTagExpansionState(): Promise<void> {
+		await Container.context.globalState.update(StorageProvider.TAGS_EXPANSION_STATE_KEY, {});
 	}
 
 	public static getTagCollapsibleState(tagId: string): vscode.TreeItemCollapsibleState {
@@ -65,10 +65,10 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 		}
 	}
 
-	public static setTagExpanded(tagId: string, expanded: boolean): void {
+	public static async setTagExpanded(tagId: string, expanded: boolean): Promise<void> {
 		const expansionState = StorageProvider.getTagExpansionState();
 		const newExpansionState = { ...expansionState, [tagId]: expanded };
-		Container.context.globalState.update(StorageProvider.TAGS_EXPANSION_STATE_KEY, newExpansionState);
+		await Container.context.globalState.update(StorageProvider.TAGS_EXPANSION_STATE_KEY, newExpansionState);
 	}
 
 	public refresh(): void {
