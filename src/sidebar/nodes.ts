@@ -61,9 +61,6 @@ export class ProjectNode extends TreeItem {
 					case "VSCode":
 						return ThemeIcons.file_code;
 
-                    case "vscode-workspace":
-                        return ThemeIcons.root_folder;
-        
 					case "Any":
 						return ThemeIcons.folder;
         
