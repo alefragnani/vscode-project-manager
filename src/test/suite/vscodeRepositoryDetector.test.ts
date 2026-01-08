@@ -22,13 +22,19 @@ suite("VSCodeRepositoryDetector", () => {
         const regularDir = fs.mkdtempSync(path.join(os.tmpdir(), "vscode-repo-detector-test-regular-"));
         const vscodeDir = fs.mkdtempSync(path.join(os.tmpdir(), "vscode-repo-detector-test-vscode-"));
 
-        fs.mkdirSync(path.join(vscodeDir, ".vscode"));
+        try {
+            fs.mkdirSync(path.join(vscodeDir, ".vscode"));
 
-        assert.strictEqual(detector.isRepoDir(regularDir), false);
-        assert.strictEqual(detector.isRepoDir(vscodeDir), true);
-
-        fs.rmSync(vscodeDir, { recursive: true, force: true });
-        fs.rmSync(regularDir, { recursive: true });
+            assert.strictEqual(detector.isRepoDir(regularDir), false);
+            assert.strictEqual(detector.isRepoDir(vscodeDir), true);
+        } finally {
+            if (fs.existsSync(vscodeDir)) {
+                fs.rmSync(vscodeDir, { recursive: true, force: true });
+            }
+            if (fs.existsSync(regularDir)) {
+                fs.rmSync(regularDir, { recursive: true, force: true });
+            }
+        }
     });
     
 	test("getProjectInfo strips .code-workspace extension", () => {
