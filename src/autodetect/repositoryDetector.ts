@@ -12,6 +12,11 @@ export interface RepositoryDetector {
     isRepoDir(projectPath: string): boolean;
     getProjectInfo(projectPath: string): AutodetectedProjectInfo;
     isRepoFile?(projectFile: string): boolean;
+    /**
+     * Returns the list of supported file extensions for early filtering.
+     * Extensions should be lowercase and include the leading dot (e.g., ".code-workspace").
+     * This enables performance optimization by filtering files before calling isRepoFile.
+     */
     getSupportedFileExtensions?(): string[];
 
 }

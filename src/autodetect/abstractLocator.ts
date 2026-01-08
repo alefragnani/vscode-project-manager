@@ -203,10 +203,11 @@ export class CustomProjectLocator {
 		// Early filter: only process files with relevant extensions to improve performance
 		// This avoids calling isRepoFile for every file in large directories
 		if (this.repositoryDetector.getSupportedFileExtensions) {
-			const supportedExtensions = this.repositoryDetector.getSupportedFileExtensions();
 			const lowerCasePath = absPath.toLowerCase();
+			const supportedExtensions = this.repositoryDetector.getSupportedFileExtensions();
+			// Extensions are expected to be lowercase
 			const hasMatchingExtension = supportedExtensions.some(ext => 
-				lowerCasePath.endsWith(ext.toLowerCase())
+				lowerCasePath.endsWith(ext)
 			);
 			if (!hasMatchingExtension) {
 				return;
