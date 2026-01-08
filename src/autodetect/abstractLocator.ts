@@ -84,6 +84,14 @@ export class CustomProjectLocator {
 		this.projectList = [];
 	}
 
+    private cachedFileIsValid(projectList: AutodetectedProjectList): boolean {
+        if (projectList.length > 0 && !("icon" in projectList[0])) {
+            return false;
+        }
+
+        return true;
+    }
+
 	private initializeCfg() {
 
 		const cacheFile: string = this.getCacheFile();
@@ -91,6 +99,10 @@ export class CustomProjectLocator {
 		if (fs.existsSync(cacheFile)) {
 			try {
 				this.projectList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
+                if (!this.cachedFileIsValid(this.projectList)) {
+                    this.deleteCacheFile();
+                    return;
+                }
 				this.alreadyLocated = true;
 			} catch (error) {
 				this.deleteCacheFile();
