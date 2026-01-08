@@ -12,7 +12,7 @@ import { codicons } from "vscode-ext-codicons";
 
 export class VSCodeRepositoryDetector implements RepositoryDetector {
     
-    public isRepoDir(projectPath: string) {
+    public isRepoDir(projectPath: string): boolean {
         return fs.existsSync(path.join(projectPath, ".vscode"));
     }
 

@@ -14,7 +14,7 @@ export class GitRepositoryDetector extends CustomRepositoryDetector {
         return codicons.git_branch;
     }
 
-	public isRepoDir(projectPath: string) {
+	public isRepoDir(projectPath: string): boolean {
 		let isGit: boolean;
 		isGit = fs.existsSync(path.join(projectPath, ".git", "config"));
 		if (isGit) {

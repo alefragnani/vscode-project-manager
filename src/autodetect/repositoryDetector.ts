@@ -9,7 +9,7 @@ import { AutodetectedProjectInfo } from "./autodetectedProjectInfo";
 
 export interface RepositoryDetector {
 
-    isRepoDir(projectPath: string);
+    isRepoDir(projectPath: string): boolean;
     getProjectInfo(projectPath: string): AutodetectedProjectInfo;
     isRepoFile?(projectFile: string): boolean;
 
@@ -22,7 +22,7 @@ export abstract class CustomRepositoryDetector implements RepositoryDetector {
 
     protected abstract getIcon(): string;
 
-    public isRepoDir(projectPath: string) {
+    public isRepoDir(projectPath: string): boolean {
         return fs.existsSync(path.join(projectPath, ...this.paths));
     }
 
