@@ -5,11 +5,12 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { AutodetectedProjectInfo } from "./autodetectedProjectInfo";
 
 export interface RepositoryDetector {
 
     isRepoDir(projectPath: string);
-    decideProjectName(projectPath: string): string;
+    getProjectDetails(projectPath: string): AutodetectedProjectInfo;
     isRepoFile?(projectFile: string): boolean;
 
 }
@@ -23,7 +24,10 @@ export class CustomRepositoryDetector implements RepositoryDetector {
         return fs.existsSync(path.join(projectPath, ...this.paths));
     }
 
-    public decideProjectName(projectPath: string): string {
-        return path.basename(projectPath);
+    public getProjectDetails(projectPath: string): AutodetectedProjectInfo {
+        return {
+            name: path.basename(projectPath),
+            fullPath: projectPath
+        };
     }
 }

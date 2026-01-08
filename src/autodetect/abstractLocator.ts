@@ -12,19 +12,16 @@ import { Project } from "../core/project";
 import minimatch = require("minimatch");
 import { l10n, workspace } from "vscode";
 import { RepositoryDetector } from "./repositoryDetector";
+import { AutodetectedProjectInfo } from "./autodetectedProjectInfo";
 
 const CACHE_FILE = "projects_cache_";
 
-export interface DirInfo {
-	fullPath: string;
-	name: string;
-}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface DirList extends Array<DirInfo> { }
+export interface AutodetectedProjectList extends Array<AutodetectedProjectInfo> { }
 
 export class CustomProjectLocator {
 
-	public dirList: DirList = <DirList> [];
+	public projectList: AutodetectedProjectList = <AutodetectedProjectList> [];
 	private maxDepth: number;
 	private ignoredFolders: string[];
 	private useCachedProjects: boolean;
@@ -46,18 +43,18 @@ export class CustomProjectLocator {
 		this.initializeCfg();
 	}
 
-	public getPathDepth(s: string) {
+	private getPathDepth(s: string) {
 		let depth = s.split(path.sep).length;
 		if (s.endsWith(path.sep))
 			depth--;
 		return depth;
 	}
 
-	public isMaxDepthReached(currentDepth, initialDepth) {
+	private isMaxDepthReached(currentDepth, initialDepth) {
 		return (this.maxDepth > 0) && ((currentDepth - initialDepth) > this.maxDepth);
 	}
 
-	public isFolderIgnored(folder) {
+	private isFolderIgnored(folder) {
 		const matches = this.ignoredFolders.filter(f => minimatch(folder, f))
 		return matches.length > 0;
 	}
@@ -68,7 +65,7 @@ export class CustomProjectLocator {
 		}
 
 		let found = false;
-		this.dirList.forEach(dir => {
+		this.projectList.forEach(dir => {
 			found = found || folder.startsWith(dir.fullPath);
 		});
 		return found;
@@ -78,14 +75,14 @@ export class CustomProjectLocator {
 		return this.alreadyLocated;
 	}
 
-	public updateCacheFile(): void {
+	private updateCacheFile(): void {
 		this.alreadyLocated = true;
 		const cacheFile: string = this.getCacheFile();
-		fs.writeFileSync(cacheFile, JSON.stringify(this.dirList, null, "\t"), { encoding: "utf8" });
+		fs.writeFileSync(cacheFile, JSON.stringify(this.projectList, null, "\t"), { encoding: "utf8" });
 	}
 
-	public clearDirList() {
-		this.dirList = [];
+	private clearDirList() {
+		this.projectList = [];
 	}
 
 	private initializeCfg() {
@@ -94,7 +91,7 @@ export class CustomProjectLocator {
         
 		if (fs.existsSync(cacheFile)) {
 			try {
-				this.dirList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
+				this.projectList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
 				this.alreadyLocated = true;
 			} catch (error) {
 				this.deleteCacheFile();
@@ -104,7 +101,7 @@ export class CustomProjectLocator {
 		}
 	}
 
-	public async locateProjects(): Promise<DirList> {
+	public async locateProjects(): Promise<AutodetectedProjectList> {
 
 		let projectsDirList = this.baseFolders;
         projectsDirList = await PathUtils.expandWithGlobPatterns(projectsDirList);
@@ -112,15 +109,15 @@ export class CustomProjectLocator {
 		projectsDirList = PathUtils.handleSymlinks(projectsDirList);
 		this.baseFolders = projectsDirList.slice();
 
-		return new Promise<DirList>((resolve, reject) => {
+		return new Promise<AutodetectedProjectList>((resolve, reject) => {
 
 			if (projectsDirList.length === 0) {
-				resolve(<DirList> []);
+				resolve(<AutodetectedProjectList> []);
 				return;
 			}
 
 			if (this.alreadyLocated) {
-				resolve(this.dirList);
+				resolve(this.projectList);
 				return;
 			}
 
@@ -174,37 +171,33 @@ export class CustomProjectLocator {
 				.then(() => {
 					// vscode.window.setStatusBarMessage("Searching folders completed", 1500);
 					this.updateCacheFile();
-					resolve(this.dirList);
+					resolve(this.projectList);
 				})
 				.catch(error => { vscode.window.showErrorMessage(l10n.t("Error while loading projects.")); });
 		});
 	}
 
-	public addToList(projectPath: string, projectName: string = null) {
-		this.dirList.push({
-			fullPath: projectPath,
-			name: projectName === null ? path.basename(projectPath) : projectName
-		});
-		return;
+	private addToList(projectInfo: AutodetectedProjectInfo) {
+		this.projectList.push(projectInfo);
 	}
 
-	public processDirectory = (absPath: string, stat: any) => {
+	private processDirectory = (absPath: string, stat: any) => {
 		// vscode.window.setStatusBarMessage(absPath, 600);
 		if (this.excludeBaseFoldersFromResults && this.isBaseFolder(absPath)) {
 			return;
 		}
 		if (this.repositoryDetector.isRepoDir(absPath)) {
-			this.addToList(absPath, this.repositoryDetector.decideProjectName(absPath));
+			this.addToList(this.repositoryDetector.getProjectDetails(absPath));
 		}
 	}
 
-	public processFile = (absPath: string, stat: any) => {
+	private processFile = (absPath: string, stat: any) => {
 		if (this.repositoryDetector.isRepoFile && this.repositoryDetector.isRepoFile(absPath)) {
-			this.addToList(absPath, this.repositoryDetector.decideProjectName(absPath));
+			this.addToList(this.repositoryDetector.getProjectDetails(absPath));
 		}
 	}
 
-	public handleError(err) {
+	private handleError(err) {
 		console.log("Error walker:", err);
 	}
 
@@ -240,7 +233,7 @@ export class CustomProjectLocator {
 			return null;
 		}
 
-		for (const element of this.dirList) {
+		for (const element of this.projectList) {
 			if ((element.fullPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase())) {
 				return {
 					rootPath: element.fullPath,

@@ -10,7 +10,7 @@ import os = require("os");
 import path = require("path");
 import { env, ExtensionContext, workspace } from "vscode";
 import { codicons } from "vscode-ext-codicons";
-import { DirList } from "../autodetect/abstractLocator";
+import { AutodetectedProjectList } from "../autodetect/abstractLocator";
 import { isRemotePath } from "./remote";
 import { glob } from "glob";
 
@@ -253,7 +253,7 @@ interface ProjectDetail {
 	path: string
 }
 
-export function addParentFolderToDuplicates(projects: DirList): ProjectDetail[] {
+export function addParentFolderToDuplicates(projects: AutodetectedProjectList): ProjectDetail[] {
 
 	if (!workspace.getConfiguration("projectManager").get<boolean>("showParentFolderInfoOnDuplicates", false)) {
 		return projects.map(project => <ProjectDetail>{

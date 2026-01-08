@@ -56,9 +56,9 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
 				// Locators (VSCode/Git/Mercurial/SVN)
 				// this.projectSource.initializeCfg(this.projectSource.kind);
         
-				if (this.projectSource.dirList.length > 0) {
+				if (this.projectSource.projectList.length > 0) {
 
-				this.projectSource.dirList.sort((n1, n2) => {
+				this.projectSource.projectList.sort((n1, n2) => {
 						if (n1.name.toLowerCase() > n2.name.toLowerCase()) {
 						return 1;
 						}
@@ -70,7 +70,7 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
 						return 0;
 				});
 
-				const projectsWithParent = addParentFolderToDuplicates(this.projectSource.dirList);
+				const projectsWithParent = addParentFolderToDuplicates(this.projectSource.projectList);
 
 				// tslint:disable-next-line:prefer-for-of
 				for (let index = 0; index < projectsWithParent.length; index++) {
@@ -105,10 +105,10 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
 		if (this.projectSource.displayName === "Git") {
 				const hideGitWelcome = Container.context.globalState.get<boolean>("hideGitWelcome", false);
 				vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName, 
-				this.projectSource.dirList.length > 0 || !hideGitWelcome);
+				this.projectSource.projectList.length > 0 || !hideGitWelcome);
 		} else {
 				vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName, 
-				this.projectSource.dirList.length > 0);
+				this.projectSource.projectList.length > 0);
 		}
 		return;
 	}  
