@@ -9,7 +9,7 @@ import { AutodetectProvider } from "../sidebar/autodetectProvider";
 import { Providers } from "../sidebar/providers";
 import { PathUtils } from "../utils/path";
 import { sortProjects } from "../utils/sorter";
-import { CustomProjectLocator, CustomRepositoryDetector } from "./abstractLocator";
+import { CustomProjectLocator, CustomRepositoryDetector, VSCodeRepositoryDetector } from "./abstractLocator";
 import { GitRepositoryDetector } from "./gitLocator";
 import { codicons } from "vscode-ext-codicons";
 import { l10n } from "vscode";
@@ -24,7 +24,7 @@ export const ANY_ICON = codicons.file_directory;
 
 export class Locators implements vscode.Disposable {
   
-	public vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", VSCODE_ICON, new CustomRepositoryDetector([".vscode"]));
+	public vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", VSCODE_ICON, new VSCodeRepositoryDetector());
 	public gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", GIT_ICON, new GitRepositoryDetector([".git"]));
 	public mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", MERCURIAL_ICON, new CustomRepositoryDetector([".hg"]));
 	public svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", SVN_ICON, new CustomRepositoryDetector([".svn", "pristine"]));

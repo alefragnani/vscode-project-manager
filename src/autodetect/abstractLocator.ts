@@ -24,7 +24,8 @@ export interface DirList extends Array<DirInfo> { }
 export interface RepositoryDetector {
 
 	isRepoDir(projectPath: string);
-	decideProjectName(projectPath: string): string; 
+	decideProjectName(projectPath: string): string;
+	isRepoFile?(projectFile: string): boolean;
 
 }
 
@@ -40,6 +41,24 @@ export class CustomRepositoryDetector implements RepositoryDetector {
 	public decideProjectName(projectPath: string): string {
 		return path.basename(projectPath);
 	}    
+}
+
+export class VSCodeRepositoryDetector implements RepositoryDetector {
+
+	public isRepoDir(projectPath: string) {
+		return fs.existsSync(path.join(projectPath, ".vscode"));
+	}
+
+	public decideProjectName(projectPath: string): string {
+		if (projectPath.toLowerCase().endsWith(".code-workspace")) {
+			return path.basename(projectPath, ".code-workspace");
+		}
+		return path.basename(projectPath);
+	}
+
+	public isRepoFile(projectFile: string): boolean {
+		return projectFile.toLowerCase().endsWith(".code-workspace");
+	}
 }
 
 export class CustomProjectLocator {
@@ -166,6 +185,7 @@ export class CustomProjectLocator {
 									this.isProjectWithinProjectIgnored(dir))
 							})
 							.on("dir", this.processDirectory)
+							.on("file", this.processFile)
                             .on("symlink", (link, stat) => {
                                 if (!workspace.getConfiguration("projectManager").get<boolean>("supportSymlinksOnBaseFolders", false)) {
                                     return;
@@ -213,6 +233,12 @@ export class CustomProjectLocator {
 			return;
 		}
 		if (this.repositoryDetector.isRepoDir(absPath)) {
+			this.addToList(absPath, this.repositoryDetector.decideProjectName(absPath));
+		}
+	}
+
+	public processFile = (absPath: string, stat: any) => {
+		if (this.repositoryDetector.isRepoFile && this.repositoryDetector.isRepoFile(absPath)) {
 			this.addToList(absPath, this.repositoryDetector.decideProjectName(absPath));
 		}
 	}
