@@ -251,7 +251,7 @@ interface ProjectDetail {
 	name: string,
 	parent?: string,
 	path: string,
-    icon: string;
+	icon: string;
 }
 
 export function addParentFolderToDuplicates(projects: AutodetectedProjectList): ProjectDetail[] {
@@ -260,7 +260,7 @@ export function addParentFolderToDuplicates(projects: AutodetectedProjectList): 
 		return projects.map(project => <ProjectDetail>{
 			name: project.name,
 			path: project.fullPath,
-            icon: project.icon
+			icon: project.icon
 		});
 	}
 
@@ -272,7 +272,7 @@ export function addParentFolderToDuplicates(projects: AutodetectedProjectList): 
 		return projects.map(project => <ProjectDetail>{
 			name: project.name,
 			path: project.fullPath,
-            icon: project.icon
+			icon: project.icon
 		});
 	}
 
@@ -280,7 +280,7 @@ export function addParentFolderToDuplicates(projects: AutodetectedProjectList): 
 	const projectsWithParentInfo = projects.map(project => <ProjectDetail>{
 		name: project.name,
 		path: project.fullPath,
-        icon: project.icon
+		icon: project.icon
 	});
 
 	// duplicates
