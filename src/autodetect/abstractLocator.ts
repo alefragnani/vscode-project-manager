@@ -40,7 +40,9 @@ export class CustomProjectLocator {
 		this.baseFolders = [];
 		this.excludeBaseFoldersFromResults = false;
 		// Cache supported file extensions for performance
-		this.supportedFileExtensions = this.repositoryDetector.getSupportedFileExtensions?.() ?? null;
+		// Normalize extensions to lowercase for consistent comparison
+		const extensions = this.repositoryDetector.getSupportedFileExtensions?.();
+		this.supportedFileExtensions = extensions ? extensions.map(ext => ext.toLowerCase()) : null;
 		this.refreshConfig();
 		this.initializeCfg();
 	}
@@ -207,7 +209,7 @@ export class CustomProjectLocator {
 		// This avoids calling isRepoFile for every file in large directories
 		if (this.supportedFileExtensions) {
 			const fileExt = path.extname(absPath).toLowerCase();
-			// Extensions are expected to be lowercase
+			// Cached extensions are normalized to lowercase for comparison
 			if (!this.supportedFileExtensions.includes(fileExt)) {
 				return;
 			}
