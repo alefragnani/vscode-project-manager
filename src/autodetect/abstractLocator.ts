@@ -200,6 +200,11 @@ export class CustomProjectLocator {
 	}
 
 	private processFile = (absPath: string, stat: any) => {
+		// Early filter: only process .code-workspace files to improve performance
+		// This avoids calling isRepoFile for every file in large directories
+		if (!absPath.toLowerCase().endsWith(".code-workspace")) {
+			return;
+		}
 		if (this.repositoryDetector.isRepoFile && this.repositoryDetector.isRepoFile(absPath)) {
 			this.addToList(this.repositoryDetector.getProjectInfo(absPath));
 		}
