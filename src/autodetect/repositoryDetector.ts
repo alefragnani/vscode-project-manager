@@ -12,6 +12,7 @@ export interface RepositoryDetector {
     isRepoDir(projectPath: string): boolean;
     getProjectInfo(projectPath: string): AutodetectedProjectInfo;
     isRepoFile?(projectFile: string): boolean;
+    getSupportedFileExtensions?(): string[];
 
 }
 

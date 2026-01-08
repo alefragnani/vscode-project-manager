@@ -200,10 +200,16 @@ export class CustomProjectLocator {
 	}
 
 	private processFile = (absPath: string, stat: any) => {
-		// Early filter: only process .code-workspace files to improve performance
+		// Early filter: only process files with relevant extensions to improve performance
 		// This avoids calling isRepoFile for every file in large directories
-		if (!absPath.toLowerCase().endsWith(".code-workspace")) {
-			return;
+		if (this.repositoryDetector.getSupportedFileExtensions) {
+			const supportedExtensions = this.repositoryDetector.getSupportedFileExtensions();
+			const hasMatchingExtension = supportedExtensions.some(ext => 
+				absPath.toLowerCase().endsWith(ext.toLowerCase())
+			);
+			if (!hasMatchingExtension) {
+				return;
+			}
 		}
 		if (this.repositoryDetector.isRepoFile && this.repositoryDetector.isRepoFile(absPath)) {
 			this.addToList(this.repositoryDetector.getProjectInfo(absPath));
