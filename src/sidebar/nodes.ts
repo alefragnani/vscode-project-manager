@@ -46,7 +46,7 @@ export class ProjectNode extends TreeItem {
 			if (currentIconThemeHasFolderIcon()) {
 					return getProjectIcon(icon, projectPath);
 			} else {
-                // if icon is a regex that matches $(icon-name), returns corresponding ThemeIcon
+                // if icon is a string that matches the pattern $(icon-name), returns corresponding ThemeIcon
                 if (/^\$\([a-z-]+\)$/.test(icon)) {
                     return new ThemeIcon(icon.substring(2, icon.length - 1));
                 }
