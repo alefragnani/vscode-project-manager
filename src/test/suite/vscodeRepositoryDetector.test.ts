@@ -16,7 +16,7 @@ suite("VSCodeRepositoryDetector", () => {
 	});
 
 	test("getProjectDetails strips .code-workspace extension", () => {
-		assert.strictEqual(detector.getProjectDetails("/path/to/project.code-workspace").name, "project");
-		assert.strictEqual(detector.getProjectDetails("/path/to/another").name, "another");
+		assert.strictEqual(detector.getProjectInfo("/path/to/project.code-workspace").name, "project");
+		assert.strictEqual(detector.getProjectInfo("/path/to/another").name, "another");
 	});
 });

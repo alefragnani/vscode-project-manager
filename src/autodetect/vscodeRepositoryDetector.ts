@@ -7,6 +7,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { RepositoryDetector } from "./repositoryDetector";
 import { AutodetectedProjectInfo } from "./autodetectedProjectInfo";
+import { codicons } from "vscode-ext-codicons";
 
 
 export class VSCodeRepositoryDetector implements RepositoryDetector {
@@ -19,10 +20,12 @@ export class VSCodeRepositoryDetector implements RepositoryDetector {
         return projectFile.toLowerCase().endsWith(".code-workspace");
     }
 
-    getProjectDetails(projectPath: string): AutodetectedProjectInfo {
+    getProjectInfo(projectPath: string): AutodetectedProjectInfo {
+        const isWorkspace = projectPath.toLowerCase().endsWith(".code-workspace");
         return {
-            name: projectPath.toLowerCase().endsWith(".code-workspace") ? path.basename(projectPath, ".code-workspace") : path.basename(projectPath),
-            fullPath: projectPath
+            name: isWorkspace ? path.basename(projectPath, ".code-workspace") : path.basename(projectPath),
+            fullPath: projectPath,
+            icon: isWorkspace ? codicons.root_folder : codicons.file_code
         }
     }
 }

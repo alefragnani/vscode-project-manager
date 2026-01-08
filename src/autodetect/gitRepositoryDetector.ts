@@ -6,8 +6,13 @@
 import fs = require("fs");
 import path = require("path");
 import { CustomRepositoryDetector } from "./repositoryDetector";
+import { codicons } from "vscode-ext-codicons";
 
 export class GitRepositoryDetector extends CustomRepositoryDetector {
+    
+    protected getIcon(): string {
+        return codicons.git_branch;
+    }
 
 	public isRepoDir(projectPath: string) {
 		let isGit: boolean;

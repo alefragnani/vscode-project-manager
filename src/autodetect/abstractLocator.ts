@@ -30,8 +30,7 @@ export class CustomProjectLocator {
 	private baseFolders: string[];
     private excludeBaseFoldersFromResults: boolean;
 
-	constructor(public kind: string, public displayName: string,
-				public icon: string, public repositoryDetector: RepositoryDetector) {
+	constructor(public kind: string, public displayName: string, public repositoryDetector: RepositoryDetector) {
 		this.maxDepth = -1;
 		this.ignoredFolders = [];
 		this.useCachedProjects = true;
@@ -127,7 +126,6 @@ export class CustomProjectLocator {
 			projectsDirList.forEach((projectBasePath) => {
 				const expandedBasePath: string = PathUtils.expandHomePath(projectBasePath);
 				if (!fs.existsSync(expandedBasePath)) {
-					// vscode.window.setStatusBarMessage("Directory " + expandedBasePath + " does not exists.", 1500);
 
 					return;
 				}
@@ -169,7 +167,6 @@ export class CustomProjectLocator {
 
 			Promise.all(promises)
 				.then(() => {
-					// vscode.window.setStatusBarMessage("Searching folders completed", 1500);
 					this.updateCacheFile();
 					resolve(this.projectList);
 				})
@@ -182,18 +179,17 @@ export class CustomProjectLocator {
 	}
 
 	private processDirectory = (absPath: string, stat: any) => {
-		// vscode.window.setStatusBarMessage(absPath, 600);
 		if (this.excludeBaseFoldersFromResults && this.isBaseFolder(absPath)) {
 			return;
 		}
 		if (this.repositoryDetector.isRepoDir(absPath)) {
-			this.addToList(this.repositoryDetector.getProjectDetails(absPath));
+			this.addToList(this.repositoryDetector.getProjectInfo(absPath));
 		}
 	}
 
 	private processFile = (absPath: string, stat: any) => {
 		if (this.repositoryDetector.isRepoFile && this.repositoryDetector.isRepoFile(absPath)) {
-			this.addToList(this.repositoryDetector.getProjectDetails(absPath));
+			this.addToList(this.repositoryDetector.getProjectInfo(absPath));
 		}
 	}
 

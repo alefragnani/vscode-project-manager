@@ -77,14 +77,14 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
 						const dirinfo = projectsWithParent[index];
             
 						lll.push(new ProjectNode(dirinfo.name, vscode.TreeItemCollapsibleState.None,
-						this.projectSource.displayName, {
+						dirinfo.icon, {
 								name: dirinfo.name,
 								detail: dirinfo.parent,
 								path: dirinfo.path
 						}, {
 								command: "_projectManager.open",
 								title: "",
-								arguments: [dirinfo.path, this.projectSource.icon + " " + dirinfo.name],
+								arguments: [dirinfo.path, dirinfo.name],
 						}));
 				}
 				}

@@ -3,8 +3,12 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-export interface AutodetectedProjectInfo {
-    fullPath: string;
-    name: string;
-    icon: string;
+import { codicons } from "vscode-ext-codicons";
+import { CustomRepositoryDetector } from "./repositoryDetector";
+
+export class AnyRepositoryDetector extends CustomRepositoryDetector {
+
+    protected getIcon(): string {
+        return codicons.file_directory;
+    }
 }
