@@ -15,7 +15,7 @@ suite("VSCodeRepositoryDetector", () => {
 		assert.strictEqual(detector.isRepoFile!("/path/to/project.txt"), false);
 	});
 
-	test("getProjectDetails strips .code-workspace extension", () => {
+	test("getProjectInfo strips .code-workspace extension", () => {
 		assert.strictEqual(detector.getProjectInfo("/path/to/project.code-workspace").name, "project");
 		assert.strictEqual(detector.getProjectInfo("/path/to/another").name, "another");
 	});
