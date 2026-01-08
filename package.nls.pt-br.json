@@ -99,6 +99,7 @@
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "Os grupos de etiquetas são sempre exibidos recolhidos.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "Os grupos de etiquetas começam expandidos, mas lembram seu último estado de expandido/recolhido.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Os grupos de etiquetas começam recolhidos, mas lembram seu último estado de expandido/recolhido.",
+    "projectManager.configuration.hideProjectsWithoutTagsInTagsView.description": "Controla se os projetos sem etiquetas são ocultados na visão de Etiquetas.",
     "projectManager.colors.sideBar.currentProjectHighlightForeground.description": "A cor para destacar o projeto corrente na Barra Lateral",
     "projectManager.walkthroughs.title": "Começar a trabalhar com Project Manager",
     "projectManager.walkthroughs.description": "Aprenda mais sobre Project Manager para otimizar seu trabalho",

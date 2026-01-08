@@ -89,6 +89,7 @@
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "標籤群組一律摺疊。",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "標籤群組一開始為展開狀態，但會記住您上次的展開/摺疊狀態。",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "標籤群組一開始為摺疊狀態，但會記住您上次的展開/摺疊狀態。",
+    "projectManager.configuration.hideProjectsWithoutTagsInTagsView.description": "控制是否在標籤視圖中隱藏沒有設置標籤的項目。",
     "projectManager.walkthroughs.title": "項目管理器入門",
     "projectManager.walkthroughs.description": "了解有關項目管理器的更多信息以優化您的工作流程",
     "projectManager.walkthroughs.saveYourFavoriteProjects.title": "保存您收藏的項目",

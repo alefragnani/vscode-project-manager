@@ -844,6 +844,11 @@
                             "%projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed%"
                         ],
                         "description": "%projectManager.configuration.tags.collapseItems.description%"
+                    },
+                    "projectManager.hideProjectsWithoutTagsInTagsView": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%projectManager.configuration.hideProjectsWithoutTagsInTagsView.description%"
                     }
                 }
             },

@@ -89,6 +89,7 @@
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "Les groupes d'étiquettes sont toujours réduits.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "Les groupes d'étiquettes sont développés au départ, mais conservent votre dernier état développé/réduit.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Les groupes d'étiquettes sont réduits au départ, mais conservent votre dernier état développé/réduit.",
+    "projectManager.configuration.hideProjectsWithoutTagsInTagsView.description": "Contrôle si les projets sans étiquettes sont cachés dans la vue des étiquettes.",
     "projectManager.walkthroughs.title": "Démarrer avec Project Manager",
     "projectManager.walkthroughs.description": "En savoir plus sur Project Manager pour optimiser votre flux de travail",
     "projectManager.walkthroughs.saveYourFavoriteProjects.title": "Sauvegardez vos projets favoris",

@@ -99,6 +99,7 @@
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "标签分组始终折叠。",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "标签分组初始为展开状态，但会记住你上次的展开/折叠状态。",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "标签分组初始为折叠状态，但会记住你上次的展开/折叠状态。",
+    "projectManager.configuration.hideProjectsWithoutTagsInTagsView.description": "控制是否在标签视图中隐藏没有设置标签的项目。",
     "projectManager.colors.sideBar.currentProjectHighlightForeground.description": "用于在侧边栏中高亮当前项目的颜色",
     "projectManager.walkthroughs.title": "快速上手项目管理器",
     "projectManager.walkthroughs.description": "深入了解项目管理器的以优化您的工作流程",

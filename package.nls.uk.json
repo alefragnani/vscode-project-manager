@@ -99,6 +99,7 @@
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "Групи тегів завжди згорнуті.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "Групи тегів спочатку розгорнуті, але запам'ятовують останній стан розгортання/згортання.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Групи тегів спочатку згорнуті, але запам'ятовують останній стан розгортання/згортання.",
+    "projectManager.configuration.hideProjectsWithoutTagsInTagsView.description": "Управляет тем, скрывать ли проекты без тегов в представлении тегов.",
     "projectManager.colors.sideBar.currentProjectHighlightForeground.description": "Колір для виділення поточного проєкту у бічній панелі",
     "projectManager.walkthroughs.title": "Початок роботи з Project Manager",
     "projectManager.walkthroughs.description": "Дізнайтеся більше про Project Manager, щоб оптимізувати свій робочий процес",

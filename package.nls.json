@@ -99,6 +99,7 @@
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "Tag groups are always collapsed.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "Tag groups start expanded, but remember your last expand/collapse state.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Tag groups start collapsed, but remember your last expand/collapse state.",
+    "projectManager.configuration.hideProjectsWithoutTagsInTagsView.description": "Controls whether projects without tags are hidden in the Tags view.",
     "projectManager.colors.sideBar.currentProjectHighlightForeground.description": "The color to highlight the current project in the Side Bar",
     "projectManager.walkthroughs.title": "Get Started with Project Manager",
     "projectManager.walkthroughs.description": "Learn more about Project Manager to optimize your workflow",
