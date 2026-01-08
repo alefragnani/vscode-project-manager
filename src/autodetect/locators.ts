@@ -10,7 +10,7 @@ import { sortProjects } from "../utils/sorter";
 import { CustomProjectLocator } from "./abstractLocator";
 import { VSCodeRepositoryDetector } from "./vscodeRepositoryDetector";
 import { GitRepositoryDetector } from "./gitRepositoryDetector";
-import { l10n, Disposable, commands, ProgressLocation,  } from "vscode";
+import { l10n, Disposable, commands, ProgressLocation } from "vscode";
 import { isRemotePath, isRemoteUri } from "../utils/remote";
 import { Uri, window, workspace } from "vscode";
 import { MercurialRepositoryDetector } from "./mercurialRepositoryDetector";
