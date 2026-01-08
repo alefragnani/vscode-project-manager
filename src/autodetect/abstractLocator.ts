@@ -11,40 +11,17 @@ import { PathUtils } from "../utils/path";
 import { Project } from "../core/project";
 import minimatch = require("minimatch");
 import { l10n, workspace } from "vscode";
+import { RepositoryDetector } from "./repositoryDetector";
+import { AutodetectedProjectInfo } from "./autodetectedProjectInfo";
 
 const CACHE_FILE = "projects_cache_";
 
-export interface DirInfo {
-	fullPath: string;
-	name: string;
-}
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface DirList extends Array<DirInfo> { }
-
-export interface RepositoryDetector {
-
-	isRepoDir(projectPath: string);
-	decideProjectName(projectPath: string): string; 
-
-}
-
-export class CustomRepositoryDetector implements RepositoryDetector {
-
-	constructor(public paths: string[]) {
-	}
-
-	public isRepoDir(projectPath: string) {
-		return fs.existsSync(path.join(projectPath, ...this.paths));
-	}
-
-	public decideProjectName(projectPath: string): string {
-		return path.basename(projectPath);
-	}    
-}
+export interface AutodetectedProjectList extends Array<AutodetectedProjectInfo> { }
 
 export class CustomProjectLocator {
 
-	public dirList: DirList = <DirList> [];
+	public projectList: AutodetectedProjectList = <AutodetectedProjectList> [];
 	private maxDepth: number;
 	private ignoredFolders: string[];
 	private useCachedProjects: boolean;
@@ -52,9 +29,9 @@ export class CustomProjectLocator {
 	private alreadyLocated: boolean;
 	private baseFolders: string[];
     private excludeBaseFoldersFromResults: boolean;
+	private supportedFileExtensions: string[] | null;
 
-	constructor(public kind: string, public displayName: string,
-				public icon: string, public repositoryDetector: RepositoryDetector) {
+	constructor(public kind: string, public displayName: string, public repositoryDetector: RepositoryDetector) {
 		this.maxDepth = -1;
 		this.ignoredFolders = [];
 		this.useCachedProjects = true;
@@ -62,22 +39,26 @@ export class CustomProjectLocator {
 		this.alreadyLocated = false;
 		this.baseFolders = [];
 		this.excludeBaseFoldersFromResults = false;
+		// Cache supported file extensions for performance
+		// Normalize extensions to lowercase for consistent comparison
+		const extensions = this.repositoryDetector.getSupportedFileExtensions?.();
+		this.supportedFileExtensions = extensions ? extensions.map(ext => ext.toLowerCase()) : null;
 		this.refreshConfig();
 		this.initializeCfg();
 	}
 
-	public getPathDepth(s: string) {
+	private getPathDepth(s: string) {
 		let depth = s.split(path.sep).length;
 		if (s.endsWith(path.sep))
 			depth--;
 		return depth;
 	}
 
-	public isMaxDepthReached(currentDepth, initialDepth) {
+	private isMaxDepthReached(currentDepth, initialDepth) {
 		return (this.maxDepth > 0) && ((currentDepth - initialDepth) > this.maxDepth);
 	}
 
-	public isFolderIgnored(folder) {
+	private isFolderIgnored(folder) {
 		const matches = this.ignoredFolders.filter(f => minimatch(folder, f))
 		return matches.length > 0;
 	}
@@ -88,7 +69,7 @@ export class CustomProjectLocator {
 		}
 
 		let found = false;
-		this.dirList.forEach(dir => {
+		this.projectList.forEach(dir => {
 			found = found || folder.startsWith(dir.fullPath);
 		});
 		return found;
@@ -98,15 +79,23 @@ export class CustomProjectLocator {
 		return this.alreadyLocated;
 	}
 
-	public updateCacheFile(): void {
+	private updateCacheFile(): void {
 		this.alreadyLocated = true;
 		const cacheFile: string = this.getCacheFile();
-		fs.writeFileSync(cacheFile, JSON.stringify(this.dirList, null, "\t"), { encoding: "utf8" });
+		fs.writeFileSync(cacheFile, JSON.stringify(this.projectList, null, "\t"), { encoding: "utf8" });
 	}
 
-	public clearDirList() {
-		this.dirList = [];
+	private clearProjectList() {
+		this.projectList = [];
 	}
+
+    private cachedFileIsValid(projectList: AutodetectedProjectList): boolean {
+        if (projectList.length > 0 && !("icon" in projectList[0])) {
+            return false;
+        }
+
+        return true;
+    }
 
 	private initializeCfg() {
 
@@ -114,7 +103,11 @@ export class CustomProjectLocator {
         
 		if (fs.existsSync(cacheFile)) {
 			try {
-				this.dirList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
+				this.projectList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
+                if (!this.cachedFileIsValid(this.projectList)) {
+                    this.deleteCacheFile();
+                    return;
+                }
 				this.alreadyLocated = true;
 			} catch (error) {
 				this.deleteCacheFile();
@@ -124,7 +117,7 @@ export class CustomProjectLocator {
 		}
 	}
 
-	public async locateProjects(): Promise<DirList> {
+	public async locateProjects(): Promise<AutodetectedProjectList> {
 
 		let projectsDirList = this.baseFolders;
         projectsDirList = await PathUtils.expandWithGlobPatterns(projectsDirList);
@@ -132,25 +125,24 @@ export class CustomProjectLocator {
 		projectsDirList = PathUtils.handleSymlinks(projectsDirList);
 		this.baseFolders = projectsDirList.slice();
 
-		return new Promise<DirList>((resolve, reject) => {
+		return new Promise<AutodetectedProjectList>((resolve, reject) => {
 
 			if (projectsDirList.length === 0) {
-				resolve(<DirList> []);
+				resolve(<AutodetectedProjectList> []);
 				return;
 			}
 
 			if (this.alreadyLocated) {
-				resolve(this.dirList);
+				resolve(this.projectList);
 				return;
 			}
 
 			const promises = [];
-			this.clearDirList();
+			this.clearProjectList();
 
 			projectsDirList.forEach((projectBasePath) => {
 				const expandedBasePath: string = PathUtils.expandHomePath(projectBasePath);
 				if (!fs.existsSync(expandedBasePath)) {
-					// vscode.window.setStatusBarMessage("Directory " + expandedBasePath + " does not exists.", 1500);
 
 					return;
 				}
@@ -166,6 +158,7 @@ export class CustomProjectLocator {
 									this.isProjectWithinProjectIgnored(dir))
 							})
 							.on("dir", this.processDirectory)
+							.on("file", this.processFile)
                             .on("symlink", (link, stat) => {
                                 if (!workspace.getConfiguration("projectManager").get<boolean>("supportSymlinksOnBaseFolders", false)) {
                                     return;
@@ -191,33 +184,42 @@ export class CustomProjectLocator {
 
 			Promise.all(promises)
 				.then(() => {
-					// vscode.window.setStatusBarMessage("Searching folders completed", 1500);
 					this.updateCacheFile();
-					resolve(this.dirList);
+					resolve(this.projectList);
 				})
 				.catch(error => { vscode.window.showErrorMessage(l10n.t("Error while loading projects.")); });
 		});
 	}
 
-	public addToList(projectPath: string, projectName: string = null) {
-		this.dirList.push({
-			fullPath: projectPath,
-			name: projectName === null ? path.basename(projectPath) : projectName
-		});
-		return;
+	private addToList(projectInfo: AutodetectedProjectInfo) {
+		this.projectList.push(projectInfo);
 	}
 
-	public processDirectory = (absPath: string, stat: any) => {
-		// vscode.window.setStatusBarMessage(absPath, 600);
+	private processDirectory = (absPath: string, stat: any) => {
 		if (this.excludeBaseFoldersFromResults && this.isBaseFolder(absPath)) {
 			return;
 		}
 		if (this.repositoryDetector.isRepoDir(absPath)) {
-			this.addToList(absPath, this.repositoryDetector.decideProjectName(absPath));
+			this.addToList(this.repositoryDetector.getProjectInfo(absPath));
 		}
 	}
 
-	public handleError(err) {
+	private processFile = (absPath: string, stat: any) => {
+		// Early filter: only process files with relevant extensions to improve performance
+		// This avoids calling isRepoFile for every file in large directories
+		if (this.supportedFileExtensions) {
+			const fileExt = path.extname(absPath).toLowerCase();
+			// Cached extensions are normalized to lowercase for comparison
+			if (!this.supportedFileExtensions.includes(fileExt)) {
+				return;
+			}
+		}
+		if (this.repositoryDetector.isRepoFile && this.repositoryDetector.isRepoFile(absPath)) {
+			this.addToList(this.repositoryDetector.getProjectInfo(absPath));
+		}
+	}
+
+	private handleError(err) {
 		console.log("Error walker:", err);
 	}
 
@@ -230,7 +232,7 @@ export class CustomProjectLocator {
 				return;
 			}
     
-			this.clearDirList();
+			this.clearProjectList();
 			const cacheFile: string = this.getCacheFile();
 			if (fs.existsSync(cacheFile)) {
 				fs.unlinkSync(cacheFile);
@@ -253,7 +255,7 @@ export class CustomProjectLocator {
 			return null;
 		}
 
-		for (const element of this.dirList) {
+		for (const element of this.projectList) {
 			if ((element.fullPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase())) {
 				return {
 					rootPath: element.fullPath,

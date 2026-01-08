@@ -3,45 +3,41 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import * as vscode from "vscode";
-
 import { AutodetectProvider } from "../sidebar/autodetectProvider";
 import { Providers } from "../sidebar/providers";
 import { PathUtils } from "../utils/path";
 import { sortProjects } from "../utils/sorter";
-import { CustomProjectLocator, CustomRepositoryDetector } from "./abstractLocator";
-import { GitRepositoryDetector } from "./gitLocator";
-import { codicons } from "vscode-ext-codicons";
-import { l10n } from "vscode";
+import { CustomProjectLocator } from "./abstractLocator";
+import { VSCodeRepositoryDetector } from "./vscodeRepositoryDetector";
+import { GitRepositoryDetector } from "./gitRepositoryDetector";
+import { l10n, Disposable, commands, ProgressLocation } from "vscode";
 import { isRemotePath, isRemoteUri } from "../utils/remote";
-import { Uri, workspace } from "vscode";
+import { Uri, window, workspace } from "vscode";
+import { MercurialRepositoryDetector } from "./mercurialRepositoryDetector";
+import { SvnRepositoryDetector } from "./svnRepositoryDetector";
+import { AnyRepositoryDetector } from "./anyRepositoryDetector";
+import { AutodetectedProjectInfo } from "./autodetectedProjectInfo";
 
-export const VSCODE_ICON = codicons.file_code;
-export const GIT_ICON = codicons.git_branch;
-export const MERCURIAL_ICON = codicons.git_branch;
-export const SVN_ICON = codicons.zap;
-export const ANY_ICON = codicons.file_directory;
-
-export class Locators implements vscode.Disposable {
+export class Locators implements Disposable {
   
-	public vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", VSCODE_ICON, new CustomRepositoryDetector([".vscode"]));
-	public gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", GIT_ICON, new GitRepositoryDetector([".git"]));
-	public mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", MERCURIAL_ICON, new CustomRepositoryDetector([".hg"]));
-	public svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", SVN_ICON, new CustomRepositoryDetector([".svn", "pristine"]));
-	public anyLocator: CustomProjectLocator = new CustomProjectLocator("any", "Any", ANY_ICON, new CustomRepositoryDetector([]));
+	public vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", new VSCodeRepositoryDetector());
+	public gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([".git"]));
+	public mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", new MercurialRepositoryDetector([".hg"]));
+	public svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", new SvnRepositoryDetector([".svn", "pristine"]));
+	public anyLocator: CustomProjectLocator = new CustomProjectLocator("any", "Any", new AnyRepositoryDetector([]));
   
 	private providerManager: Providers;
 
 	public registerCommands() {
-		vscode.commands.registerCommand("projectManager.refreshVSCodeProjects", () => this.refreshProjectsByType("VSCode", this.vscLocator, this.providerManager.vscodeProvider, true, true));
-		vscode.commands.registerCommand("projectManager.refreshGitProjects", () => this.refreshProjectsByType("Git", this.gitLocator, this.providerManager.gitProvider, true, true));
-		vscode.commands.registerCommand("projectManager.refreshMercurialProjects", () => this.refreshProjectsByType("Mercurial", this.mercurialLocator, this.providerManager.mercurialProvider, true, true));
-		vscode.commands.registerCommand("projectManager.refreshSVNProjects", () => this.refreshProjectsByType("SVN", this.svnLocator, this.providerManager.svnProvider, true, true));
-		vscode.commands.registerCommand("projectManager.refreshAnyProjects", () => this.refreshProjectsByType("Any", this.anyLocator, this.providerManager.anyProvider, true, true));
+		commands.registerCommand("projectManager.refreshVSCodeProjects", () => this.refreshProjectsByType("VSCode", this.vscLocator, this.providerManager.vscodeProvider, true, true));
+		commands.registerCommand("projectManager.refreshGitProjects", () => this.refreshProjectsByType("Git", this.gitLocator, this.providerManager.gitProvider, true, true));
+		commands.registerCommand("projectManager.refreshMercurialProjects", () => this.refreshProjectsByType("Mercurial", this.mercurialLocator, this.providerManager.mercurialProvider, true, true));
+		commands.registerCommand("projectManager.refreshSVNProjects", () => this.refreshProjectsByType("SVN", this.svnLocator, this.providerManager.svnProvider, true, true));
+		commands.registerCommand("projectManager.refreshAnyProjects", () => this.refreshProjectsByType("Any", this.anyLocator, this.providerManager.anyProvider, true, true));
 	}
 
 	public dispose() {
-		if (vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true)) { 
+		if (workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true)) { 
 				return; 
 		}
     
@@ -62,11 +58,11 @@ export class Locators implements vscode.Disposable {
 
 			locator.locateProjects()
 				.then(this.filterKnownDirectories.bind(this, itemsSorted))
-				.then((dirList: any[]) => {
+				.then((dirList: AutodetectedProjectInfo[]) => {
 					let newItems = [];
 					newItems = dirList.map(item => {
 						return {
-							label: locator.icon + " " + item.name,
+							label: item.icon + " " + item.name,
 							description: item.fullPath
 						};
 					});
@@ -78,7 +74,7 @@ export class Locators implements vscode.Disposable {
 	}
 
 	public sortGroupedList(items): any[] {
-		if (vscode.workspace.getConfiguration("projectManager").get("groupList", false)) {
+		if (workspace.getConfiguration("projectManager").get("groupList", false)) {
 			return this.sortProjectList(items);
 		} else {
 			return items;
@@ -88,7 +84,7 @@ export class Locators implements vscode.Disposable {
 	public sortProjectList(items): any[] {
 		let itemsToShow = PathUtils.expandHomePaths(items);
 		itemsToShow = this.removeRootPath(itemsToShow);
-		const checkInvalidPath: boolean = vscode.workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
+		const checkInvalidPath: boolean = workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
 		if (checkInvalidPath) {
 			itemsToShow = PathUtils.indicateInvalidPaths(itemsToShow);
 		}
@@ -97,8 +93,8 @@ export class Locators implements vscode.Disposable {
 	}
 
 	public refreshProjectsByType(projectType: string, locator: CustomProjectLocator, projectProvider: AutodetectProvider, showMessage?: boolean, forceRefresh?: boolean) {
-		vscode.window.withProgress({
-			location: vscode.ProgressLocation.Notification,
+		window.withProgress({
+			location: ProgressLocation.Notification,
 			title: l10n.t("Refreshing Projects"),
 			cancellable: false
 		}, async (progress) => {
@@ -113,7 +109,7 @@ export class Locators implements vscode.Disposable {
 		}).then(async () => {
 			if (showMessage) {
 				await this.delay(1000);
-				vscode.window.showInformationMessage(l10n.t("{0} projects have been refreshed!", projectType));
+				window.showInformationMessage(l10n.t("{0} projects have been refreshed!", projectType));
 			}
 		})
 	}
@@ -124,7 +120,7 @@ export class Locators implements vscode.Disposable {
 				workspace.workspaceFolders ? workspace.workspaceFolders[0].uri : 
 				undefined;
 
-		if (!workspace0 || !vscode.workspace.getConfiguration("projectManager").get("removeCurrentProjectFromList")) {
+		if (!workspace0 || !workspace.getConfiguration("projectManager").get("removeCurrentProjectFromList")) {
 			return items;
 		} else {
 				if (isRemoteUri(workspace0)) {
@@ -137,7 +133,7 @@ export class Locators implements vscode.Disposable {
 								}
 						})
 				} else {
-						return items.filter(value => value.description.toString().toLowerCase() !== vscode.workspace.rootPath.toLowerCase());
+						return items.filter(value => value.description.toString().toLowerCase() !== workspace.rootPath.toLowerCase());
 				}
 		}
 	}

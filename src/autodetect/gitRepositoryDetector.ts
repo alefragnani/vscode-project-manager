@@ -5,11 +5,16 @@
 
 import fs = require("fs");
 import path = require("path");
-import { CustomRepositoryDetector } from "./abstractLocator";
+import { CustomRepositoryDetector } from "./repositoryDetector";
+import { codicons } from "vscode-ext-codicons";
 
 export class GitRepositoryDetector extends CustomRepositoryDetector {
+    
+    protected getIcon(): string {
+        return codicons.git_branch;
+    }
 
-	public isRepoDir(projectPath: string) {
+	public isRepoDir(projectPath: string): boolean {
 		let isGit: boolean;
 		isGit = fs.existsSync(path.join(projectPath, ".git", "config"));
 		if (isGit) {

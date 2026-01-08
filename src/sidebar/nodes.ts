@@ -46,6 +46,10 @@ export class ProjectNode extends TreeItem {
 			if (currentIconThemeHasFolderIcon()) {
 					return getProjectIcon(icon, projectPath);
 			} else {
+                // if icon is a string that matches the pattern $(icon-name), returns corresponding ThemeIcon
+                if (/^\$\([a-z-]+\)$/.test(icon)) {
+                    return new ThemeIcon(icon.substring(2, icon.length - 1));
+                }
 				switch (icon) {
 					case "Git":
 					case "Mercurial":
@@ -56,7 +60,7 @@ export class ProjectNode extends TreeItem {
         
 					case "VSCode":
 						return ThemeIcons.file_code;
-        
+
 					case "Any":
 						return ThemeIcons.folder;
         

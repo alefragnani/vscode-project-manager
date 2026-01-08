@@ -4,19 +4,30 @@
 *--------------------------------------------------------------------------------------------*/
 
 import path = require("path");
-import { IconPath, ThemeIcon, Uri, workspace } from "vscode";
+import { IconPath, Uri, workspace } from "vscode";
 import { codicons } from "vscode-ext-codicons";
 import { Container } from "../core/container";
 import { isRemoteUri, REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "./remote";
 
 export function currentIconThemeHasFolderIcon(): boolean {
 	const currentIconTheme = workspace.getConfiguration("workbench").get<string>("iconTheme", "");
-    
+	
 	return currentIconTheme === null || currentIconTheme === "vs-seti";
 }
 
+function translateCodiconToLocalIcons(codicon: string): string {
+	switch (codicon) {
+		case codicons.file_code: return "vscode";
+		case codicons.git_branch: return "git";
+		case codicons.zap: return "svn";
+		case codicons.file_directory: return "folder";
+		case codicons.root_folder: return "favorites-workspace";
+		default: return codicon;
+	}
+}
+
 export function getProjectIconPath(icon: string, lightDark: string): string {
-	return "images/ico-" + icon.toLowerCase() + "-" + lightDark + ".svg";
+	return "images/ico-" + translateCodiconToLocalIcons(icon) + "-" + lightDark + ".svg";
 }
 
 export function getProjectIcon(icon: string, projectPath: string): string | IconPath {
@@ -24,13 +35,13 @@ export function getProjectIcon(icon: string, projectPath: string): string | Icon
 		return {
 			light: Uri.joinPath(Container.context.extensionUri, getProjectIconPath("favorites-remote-codespaces", "light")),
 			dark: Uri.joinPath(Container.context.extensionUri, getProjectIconPath("favorites-remote-codespaces", "dark"))
-        };
+		};
 	}
-    
+	
 	return {
 		light: Uri.joinPath(Container.context.extensionUri, getProjectIconPath(icon, "light")),
 		dark: Uri.joinPath(Container.context.extensionUri, getProjectIconPath(icon, "dark"))
-    };
+	};
 }
 
 export function getCodiconFromUri(uri: Uri): string {
