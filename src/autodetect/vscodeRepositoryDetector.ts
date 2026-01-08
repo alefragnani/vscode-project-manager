@@ -20,6 +20,10 @@ export class VSCodeRepositoryDetector implements RepositoryDetector {
         return projectFile.toLowerCase().endsWith(".code-workspace");
     }
 
+    public getSupportedFileExtensions(): string[] {
+        return [".code-workspace"];
+    }
+
     getProjectInfo(projectPath: string): AutodetectedProjectInfo {
         const isWorkspace = projectPath.toLowerCase().endsWith(".code-workspace");
         return {

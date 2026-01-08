@@ -49,4 +49,10 @@ suite("VSCodeRepositoryDetector", () => {
         assert.strictEqual(workspaceProject.icon, "$(root-folder)");
         assert.strictEqual(folderProject.icon, "$(file-code)");
     });
+
+    test("getSupportedFileExtensions returns .code-workspace", () => {
+        const extensions = detector.getSupportedFileExtensions();
+        assert.strictEqual(extensions.length, 1);
+        assert.strictEqual(extensions[0], ".code-workspace");
+    });
 });
