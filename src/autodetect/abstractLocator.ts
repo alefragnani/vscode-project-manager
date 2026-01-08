@@ -80,7 +80,7 @@ export class CustomProjectLocator {
 		fs.writeFileSync(cacheFile, JSON.stringify(this.projectList, null, "\t"), { encoding: "utf8" });
 	}
 
-	private clearDirList() {
+	private clearProjectList() {
 		this.projectList = [];
 	}
 
@@ -133,7 +133,7 @@ export class CustomProjectLocator {
 			}
 
 			const promises = [];
-			this.clearDirList();
+			this.clearProjectList();
 
 			projectsDirList.forEach((projectBasePath) => {
 				const expandedBasePath: string = PathUtils.expandHomePath(projectBasePath);
@@ -218,7 +218,7 @@ export class CustomProjectLocator {
 				return;
 			}
     
-			this.clearDirList();
+			this.clearProjectList();
 			const cacheFile: string = this.getCacheFile();
 			if (fs.existsSync(cacheFile)) {
 				fs.unlinkSync(cacheFile);
