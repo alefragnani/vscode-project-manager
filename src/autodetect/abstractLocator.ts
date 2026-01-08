@@ -29,6 +29,7 @@ export class CustomProjectLocator {
 	private alreadyLocated: boolean;
 	private baseFolders: string[];
     private excludeBaseFoldersFromResults: boolean;
+	private supportedFileExtensions: string[] | null;
 
 	constructor(public kind: string, public displayName: string, public repositoryDetector: RepositoryDetector) {
 		this.maxDepth = -1;
@@ -38,6 +39,10 @@ export class CustomProjectLocator {
 		this.alreadyLocated = false;
 		this.baseFolders = [];
 		this.excludeBaseFoldersFromResults = false;
+		// Cache supported file extensions for performance
+		this.supportedFileExtensions = this.repositoryDetector.getSupportedFileExtensions 
+			? this.repositoryDetector.getSupportedFileExtensions() 
+			: null;
 		this.refreshConfig();
 		this.initializeCfg();
 	}
@@ -202,14 +207,10 @@ export class CustomProjectLocator {
 	private processFile = (absPath: string, stat: any) => {
 		// Early filter: only process files with relevant extensions to improve performance
 		// This avoids calling isRepoFile for every file in large directories
-		if (this.repositoryDetector.getSupportedFileExtensions) {
-			const lowerCasePath = absPath.toLowerCase();
-			const supportedExtensions = this.repositoryDetector.getSupportedFileExtensions();
+		if (this.supportedFileExtensions) {
+			const fileExt = path.extname(absPath).toLowerCase();
 			// Extensions are expected to be lowercase
-			const hasMatchingExtension = supportedExtensions.some(ext => 
-				lowerCasePath.endsWith(ext)
-			);
-			if (!hasMatchingExtension) {
+			if (!this.supportedFileExtensions.includes(fileExt)) {
 				return;
 			}
 		}
