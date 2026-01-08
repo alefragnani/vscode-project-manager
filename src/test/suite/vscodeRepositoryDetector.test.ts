@@ -22,13 +22,11 @@ suite("VSCodeRepositoryDetector", () => {
         const regularDir = fs.mkdtempSync(path.join(os.tmpdir(), "vscode-repo-detector-test-regular-"));
         const vscodeDir = fs.mkdtempSync(path.join(os.tmpdir(), "vscode-repo-detector-test-vscode-"));
 
-        // fs.mkdirSync(regularDir);
         fs.mkdirSync(path.join(vscodeDir, ".vscode"));
 
         assert.strictEqual(detector.isRepoDir(regularDir), false);
         assert.strictEqual(detector.isRepoDir(vscodeDir), true);
 
-        // Cleanup
         fs.rmSync(vscodeDir, { recursive: true, force: true });
         fs.rmSync(regularDir, { recursive: true });
     });
