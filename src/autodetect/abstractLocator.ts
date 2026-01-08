@@ -40,9 +40,7 @@ export class CustomProjectLocator {
 		this.baseFolders = [];
 		this.excludeBaseFoldersFromResults = false;
 		// Cache supported file extensions for performance
-		this.supportedFileExtensions = this.repositoryDetector.getSupportedFileExtensions 
-			? this.repositoryDetector.getSupportedFileExtensions() 
-			: null;
+		this.supportedFileExtensions = this.repositoryDetector.getSupportedFileExtensions?.() ?? null;
 		this.refreshConfig();
 		this.initializeCfg();
 	}
