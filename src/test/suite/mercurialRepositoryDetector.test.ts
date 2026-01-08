@@ -31,7 +31,7 @@ suite("MercurialRepositoryDetector", () => {
 			}
 		}
 	});
-	
+
 	test("getProjectInfo returns correct name", () => {
 		assert.strictEqual(detector.getProjectInfo("/path/to/project").name, "project");
 		assert.strictEqual(detector.getProjectInfo("/path/to/another").name, "another");
