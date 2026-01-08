@@ -46,6 +46,7 @@ suite("SvnRepositoryDetector", () => {
 
 	test("getProjectInfo returns correct icon", () => {
 		const projectInfo = detector.getProjectInfo("/path/to/project");
-		assert.strictEqual(projectInfo.icon, "$(zap)");
+		assert.strictEqual(projectInfo.icon, "$(symbol-event)"); 
+        //TODO: Update my vscode-ext-codicons library with the latest version os VS Code since $(zap) was replaced by `$(symbol-event)`
 	});
 });
