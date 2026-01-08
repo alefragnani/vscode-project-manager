@@ -204,8 +204,9 @@ export class CustomProjectLocator {
 		// This avoids calling isRepoFile for every file in large directories
 		if (this.repositoryDetector.getSupportedFileExtensions) {
 			const supportedExtensions = this.repositoryDetector.getSupportedFileExtensions();
+			const lowerCasePath = absPath.toLowerCase();
 			const hasMatchingExtension = supportedExtensions.some(ext => 
-				absPath.toLowerCase().endsWith(ext.toLowerCase())
+				lowerCasePath.endsWith(ext.toLowerCase())
 			);
 			if (!hasMatchingExtension) {
 				return;
