@@ -11,6 +11,7 @@ import { PathUtils } from "../utils/path";
 import { Project } from "../core/project";
 import minimatch = require("minimatch");
 import { l10n, workspace } from "vscode";
+import { RepositoryDetector } from "./repositoryDetector";
 
 const CACHE_FILE = "projects_cache_";
 
@@ -20,46 +21,6 @@ export interface DirInfo {
 }
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface DirList extends Array<DirInfo> { }
-
-export interface RepositoryDetector {
-
-	isRepoDir(projectPath: string);
-	decideProjectName(projectPath: string): string;
-	isRepoFile?(projectFile: string): boolean;
-
-}
-
-export class CustomRepositoryDetector implements RepositoryDetector {
-
-	constructor(public paths: string[]) {
-	}
-
-	public isRepoDir(projectPath: string) {
-		return fs.existsSync(path.join(projectPath, ...this.paths));
-	}
-
-	public decideProjectName(projectPath: string): string {
-		return path.basename(projectPath);
-	}    
-}
-
-export class VSCodeRepositoryDetector implements RepositoryDetector {
-
-	public isRepoDir(projectPath: string) {
-		return fs.existsSync(path.join(projectPath, ".vscode"));
-	}
-
-	public decideProjectName(projectPath: string): string {
-		if (projectPath.toLowerCase().endsWith(".code-workspace")) {
-			return path.basename(projectPath, ".code-workspace");
-		}
-		return path.basename(projectPath);
-	}
-
-	public isRepoFile(projectFile: string): boolean {
-		return projectFile.toLowerCase().endsWith(".code-workspace");
-	}
-}
 
 export class CustomProjectLocator {
 

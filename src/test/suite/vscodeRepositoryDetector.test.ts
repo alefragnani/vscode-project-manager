@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as assert from "assert";
-import { VSCodeRepositoryDetector } from "../../../src/autodetect/abstractLocator";
+import { VSCodeRepositoryDetector } from "../../autodetect/vscodeRepositoryDetector";
 
 suite("VSCodeRepositoryDetector", () => {
 	const detector = new VSCodeRepositoryDetector();
