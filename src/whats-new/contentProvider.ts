@@ -3,7 +3,6 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-// tslint:disable-next-line:max-line-length
 import { ChangeLogItem, ChangeLogKind, ContentProvider, Header, Image, IssueKind, SupportChannel, SocialMediaProvider } from "../../vscode-whats-new/src/ContentProvider";
 
 export class ProjectManagerContentProvider implements ContentProvider {

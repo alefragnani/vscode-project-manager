@@ -94,7 +94,6 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
                 projectsMapped = sortProjects(projectsMapped);
 
-                // tslint:disable-next-line:prefer-for-of
                 for (let index = 0; index < projectsMapped.length; index++) {
                     const prj: ProjectInQuickPick = projectsMapped[ index ];
 
@@ -168,7 +167,6 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
                 projectsMapped = sortProjects(projectsMapped);
 
-                // tslint:disable-next-line:prefer-for-of
                 for (let index = 0; index < projectsMapped.length; index++) {
                     const prj: ProjectInQuickPick = projectsMapped[ index ];
 

@@ -6,8 +6,9 @@
 import { commands, l10n, Uri, window } from "vscode";
 import { Container } from "../core/container";
 import { isMacOS, isRemotePath, isWindows } from "../utils/remote";
+import { ProjectNode } from "../sidebar/nodes";
 
-async function revealFileInOS(node: any) {
+async function revealFileInOS(node: ProjectNode) {
     if (!node) { return }
 
     if (isRemotePath(node.command.arguments[ 0 ])) {

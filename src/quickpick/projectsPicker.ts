@@ -18,7 +18,7 @@ import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIf
 
 function getProjects(itemsSorted: any[]): Promise<any[]> {
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
 
         resolve(itemsSorted);
 
@@ -96,7 +96,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
     const disposables: Disposable[] = [];
 
     try {
-        return await new Promise<Picked<Project> | undefined>((resolve, reject) => {
+        return await new Promise<Picked<Project> | undefined>((resolve) => {
             let items = [];
             const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
             if (projectStorage) {

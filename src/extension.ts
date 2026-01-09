@@ -33,6 +33,7 @@ import { CustomProjectLocator } from "./autodetect/abstractLocator";
 import { l10n } from "vscode";
 import { registerWalkthrough } from "./commands/walkthrough";
 import { registerSideBarDecorations } from "./sidebar/decoration";
+import { ProjectNode } from "./sidebar/nodes";
 
 let locators: Locators
 
@@ -86,16 +87,16 @@ export async function activate(context: vscode.ExtensionContext) {
         }
         vscode.commands.executeCommand("vscode.openFolder", uri, { forceProfile: profile , forceNewWindow: false } )
             .then(
-                value => ({}),  // done
-                value => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
+                () => ({}),  // done
+                () => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
     });
     vscode.commands.registerCommand("_projectManager.openInNewWindow", (node) => {
         const uri = buildProjectUri(node.command.arguments[0]);
         const openInNewWindow = shouldOpenInNewWindow(true, CommandLocation.SideBar);
         vscode.commands.executeCommand("vscode.openFolder", uri, { forceProfile: node.command.arguments[2] , forceNewWindow: openInNewWindow } )
             .then(
-                value => ({}),  // done
-                value => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
+                () => ({}),  // done
+                () => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
     });
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
@@ -161,7 +162,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // // new place to register TreeView
     await providerManager.showTreeViewFromAllProviders();
 
-    fs.watchFile(getProjectFilePath(), (prev, next) => {
+    fs.watchFile(getProjectFilePath(), () => {
         loadProjectsFile();
         providerManager.storageProvider.refresh();
         providerManager.updateTreeViewStorage();
@@ -274,12 +275,12 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    async function saveProject(node?: any) {
+    async function saveProject(node?: ProjectNode) {
         let wpath: string;
         let rootPath: string;
 
         if (node) {
-            wpath = node.label; 
+            wpath = node.label as string; 
             rootPath = node.command.arguments[0];
         } else {
             const projectDetails = await getProjectDetails();
@@ -409,7 +410,7 @@ export async function activate(context: vscode.ExtensionContext) {
             vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(projectPath)});
     }
 
-    async function addProjectToWorkspace(node: any) {
+    async function addProjectToWorkspace(node: ProjectNode) {
         if (node) {
             addProjectPathToWorkspace(node.command.arguments[0]);
             return;
@@ -421,7 +422,7 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function deleteProject(node: any) {
+    function deleteProject(node: ProjectNode) {
         Container.stack.pop(node.command.arguments[1]);
         projectStorage.pop(node.command.arguments[1]);
         projectStorage.save();
@@ -429,7 +430,7 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage(l10n.t("Project successfully deleted!"));
     }
 
-    function renameProject(node: any) {
+    function renameProject(node: ProjectNode) {
         const oldName: string = node.command.arguments[1];
         // Display a message box to the user
         // ask the NEW PROJECT NAME ()
@@ -462,7 +463,7 @@ export async function activate(context: vscode.ExtensionContext) {
         });
     }
 
-    async function editTags(node: any) {
+    async function editTags(node: ProjectNode) {
 
         const project = projectStorage.existsWithRootPath(node.command.arguments[0]);
         if (!project) {
@@ -481,7 +482,7 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function toggleProjectEnabled(node: any, askForUndo = true) {
+    function toggleProjectEnabled(node: ProjectNode, askForUndo = true) {
         const projectName: string = node.command.arguments[1];
         const enabled: boolean = projectStorage.toggleEnabled(projectName);
         
@@ -514,9 +515,6 @@ export async function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-    // if (vscode.workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true)) { 
-    //     return; 
-    // }
 
     locators.dispose();
 }

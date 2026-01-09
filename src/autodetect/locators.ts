@@ -54,7 +54,7 @@ export class Locators implements Disposable {
 
     public getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator): Promise<any[]> {
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
 
             locator.locateProjects()
                 .then(this.filterKnownDirectories.bind(this, itemsSorted))

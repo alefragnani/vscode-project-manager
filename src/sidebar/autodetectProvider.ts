@@ -72,7 +72,6 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
 
                     const projectsWithParent = addParentFolderToDuplicates(this.projectSource.projectList);
 
-                    // tslint:disable-next-line:prefer-for-of
                     for (let index = 0; index < projectsWithParent.length; index++) {
                         const dirinfo = projectsWithParent[ index ];
 
