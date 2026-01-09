@@ -10,13 +10,13 @@ import * as assert from "assert";
 import { VSCodeRepositoryDetector } from "../../autodetect/vscodeRepositoryDetector";
 
 suite("VSCodeRepositoryDetector", () => {
-	const detector = new VSCodeRepositoryDetector();
+    const detector = new VSCodeRepositoryDetector();
 
-	test("isRepoFile detects .code-workspace files", () => {
-		assert.strictEqual(detector.isRepoFile("/path/to/project.code-workspace"), true);
-		assert.strictEqual(detector.isRepoFile("/path/to/PROJECT_UPPERCASE.code-workspace"), true);
-		assert.strictEqual(detector.isRepoFile("/path/to/not-a-project.txt"), false);
-	});
+    test("isRepoFile detects .code-workspace files", () => {
+        assert.strictEqual(detector.isRepoFile("/path/to/project.code-workspace"), true);
+        assert.strictEqual(detector.isRepoFile("/path/to/PROJECT_UPPERCASE.code-workspace"), true);
+        assert.strictEqual(detector.isRepoFile("/path/to/not-a-project.txt"), false);
+    });
 
     test("isRepoDir detects .vscode directories", () => {
         const regularDir = fs.mkdtempSync(path.join(os.tmpdir(), "vscode-repo-detector-test-regular-"));
@@ -36,11 +36,11 @@ suite("VSCodeRepositoryDetector", () => {
             }
         }
     });
-    
-	test("getProjectInfo strips .code-workspace extension", () => {
-		assert.strictEqual(detector.getProjectInfo("/path/to/project.code-workspace").name, "project");
-		assert.strictEqual(detector.getProjectInfo("/path/to/another").name, "another");
-	});
+
+    test("getProjectInfo strips .code-workspace extension", () => {
+        assert.strictEqual(detector.getProjectInfo("/path/to/project.code-workspace").name, "project");
+        assert.strictEqual(detector.getProjectInfo("/path/to/another").name, "another");
+    });
 
     test("getProjectInfo returns correct icon", () => {
         const workspaceProject = detector.getProjectInfo("/path/to/project.code-workspace");
@@ -53,6 +53,6 @@ suite("VSCodeRepositoryDetector", () => {
     test("getSupportedFileExtensions returns .code-workspace", () => {
         const extensions = detector.getSupportedFileExtensions();
         assert.strictEqual(extensions.length, 1);
-        assert.strictEqual(extensions[0], ".code-workspace");
+        assert.strictEqual(extensions[ 0 ], ".code-workspace");
     });
 });

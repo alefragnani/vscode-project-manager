@@ -6,16 +6,17 @@
 import { commands, l10n, Uri, window } from "vscode";
 import { Container } from "../core/container";
 import { isMacOS, isRemotePath, isWindows } from "../utils/remote";
+import { ProjectNode } from "../sidebar/nodes";
 
-async function revealFileInOS(node: any) {
-    if (!node) { return }
+async function revealFileInOS(node: ProjectNode) {
+    if (!node) { return; }
 
     if (isRemotePath(node.command.arguments[ 0 ])) {
         const revealApp = isWindows ? "Explorer" : isMacOS ? "Finder" : "File Manager";
         window.showErrorMessage(l10n.t("Remote projects can't be revealed in {0}", revealApp));
     }
 
-    commands.executeCommand("revealFileInOS", Uri.file(node.command.arguments[ 0 ]))
+    commands.executeCommand("revealFileInOS", Uri.file(node.command.arguments[ 0 ]));
 }
 export function registerRevealFileInOS() {
     Container.context.subscriptions.push(commands.registerCommand("_projectManager.revealInFinder#sideBar", (node) => revealFileInOS(node)));
