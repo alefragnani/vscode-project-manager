@@ -59,13 +59,13 @@ export class CustomProjectLocator {
     }
 
     private isFolderIgnored(folder) {
-        const matches = this.ignoredFolders.filter(f => minimatch(folder, f))
+        const matches = this.ignoredFolders.filter(f => minimatch(folder, f));
         return matches.length > 0;
     }
 
     private isProjectWithinProjectIgnored(folder: string) {
         if (!this.ignoreProjectsWithinProjects) { 
-            return false 
+            return false; 
         }
 
         let found = false;
@@ -155,7 +155,7 @@ export class CustomProjectLocator {
                             .filterDir((dir) => {
                                 return !(this.isFolderIgnored(path.basename(dir)) ||
                                     this.isMaxDepthReached(this.getPathDepth(dir), depth) || 
-                                    this.isProjectWithinProjectIgnored(dir))
+                                    this.isProjectWithinProjectIgnored(dir));
                             })
                             .on("dir", this.processDirectory)
                             .on("file", this.processFile)
@@ -202,7 +202,7 @@ export class CustomProjectLocator {
         if (this.repositoryDetector.isRepoDir(absPath)) {
             this.addToList(this.repositoryDetector.getProjectInfo(absPath));
         }
-    }
+    };
 
     private processFile = (absPath: string) => {
         // Early filter: only process files with relevant extensions to improve performance
@@ -217,7 +217,7 @@ export class CustomProjectLocator {
         if (this.repositoryDetector.isRepoFile && this.repositoryDetector.isRepoFile(absPath)) {
             this.addToList(this.repositoryDetector.getProjectInfo(absPath));
         }
-    }
+    };
 
     private handleError(err) {
         console.log("Error walker:", err);
@@ -243,8 +243,8 @@ export class CustomProjectLocator {
                     resolve(true);
                 })
                 .catch(error => {
-                    reject(error)
-                })            
+                    reject(error);
+                });            
         });
     }
 

@@ -11,5 +11,5 @@ function openSideBar() {
 }
 
 export function registerWalkthrough() {
-    Container.context.subscriptions.push(commands.registerCommand("_projectManager.openSideBar", () => openSideBar()))
+    Container.context.subscriptions.push(commands.registerCommand("_projectManager.openSideBar", () => openSideBar()));
 }

@@ -44,7 +44,7 @@ export async function pickTags(storage: ProjectStorage, preselected: string[], o
         return {
             label: tag,
             picked: preselected.includes(tag)
-        }
+        };
     });
 
     const selection = await window.showQuickPick(items, {
@@ -53,9 +53,9 @@ export async function pickTags(storage: ProjectStorage, preselected: string[], o
     });
 
     if (typeof selection === "undefined") {
-        return undefined
+        return undefined;
     }
 
-    const selections = selection.map(item => item.label)
+    const selections = selection.map(item => item.label);
     return selections;
 }

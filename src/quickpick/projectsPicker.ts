@@ -70,11 +70,11 @@ function canPickSelectedProject(item: QuickPickItem, projectStorage: ProjectStor
 
 function getProjectsFromLocator(folders: any, locators: Locators, locatorToFilter: CustomProjectLocator, locatorToGetFrom: CustomProjectLocator) {
     if (locatorToFilter && locatorToFilter !== locatorToGetFrom) {
-        return folders
+        return folders;
     }
 
     if (!locators) {
-        return folders
+        return folders;
     }
 
     return locators.getLocatorProjects(<any[]>folders, locatorToGetFrom);
@@ -141,7 +141,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                                 description: folder.description,
                                 profile: folder.profile,
                                 buttons: showOpenInNewWindowButton ? [ openInNewWindowButton ] : []
-                            }
+                            };
                         });
                         const input = window.createQuickPick();
                         input.placeholder = l10n.t("Loading projects (pick one)...");
@@ -190,8 +190,8 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                             commands.executeCommand("setContext", "inProjectManagerList", false);
                             resolve(undefined);
                             input.dispose();
-                            return
-                        })
+                            return;
+                        });
                         input.show();
 
                     }
@@ -221,7 +221,7 @@ export function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: Comm
     if (oldValue.globalValue) {
         config = newValue.globalValue === undefined ? oldValue.globalValue : newValue.globalValue;
     } else {
-        config = workspace.getConfiguration("projectManager").get<string>("openInCurrentWindowIfEmpty")
+        config = workspace.getConfiguration("projectManager").get<string>("openInCurrentWindowIfEmpty");
     }
 
     if (config === OpenInCurrentWindowIfEmptyMode.always) {
@@ -276,7 +276,7 @@ export async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Prom
 }
 
 export async function openPickedProject(picked: Picked<Project>, forceNewWindow: boolean, calledFrom: CommandLocation) {
-    if (!picked) { return }
+    if (!picked) { return; }
 
     if (!picked.button) {
         if (!forceNewWindow && !await canSwitchOnActiveWindow(calledFrom)) {

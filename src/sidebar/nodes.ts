@@ -26,10 +26,10 @@ export class ProjectNode extends TreeItem {
         super(label, collapsibleState);
 
         if (icon) {
-            this.iconPath = this.getIconPath(icon, preview.path)
+            this.iconPath = this.getIconPath(icon, preview.path);
             this.contextValue = "ProjectNodeKind";
         } else {
-            this.contextValue = "ConfigNodeKind"
+            this.contextValue = "ConfigNodeKind";
         }
 
         this.resourceUri = Uri.from({
@@ -105,7 +105,7 @@ export class TagNode extends TreeItem {
         public readonly collapsibleState: TreeItemCollapsibleState,
     ) {
         super(label, collapsibleState);
-        this.iconPath = ThemeIcons.tag
+        this.iconPath = ThemeIcons.tag;
     }
 }
 

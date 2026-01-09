@@ -99,9 +99,9 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
                     let iconFavorites = "favorites";
                     if (path.extname(prj.description) === ".code-workspace") {
-                        iconFavorites = "favorites-workspace"
+                        iconFavorites = "favorites-workspace";
                     } else if (isRemotePath(prj.description)) {
-                        iconFavorites = "favorites-remote"
+                        iconFavorites = "favorites-remote";
                     }
                     nodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
                         iconFavorites, {
@@ -144,7 +144,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                         const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
                         if (filterByTags.length > 0) {
                             nodes = nodes.filter(node => filterByTags.includes(node.label)
-                                || (filterByTags.includes(NO_TAGS_DEFINED) && node.label === ""))
+                                || (filterByTags.includes(NO_TAGS_DEFINED) && node.label === ""));
                         }
 
                         resolve(nodes);
@@ -172,9 +172,9 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
                     let iconFavorites = "favorites";
                     if (path.extname(prj.description) === ".code-workspace") {
-                        iconFavorites = "favorites-workspace"
+                        iconFavorites = "favorites-workspace";
                     } else if (isRemotePath(prj.description)) {
-                        iconFavorites = "favorites-remote"
+                        iconFavorites = "favorites-remote";
                     }
                     nodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
                         iconFavorites, {

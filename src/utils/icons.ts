@@ -46,7 +46,7 @@ export function getProjectIcon(icon: string, projectPath: string): string | Icon
 
 export function getCodiconFromUri(uri: Uri): string {
     if (!isRemoteUri(uri)) {
-        return codicons.file_directory
+        return codicons.file_directory;
     }
 
     return uri.scheme === REMOTE_PREFIX

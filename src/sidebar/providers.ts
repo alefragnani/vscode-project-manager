@@ -120,12 +120,12 @@ export class Providers {
 
     public updateTreeViewStorage() {
         const disabledProjects = this.projectStorage.disabled()?.length;
-        const disabledProjectsTitle = disabledProjects ? l10n.t("{0} disabled", disabledProjects) : ""
+        const disabledProjectsTitle = disabledProjects ? l10n.t("{0} disabled", disabledProjects) : "";
 
         const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
         const filterByTagsTitle = filterByTags.length > 0 ? l10n.t("filtered by tags") : "";
 
-        const separatorTitle = disabledProjects && filterByTags.length > 0 ? "/ " : " "
+        const separatorTitle = disabledProjects && filterByTags.length > 0 ? "/ " : " ";
 
         this.storageTreeView.title = `Favorites (${this.projectStorage.length() - disabledProjects})`;
         this.storageTreeView.description = `${disabledProjectsTitle} ${separatorTitle} ${filterByTagsTitle}`;

@@ -35,7 +35,7 @@ import { registerWalkthrough } from "./commands/walkthrough";
 import { registerSideBarDecorations } from "./sidebar/decoration";
 import { ProjectNode } from "./sidebar/nodes";
 
-let locators: Locators
+let locators: Locators;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -64,8 +64,8 @@ export async function activate(context: vscode.ExtensionContext) {
     registerWhatsNew();
 
     context.subscriptions.push(vscode.commands.registerCommand("_projectManager.openFolderWelcome", () => {
-        const openFolderCommand = isWindows || isMacOS ? "workbench.action.files.openFolder" : "workbench.action.files.openFileFolder"
-        vscode.commands.executeCommand(openFolderCommand)
+        const openFolderCommand = isWindows || isMacOS ? "workbench.action.files.openFolder" : "workbench.action.files.openFileFolder";
+        vscode.commands.executeCommand(openFolderCommand);
     }));
     context.subscriptions.push(vscode.commands.registerCommand("projectManager.hideGitWelcome", () => {
         context.globalState.update("hideGitWelcome", true);
@@ -178,7 +178,7 @@ export async function activate(context: vscode.ExtensionContext) {
         }
 
         if (cfg.affectsConfiguration("workbench.iconTheme")) {
-            providerManager.refreshTreeViews()
+            providerManager.refreshTreeViews();
         }
 
         if (cfg.affectsConfiguration("projectManager.sortList")) {
@@ -245,7 +245,7 @@ export async function activate(context: vscode.ExtensionContext) {
             if (showMessage) {
                 vscode.window.showInformationMessage(l10n.t("The projects have been refreshed!"));
             }
-        })
+        });
     }
 
     function editProjects() {
@@ -452,7 +452,7 @@ export async function activate(context: vscode.ExtensionContext) {
             }
 
             if (!projectStorage.exists(newName) || newName.toLowerCase() === oldName.toLowerCase()) {
-                Container.stack.rename(oldName, newName)
+                Container.stack.rename(oldName, newName);
                 projectStorage.rename(oldName, newName);
                 projectStorage.save();
                 vscode.window.showInformationMessage(l10n.t("Project renamed!"));

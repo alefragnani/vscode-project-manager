@@ -21,6 +21,6 @@ export function createProject(name: string, rootPath: string): Project {
         tags: [],
         enabled: true,
         profile: ""
-    }
+    };
     return newProject;
 }

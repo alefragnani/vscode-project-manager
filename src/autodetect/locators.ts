@@ -111,7 +111,7 @@ export class Locators implements Disposable {
                 await this.delay(1000);
                 window.showInformationMessage(l10n.t("{0} projects have been refreshed!", projectType));
             }
-        })
+        });
     }
 
     private removeRootPath(items: any[]): any[] {
@@ -125,13 +125,13 @@ export class Locators implements Disposable {
         } else {
             if (isRemoteUri(workspace0)) {
                 return items.filter(value => {
-                    if (!isRemotePath(value.description)) { return value }
+                    if (!isRemotePath(value.description)) { return value; }
 
                     const uriElement = Uri.parse(value.description);
                     if (uriElement.path !== workspace0.path) {
                         return value;
                     }
-                })
+                });
             } else {
                 return items.filter(value => value.description.toString().toLowerCase() !== workspace.rootPath.toLowerCase());
             }

@@ -19,7 +19,7 @@ export const HOME_PATH_VARIABLE = "$home";
 export const HOME_PATH_TILDE = "~";
 
 // Contains recommended global storage path if provided by current version of VS Code. 
-let extensionStoragePath = ""
+let extensionStoragePath = "";
 
 export class PathUtils {
     /** 
@@ -289,7 +289,7 @@ export function addParentFolderToDuplicates(projects: AutodetectedProjectList): 
 
     for (const dup of dups) {
         const dupsToUpdate = projects.filter((item, index) => projects[ index ].name === dup);
-        const dupsUpdated = getDiffParentFolder(dupsToUpdate.map(item => item.fullPath))
+        const dupsUpdated = getDiffParentFolder(dupsToUpdate.map(item => item.fullPath));
 
         // update
         for (const iterator of dupsUpdated) {

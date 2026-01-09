@@ -23,7 +23,7 @@ suite("Stack Tests", () => {
     
     setup( () => {
         stack = new myStack.Stack();        
-    })
+    });
 
     // Defines a Mocha unit test
     test("Something 1", () => {

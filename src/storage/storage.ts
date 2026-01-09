@@ -144,7 +144,7 @@ export class ProjectStorage {
                     tags: project.tags,
                     enabled: project.enabled,
                     profile: project.profile
-                }))
+                }));
             }
 
             this.updatePaths();

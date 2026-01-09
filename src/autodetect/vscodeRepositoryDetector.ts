@@ -30,6 +30,6 @@ export class VSCodeRepositoryDetector implements RepositoryDetector {
             name: isWorkspace ? path.basename(projectPath, ".code-workspace") : path.basename(projectPath),
             fullPath: projectPath,
             icon: isWorkspace ? codicons.root_folder : codicons.file_code
-        }
+        };
     }
 }
