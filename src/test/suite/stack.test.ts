@@ -51,4 +51,12 @@ suite("Stack Tests", () => {
         stack.push("item 0");
         assert.equal(stack.length(), 1);
     });
+
+    test("Should rename an item in the stack", () => {
+        stack.push("item 0");
+        stack.push("item 1");
+        stack.rename("item 0", "item 0 renamed");
+        assert.equal(stack.getItem(0), "item 0 renamed");
+        assert.equal(stack.getItem(1), "item 1");
+    });
 });
