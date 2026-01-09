@@ -76,6 +76,7 @@ src/
 ### Indentation & Formatting
 - We use spaces, not tabs   
 - Use **4 spaces** for indentation
+- We use **semicolons** at the end of statements
 
 ### Naming Conventions
 - **Interfaces**: PascalCase (e.g., `Project`, `ProjectStorage`)
