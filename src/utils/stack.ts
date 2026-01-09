@@ -39,9 +39,9 @@ export class Stack {
     }
 
     public rename(oldItem: string, newItem: string): void {
-        for (let iterator of this.items) {
-            if (iterator === oldItem) {
-                iterator = newItem;
+        for (let index = 0; index < this.items.length; index++) {
+            if (this.items[index] === oldItem) {
+                this.items[index] = newItem;
             }
         }
     }
