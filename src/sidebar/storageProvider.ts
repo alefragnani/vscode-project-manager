@@ -156,7 +156,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                 // raw list
                 const nodes: ProjectNode[] = [];
 
-                let projectsMapped = <ProjectInQuickPickList>this.projectSource.map();
+                let projectsMapped: ProjectInQuickPickList;
 
                 const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
                 if (filterByTags.length > 0) {
