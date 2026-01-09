@@ -27,10 +27,10 @@ function getProjects(itemsSorted: any[]): Promise<any[]> {
 
 function folderNotFound(name: string, projectStorage: ProjectStorage) {
 
-    const optionUpdateProject = <MessageItem> {
+    const optionUpdateProject = <MessageItem>{
         title: l10n.t("Update Project")
     };
-    const optionDeleteProject = <MessageItem> {
+    const optionDeleteProject = <MessageItem>{
         title: l10n.t("Delete Project")
     };
 
@@ -69,12 +69,12 @@ function canPickSelectedProject(item: QuickPickItem, projectStorage: ProjectStor
 }
 
 function getProjectsFromLocator(folders: any, locators: Locators, locatorToFilter: CustomProjectLocator, locatorToGetFrom: CustomProjectLocator) {
-    if (locatorToFilter && locatorToFilter !== locatorToGetFrom) { 
-        return folders 
+    if (locatorToFilter && locatorToFilter !== locatorToGetFrom) {
+        return folders
     }
-    
-    if (!locators) { 
-        return folders 
+
+    if (!locators) {
+        return folders
     }
 
     return locators.getLocatorProjects(<any[]>folders, locatorToGetFrom);
@@ -123,7 +123,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                     return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.anyLocator);
                 })
                 .then((folders) => { // sort
-                    if ((<any[]> folders).length === 0) {
+                    if ((<any[]>folders).length === 0) {
                         window.showInformationMessage(l10n.t("No projects saved yet!"));
                         return resolve(undefined);
                     } else {
@@ -135,21 +135,21 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         commands.executeCommand("setContext", "inProjectManagerList", true);
 
                         //
-                        folders =  (<any[]> folders).map(folder => {
+                        folders = (<any[]>folders).map(folder => {
                             return {
                                 label: folder.label,
                                 description: folder.description,
                                 profile: folder.profile,
-                                buttons: showOpenInNewWindowButton ? [openInNewWindowButton] : []
+                                buttons: showOpenInNewWindowButton ? [ openInNewWindowButton ] : []
                             }
                         });
                         const input = window.createQuickPick();
                         input.placeholder = l10n.t("Loading projects (pick one)...");
                         input.matchOnDescription = workspace.getConfiguration("projectManager").get("filterOnFullPath", false);
                         input.matchOnDetail = false;
-                        input.items = <any[]> folders;
+                        input.items = <any[]>folders;
                         input.onDidChangeSelection(items => {
-                            const item = <any>items[0];
+                            const item = <any>items[ 0 ];
                             if (item) {
                                 if (!canPickSelectedProject(item, projectStorage)) {
                                     resolve(undefined);
@@ -214,8 +214,8 @@ export function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: Comm
     }
 
     // Check for setting name before and after typo was corrected
-    const oldValue =  workspace.getConfiguration("projectManager").inspect("openInCurrenWindowIfEmpty");
-    const newValue =  workspace.getConfiguration("projectManager").inspect("openInCurrentWindowIfEmpty");
+    const oldValue = workspace.getConfiguration("projectManager").inspect("openInCurrenWindowIfEmpty");
+    const newValue = workspace.getConfiguration("projectManager").inspect("openInCurrentWindowIfEmpty");
 
     let config: string | unknown;
     if (oldValue.globalValue) {
@@ -223,7 +223,7 @@ export function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: Comm
     } else {
         config = workspace.getConfiguration("projectManager").get<string>("openInCurrentWindowIfEmpty")
     }
-    
+
     if (config === OpenInCurrentWindowIfEmptyMode.always) {
         return false;
     }
@@ -249,7 +249,7 @@ function shouldConfirmSwitchOnActiveWindow(calledFrom: CommandLocation): boolean
     }
 
     const config = workspace.getConfiguration("projectManager").get<string>("confirmSwitchOnActiveWindow", ConfirmSwitchOnActiveWindowMode.never);
-    
+
     switch (config) {
         case ConfirmSwitchOnActiveWindowMode.never:
             return false;
@@ -268,10 +268,10 @@ export async function canSwitchOnActiveWindow(calledFrom: CommandLocation): Prom
         return true;
     }
 
-    const optionOpenProject = <MessageItem> {
+    const optionOpenProject = <MessageItem>{
         title: l10n.t("Open Project")
     };
-    const answer = await window.showWarningMessage(l10n.t("Do you want to open the project in the active window?"), {modal: true}, optionOpenProject);
+    const answer = await window.showWarningMessage(l10n.t("Do you want to open the project in the active window?"), { modal: true }, optionOpenProject);
     return answer === optionOpenProject;
 }
 

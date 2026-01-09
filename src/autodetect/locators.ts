@@ -19,138 +19,138 @@ import { AnyRepositoryDetector } from "./anyRepositoryDetector";
 import { AutodetectedProjectInfo } from "./autodetectedProjectInfo";
 
 export class Locators implements Disposable {
-  
-	public vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", new VSCodeRepositoryDetector());
-	public gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([".git"]));
-	public mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", new MercurialRepositoryDetector([".hg"]));
-	public svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", new SvnRepositoryDetector([".svn", "pristine"]));
-	public anyLocator: CustomProjectLocator = new CustomProjectLocator("any", "Any", new AnyRepositoryDetector([]));
-  
-	private providerManager: Providers;
 
-	public registerCommands() {
-		commands.registerCommand("projectManager.refreshVSCodeProjects", () => this.refreshProjectsByType("VSCode", this.vscLocator, this.providerManager.vscodeProvider, true, true));
-		commands.registerCommand("projectManager.refreshGitProjects", () => this.refreshProjectsByType("Git", this.gitLocator, this.providerManager.gitProvider, true, true));
-		commands.registerCommand("projectManager.refreshMercurialProjects", () => this.refreshProjectsByType("Mercurial", this.mercurialLocator, this.providerManager.mercurialProvider, true, true));
-		commands.registerCommand("projectManager.refreshSVNProjects", () => this.refreshProjectsByType("SVN", this.svnLocator, this.providerManager.svnProvider, true, true));
-		commands.registerCommand("projectManager.refreshAnyProjects", () => this.refreshProjectsByType("Any", this.anyLocator, this.providerManager.anyProvider, true, true));
-	}
+    public vscLocator: CustomProjectLocator = new CustomProjectLocator("vscode", "VSCode", new VSCodeRepositoryDetector());
+    public gitLocator: CustomProjectLocator = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([ ".git" ]));
+    public mercurialLocator: CustomProjectLocator = new CustomProjectLocator("hg", "Mercurial", new MercurialRepositoryDetector([ ".hg" ]));
+    public svnLocator: CustomProjectLocator = new CustomProjectLocator("svn", "SVN", new SvnRepositoryDetector([ ".svn", "pristine" ]));
+    public anyLocator: CustomProjectLocator = new CustomProjectLocator("any", "Any", new AnyRepositoryDetector([]));
 
-	public dispose() {
-		if (workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true)) { 
-				return; 
-		}
-    
-		this.vscLocator.deleteCacheFile();
-		this.gitLocator.deleteCacheFile();
-		this.mercurialLocator.deleteCacheFile();
-		this.svnLocator.deleteCacheFile();
-		this.anyLocator.deleteCacheFile();
-	}
+    private providerManager: Providers;
 
-	public setProviderManager(providerManager: Providers) {
-		this.providerManager = providerManager;
-	}
+    public registerCommands() {
+        commands.registerCommand("projectManager.refreshVSCodeProjects", () => this.refreshProjectsByType("VSCode", this.vscLocator, this.providerManager.vscodeProvider, true, true));
+        commands.registerCommand("projectManager.refreshGitProjects", () => this.refreshProjectsByType("Git", this.gitLocator, this.providerManager.gitProvider, true, true));
+        commands.registerCommand("projectManager.refreshMercurialProjects", () => this.refreshProjectsByType("Mercurial", this.mercurialLocator, this.providerManager.mercurialProvider, true, true));
+        commands.registerCommand("projectManager.refreshSVNProjects", () => this.refreshProjectsByType("SVN", this.svnLocator, this.providerManager.svnProvider, true, true));
+        commands.registerCommand("projectManager.refreshAnyProjects", () => this.refreshProjectsByType("Any", this.anyLocator, this.providerManager.anyProvider, true, true));
+    }
 
-	public getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator): Promise<any[]> {
+    public dispose() {
+        if (workspace.getConfiguration("projectManager").get("cacheProjectsBetweenSessions", true)) {
+            return;
+        }
 
-		return new Promise((resolve, reject) => {
+        this.vscLocator.deleteCacheFile();
+        this.gitLocator.deleteCacheFile();
+        this.mercurialLocator.deleteCacheFile();
+        this.svnLocator.deleteCacheFile();
+        this.anyLocator.deleteCacheFile();
+    }
 
-			locator.locateProjects()
-				.then(this.filterKnownDirectories.bind(this, itemsSorted))
-				.then((dirList: AutodetectedProjectInfo[]) => {
-					let newItems = [];
-					newItems = dirList.map(item => {
-						return {
-							label: item.icon + " " + item.name,
-							description: item.fullPath
-						};
-					});
+    public setProviderManager(providerManager: Providers) {
+        this.providerManager = providerManager;
+    }
 
-					newItems = this.sortGroupedList(newItems);
-					resolve(itemsSorted.concat(newItems));
-				});
-		});
-	}
+    public getLocatorProjects(itemsSorted: any[], locator: CustomProjectLocator): Promise<any[]> {
 
-	public sortGroupedList(items): any[] {
-		if (workspace.getConfiguration("projectManager").get("groupList", false)) {
-			return this.sortProjectList(items);
-		} else {
-			return items;
-		}
-	}
+        return new Promise((resolve, reject) => {
 
-	public sortProjectList(items): any[] {
-		let itemsToShow = PathUtils.expandHomePaths(items);
-		itemsToShow = this.removeRootPath(itemsToShow);
-		const checkInvalidPath: boolean = workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
-		if (checkInvalidPath) {
-			itemsToShow = PathUtils.indicateInvalidPaths(itemsToShow);
-		}
-		const newItemsSorted = sortProjects(itemsToShow);
-		return newItemsSorted;
-	}
+            locator.locateProjects()
+                .then(this.filterKnownDirectories.bind(this, itemsSorted))
+                .then((dirList: AutodetectedProjectInfo[]) => {
+                    let newItems = [];
+                    newItems = dirList.map(item => {
+                        return {
+                            label: item.icon + " " + item.name,
+                            description: item.fullPath
+                        };
+                    });
 
-	public refreshProjectsByType(projectType: string, locator: CustomProjectLocator, projectProvider: AutodetectProvider, showMessage?: boolean, forceRefresh?: boolean) {
-		window.withProgress({
-			location: ProgressLocation.Notification,
-			title: l10n.t("Refreshing Projects"),
-			cancellable: false
-		}, async (progress) => {
-			progress.report({ increment: 50, message: projectType });
-			const result = await locator.refreshProjects(forceRefresh);
+                    newItems = this.sortGroupedList(newItems);
+                    resolve(itemsSorted.concat(newItems));
+                });
+        });
+    }
 
-			if (result || forceRefresh) {
-				progress.report({ increment: 50, message: projectType });
-				projectProvider.refresh();
-				projectProvider.showTreeView();
-			}
-		}).then(async () => {
-			if (showMessage) {
-				await this.delay(1000);
-				window.showInformationMessage(l10n.t("{0} projects have been refreshed!", projectType));
-			}
-		})
-	}
+    public sortGroupedList(items): any[] {
+        if (workspace.getConfiguration("projectManager").get("groupList", false)) {
+            return this.sortProjectList(items);
+        } else {
+            return items;
+        }
+    }
 
-	private removeRootPath(items: any[]): any[] {
-		// if (!vscode.workspace.rootPath) {
-		const workspace0 = workspace.workspaceFile ? workspace.workspaceFile :
-				workspace.workspaceFolders ? workspace.workspaceFolders[0].uri : 
-				undefined;
+    public sortProjectList(items): any[] {
+        let itemsToShow = PathUtils.expandHomePaths(items);
+        itemsToShow = this.removeRootPath(itemsToShow);
+        const checkInvalidPath: boolean = workspace.getConfiguration("projectManager").get("checkInvalidPathsBeforeListing", true);
+        if (checkInvalidPath) {
+            itemsToShow = PathUtils.indicateInvalidPaths(itemsToShow);
+        }
+        const newItemsSorted = sortProjects(itemsToShow);
+        return newItemsSorted;
+    }
 
-		if (!workspace0 || !workspace.getConfiguration("projectManager").get("removeCurrentProjectFromList")) {
-			return items;
-		} else {
-				if (isRemoteUri(workspace0)) {
-						return items.filter(value => {
-								if (!isRemotePath(value.description)) { return value }
-    
-								const uriElement = Uri.parse(value.description);
-								if (uriElement.path !== workspace0.path) {
-										return value;
-								}
-						})
-				} else {
-						return items.filter(value => value.description.toString().toLowerCase() !== workspace.rootPath.toLowerCase());
-				}
-		}
-	}
+    public refreshProjectsByType(projectType: string, locator: CustomProjectLocator, projectProvider: AutodetectProvider, showMessage?: boolean, forceRefresh?: boolean) {
+        window.withProgress({
+            location: ProgressLocation.Notification,
+            title: l10n.t("Refreshing Projects"),
+            cancellable: false
+        }, async (progress) => {
+            progress.report({ increment: 50, message: projectType });
+            const result = await locator.refreshProjects(forceRefresh);
 
-	// Filters out any newDirectories entries that are present in knownDirectories.
-	private filterKnownDirectories(knownDirectories: any[], newDirectories: any[]): Promise<any[]> {
-		if (knownDirectories) {
-			newDirectories = newDirectories.filter(item =>
-				!knownDirectories.some(sortedItem =>
-					PathUtils.expandHomePath(sortedItem.description).toLowerCase() === PathUtils.expandHomePath(item.fullPath).toLowerCase()));
-		}
+            if (result || forceRefresh) {
+                progress.report({ increment: 50, message: projectType });
+                projectProvider.refresh();
+                projectProvider.showTreeView();
+            }
+        }).then(async () => {
+            if (showMessage) {
+                await this.delay(1000);
+                window.showInformationMessage(l10n.t("{0} projects have been refreshed!", projectType));
+            }
+        })
+    }
 
-		return Promise.resolve(newDirectories);
-	}
+    private removeRootPath(items: any[]): any[] {
+        // if (!vscode.workspace.rootPath) {
+        const workspace0 = workspace.workspaceFile ? workspace.workspaceFile :
+            workspace.workspaceFolders ? workspace.workspaceFolders[ 0 ].uri :
+                undefined;
 
-	private async delay(ms: number) {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	}
+        if (!workspace0 || !workspace.getConfiguration("projectManager").get("removeCurrentProjectFromList")) {
+            return items;
+        } else {
+            if (isRemoteUri(workspace0)) {
+                return items.filter(value => {
+                    if (!isRemotePath(value.description)) { return value }
+
+                    const uriElement = Uri.parse(value.description);
+                    if (uriElement.path !== workspace0.path) {
+                        return value;
+                    }
+                })
+            } else {
+                return items.filter(value => value.description.toString().toLowerCase() !== workspace.rootPath.toLowerCase());
+            }
+        }
+    }
+
+    // Filters out any newDirectories entries that are present in knownDirectories.
+    private filterKnownDirectories(knownDirectories: any[], newDirectories: any[]): Promise<any[]> {
+        if (knownDirectories) {
+            newDirectories = newDirectories.filter(item =>
+                !knownDirectories.some(sortedItem =>
+                    PathUtils.expandHomePath(sortedItem.description).toLowerCase() === PathUtils.expandHomePath(item.fullPath).toLowerCase()));
+        }
+
+        return Promise.resolve(newDirectories);
+    }
+
+    private async delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
 }

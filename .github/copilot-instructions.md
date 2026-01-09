@@ -73,6 +73,10 @@ src/
    - Strict mode: enabled (`alwaysStrict: true`)
    - Source maps: enabled for debugging
 
+### Indentation & Formatting
+- We use spaces, not tabs   
+- Use **4 spaces** for indentation
+
 ### Naming Conventions
 - **Interfaces**: PascalCase (e.g., `Project`, `ProjectStorage`)
 - **Classes**: PascalCase (e.g., `Locators`, `Providers`, `Container`)

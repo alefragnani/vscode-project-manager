@@ -86,16 +86,16 @@ export async function activate(context: vscode.ExtensionContext) {
         }
         vscode.commands.executeCommand("vscode.openFolder", uri, { forceProfile: profile , forceNewWindow: false } )
             .then(
-            value => ({}),  // done
-            value => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
+                value => ({}),  // done
+                value => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
     });
     vscode.commands.registerCommand("_projectManager.openInNewWindow", (node) => {
         const uri = buildProjectUri(node.command.arguments[0]);
         const openInNewWindow = shouldOpenInNewWindow(true, CommandLocation.SideBar);
         vscode.commands.executeCommand("vscode.openFolder", uri, { forceProfile: node.command.arguments[2] , forceNewWindow: openInNewWindow } )
             .then(
-            value => ({}),  // done
-            value => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
+                value => ({}),  // done
+                value => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
     });
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
@@ -190,10 +190,10 @@ export async function activate(context: vscode.ExtensionContext) {
             providerManager.refreshTreeViews();
         }
 
-		if (cfg.affectsConfiguration("projectManager.tags.collapseItems")) {
-			await StorageProvider.resetTagExpansionState();
-			providerManager.refreshStorageTreeView();
-		}
+        if (cfg.affectsConfiguration("projectManager.tags.collapseItems")) {
+            await StorageProvider.resetTagExpansionState();
+            providerManager.refreshStorageTreeView();
+        }
     }));
 
     const currentProject = showStatusBar(projectStorage, locators);
