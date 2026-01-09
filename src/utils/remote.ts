@@ -12,13 +12,13 @@ export const isWindows = process.platform === "win32";
 export const isMacOS = process.platform === "darwin";
 
 export function isRemotePath(projectPath: string): boolean {
-	return projectPath.startsWith(REMOTE_PREFIX) || projectPath.startsWith(VIRTUAL_WORKSPACE_PREFIX); 
+    return projectPath.startsWith(REMOTE_PREFIX) || projectPath.startsWith(VIRTUAL_WORKSPACE_PREFIX);
 }
 
 export function isRemoteUri(uri: Uri): boolean {
-	return uri.scheme === REMOTE_PREFIX || uri.scheme === VIRTUAL_WORKSPACE_PREFIX;
+    return uri.scheme === REMOTE_PREFIX || uri.scheme === VIRTUAL_WORKSPACE_PREFIX;
 }
 
 export function isRunningOnCodespaces(): boolean {
-	return env.remoteName?.toLocaleLowerCase() === 'codespaces';
+    return env.remoteName?.toLocaleLowerCase() === 'codespaces';
 }

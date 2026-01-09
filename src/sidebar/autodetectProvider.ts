@@ -11,106 +11,105 @@ import { addParentFolderToDuplicates } from "../utils/path";
 
 export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> {
 
-	public readonly onDidChangeTreeData: vscode.Event<ProjectNode | void>;
-  
-	private projectSource: CustomProjectLocator;
-	private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | void> = new vscode.EventEmitter<ProjectNode | void>();
+    public readonly onDidChangeTreeData: vscode.Event<ProjectNode | void>;
 
-	constructor(projectSource: CustomProjectLocator) {
-		this.projectSource = projectSource;
-		this.onDidChangeTreeData = this.internalOnDidChangeTreeData.event;
-	}
+    private projectSource: CustomProjectLocator;
+    private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | void> = new vscode.EventEmitter<ProjectNode | void>();
 
-	public refresh(): void {
-		this.internalOnDidChangeTreeData.fire();
-	}
+    constructor(projectSource: CustomProjectLocator) {
+        this.projectSource = projectSource;
+        this.onDidChangeTreeData = this.internalOnDidChangeTreeData.event;
+    }
 
-	public getTreeItem(element: ProjectNode): vscode.TreeItem {
-		return element;
-	}
+    public refresh(): void {
+        this.internalOnDidChangeTreeData.fire();
+    }
 
-	public getChildren(element?: ProjectNode): Thenable<ProjectNode[]> {
+    public getTreeItem(element: ProjectNode): vscode.TreeItem {
+        return element;
+    }
 
-		// loop !!!
-		return new Promise(resolve => {
+    public getChildren(element?: ProjectNode): Thenable<ProjectNode[]> {
 
-			if (element) {
+        // loop !!!
+        return new Promise(resolve => {
 
-				const ll: ProjectNode[] = [];
+            if (element) {
 
-				ll.push(new ProjectNode(element.label, vscode.TreeItemCollapsibleState.None, "git", element.preview, {
-					command: "_projectManager.open",
-					title: "",
-					arguments: [element.preview.path],
-				}));
+                const ll: ProjectNode[] = [];
 
-				resolve(ll);
-        
-			} else {
+                ll.push(new ProjectNode(element.label, vscode.TreeItemCollapsibleState.None, "git", element.preview, {
+                    command: "_projectManager.open",
+                    title: "",
+                    arguments: [ element.preview.path ],
+                }));
 
-				// ROOT
+                resolve(ll);
 
-				// raw list
-				const lll: ProjectNode[] = [];
-            
-				// Locators (VSCode/Git/Mercurial/SVN)
-				// this.projectSource.initializeCfg(this.projectSource.kind);
-        
-				if (this.projectSource.dirList.length > 0) {
+            } else {
 
-				this.projectSource.dirList.sort((n1, n2) => {
-						if (n1.name.toLowerCase() > n2.name.toLowerCase()) {
-						return 1;
-						}
+                // ROOT
 
-						if (n1.name.toLowerCase() < n2.name.toLowerCase()) {
-						return -1;
-						}
+                // raw list
+                const lll: ProjectNode[] = [];
 
-						return 0;
-				});
+                // Locators (VSCode/Git/Mercurial/SVN)
+                // this.projectSource.initializeCfg(this.projectSource.kind);
 
-				const projectsWithParent = addParentFolderToDuplicates(this.projectSource.dirList);
+                if (this.projectSource.projectList.length > 0) {
 
-				// tslint:disable-next-line:prefer-for-of
-				for (let index = 0; index < projectsWithParent.length; index++) {
-						const dirinfo = projectsWithParent[index];
-            
-						lll.push(new ProjectNode(dirinfo.name, vscode.TreeItemCollapsibleState.None,
-						this.projectSource.displayName, {
-								name: dirinfo.name,
-								detail: dirinfo.parent,
-								path: dirinfo.path
-						}, {
-								command: "_projectManager.open",
-								title: "",
-								arguments: [dirinfo.path, this.projectSource.icon + " " + dirinfo.name],
-						}));
-				}
-				}
+                    this.projectSource.projectList.sort((n1, n2) => {
+                        if (n1.name.toLowerCase() > n2.name.toLowerCase()) {
+                            return 1;
+                        }
 
-				resolve(lll);
-			}
-		});
-	}
+                        if (n1.name.toLowerCase() < n2.name.toLowerCase()) {
+                            return -1;
+                        }
 
-	public async showTreeView(): Promise<void> {
+                        return 0;
+                    });
 
-		// The "auto-detected" views depends if some project have been detected
-		// this.projectSource.initializeCfg(this.projectSource.kind);
-		if (!this.projectSource.isAlreadyLocated()) {
-				await this.projectSource.locateProjects();
-		}
-    
-		if (this.projectSource.displayName === "Git") {
-				const hideGitWelcome = Container.context.globalState.get<boolean>("hideGitWelcome", false);
-				vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName, 
-				this.projectSource.dirList.length > 0 || !hideGitWelcome);
-		} else {
-				vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName, 
-				this.projectSource.dirList.length > 0);
-		}
-		return;
-	}  
+                    const projectsWithParent = addParentFolderToDuplicates(this.projectSource.projectList);
+
+                    for (let index = 0; index < projectsWithParent.length; index++) {
+                        const dirinfo = projectsWithParent[ index ];
+
+                        lll.push(new ProjectNode(dirinfo.name, vscode.TreeItemCollapsibleState.None,
+                            dirinfo.icon, {
+                                name: dirinfo.name,
+                                detail: dirinfo.parent,
+                                path: dirinfo.path
+                            }, {
+                                command: "_projectManager.open",
+                                title: "",
+                                arguments: [ dirinfo.path, dirinfo.name ],
+                            }));
+                    }
+                }
+
+                resolve(lll);
+            }
+        });
+    }
+
+    public async showTreeView(): Promise<void> {
+
+        // The "auto-detected" views depends if some project have been detected
+        // this.projectSource.initializeCfg(this.projectSource.kind);
+        if (!this.projectSource.isAlreadyLocated()) {
+            await this.projectSource.locateProjects();
+        }
+
+        if (this.projectSource.displayName === "Git") {
+            const hideGitWelcome = Container.context.globalState.get<boolean>("hideGitWelcome", false);
+            vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName,
+                this.projectSource.projectList.length > 0 || !hideGitWelcome);
+        } else {
+            vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName,
+                this.projectSource.projectList.length > 0);
+        }
+        return;
+    }
 
 }

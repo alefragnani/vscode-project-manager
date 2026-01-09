@@ -3,9 +3,12 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Uri } from "vscode";
-import { isRemotePath } from "./remote";
+import { codicons } from "vscode-ext-codicons";
+import { CustomRepositoryDetector } from "./repositoryDetector";
 
-export function buildProjectUri(rootPath: string): Uri {
-    return isRemotePath(rootPath) ? Uri.parse(rootPath) : Uri.file(rootPath);
+export class MercurialRepositoryDetector extends CustomRepositoryDetector {
+
+    protected getIcon(): string {
+        return codicons.git_branch;
+    }
 }
