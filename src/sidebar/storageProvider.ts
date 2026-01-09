@@ -139,10 +139,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
 						// has any, then OK
 						if (nodes.length > 0) {
-                if (
-                  vscode.workspace.getConfiguration('projectManager').get<boolean>('hideProjectsWithoutTagsInTagsView', false) !== true ||
-                  Container.context.globalState.get<string[]>("filterByTags", []).includes(NO_TAGS_DEFINED)
-                ) {
+                if (this.projectSource.getProjectsByTag('').length !== 0) {
                   nodes.push(new NoTagNode(NO_TAGS_DEFINED, StorageProvider.getTagCollapsibleState(NO_TAGS_DEFINED, tagsCollapseBehavior)));
                 }
 

@@ -87,6 +87,5 @@
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Группы тегов всегда развёрнуты.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "Группы тегов всегда свёрнуты.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "Группы тегов изначально развёрнуты, но запоминают последнее состояние свёртывания/разворачивания.",
-    "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Группы тегов изначально свёрнуты, но запоминают последнее состояние свёртывания/разворачивания.",
-    "projectManager.configuration.hideProjectsWithoutTagsInTagsView.description": "Управляет тем, скрывать ли проекты без тегов в представлении тегов."
+    "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Группы тегов изначально свёрнуты, но запоминают последнее состояние свёртывания/разворачивания."
 }

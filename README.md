@@ -333,12 +333,6 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.tags.collapseItems": "startExpanded"
 ```
 
-* Controls whether projects without tags are hidden in the tags view (`false` by default), but if you filter by the `No Tags` tag, they will be shown.
-
-```json
-    "projectManager.hideProjectsWithoutTagsInTagsView": true
-```
-
 ## Available Colors
 
 * Choose the foreground color to highlight the current project in the Side Bar

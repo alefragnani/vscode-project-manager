@@ -87,6 +87,5 @@
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Skupiny značek jsou vždy rozbalené.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "Skupiny značek jsou vždy sbalené.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "Skupiny značek jsou na začátku rozbalené, ale pamatují si váš poslední stav rozbalení/sbalení.",
-    "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Skupiny značek jsou na začátku sbalené, ale pamatují si váš poslední stav rozbalení/sbalení.",
-    "projectManager.configuration.hideProjectsWithoutTagsInTagsView.description": "Ovládá, zda jsou projekty bez značek skryty v zobrazení Značky."
+    "projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed": "Skupiny značek jsou na začátku sbalené, ale pamatují si váš poslední stav rozbalení/sbalení."
 }
