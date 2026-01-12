@@ -77,7 +77,13 @@ export class Providers {
             }),
             this.storageTreeView.onDidCollapseElement(async event => {
                 await this.handleStorageTreeViewExpansionChange(event, "collapsed");
-            })
+            }),
+            // Refresh git branch info when window gains focus and sidebar is visible
+            vscode.window.onDidChangeWindowState(async () => {
+                if (this.storageTreeView.visible) {
+                    this.storageProvider.refresh();
+                }
+            }),
         );
     }
 

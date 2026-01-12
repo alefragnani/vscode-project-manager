@@ -93,6 +93,7 @@
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Використовуйте `projectManager.openInCurrentWindowIfEmpty` замість цього",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Вказує, чи відкривати проєкт у поточному вікні, якщо воно порожнє, при використанні команди Нове вікно.",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Чи питати підтвердження при відкритті проєктів в активному вікні?",
+    "projectManager.configuration.showGitBranchInSideBar.description": "Відображати гілку Git поруч із назвою проєкту на бічній панелі?",
     "projectManager.configuration.tags.description": "Вказує список тегів, які можна використовувати для організації проєктів",
     "projectManager.configuration.tags.collapseItems.description": "Керує тим, як групи тегів у поданні ""Улюблені"" розгортаються або згортаються за замовчуванням та чи запам'ятовується їхній стан.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Групи тегів завжди розгорнуті.",

@@ -195,6 +195,11 @@ export async function activate(context: vscode.ExtensionContext) {
             await StorageProvider.resetTagExpansionState();
             providerManager.refreshStorageTreeView();
         }
+
+        if (cfg.affectsConfiguration("projectManager.showGitBranchInSideBar")) {
+            providerManager.storageProvider.refresh();
+            providerManager.updateTreeViewStorage();
+        }
     }));
 
     const currentProject = showStatusBar(projectStorage, locators);
