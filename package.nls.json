@@ -93,6 +93,7 @@
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Use `projectManager.openInCurrentWindowIfEmpty` instead",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Indicates if the New Window command open the project in current window, when empty.",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Controls whether the extension should ask for confirmation when opening projects in the active window.",
+    "projectManager.configuration.showGitBranchInSideBar.description": "Should display the Git branch next to the project name in the Side Bar?",
     "projectManager.configuration.tags.description": "Indicates the list of tags you can use to organize your projects",
     "projectManager.configuration.tags.collapseItems.description": "Controls how tag groups in the Favorites view are expanded or collapsed by default, and whether their state is remembered.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Tag groups are always expanded.",

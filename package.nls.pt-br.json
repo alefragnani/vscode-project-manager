@@ -93,6 +93,7 @@
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Use `openInCurrentWindowIfEmpty` em vez disso",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Indica se o comando Nova Janela abre o projeto na janela corrente, quando vazia",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Controla se a extensão deve solicitar confirmação ao abrir projetos na janela ativa.",
+    "projectManager.configuration.showGitBranchInSideBar.description": "Deve exibir o branch Git ao lado do nome do projeto na Barra Lateral?",
     "projectManager.configuration.tags.description": "Indica a lista de etiquetas que você pode usar para organizar seus projetos",
     "projectManager.configuration.tags.collapseItems.description": "Controla como os grupos de etiquetas na visão Favoritos são expandidos ou recolhidos por padrão e se seu estado é lembrado.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Os grupos de etiquetas são sempre exibidos expandidos.",
