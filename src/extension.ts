@@ -404,7 +404,11 @@ export async function activate(context: vscode.ExtensionContext) {
                 input.prompt = l10n.t("Project Name");
             }
 
-            input.show();
+            const saved = await saveProjectInternal(input.value, selectedTags);
+            if (saved) {
+                input.hide();
+                input.dispose();
+            }
         });
 
         input.show();
