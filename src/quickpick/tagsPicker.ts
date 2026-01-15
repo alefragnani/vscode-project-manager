@@ -3,7 +3,7 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { l10n, QuickPickItem, window, workspace } from "vscode";
+import { l10n, QuickInputButton, QuickPickItem, ThemeIcon, window, workspace } from "vscode";
 import { NO_TAGS_DEFINED } from "../sidebar/constants";
 import { ProjectStorage } from "../storage/storage";
 
@@ -19,7 +19,18 @@ export async function pickTags(storage: ProjectStorage, preselected: string[], o
     const defaultTags = config.get<string[]>("tags") ?? [];
     let currentPreselected = preselected ?? [];
 
-    while (true) {
+    const quickPick = window.createQuickPick<QuickPickItem>();
+    quickPick.canSelectMany = true;
+    quickPick.placeholder = l10n.t("Select the tags");
+
+    const addTagsButton: QuickInputButton = {
+        iconPath: new ThemeIcon("add"),
+        tooltip: l10n.t("Add new tags")
+    };
+
+    quickPick.buttons = [ addTagsButton ];
+
+    const refreshItems = () => {
         let tags = storage.getAvailableTags();
 
         tags.push(...currentPreselected.filter(tag => !tags.includes(tag) && tag !== NO_TAGS_DEFINED));
@@ -43,59 +54,87 @@ export async function pickTags(storage: ProjectStorage, preselected: string[], o
 
         const items: QuickPickItem[] = tags.map(tag => {
             return {
-                label: tag,
-                picked: currentPreselected.includes(tag)
+                label: tag
             };
         });
 
-        const addNewItem: QuickPickItem = {
-            label: l10n.t("Add new tags..."),
-            description: l10n.t("Create and add new tags"),
-            alwaysShow: true
+        quickPick.items = items;
+        quickPick.selectedItems = quickPick.items.filter(item => currentPreselected.includes(item.label));
+    };
+
+    refreshItems();
+
+    const result = await new Promise<string[] | undefined>((resolve) => {
+
+        let resolved = false;
+        let ignoreHide = false;
+
+        const doResolve = (value: string[] | undefined) => {
+            if (resolved) {
+                return;
+            }
+            resolved = true;
+            resolve(value);
         };
 
-        const selection = await window.showQuickPick([ ...items, addNewItem ], {
-            placeHolder: l10n.t('Select the tags'),
-            canPickMany: true
+        quickPick.onDidAccept(() => {
+            const selections = quickPick.selectedItems.map(item => item.label);
+            ignoreHide = true;
+            quickPick.hide();
+            quickPick.dispose();
+            doResolve(selections);
         });
 
-        if (typeof selection === "undefined") {
-            return undefined;
-        }
-
-        const addNewSelected = selection.some(item => item.label === addNewItem.label && item.description === addNewItem.description);
-        const pickedLabels = selection
-            .filter(item => item.label !== addNewItem.label || item.description !== addNewItem.description)
-            .map(item => item.label);
-
-        if (!addNewSelected) {
-            return pickedLabels;
-        }
-
-        const input = await window.showInputBox({
-            placeHolder: l10n.t("Type new tags, separated by comma"),
-            prompt: l10n.t("New tags"),
-            ignoreFocusOut: true
+        quickPick.onDidHide(() => {
+            if (ignoreHide) {
+                return;
+            }
+            quickPick.dispose();
+            doResolve(undefined);
         });
 
-        if (typeof input === "undefined") {
-            currentPreselected = pickedLabels;
-            continue;
-        }
+        quickPick.onDidTriggerButton(async (button) => {
+            if (button !== addTagsButton) {
+                return;
+            }
 
-        const newTagsFromInput = input.split(",")
-            .map(tag => tag.trim())
-            .filter(tag => tag.length > 0 && tag !== NO_TAGS_DEFINED);
+            ignoreHide = true;
 
-        if (newTagsFromInput.length === 0) {
-            currentPreselected = pickedLabels;
-            continue;
-        }
+            const input = await window.showInputBox({
+                placeHolder: l10n.t("Type new tags, separated by comma"),
+                prompt: l10n.t("New tags"),
+                ignoreFocusOut: true
+            });
 
-        const existingConfigTags = config.get<string[]>("tags") ?? [];
-        const mergedConfigTags = [ ...new Set([ ...existingConfigTags, ...newTagsFromInput ]) ];
-        await config.update("tags", mergedConfigTags, true);
+            ignoreHide = false;
 
-        currentPreselected = [ ...new Set([ ...pickedLabels, ...newTagsFromInput ]) ];
-    }
+            if (typeof input === "undefined") {
+                quickPick.show();
+                return;
+            }
+
+            const newTagsFromInput = input.split(",")
+                .map(tag => tag.trim())
+                .filter(tag => tag.length > 0 && tag !== NO_TAGS_DEFINED);
+
+            if (newTagsFromInput.length === 0) {
+                quickPick.show();
+                return;
+            }
+
+            const existingConfigTags = config.get<string[]>("tags") ?? [];
+            const mergedConfigTags = [ ...new Set([ ...existingConfigTags, ...newTagsFromInput ]) ];
+            await config.update("tags", mergedConfigTags, true);
+
+            const currentlySelectedLabels = quickPick.selectedItems.map(item => item.label);
+            currentPreselected = [ ...new Set([ ...currentlySelectedLabels, ...newTagsFromInput ]) ];
+
+            refreshItems();
+            quickPick.show();
+        });
+
+        quickPick.show();
+    });
+
+    return result;
 }
