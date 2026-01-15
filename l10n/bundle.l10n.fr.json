@@ -38,8 +38,14 @@
     "{0} projects have been refreshed!": "{0} projets ont été actualisés !",
     "No tags available/defined.": "Aucune étiquette disponible/définie.",
     "Select the tags": "Sélectionner les étiquettes",
+    "Select tags": "Sélectionner des étiquettes",
+    "Selected tags: {0}": "Étiquettes sélectionnées : {0}",
+    "Add new tags": "Ajouter de nouvelles étiquettes",
+    "Type new tags, separated by comma": "Saisissez de nouvelles étiquettes, séparées par une virgule",
+    "New tags": "Nouvelles étiquettes",
     "{0} disabled": "{0} désactivé(s)",
     "filtered by tags": "filtré par étiquettes",
     "Save the workspace first to save a project": "Sauvegarder d'abord l'espace de travail pour sauvegarder un projet",
-    "Open a folder first to save a project": "Ouvrir d'abord un dossier pour enregistrer un projet"
+    "Open a folder first to save a project": "Ouvrir d'abord un dossier pour enregistrer un projet",
+    "Save Project": "Enregistrer le projet"
 }

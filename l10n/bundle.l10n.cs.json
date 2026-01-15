@@ -38,8 +38,14 @@
     "{0} projects have been refreshed!": "Počet obnovených projektů: {0}",
     "No tags available/defined.": "Žádné dostupné/definované značky.",
     "Select the tags": "Vyberte značky",
+    "Select tags": "Vybrat značky",
+    "Selected tags: {0}": "Vybrané značky: {0}",
+    "Add new tags": "Přidat nové značky",
+    "Type new tags, separated by comma": "Zadejte nové značky oddělené čárkou",
+    "New tags": "Nové značky",
     "{0} disabled": "{0} deaktivováno",
     "filtered by tags": "filtrováno podle značek",
     "Save the workspace first to save a project": "Chcete-li uložit projekt, nejprve uložte pracovní prostor",
-    "Open a folder first to save a project": "Chcete-li uložit projekt, nejprve otevřete složku"
+    "Open a folder first to save a project": "Chcete-li uložit projekt, nejprve otevřete složku",
+    "Save Project": "Uložit projekt"
 }

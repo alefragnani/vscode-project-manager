@@ -38,8 +38,14 @@
     "{0} projects have been refreshed!": "{0} 项目已刷新！",
     "No tags available/defined.": "无可用/定义的标签。",
     "Select the tags": "选择标签",
+    "Select tags": "选择标签",
+    "Selected tags: {0}": "已选择的标签：{0}",
+    "Add new tags": "添加新标签",
+    "Type new tags, separated by comma": "输入新标签，用逗号分隔",
+    "New tags": "新标签",
     "{0} disabled": "{0} 已禁用",
     "filtered by tags": "按标签过滤",
     "Save the workspace first to save a project": "先保存工作区以保存项目",
-    "Open a folder first to save a project": "先打开一个文件夹以保存项目"
+    "Open a folder first to save a project": "先打开一个文件夹以保存项目",
+    "Save Project": "保存项目"
 }
