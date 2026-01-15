@@ -333,6 +333,13 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.tags.collapseItems": "startExpanded"
 ```
 
+* Show the current Git branch in the Side Bar (`false` by default)
+
+```json
+    "projectManager.showGitBranchInSideBar": false
+```
+
+
 ## Available Colors
 
 * Choose the foreground color to highlight the current project in the Side Bar

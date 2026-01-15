@@ -844,7 +844,12 @@
                             "%projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed%"
                         ],
                         "description": "%projectManager.configuration.tags.collapseItems.description%"
-                    }
+                    },
+					"projectManager.showGitBranchInSideBar": {
+						"type": "boolean",
+						"default": false,
+						"description": "%projectManager.configuration.showGitBranchInSideBar.description%"
+					}
                 }
             },
             {

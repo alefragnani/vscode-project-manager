@@ -83,6 +83,7 @@
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Utiliser `projectManager.openInCurrentWindowIfEmpty` à la place",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Précise si la commande Nouvelle fenêtre permet d'ouvrir le projet dans la fenêtre courante, lorsqu'elle est vide.",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Détermine si l'extension doit demander une confirmation lors de l'ouverture de projets dans la fenêtre active.",
+    "projectManager.configuration.showGitBranchInSideBar.description": "Faut-il afficher la branche Git à côté du nom du projet dans la barre latérale ?",
     "projectManager.configuration.tags.description": "Précise la liste des étiquettes que vous pouvez utiliser pour organiser vos projets.",
     "projectManager.configuration.tags.collapseItems.description": "Contrôle la façon dont les groupes d'étiquettes dans la vue Favoris sont développés ou réduits par défaut et si leur état est mémorisé.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Les groupes d'étiquettes sont toujours développés.",

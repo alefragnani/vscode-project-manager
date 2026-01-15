@@ -82,6 +82,7 @@
     "projectManager.configuration.openInCurrenWindowIfEmpty.deprecation": "Вместо этого используйте `openInCurrentWindowIfEmpty`",
     "projectManager.configuration.openInCurrentWindowIfEmpty.description": "Указывает, открывает ли команда «Новое окно» проект в текущем пустом окне.",
     "projectManager.configuration.confirmSwitchOnActiveWindow.description": "Определяет, должно ли расширение запрашивать подтверждение при открытии проектов в активном окне.",
+    "projectManager.configuration.showGitBranchInSideBar.description": "Должна ли отображаться ветка Git рядом с именем проекта на боковой панели?",
     "projectManager.configuration.tags.description": "Указывает список тегов, которые вы можете использовать для организации ваших проектов.",
     "projectManager.configuration.tags.collapseItems.description": "Определяет, как группы тегов в представлении ""Избранное"" сворачиваются или разворачиваются по умолчанию и запоминается ли их состояние.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Группы тегов всегда развёрнуты.",
