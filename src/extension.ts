@@ -17,7 +17,7 @@ import { StorageProvider } from "./sidebar/storageProvider";
 import { showStatusBar, updateStatusBar } from "./statusbar/statusBar";
 import { getProjectDetails } from "./utils/suggestion";
 import { CommandLocation, PROJECTS_FILE } from "./core/constants";
-import { isMacOS, isWindows } from "./utils/remote";
+import { isMacOS, isRemoteUri, isWindows } from "./utils/remote";
 import { buildProjectUri } from "./utils/uri";
 import { Container } from "./core/container";
 import { registerWhatsNew } from "./whats-new/commands";
@@ -34,6 +34,7 @@ import { l10n } from "vscode";
 import { registerWalkthrough } from "./commands/walkthrough";
 import { registerSideBarDecorations } from "./sidebar/decoration";
 import { ProjectNode } from "./sidebar/nodes";
+import { Project } from "./core/project";
 
 let locators: Locators;
 
@@ -159,6 +160,14 @@ export async function activate(context: vscode.ExtensionContext) {
 
     loadProjectsFile();
 
+    // TODO: Extract the detection of the current project from `showStatusBar`, and optimize how it works.
+    // Evaluate if it is really necessary to get the `Project` instance, or if just the root path is enough.
+    // Up until then, the call to `showStatusBar` (and the assignment to `Container.currentProject`)
+    // intentionally happens *before* `providerManager.showTreeViewFromAllProviders()`, and changing this order may
+    // introduce issues.
+    const currentProject = showStatusBar(projectStorage, locators);
+    Container.currentProject = currentProject;
+
     // // new place to register TreeView
     await providerManager.showTreeViewFromAllProviders();
 
@@ -197,9 +206,6 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }));
 
-    const currentProject = showStatusBar(projectStorage, locators);
-    Container.currentProject = currentProject;
-    
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
         vscode.window.withProgress({
@@ -291,34 +297,31 @@ export async function activate(context: vscode.ExtensionContext) {
             wpath = projectDetails.name;
         }
 
-        // ask the PROJECT NAME (suggest the )
-        const ibo = <vscode.InputBoxOptions> {
-            prompt: l10n.t("Project Name"),
-            placeHolder: l10n.t("Type a name for your project"),
-            value: wpath
-        };
+        let selectedTags: string[] | undefined;
 
-        vscode.window.showInputBox(ibo).then(projectName => {
-            if (typeof projectName === "undefined") {
-                return;
-            }
-
-            // 'empty'
+        const saveProjectInternal = async (projectName: string, tags?: string[]): Promise<boolean> => {
             if (projectName === "") {
                 vscode.window.showWarningMessage(l10n.t("You must define a name for the project."));
-                return;
+                return false;
             }
-   
+
+            const tagsToSave = (tags && tags.length > 0) ? tags : undefined;
+
             if (!projectStorage.exists(projectName)) {
                 Container.stack.push(projectName);
                 context.globalState.update("recent", Container.stack.toString());
                 projectStorage.push(projectName, rootPath);
+                if (tagsToSave) {
+                    projectStorage.editTags(projectName, tagsToSave);
+                }
                 projectStorage.save();
                 providerManager.updateTreeViewStorage();
                 vscode.window.showInformationMessage(l10n.t("Project saved!"));
                 if (!node) {
                     showStatusBar(projectStorage, locators, projectName);
+                    updateCurrentProject();
                 }
+                return true;
             } else {
                 const optionUpdate = <vscode.MessageItem> {
                     title: l10n.t("Update")
@@ -327,29 +330,115 @@ export async function activate(context: vscode.ExtensionContext) {
                     title: l10n.t("Cancel")
                 };
 
-                vscode.window.showInformationMessage(l10n.t("Project already exists!"), optionUpdate, optionCancel).then(option => {
-                    // nothing selected
-                    if (typeof option === "undefined") {
-                        return;
-                    }
+                const option = await vscode.window.showInformationMessage(l10n.t("Project already exists!"), optionUpdate, optionCancel);
 
-                    if (option.title === l10n.t("Update")) {
-                        Container.stack.push(projectName);
-                        context.globalState.update("recent", Container.stack.toString());
-                        projectStorage.updateRootPath(projectName, rootPath);
-                        projectStorage.save();
-                        providerManager.updateTreeViewStorage();
-                        vscode.window.showInformationMessage(l10n.t("Project saved!"));
-                        if (!node) {
-                            showStatusBar(projectStorage, locators, projectName);
-                        }
-                        return;
-                    } else {
-                        return;
+                // nothing selected or canceled
+                if (typeof option === "undefined" || option.title === l10n.t("Cancel")) {
+                    return false;
+                }
+
+                if (option.title === l10n.t("Update")) {
+                    Container.stack.push(projectName);
+                    context.globalState.update("recent", Container.stack.toString());
+                    projectStorage.updateRootPath(projectName, rootPath);
+                    if (tagsToSave) {
+                        projectStorage.editTags(projectName, tagsToSave);
                     }
-                });
+                    projectStorage.save();
+                    providerManager.updateTreeViewStorage();
+                    vscode.window.showInformationMessage(l10n.t("Project saved!"));
+                    if (!node) {
+                        showStatusBar(projectStorage, locators, projectName);
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+        };
+
+        const input = vscode.window.createInputBox();
+        input.title = l10n.t("Save Project");
+        input.prompt = l10n.t("Project Name");
+        input.placeholder = l10n.t("Type a name for your project");
+        input.value = wpath;
+
+        const tagsButton: vscode.QuickInputButton = {
+            iconPath: new vscode.ThemeIcon("tag"),
+            tooltip: l10n.t("Select tags")
+        };
+
+        input.buttons = [ tagsButton ];
+
+        input.onDidAccept(async () => {
+            const saved = await saveProjectInternal(input.value, selectedTags);
+            if (saved) {
+                input.hide();
+                input.dispose();
             }
         });
+
+        input.onDidTriggerButton(async (button) => {
+            if (button !== tagsButton) {
+                return;
+            }
+
+            if (input.value === "") {
+                vscode.window.showWarningMessage(l10n.t("You must define a name for the project."));
+                return;
+            }
+
+            let preselectedTags: string[] = selectedTags ?? [];
+            const existingProject = projectStorage.existsWithRootPath(rootPath);
+            if (existingProject && existingProject.name.toLowerCase() === input.value.toLowerCase() && (!selectedTags || selectedTags.length === 0)) {
+                preselectedTags = existingProject.tags;
+            }
+
+            const picked = await pickTags(projectStorage, preselectedTags, {
+                useDefaultTags: true,
+                useNoTagsDefined: false,
+                allowAddingNewTags: true
+            });
+
+            if (!picked) {
+                return;
+            }
+
+            selectedTags = picked;
+
+            if (selectedTags.length > 0) {
+                input.prompt = l10n.t("Selected tags: {0}", selectedTags.join(", "));
+            } else {
+                input.prompt = l10n.t("Project Name");
+            }
+
+            const saved = await saveProjectInternal(input.value, selectedTags);
+            if (saved) {
+                input.hide();
+                input.dispose();
+            }
+        });
+
+        input.onDidHide(() => {
+            input.dispose();
+        });
+
+        input.show();
+    }
+
+    function updateCurrentProject() {
+        const workspace0 = vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile :
+            vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[ 0 ].uri :
+                undefined;
+        const currentProjectPath = workspace0 ? workspace0.fsPath : undefined;
+
+        let foundProject: Project;
+        if (workspace0 && isRemoteUri(workspace0)) {
+            foundProject = projectStorage.existsRemoteWithRootPath(workspace0);
+        } else {
+            foundProject = projectStorage.existsWithRootPath(currentProjectPath);
+        }
+        Container.currentProject = foundProject;
     }
 
     async function listProjects(forceNewWindow: boolean) {

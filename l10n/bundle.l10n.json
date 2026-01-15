@@ -38,8 +38,14 @@
     "{0} projects have been refreshed!": "{0} projects have been refreshed!",
     "No tags available/defined.": "No tags available/defined.",
     "Select the tags": "Select the tags",
+    "Select tags": "Select tags",
+    "Selected tags: {0}": "Selected tags: {0}",
+    "Add new tags": "Add new tags",
+    "Type new tags, separated by comma": "Type new tags, separated by comma",
+    "New tags": "New tags",
     "{0} disabled": "{0} disabled",
     "filtered by tags": "filtered by tags",
     "Save the workspace first to save a project": "Save the workspace first to save a project",
-    "Open a folder first to save a project": "Open a folder first to save a project"
+    "Open a folder first to save a project": "Open a folder first to save a project",
+    "Save Project": "Save Project"
 }

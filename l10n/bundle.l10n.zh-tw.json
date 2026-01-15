@@ -38,8 +38,14 @@
     "{0} projects have been refreshed!": "{0} 項目已刷新！",
     "No tags available/defined.": "無可用/定義的標籤。",
     "Select the tags": "選擇標籤",
+    "Select tags": "選擇標籤",
+    "Selected tags: {0}": "已選取的標籤：{0}",
+    "Add new tags": "新增標籤",
+    "Type new tags, separated by comma": "輸入新標籤，以逗號分隔",
+    "New tags": "新標籤",
     "{0} disabled": "{0} 已禁用",
     "filtered by tags": "按標籤過濾",
     "Save the workspace first to save a project": "先保存工作區以保存項目",
-    "Open a folder first to save a project": "先打開一個文件夾以保存項目"
+    "Open a folder first to save a project": "先打開一個文件夾以保存項目",
+    "Save Project": "儲存專案"
 }

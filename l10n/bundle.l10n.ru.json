@@ -38,8 +38,14 @@
     "{0} projects have been refreshed!": "{0} проектов обновлено!",
     "No tags available/defined.": "Теги недоступны/не определены.",
     "Select the tags": "Выберите теги",
+    "Select tags": "Выбрать теги",
+    "Selected tags: {0}": "Выбранные теги: {0}",
+    "Add new tags": "Добавить новые теги",
+    "Type new tags, separated by comma": "Введите новые теги, разделяя их запятой",
+    "New tags": "Новые теги",
     "{0} disabled": "{0} отключен",
     "filtered by tags": "отфильтровано по тегам",
     "Save the workspace first to save a project": "Сначала сохраните рабочую область, чтобы сохранить проект",
-    "Open a folder first to save a project": "Сначала откройте папку, чтобы сохранить проект"
+    "Open a folder first to save a project": "Сначала откройте папку, чтобы сохранить проект",
+    "Save Project": "Сохранить проект"
 }
