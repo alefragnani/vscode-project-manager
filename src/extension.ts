@@ -414,6 +414,10 @@ export async function activate(context: vscode.ExtensionContext) {
             }
         });
 
+        input.onDidHide(() => {
+            input.dispose();
+        });
+
         input.show();
     }
 
