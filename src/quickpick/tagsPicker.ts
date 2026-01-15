@@ -10,7 +10,8 @@ import { ProjectStorage } from "../storage/storage";
 export interface PickTagOptions {
     useDefaultTags: boolean,
     useNoTagsDefined: boolean,
-    showWarningWhenHasNoTagsToPick?: boolean
+    showWarningWhenHasNoTagsToPick?: boolean,
+    allowAddingNewTags?: boolean
 }
 
 export async function pickTags(storage: ProjectStorage, preselected: string[], options?: PickTagOptions): Promise<string[] | undefined> {
@@ -28,7 +29,7 @@ export async function pickTags(storage: ProjectStorage, preselected: string[], o
         tooltip: l10n.t("Add new tags")
     };
 
-    quickPick.buttons = [ addTagsButton ];
+    quickPick.buttons = options?.allowAddingNewTags ? [ addTagsButton ] : [];
 
     const refreshItems = () => {
         let tags = storage.getAvailableTags();

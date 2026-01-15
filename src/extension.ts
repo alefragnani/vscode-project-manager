@@ -389,7 +389,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
             const picked = await pickTags(projectStorage, preselectedTags, {
                 useDefaultTags: true,
-                useNoTagsDefined: false
+                useNoTagsDefined: false,
+                allowAddingNewTags: true
             });
 
             if (!picked) {
