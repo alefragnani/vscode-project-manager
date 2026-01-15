@@ -17,7 +17,7 @@ import { StorageProvider } from "./sidebar/storageProvider";
 import { showStatusBar, updateStatusBar } from "./statusbar/statusBar";
 import { getProjectDetails } from "./utils/suggestion";
 import { CommandLocation, PROJECTS_FILE } from "./core/constants";
-import { isMacOS, isWindows } from "./utils/remote";
+import { isMacOS, isRemoteUri, isWindows } from "./utils/remote";
 import { buildProjectUri } from "./utils/uri";
 import { Container } from "./core/container";
 import { registerWhatsNew } from "./whats-new/commands";
@@ -34,6 +34,7 @@ import { l10n } from "vscode";
 import { registerWalkthrough } from "./commands/walkthrough";
 import { registerSideBarDecorations } from "./sidebar/decoration";
 import { ProjectNode } from "./sidebar/nodes";
+import { Project } from "./core/project";
 
 let locators: Locators;
 
@@ -159,6 +160,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
     loadProjectsFile();
 
+    const currentProject = showStatusBar(projectStorage, locators);
+    Container.currentProject = currentProject;
+
     // // new place to register TreeView
     await providerManager.showTreeViewFromAllProviders();
 
@@ -197,9 +201,6 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }));
 
-    const currentProject = showStatusBar(projectStorage, locators);
-    Container.currentProject = currentProject;
-    
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
         vscode.window.withProgress({
@@ -313,6 +314,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage(l10n.t("Project saved!"));
                 if (!node) {
                     showStatusBar(projectStorage, locators, projectName);
+                    updateCurrentProject();
                 }
                 return true;
             } else {
@@ -413,6 +415,21 @@ export async function activate(context: vscode.ExtensionContext) {
         });
 
         input.show();
+    }
+
+    function updateCurrentProject() {
+        const workspace0 = vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile :
+            vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[ 0 ].uri :
+                undefined;
+        const currentProjectPath = workspace0 ? workspace0.fsPath : undefined;
+
+        let foundProject: Project;
+        if (workspace0 && isRemoteUri(workspace0)) {
+            foundProject = projectStorage.existsRemoteWithRootPath(workspace0);
+        } else {
+            foundProject = projectStorage.existsWithRootPath(currentProjectPath);
+        }
+        Container.currentProject = foundProject;
     }
 
     async function listProjects(forceNewWindow: boolean) {
