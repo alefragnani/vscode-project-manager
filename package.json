@@ -845,10 +845,20 @@
                         ],
                         "description": "%projectManager.configuration.tags.collapseItems.description%"
                     },
-					"projectManager.showGitBranchInSideBar": {
-						"type": "boolean",
-						"default": false,
-						"description": "%projectManager.configuration.showGitBranchInSideBar.description%"
+					"projectManager.git.showBranchName": {
+						"type": "string",
+						"enum": [
+							"never",
+							"onlyInSideBar",
+							"always"
+						],
+						"enumDescriptions": [
+							"%projectManager.configuration.git.showBranchName.enumDescriptions.never%",
+							"%projectManager.configuration.git.showBranchName.enumDescriptions.onlyInSideBar%",
+							"%projectManager.configuration.git.showBranchName.enumDescriptions.always%"
+						],
+						"default": "never",
+						"description": "%projectManager.configuration.git.showBranchName.description%"
 					}
                 }
             },
