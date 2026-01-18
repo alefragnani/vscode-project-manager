@@ -96,6 +96,7 @@
     "projectManager.configuration.git.showBranchName.description": "Controla onde exibir o nome da branch Git atual para os projetos",
     "projectManager.configuration.git.showBranchName.enumDescriptions.never": "Nunca exibir o nome da branch Git",
     "projectManager.configuration.git.showBranchName.enumDescriptions.onlyInSideBar": "Exibir o nome da branch Git apenas na Barra Lateral",
+    "projectManager.configuration.git.showBranchName.enumDescriptions.onlyInCommandPalette": "Exibir o nome da branch Git apenas na Paleta de Comandos",
     "projectManager.configuration.git.showBranchName.enumDescriptions.always": "Exibir o nome da branch Git em todos os locais",
     "projectManager.configuration.tags.description": "Indica a lista de etiquetas que você pode usar para organizar seus projetos",
     "projectManager.configuration.tags.collapseItems.description": "Controla como os grupos de etiquetas na visão Favoritos são expandidos ou recolhidos por padrão e se seu estado é lembrado.",

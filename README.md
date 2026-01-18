@@ -339,6 +339,12 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.git.showBranchName": "never"
 ```
 
+Supported values:
+- `"never"`: Never display the Git branch name
+- `"onlyInSideBar"`: Display the Git branch name only in the Side Bar
+- `"onlyInCommandPalette"`: Display the Git branch name only in the Command Palette
+- `"always"`: Display the Git branch name in all locations
+
 
 ## Available Colors
 

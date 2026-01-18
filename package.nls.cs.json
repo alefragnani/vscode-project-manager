@@ -85,6 +85,7 @@
     "projectManager.configuration.git.showBranchName.description": "Řídí, kde zobrazit název aktuální větve Git pro projekty",
     "projectManager.configuration.git.showBranchName.enumDescriptions.never": "Nikdy nezobrazovat název větve Git",
     "projectManager.configuration.git.showBranchName.enumDescriptions.onlyInSideBar": "Zobrazit název větve Git pouze v postranním panelu",
+    "projectManager.configuration.git.showBranchName.enumDescriptions.onlyInCommandPalette": "Zobrazit název větve Git pouze v paletě příkazů",
     "projectManager.configuration.git.showBranchName.enumDescriptions.always": "Zobrazit název větve Git ve všech místech",
     "projectManager.configuration.tags.description": "Označuje seznam značek, které můžete použít k uspořádání projektů",
     "projectManager.configuration.tags.collapseItems.description": "Určuje, zda jsou skupiny značek v zobrazení Oblíbené ve výchozím nastavení rozbalené nebo sbalené a zda si pamatují svůj stav.",
