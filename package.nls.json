@@ -76,6 +76,7 @@
     "projectManager.configuration.git.showBranchName.description": "Controls where to display the current Git branch name for projects",
     "projectManager.configuration.git.showBranchName.enumDescriptions.never": "Never display the Git branch name",
     "projectManager.configuration.git.showBranchName.enumDescriptions.onlyInSideBar": "Display the Git branch name only in the Side Bar",
+    "projectManager.configuration.git.showBranchName.enumDescriptions.onlyInCommandPalette": "Display the Git branch name only in the Command Palette",
     "projectManager.configuration.git.showBranchName.enumDescriptions.always": "Display the Git branch name in all locations",
     "projectManager.configuration.hg.baseFolders.description": "Indicates folders or [glob patterns](https://code.visualstudio.com/docs/editor/glob-patterns) to search for Mercurial projects",
     "projectManager.configuration.hg.ignoredFolders.description": "Indicates folders or [glob patterns](https://code.visualstudio.com/docs/editor/glob-patterns) to be ignored when searching for projects",
