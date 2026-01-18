@@ -94,8 +94,8 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                 }
 
                 projectsMapped = sortProjects(projectsMapped);
-                
-                const showGitBranch = vscode.workspace.getConfiguration("projectManager").get<boolean>("showGitBranchInSideBar", false);
+
+                const showGitBranch = vscode.workspace.getConfiguration("projectManager").get<string>("git.showBranchName", "never");
 
                 for (let index = 0; index < projectsMapped.length; index++) {
                     const prj: ProjectInQuickPick = projectsMapped[ index ];
@@ -108,7 +108,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                     }
 
                     const projectPath = PathUtils.expandHomePath(prj.description);
-                    const gitBranch = showGitBranch ? getGitBranch(projectPath) : undefined;
+                    const gitBranch = (showGitBranch === "always" || showGitBranch === "onlyInSideBar") ? getGitBranch(projectPath) : undefined;
 
                     nodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
                         iconFavorites, {
@@ -177,7 +177,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
                 projectsMapped = sortProjects(projectsMapped);
 
-                const showGitBranch = vscode.workspace.getConfiguration("projectManager").get<boolean>("showGitBranchInSideBar", false);
+                const showGitBranch = vscode.workspace.getConfiguration("projectManager").get<string>("git.showBranchName", "never");
 
                 for (let index = 0; index < projectsMapped.length; index++) {
                     const prj: ProjectInQuickPick = projectsMapped[ index ];
@@ -190,7 +190,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                     }
 
                     const projectPath = PathUtils.expandHomePath(prj.description);
-                    const gitBranch = showGitBranch ? getGitBranch(projectPath) : undefined;
+                    const gitBranch = (showGitBranch === "always" || showGitBranch === "onlyInSideBar") ? getGitBranch(projectPath) : undefined;
 
                     nodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
                         iconFavorites, {
