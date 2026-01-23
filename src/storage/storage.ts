@@ -9,6 +9,7 @@ import { isRemotePath } from "../utils/remote";
 import { Uri } from "vscode";
 import { createProject, Project } from "../core/project";
 import { NO_TAGS_DEFINED } from "../sidebar/constants";
+import { tagMatchesFilter } from "../utils/tagHierarchy";
 
 export class ProjectStorage {
 
@@ -200,10 +201,20 @@ export class ProjectStorage {
     public getProjectsByTags(tags: string[]): any {
         const newItems = this.projects.filter(
             item => item.enabled
-                && (item.tags.some(t => tags.includes(t))
-                    || ((tags.length === 0 || tags.includes(NO_TAGS_DEFINED) && item.tags.length === 0)
-                    ))
+                && (item.tags.some(projectTag => tags.some(filterTag => tagMatchesFilter(projectTag, filterTag)))
+                    || ((tags.length === 0 || tags.includes(NO_TAGS_DEFINED)) && item.tags.length === 0))
         ).map(item => {
+            return {
+                label: item.name,
+                description: item.rootPath,
+                profile: item.profile
+            };
+        });
+        return newItems;
+    }
+
+    public getProjectsByTagExact(tag: string): any {
+        const newItems = this.projects.filter(item => item.enabled && item.tags.includes(tag)).map(item => {
             return {
                 label: item.name,
                 description: item.rootPath,
