@@ -53,7 +53,7 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
     if (isRemoteUri(workspace0)) {
         foundProject = projectStorage.existsRemoteWithRootPath(workspace0);
     } else {
-        foundProject = projectStorage.existsWithRootPath(currentProjectPath);
+        foundProject = projectStorage.existsWithRootPath(currentProjectPath, true);
         if (!foundProject) {
             foundProject = locators.vscLocator.existsWithRootPath(currentProjectPath);
         }

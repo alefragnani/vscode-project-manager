@@ -436,7 +436,7 @@ export async function activate(context: vscode.ExtensionContext) {
         if (workspace0 && isRemoteUri(workspace0)) {
             foundProject = projectStorage.existsRemoteWithRootPath(workspace0);
         } else {
-            foundProject = projectStorage.existsWithRootPath(currentProjectPath);
+            foundProject = projectStorage.existsWithRootPath(currentProjectPath, true);
         }
         Container.currentProject = foundProject;
     }
