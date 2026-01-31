@@ -69,16 +69,18 @@ export class PathUtils {
      * 
      * @param path The path to expand
      */
-    public static expandHomePath(path: string) {
-        if (path.startsWith(HOME_PATH_VARIABLE)) {
-            return path.replace(HOME_PATH_VARIABLE, homeDir);
+    public static expandHomePath(inputPath: string) {
+        if (inputPath.startsWith(HOME_PATH_VARIABLE)) {
+            const relativePath = inputPath.substring(HOME_PATH_VARIABLE.length);
+            return path.normalize(path.join(homeDir, relativePath));
         }
 
-        if (path.startsWith(HOME_PATH_TILDE)) {
-            return path.replace(HOME_PATH_TILDE, homeDir);
+        if (inputPath.startsWith(HOME_PATH_TILDE)) {
+            const relativePath = inputPath.substring(HOME_PATH_TILDE.length);
+            return path.normalize(path.join(homeDir, relativePath));
         }
 
-        return path;
+        return inputPath;
     }
 
     /**

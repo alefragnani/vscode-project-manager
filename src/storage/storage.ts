@@ -84,11 +84,16 @@ export class ProjectStorage {
         return found;
     }
 
-    public existsWithRootPath(rootPath: string): Project {
+    public existsWithRootPath(rootPath: string, returnExpandedHomePath: boolean = false): Project {
         for (const element of this.projects) {
             const elementPath = PathUtils.expandHomePath(element.rootPath);
-            if ((elementPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase()) ||
-                (elementPath === rootPath)) {
+            if ((elementPath.toLocaleLowerCase() === rootPath.toLocaleLowerCase()) || (elementPath === rootPath)) {
+                if (returnExpandedHomePath) {
+                    return {
+                        ...element,
+                        rootPath: elementPath
+                    };
+                }
                 return element;
             }
         }
