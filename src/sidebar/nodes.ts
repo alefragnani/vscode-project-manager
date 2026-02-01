@@ -103,9 +103,16 @@ export class TagNode extends TreeItem {
     constructor(
         public readonly label: string,
         public readonly collapsibleState: TreeItemCollapsibleState,
+        public readonly fullPath?: string,
+        public readonly parentPath?: string
     ) {
         super(label, collapsibleState);
         this.iconPath = ThemeIcons.tag;
+        this.contextValue = "TagNodeKind";
+    }
+
+    public getTagId(): string {
+        return this.fullPath ?? this.label;
     }
 }
 

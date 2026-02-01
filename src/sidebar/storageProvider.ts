@@ -10,6 +10,7 @@ import { ProjectStorage } from "../storage/storage";
 import { PathUtils } from "../utils/path";
 import { isRemotePath } from "../utils/remote";
 import { sortProjects } from "../utils/sorter";
+import { parseTagHierarchy, TagHierarchyNode, isChildTag, TAG_SEPARATOR } from "../utils/tagHierarchy";
 import { NO_TAGS_DEFINED } from "./constants";
 import { NoTagNode, ProjectNode, TagNode } from "./nodes";
 
@@ -29,10 +30,25 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
     private projectSource: ProjectStorage;
     private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | TagNode | void> = new vscode.EventEmitter<ProjectNode | void>();
     private static readonly TAGS_EXPANSION_STATE_KEY = "projectsExplorerFavorites.tagsExpansionState";
+    private cachedTagHierarchy: Map<string, TagHierarchyNode> | null = null;
+    private cachedTags: string[] | null = null;
 
     constructor(projectSource: ProjectStorage) {
         this.projectSource = projectSource;
         this.onDidChangeTreeData = this.internalOnDidChangeTreeData.event;
+    }
+
+    private getTagHierarchy(): Map<string, TagHierarchyNode> {
+        const currentTags = this.projectSource.getAvailableTags();
+        const tagsChanged = !this.cachedTags || 
+            currentTags.length !== this.cachedTags.length ||
+            currentTags.some((tag, i) => tag !== this.cachedTags![i]);
+        
+        if (tagsChanged || !this.cachedTagHierarchy) {
+            this.cachedTags = [...currentTags];
+            this.cachedTagHierarchy = parseTagHierarchy(currentTags);
+        }
+        return this.cachedTagHierarchy;
     }
 
     private static getTagExpansionState(): Record<string, boolean> {
@@ -82,28 +98,62 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
         // loop !!!
         return new Promise(resolve => {
 
-            if (element) {
+            if (element instanceof TagNode) {
+                const tagFullPath = element.getTagId();
+                const isNoTagNode = element instanceof NoTagNode;
 
-                const nodes: ProjectNode[] = [];
+                if (isNoTagNode) {
+                    const projectNodes: ProjectNode[] = [];
+                    let projectsMapped = <ProjectInQuickPickList>this.projectSource.getProjectsByTag('');
+                    projectsMapped = sortProjects(projectsMapped);
 
-                let projectsMapped = <ProjectInQuickPickList>this.projectSource.getProjectsByTag(element.label);
-
-                if (projectsMapped.length === 0) {
-                    resolve(nodes);
+                    for (const prj of projectsMapped) {
+                        let iconFavorites = "favorites";
+                        if (path.extname(prj.description) === ".code-workspace") {
+                            iconFavorites = "favorites-workspace";
+                        } else if (isRemotePath(prj.description)) {
+                            iconFavorites = "favorites-remote";
+                        }
+                        projectNodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
+                            iconFavorites, {
+                                name: prj.label,
+                                path: PathUtils.expandHomePath(prj.description)
+                            }, {
+                                command: "_projectManager.open",
+                                title: "",
+                                arguments: [ PathUtils.expandHomePath(prj.description), prj.label, (prj as any).profile ],
+                            }));
+                    }
+                    resolve(projectNodes);
+                    return;
                 }
 
+                const tagsCollapseBehavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
+                const tagHierarchy = this.getTagHierarchy();
+
+                const childTagNodes: TagNode[] = [];
+                const childTags = this.getChildTagsAtLevel(tagHierarchy, tagFullPath);
+                for (const childTag of childTags) {
+                    const hasGrandchildren = this.hasChildTags(tagHierarchy, childTag.fullPath);
+                    const hasDirectProjects = this.projectSource.getProjectsByTagExact(childTag.fullPath).length > 0;
+                    const collapsibleState = (hasGrandchildren || hasDirectProjects)
+                        ? StorageProvider.getTagCollapsibleState(childTag.fullPath, tagsCollapseBehavior)
+                        : vscode.TreeItemCollapsibleState.None;
+                    childTagNodes.push(new TagNode(childTag.name, collapsibleState, childTag.fullPath, tagFullPath));
+                }
+
+                const projectNodes: ProjectNode[] = [];
+                let projectsMapped = <ProjectInQuickPickList>this.projectSource.getProjectsByTagExact(tagFullPath);
                 projectsMapped = sortProjects(projectsMapped);
 
-                for (let index = 0; index < projectsMapped.length; index++) {
-                    const prj: ProjectInQuickPick = projectsMapped[ index ];
-
+                for (const prj of projectsMapped) {
                     let iconFavorites = "favorites";
                     if (path.extname(prj.description) === ".code-workspace") {
                         iconFavorites = "favorites-workspace";
                     } else if (isRemotePath(prj.description)) {
                         iconFavorites = "favorites-remote";
                     }
-                    nodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
+                    projectNodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
                         iconFavorites, {
                             name: prj.label,
                             path: PathUtils.expandHomePath(prj.description)
@@ -114,7 +164,10 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                         }));
                 }
 
-                resolve(nodes);
+                resolve([ ...childTagNodes, ...projectNodes ] as TagNode[] | ProjectNode[]);
+
+            } else if (element) {
+                resolve([]);
 
             } else { // ROOT
 
@@ -128,25 +181,34 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
                 // viewAsTags - must have at least one tag otherwise, use `viewAsList`
                 if (!viewAsList) {
-                    let nodes: TagNode[] = [];
-
                     const tagsCollapseBehavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
-                    const tags = this.projectSource.getAvailableTags().sort();
-                    for (const tag of tags) {
-                        nodes.push(new TagNode(tag, StorageProvider.getTagCollapsibleState(tag, tagsCollapseBehavior)));
+                    const tagHierarchy = this.getTagHierarchy();
+
+                    let nodes: TagNode[] = [];
+                    for (const [ name, node ] of tagHierarchy) {
+                        const hasChildren = node.children.size > 0;
+                        const hasDirectProjects = this.projectSource.getProjectsByTagExact(node.fullPath).length > 0;
+                        const collapsibleState = (hasChildren || hasDirectProjects)
+                            ? StorageProvider.getTagCollapsibleState(node.fullPath, tagsCollapseBehavior)
+                            : vscode.TreeItemCollapsibleState.None;
+                        nodes.push(new TagNode(name, collapsibleState, node.fullPath));
                     }
 
-                    // has any, then OK
-                    if (nodes.length > 0) {
-                        if (this.projectSource.getProjectsByTag('').length !== 0) {
-                            nodes.push(new NoTagNode(NO_TAGS_DEFINED, StorageProvider.getTagCollapsibleState(NO_TAGS_DEFINED, tagsCollapseBehavior)));
-                        }
+                    if (this.projectSource.getProjectsByTag('').length !== 0) {
+                        nodes.push(new NoTagNode(NO_TAGS_DEFINED, StorageProvider.getTagCollapsibleState(NO_TAGS_DEFINED, tagsCollapseBehavior)));
+                    }
 
-                        // should filter ?
+                    if (nodes.length > 0) {
                         const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
                         if (filterByTags.length > 0) {
-                            nodes = nodes.filter(node => filterByTags.includes(node.label)
-                                || (filterByTags.includes(NO_TAGS_DEFINED) && node.label === ""));
+                            nodes = nodes.filter(node => {
+                                const nodeFullPath = node.getTagId();
+                                return filterByTags.some(filterTag => 
+                                    nodeFullPath === filterTag || 
+                                    isChildTag(filterTag, nodeFullPath) ||
+                                    isChildTag(nodeFullPath, filterTag)
+                                ) || (filterByTags.includes(NO_TAGS_DEFINED) && node.label === "");
+                            });
                         }
 
                         resolve(nodes);
@@ -193,6 +255,26 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                 resolve(nodes);
             }
         });
+    }
+
+    private getChildTagsAtLevel(hierarchy: Map<string, TagHierarchyNode>, parentPath: string): TagHierarchyNode[] {
+        const parts = parentPath.split(TAG_SEPARATOR);
+        let current = hierarchy;
+
+        for (const part of parts) {
+            const node = current.get(part);
+            if (!node) {
+                return [];
+            }
+            current = node.children;
+        }
+
+        return Array.from(current.values());
+    }
+
+    private hasChildTags(hierarchy: Map<string, TagHierarchyNode>, tagPath: string): boolean {
+        const children = this.getChildTagsAtLevel(hierarchy, tagPath);
+        return children.length > 0;
     }
 
 }
