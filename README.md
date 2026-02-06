@@ -333,6 +333,19 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.tags.collapseItems": "startExpanded"
 ```
 
+* Show the current Git branch name for projects (`"never"` by default)
+
+```json
+    "projectManager.git.showBranchName": "never"
+```
+
+Supported values:
+- `"never"`: Never display the Git branch name
+- `"onlyInSideBar"`: Display the Git branch name only in the Side Bar
+- `"onlyInCommandPalette"`: Display the Git branch name only in the Command Palette
+- `"always"`: Display the Git branch name in all locations
+
+
 ## Available Colors
 
 * Choose the foreground color to highlight the current project in the Side Bar

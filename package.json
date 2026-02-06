@@ -844,7 +844,24 @@
                             "%projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed%"
                         ],
                         "description": "%projectManager.configuration.tags.collapseItems.description%"
-                    }
+                    },
+					"projectManager.git.showBranchName": {
+						"type": "string",
+						"enum": [
+							"never",
+							"onlyInSideBar",
+							"onlyInCommandPalette",
+							"always"
+						],
+						"enumDescriptions": [
+							"%projectManager.configuration.git.showBranchName.enumDescriptions.never%",
+							"%projectManager.configuration.git.showBranchName.enumDescriptions.onlyInSideBar%",
+							"%projectManager.configuration.git.showBranchName.enumDescriptions.onlyInCommandPalette%",
+							"%projectManager.configuration.git.showBranchName.enumDescriptions.always%"
+						],
+						"default": "never",
+						"description": "%projectManager.configuration.git.showBranchName.description%"
+					}
                 }
             },
             {
