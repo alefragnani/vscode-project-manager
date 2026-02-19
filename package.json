@@ -1133,7 +1133,7 @@
         "webpack-cli": "^4.8.0"
 	},
 	"dependencies": {
-		"minimatch": "^3.0.4",
+		"minimatch": "^10.2.1",
 		"vscode-ext-codicons": "^1.4.0",
 		"vscode-ext-help-and-feedback-view": "^1.0.1",
 		"walker": "^1.0.7"
