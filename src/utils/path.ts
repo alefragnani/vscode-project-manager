@@ -211,23 +211,13 @@ export class PathUtils {
 
     public static async expandWithGlobPatterns(projectsDirList: string[]): Promise<string[]> {
         const resolved: string[] = [];
-        const globAsync = (pattern: string): Promise<string[]> =>
-            new Promise((resolve, reject) => {
-                glob(pattern, { nodir: false, dot: false }, (err, matches) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(matches);
-                    }
-                });
-            });
 
         for (const pattern of projectsDirList || []) {
             const expanded = PathUtils.expandHomePath(pattern);
 
             if (PathUtils.hasGlobPattern(expanded)) {
                 try {
-                    const matches = await globAsync(expanded);
+                    const matches = await glob(expanded, { nodir: false, dot: false });
                     for (const match of matches) {
                         try {
                             const stat = fs.statSync(match);
