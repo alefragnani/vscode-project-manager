@@ -9,7 +9,7 @@ import vscode = require("vscode");
 import walker = require("walker");
 import { PathUtils } from "../utils/path";
 import { Project } from "../core/project";
-import minimatch = require("minimatch");
+import { minimatch } from "minimatch";
 import { l10n, workspace } from "vscode";
 import { RepositoryDetector } from "./repositoryDetector";
 import { AutodetectedProjectInfo } from "./autodetectedProjectInfo";
