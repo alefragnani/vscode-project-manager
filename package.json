@@ -1128,8 +1128,8 @@
 		"@types/mocha": "^10.0.0",
 		"@types/node": "^18.17.0",
 		"@types/vscode": "^1.78.0",
-		"@typescript-eslint/eslint-plugin": "^6.0.0",
-		"@typescript-eslint/parser": "^6.0.0",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
 		"@vscode/test-electron": "^2.5.2",
 		"eslint": "^8.1.0",
 		"eslint-config-vscode-ext": "^1.1.0",
@@ -1142,7 +1142,7 @@
 	},
 	"dependencies": {
 		"glob": "^10.5.0",
-		"minimatch": "^10.2.1",
+		"minimatch": "^10.2.4",
 		"vscode-ext-codicons": "^1.4.0",
 		"vscode-ext-help-and-feedback-view": "^1.0.1",
 		"walker": "^1.0.7"
