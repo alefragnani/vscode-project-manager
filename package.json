@@ -708,6 +708,11 @@
 						"default": false,
 						"description": "%projectManager.configuration.openInNewWindowWhenClickingInStatusBar.description%"
 					},
+					"projectManager.alwaysOpenInNewWindow": {
+						"type": "boolean",
+						"default": false,
+						"description": "Always open projects in a new window instead of the current one."
+					},
 					"projectManager.removeCurrentProjectFromList": {
 						"type": "boolean",
 						"default": true,

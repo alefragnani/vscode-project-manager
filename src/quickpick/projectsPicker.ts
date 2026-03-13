@@ -205,6 +205,10 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
 }
 
 export function shouldOpenInNewWindow(openInNewWindow: boolean, calledFrom: CommandLocation): boolean {
+    if (workspace.getConfiguration("projectManager").get<boolean>("alwaysOpenInNewWindow", false)) {
+        return true;
+    }
+
     if (!openInNewWindow) {
         return false;
     }
