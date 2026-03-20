@@ -17,7 +17,7 @@ git clone https://github.com/alefragnani/vscode-project-manager.git
 Prerequisites
 
 - [Git](https://git-scm.com/), `>= 2.22.0`
-- [NodeJS](https://nodejs.org/), `>= 18.17.0`
+- [NodeJS](https://nodejs.org/), `>= 22.22.1`
 
 ### Dependencies
 
