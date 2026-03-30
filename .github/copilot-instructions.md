@@ -1,246 +1,184 @@
 # GitHub Copilot Instructions for Project Manager Extension
 
+Always reference these instructions first and fall back to additional search or terminal commands only when project files do not provide enough context.
+
 ## Project Overview
 
-**Project Manager** is a Visual Studio Code extension that helps users easily access and manage their projects, whether they are favorites, Git repositories, Mercurial, SVN, or VSCode folders. The extension provides a dedicated sidebar, status bar integration, and quick-pick commands for seamless project navigation.
+**Project Manager** is a Visual Studio Code extension that helps users easily access and manage their projects, whether they are favorites, Git repositories, Mercurial, SVN, or VS Code folders. The extension provides a dedicated sidebar, status bar integration, and quick-pick commands for seamless project navigation.
 
 ## Technology Stack
 
-- **Language**: TypeScript
-- **Runtime**: Node.js (targeting ES2020)
-- **Framework**: VS Code Extension API
-- **Build Tool**: Webpack with ts-loader
-- **Testing**: Mocha with @vscode/test-electron
-- **Linting**: ESLint with @typescript-eslint parser and eslint-config-vscode-ext
+- Language: TypeScript
+- Runtime: VS Code Extension API (Node.js)
+- Bundler: Webpack with ts-loader
+- Linting: ESLint (`eslint-config-vscode-ext`)
+- Testing: Mocha + `@vscode/test-electron`
 
-## Architecture & Project Structure
+## Working Effectively
+
+Bootstrap and local setup:
+
+```bash
+git submodule init
+git submodule update
+npm install
+```
+
+Build and development quickstart:
+
+```bash
+npm run build
+npm run lint
+```
+
+- Use `npm run watch` during active development.
+- Use VS Code "Launch Extension" (F5) to validate behavior in Extension Development Host.
+- Expected command timings are usually under 10 seconds.
+- Never cancel `npm install`, `npm run watch`, or `npm test` once started.
+## Build and Development Commands
+
+- `npm run compile` - TypeScript compilation
+- `npm run build` - Webpack development build
+- `npm run watch` - Continuous webpack build
+- `npm run lint` - ESLint validation
+- `npm run test` - Full test suite
+- `npm run vscode:prepublish` - Production build
+
+## Testing and Validation
+
+Automated tests use the VS Code test runner and may fail in restricted environments due to VS Code download/network constraints.
+
+Manual validation checklist:
+
+1. Run `npm run build` successfully.
+2. Press F5 to launch Extension Development Host.
+3. Save/list/open projects using quick pick and sidebar flows.
+4. Validate project detection for supported providers.
+5. Validate status bar updates and project switching behavior.
+
+## Project Structure and Key Files
 
 ```
 src/
-├── autodetect/         # Project auto-detection logic (Git, SVN, Mercurial, VSCode)
-├── commands/           # Command implementations
-├── core/              # Core domain models and constants
-│   ├── constants.ts   # Enums and constants (PROJECTS_FILE, CommandLocation, etc.)
-│   ├── container.ts   # Dependency injection container
-│   └── project.ts     # Project interface and factory functions
-├── quickpick/         # QuickPick UI implementations (project picker, tag picker)
-├── sidebar/           # Sidebar tree view providers and decorations
-├── statusbar/         # Status bar integration
-├── storage/           # Project storage management (projects.json)
-├── utils/             # Utility functions (path, remote detection, URI building)
-├── whats-new/         # What's New notifications
-├── test/              # Test suites
-│   ├── suite/         # Test cases
-│   └── runTest.ts     # Test runner
-└── extension.ts       # Extension entry point (activate/deactivate)
+├── autodetect/           # Project auto-detection logic (Git, SVN, Mercurial, VS Code)
+├── commands/             # Command implementations
+├── core/                 # Core domain models and constants
+│   ├── constants.ts      # Enums and constants (PROJECTS_FILE, CommandLocation, etc.)
+│   ├── container.ts      # Dependency injection container
+│   └── project.ts        # Project interface and factory functions
+├── quickpick/            # QuickPick UI implementations (project picker, tag picker)
+├── sidebar/              # Sidebar tree view providers and decorations
+├── statusbar/            # Status bar integration
+├── storage/              # Project storage management (projects.json)
+├── utils/                # Utility functions (path, remote detection, URI building)
+├── whats-new/            # What's New notifications
+├── test/                 # Test suites
+│   ├── suite/            # Test cases
+│   └── runTest.ts        # Test runner
+└── extension.ts          # Extension entry point (activate/deactivate)
+
+dist/                     # Webpack bundles (extension.js)
+l10n/                     # Localization files
+out/                      # Compiled TypeScript files
+vscode-whats-new/         # Git submodule for What's New
+walkthrough/              # Getting Started walkthrough content
 ```
 
-## Build & Development Commands
+## Coding Conventions and Patterns
 
-### Essential Commands
-- `npm run build` - Development build using Webpack
-- `npm run watch` - Watch mode for development
-- `npm run lint` - Run ESLint on TypeScript files
-- `npm run compile` - TypeScript compilation
-- `npm test` - Run full test suite (compile + lint + test)
-- `npm run webpack` - Webpack development build
-- `npm run vscode:prepublish` - Production build (minified)
+### Indentation
 
-### Testing
-- `npm run pretest` - Compile and lint before testing
-- `npm run test-compile` - Compile TypeScript and build webpack
-- `npm run just-test` - Run tests only (without compilation)
-
-## Coding Conventions & Style Guidelines
-
-### General Principles
-1. **License Headers**: All source files must include the GPL-3.0 license header:
-   ```typescript
-   /*---------------------------------------------------------------------------------------------
-   *  Copyright (c) Alessandro Fragnani. All rights reserved.
-   *  Licensed under the GPLv3 License. See License.md in the project root for license information.
-   *--------------------------------------------------------------------------------------------*/
-   ```
-
-2. **Imports Organization**: Group imports logically:
-   - Node.js built-in modules first
-   - VS Code API imports
-   - Internal module imports (relative paths)
-
-3. **TypeScript Settings**:
-   - Target: ES2020
-   - Module: CommonJS
-   - Strict mode: enabled (`alwaysStrict: true`)
-   - Source maps: enabled for debugging
-
-### Indentation & Formatting
-- We use spaces, not tabs   
-- Use **4 spaces** for indentation
-- We use **semicolons** at the end of statements
+- We spaces, not tabs.
+- Use 4 spaces for indentation.
 
 ### Naming Conventions
-- **Interfaces**: PascalCase (e.g., `Project`, `ProjectStorage`)
-- **Classes**: PascalCase (e.g., `Locators`, `Providers`, `Container`)
-- **Functions/Methods**: camelCase (e.g., `registerWhatsNew`, `getProjectFilePath`)
-- **Constants**: UPPER_SNAKE_CASE (e.g., `PROJECTS_FILE`)
-- **Enums**: PascalCase for enum name, camelCase for members (e.g., `CommandLocation.SideBar`)
-- **Private fields**: Prefix with underscore (e.g., `_context`, `_stack`)
 
-### Code Organization
-- Use **namespace imports** for Node.js modules: `import fs = require("fs")`
-- Use **named imports** for VS Code and internal modules
-- Prefer **async/await** over promises for better readability
-- Use **l10n** (localization) for all user-facing strings: `l10n.t("message")`
+- Use PascalCase for `type` names
+- Use PascalCase for `enum` values
+- Use camelCase for `function` and `method` names
+- Use camelCase for `property` names and `local variables`
+- Use whole words in names when possible
 
-### Extension-Specific Patterns
-1. **Command Registration**: Register commands in `activate()` using `context.subscriptions.push()`
-2. **Context Management**: Use the `Container` class for shared state (context, stack, currentProject)
-3. **Configuration**: Access settings via `vscode.workspace.getConfiguration("projectManager")`
-4. **Storage**: Use `context.globalState` for persistent data, `projects.json` for project definitions
-5. **URI Handling**: Use `buildProjectUri()` helper for cross-platform path handling
+### Types
 
-## Key Dependencies
+- Do not export `types` or `functions` unless you need to share it across multiple components
+- Do not introduce new `types` or `values` to the global namespace
+- Prefer `const` over `let` when possible.
 
-### Production
-- **minimatch**: Glob pattern matching for ignored folders
-- **vscode-ext-codicons**: Icon utilities for VS Code
-- **vscode-ext-help-and-feedback-view**: Help and feedback tree view
-- **walker**: Directory traversal for project detection
+### Strings
 
-### Development
-- **webpack** & **ts-loader**: Bundle extension for production
-- **terser-webpack-plugin**: Minification and optimization
-- **eslint-config-vscode-ext**: VS Code extension-specific ESLint rules
+- Use "double quotes"
+- All strings visible to the user need to be externalized using the `l10n` API
+- Externalized strings must not use string concatenation. Use placeholders instead (`{0}`).
 
-## Testing Approach
+### Code Quality
 
-- **Framework**: Mocha with @vscode/test-electron
-- **Test Location**: `src/test/suite/`
-- **Test Patterns**: 
-  - Unit tests for core logic (e.g., `stack.test.ts`)
-  - Integration tests for extension functionality (e.g., `extension.test.ts`)
-- **Running Tests**: Tests run in actual VS Code instance via test-electron
+- All files must include copyright header
+- Prefer `async` and `await` over `Promise` and `then` calls
+- All user facing messages must be localized using the applicable localization framework (for example `l10n.t` method)
+- Keep imports organized: VS Code first, then internal modules.
+- Use semicolons at the end of statements.
+- Keep changes minimal and aligned with existing style.
 
-## Configuration Files
+### Import Organization
 
-- **tsconfig.json**: TypeScript compiler configuration (ES2020, CommonJS, strict mode)
-- **webpack.config.js**: Webpack bundling for production (minification, source maps)
-- **package.json**: Extension manifest with commands, views, configuration, and dependencies
-- **.vscodeignore**: Files to exclude from extension package
-- **.gitignore**: Standard exclusions (out/, node_modules/, dist/, *.vsix)
+- Import VS Code API first: `import * as vscode from "vscode"`
+- Group related imports together
+- Use named imports for specific VS Code types
+- Import from local modules using relative paths
 
-## Common Patterns & Best Practices
+### Architecture Patterns
+- **Container Pattern**: The `Container` class stores global state like `Container.context`
+- **TreeDataProvider Pattern**: The sidebar uses VS Code's `TreeDataProvider` API for project listing and management.
+- **Cached Data**: The extension caches autodetected projects to optimize listing
+- **setContext Pattern**: Uses `VS Code.commands.executeCommand("setContext", "projectManager:hasProjects", true/false)` to control command visibility based on project availability.
+- **Helper Utilities**: Use helper utilities for URI and cross-platform path handling.
 
-### 1. Internationalization (i18n)
-Always use VS Code's localization API for user-facing strings:
-```typescript
-import { l10n } from "vscode";
-vscode.window.showInformationMessage(l10n.t("Could not open the project!"));
-```
+## Extension Features and Configuration
 
-### 2. Command Pattern
-Commands should be registered in `activate()` and follow this pattern:
-```typescript
-context.subscriptions.push(
-    vscode.commands.registerCommand("projectManager.commandName", async () => {
-        // Command implementation
-    })
-);
-```
+### Key Features
+1. **Favorite Projects**: Save favorite projects for easier switch
+2. **Project Providers**: Support for Git, Mercurial, SVN, and VS Code folders with auto-detection
+3. **Auto-detected Projects**: Auto-detect different kind of projects with a wide variety of configurations
+4. **Sidebar**: Tree views showing all projects
+5. **Status bar**: Show current project and allow quick switching
+6. **Project Tags**: Tag projects and filter by tags in quick pick and sidebar
+7. **Remote Support**: Full support for remote development (SSH/WSL/Containers/Codespaces)
+8. **Internationalization support**: Localization of all user-facing strings
 
-### 3. Tree View Providers
-- Located in `src/sidebar/`
-- Implement `vscode.TreeDataProvider` interface
-- Use `_onDidChangeTreeData` event emitter for updates
+### Important Settings
+- `projectManager.sortList`
+- `projectManager.groupList`
+- `projectManager.showProjectNameInStatusBar`
+- `projectManager.tags`
+- `projectManager.git.baseFolders`
+- `projectManager.git.ignoredFolders`
+- `projectManager.git.maxDepthRecursion`
 
-### 4. Path Handling
-- Use `PathUtils` for cross-platform path operations
-- Support `~` and `$home` expansion in user-defined paths
-- Use `buildProjectUri()` for proper URI construction (supports remotes)
+## Dependencies and External Tools
 
-### 5. Remote Development Support
-- Extension supports Remote Development (SSH, WSL, Containers, Codespaces)
-- Use `isWindows`, `isMacOS` helper functions from `utils/remote`
-- Handle both local and remote URIs appropriately
+- Requires `vscode-whats-new` submodule initialization.
+- No external runtime tools are required beyond standard extension toolchain.
 
-## Multi-language Support
+## Troubleshooting and Known Limitations
 
-The extension supports multiple languages via `l10n` bundles:
-- English (package.nls.json)
-- French, Portuguese (Brazil), Russian, Ukrainian, Chinese (Simplified/Traditional), Czech
+- Build failures: check TypeScript/Webpack config compatibility.
+- Test failures in restricted networks can be environment-related due to VS Code download.
+- Path handling bugs are commonly related to remote/local URI differences.
+- Keep localization files in sync when adding new user-facing strings.
 
-All localization files follow the pattern `package.nls.{locale}.json` in the root directory.
+## CI and Pre-Commit Validation
 
-## Important Configuration Settings
+Before committing:
 
-### Project Detection
-- `projectManager.git.baseFolders`: Base folders for Git project detection
-- `projectManager.git.ignoredFolders`: Folders to ignore (supports glob patterns)
-- `projectManager.git.maxDepthRecursion`: Maximum depth for recursive search
+1. Run `npm run lint`.
+2. Run `npm run build`.
+3. Run `npm run test-compile`.
+4. Validate core quick pick/sidebar workflows in Extension Host.
 
-### UI Behavior
-- `projectManager.sortList`: Sorting strategy (Saved, Name, Path, Recent)
-- `projectManager.groupList`: Group projects by type
-- `projectManager.showProjectNameInStatusBar`: Display current project in status bar
-- `projectManager.tags`: Available tags for project organization
+## Common Tasks
 
-## Extension Points
-
-### Commands (Key Examples)
-- `projectManager.saveProject`: Save current folder/workspace as project
-- `projectManager.listProjects`: Show project picker
-- `projectManager.editProjects`: Open projects.json for editing
-- `projectManager.filterProjectsByTag`: Filter by tags
-
-### Views
-- `projectsExplorerFavorites`: Favorite projects tree view
-- `projectsExplorerGit`: Git repositories tree view
-- `projectsExplorerSVN`: SVN repositories tree view
-- `projectsExplorerMercurial`: Mercurial repositories tree view
-- `projectsExplorerVSCode`: VSCode folders tree view
-- `projectsExplorerAny`: Any folder tree view
-
-### Context Keys
-- `projectManager.viewAsList`: Current view mode (list vs tags)
-- `projectManager.sortBy`: Current sort mode
-- `projectManager.canShowTreeView{Type}`: Visibility conditions for tree views
-
-## Development Workflow
-
-1. **Setup**: Run `npm install` to install dependencies
-2. **Development**: Run `npm run watch` for continuous compilation
-3. **Testing**: Run `npm test` for full test suite
-4. **Debugging**: Press F5 in VS Code to launch Extension Development Host
-5. **Linting**: Run `npm run lint` before committing
-6. **Building**: Run `npm run build` for development build or `npm run vscode:prepublish` for production
-
-## Things to Avoid
-
-1. **Don't** hardcode strings - always use `l10n.t()` for internationalization
-2. **Don't** use synchronous file operations in main thread - prefer async APIs
-3. **Don't** directly access workspace folders - use extension's path utilities
-4. **Don't** ignore cross-platform path differences - use `path` module and helpers
-5. **Don't** forget license headers in new source files
-6. **Don't** commit `out/`, `node_modules/`, or `dist/` folders
-
-## Security Considerations
-
-- User-defined paths support `~` and `$home` expansion but are validated
-- Project files (projects.json) are stored in user's VS Code configuration directory
-- Extension requires no special permissions beyond file system access
-- Untrusted workspace support is enabled with appropriate restrictions
-
-## Troubleshooting Tips
-
-1. **Build failures**: Check TypeScript version compatibility and webpack configuration
-2. **Test failures**: Ensure @vscode/test-electron matches VS Code engine version
-3. **Linting errors**: Follow eslint-config-vscode-ext rules strictly
-4. **Path issues**: Use PathUtils and verify remote/local context handling
-5. **Localization**: Verify all new strings are added to package.nls.json
-
-## Additional Resources
-
-- [VS Code Extension API](https://code.visualstudio.com/api)
-- [Extension Manifest (package.json)](https://code.visualstudio.com/api/references/extension-manifest)
-- [Testing Extensions](https://code.visualstudio.com/api/working-with-extensions/testing-extension)
-- [Publishing Extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
+1. Add/update commands and keep `package.json` contributions synchronized.
+2. Update settings and ensure configuration handling reacts to changes.
+3. Update localization keys in `package.nls*.json` when adding user-facing text.
+4. Verify remote and local path behavior when touching project URI logic.
