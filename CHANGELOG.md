@@ -1,3 +1,34 @@
+## [13.1.0] - 2026-03-31
+### Added
+- Autodetect VS Code workspaces (issue [#334](https://github.com/alefragnani/vscode-project-manager/issues/334))
+- Add Tags while saving projects (issue [#551](https://github.com/alefragnani/vscode-project-manager/issues/551))
+- Collapsible Tags in Tags view (issue [#867](https://github.com/alefragnani/vscode-project-manager/issues/867))
+- Hide projects without tags in Tags view (Thanks to @AlanQtten PR [#874](https://github.com/alefragnani/vscode-project-manager/pull/874))
+- Support symlinks in auto-detection (issue [#655](https://github.com/alefragnani/vscode-project-manager/issues/655))
+- Support glob patterns in `baseFolders` setting (issue [#309](https://github.com/alefragnani/vscode-project-manager/issues/309))
+- Exclude Base Folder from auto-detected projects (issue [#828](https://github.com/alefragnani/vscode-project-manager/issues/828))
+
+### Changed
+- Add keyboard navigation key binding to README (Thanks to @zobweyt PR [#839](https://github.com/alefragnani/vscode-project-manager/pull/839))
+- Update translation/localization references (issue [#854](https://github.com/alefragnani/vscode-project-manager/issues/854))
+
+### Fixed
+- Current project not highlighted in sidebar for paths using `~` or `$HOME` (issue [#892](https://github.com/alefragnani/vscode-project-manager/issues/892))
+- `baseFolders` setting not working with `~` in path (issue [#663](https://github.com/alefragnani/vscode-project-manager/issues/663))
+
+### Internal
+- Security Alert: js-yaml (dependabot [PR #850](https://github.com/alefragnani/vscode-project-manager/pull/850))
+- Security Alert: webpack (dependabot [PR #895](https://github.com/alefragnani/vscode-project-manager/pull/895))
+- Security Alert: minimatch (dependabot [PR #900](https://github.com/alefragnani/vscode-project-manager/pull/900))
+- Security Alert: cross-spawn (dependabot [PR #904](https://github.com/alefragnani/vscode-project-manager/pull/904))
+- Security Alert: minimatch (dependabot [PR #906](https://github.com/alefragnani/vscode-project-manager/pull/906))
+- Security Alert: flatted (dependabot [PR #911](https://github.com/alefragnani/vscode-project-manager/pull/911))
+- Security Alert: picomatch (dependabot [PR #914](https://github.com/alefragnani/vscode-project-manager/pull/914))
+- Security Alert: brace-expansion (dependabot [PR #915](https://github.com/alefragnani/vscode-project-manager/pull/915))
+- Bump Node.js to v22 (PR [#910](https://github.com/alefragnani/vscode-project-manager/pull/910))
+- Bump `vscode-whats-new` to March 2026 release (PR [#913](https://github.com/alefragnani/vscode-project-manager/pull/913))
+
+
 ## [13.0.0] - 2025-12-17
 ### Added
 - Fully Open Source again (issue [#498](https://github.com/alefragnani/vscode-project-manager/issues/498))
