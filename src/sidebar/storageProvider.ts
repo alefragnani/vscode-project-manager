@@ -88,6 +88,11 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                     return;
                 }
 
+                if (element instanceof ProjectNode) {
+                    resolve([]);
+                    return;
+                }
+
                 const nodes: ProjectNode[] = [];
 
                 let projectsMapped = <ProjectInQuickPickList>this.projectSource.getProjectsByTag(element.label);

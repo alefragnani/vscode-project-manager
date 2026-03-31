@@ -167,8 +167,12 @@ export async function activate(context: vscode.ExtensionContext) {
 
         projectStorage.editGroup(project.name, newGroup);
         await projectStorage.save();
-        providerManager.updateTreeViewStorage();
+        providerManager.refreshStorageTreeView();
         vscode.window.showInformationMessage(l10n.t("Project group updated!"));
+    });
+    vscode.commands.registerCommand("_projectManager.refreshFavorites", () => {
+        loadProjectsFile();
+        providerManager.refreshStorageTreeView();
     });
     vscode.commands.registerCommand("projectManager.addToFavorites", (node) => saveProject(node));
     vscode.commands.registerCommand("_projectManager.toggleProjectEnabled", (node) => toggleProjectEnabled(node));

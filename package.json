@@ -145,14 +145,12 @@
 			{
 				"command": "_projectManager.viewAsTags#sideBarFavorites",
 				"title": "%projectManager.commands.viewAsTags#sideBarFavorites.title%",
-				"icon": "$(list-tree)",
-				"enablement": "projectManager.favoritesViewMode == 'list'"
+				"icon": "$(list-tree)"
 			},
 			{
 				"command": "_projectManager.viewAsList#sideBarFavorites",
 				"title": "%projectManager.commands.viewAsList#sideBarFavorites.title%",
-				"icon": "$(list-flat)",
-				"enablement": "projectManager.favoritesViewMode != 'list'"
+				"icon": "$(list-flat)"
 			},
 			{
 				"command": "_projectManager.sortBySaved#sideBarFavorites",
@@ -191,6 +189,12 @@
 			{
 				"command": "projectManager.refreshProjects",
 				"title": "%projectManager.commands.refreshProjects.title%"
+			},
+			{
+				"command": "_projectManager.refreshFavorites",
+				"title": "%projectManager.commands.refreshFavorites.title%",
+				"icon": "$(refresh)",
+				"category": "Project Manager"
 			},
 			{
 				"command": "projectManager.refreshVSCodeProjects",
@@ -314,8 +318,7 @@
 		{
 			"command": "_projectManager.viewAsGroups#sideBarFavorites",
 			"title": "%projectManager.commands.viewAsGroups#sideBarFavorites.title%",
-			"icon": "$(type-hierarchy)",
-			"enablement": "projectManager.favoritesViewMode != 'groups'"
+			"icon": "$(type-hierarchy)"
 		},
 		{
 				"command": "projectManager.whatsNew",
@@ -495,6 +498,10 @@
 			{
 				"command": "_projectManager.viewAsGroups#sideBarFavorites",
 				"when": "false"
+			},
+			{
+				"command": "_projectManager.refreshFavorites",
+				"when": "false"
 			}
 		],
 			"view/title": [
@@ -504,25 +511,30 @@
 					"group": "navigation@10"
 				},
 				{
-					"command": "projectManager.editProjects",
+					"command": "_projectManager.refreshFavorites",
 					"when": "view == projectsExplorerFavorites",
 					"group": "navigation@11"
 				},
 				{
-					"command": "_projectManager.viewAsTags#sideBarFavorites",
-"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode == 'list'",
-				"group": "navigation@12"
+					"command": "projectManager.editProjects",
+					"when": "view == projectsExplorerFavorites",
+					"group": "navigation@12"
 				},
-			{
-				"command": "_projectManager.viewAsList#sideBarFavorites",
-				"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode != 'list'",
-				"group": "navigation@13"
-			},
-			{
-				"command": "_projectManager.viewAsGroups#sideBarFavorites",
-				"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode != 'groups'",
-				"group": "navigation@14"
-			},
+				{
+					"command": "_projectManager.viewAsTags#sideBarFavorites",
+					"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode == 'list'",
+					"group": "navigation@13"
+				},
+				{
+					"command": "_projectManager.viewAsGroups#sideBarFavorites",
+					"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode == 'tags'",
+					"group": "navigation@13"
+				},
+				{
+					"command": "_projectManager.viewAsList#sideBarFavorites",
+					"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode == 'groups'",
+					"group": "navigation@13"
+				},
 			{
 				"command": "projectManager.listFavoriteProjects#sideBarFavorites",
 					"when": "view == projectsExplorerFavorites",

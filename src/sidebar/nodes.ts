@@ -117,7 +117,7 @@ export class GroupNode extends TreeItem {
         public readonly collapsibleState: TreeItemCollapsibleState,
     ) {
         super(label, collapsibleState);
-        this.iconPath = ThemeIcons.folder;
+        this.iconPath = getProjectIcon("group", "");
         this.contextValue = "GroupNodeKind";
     }
 }

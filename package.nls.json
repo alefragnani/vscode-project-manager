@@ -45,6 +45,7 @@
     "projectManager.commands.renameProject.title": "Rename Project",
     "projectManager.commands.editTags.title": "Edit Tags",
     "projectManager.commands.editGroup.title": "Edit Group",
+    "projectManager.commands.refreshFavorites.title": "Refresh Favorites",
     "projectManager.commands.viewAsGroups#sideBarFavorites.title": "View as Groups",
     "projectManager.commands.viewAsTags#sideBarFavorites.title": "View as Tags",
     "projectManager.commands.viewAsList#sideBarFavorites.title": "View as List",
