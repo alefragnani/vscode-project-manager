@@ -1,7 +1,7 @@
 # Design: globalState Storage, Group Hierarchy, and Export/Import
 
 **Date:** 2026-03-31
-**Status:** Draft
+**Status:** Approved (rev 3)
 
 ## Summary
 
@@ -26,7 +26,7 @@ Three related changes to the Project Manager extension:
 Replace `fs.readFileSync` / `fs.writeFileSync` in `ProjectStorage` with `ExtensionContext.globalState`:
 
 - **Storage key:** `"projectManager.projects"`
-- **Sync registration:** `context.globalState.setKeysForSync(["projectManager.projects"])` in `activate()`
+- **Sync registration:** `context.globalState.setKeysForSync(["projectManager.projects"])` in `activate()`. UI preference keys like `favoritesViewMode` are intentionally **not** synced (view mode is a per-machine preference).
 - **Load:** `context.globalState.get<Project[]>(STORAGE_KEY, [])`
 - **Save:** `context.globalState.update(STORAGE_KEY, this.projects)`
 
@@ -38,19 +38,28 @@ Replace `fs.readFileSync` / `fs.writeFileSync` in `ProjectStorage` with `Extensi
 constructor(context: ExtensionContext)
 ```
 
-Internally replaces all `fs` operations with `globalState` calls. The `save()` / `load()` method signatures remain the same for minimal call-site disruption.
+Internally replaces all `fs` operations with `globalState` calls.
+
+`save()` becomes `async` (returns `Promise<void>`) since `globalState.update()` returns `Thenable`. All call sites must `await` it. `load()` becomes synchronous read from `globalState.get()` (already synchronous in the VS Code API).
 
 ### Migration from projects.json
 
-On activation, if `globalState` has no data under the storage key:
+A separate `globalState` flag `"projectManager.migrationCompleted"` tracks whether migration has run. This distinguishes "never migrated" from "user intentionally has zero projects."
+
+On activation, if `migrationCompleted` is falsy:
 
 1. Attempt to read `projects.json` from the legacy path (`getProjectFilePath()` logic).
 2. If found, parse and write into `globalState`.
 3. Add `group: ""` to each migrated project.
-4. **Do not delete** the old file (safety — user can manually remove later).
-5. Show an information message: "Projects migrated from projects.json to synced storage."
+4. Set `migrationCompleted` to `true`.
+5. **Do not delete** the old file (safety — user can manually remove later).
+6. Show an information message: "Projects migrated from projects.json to synced storage."
 
-If `globalState` already has data, skip migration entirely.
+If no legacy file exists, still set `migrationCompleted` to `true` (fresh install).
+
+**Migration failure:** If reading or parsing the legacy file throws, do **not** set `migrationCompleted`, allowing retry on next activation. Show an error message with the option to import manually.
+
+**Recovery after globalState wipe:** If `migrationCompleted` is true but `projects` is empty, that is a valid state (user has zero projects). Users who lose data can recover via Import command from a backup or the preserved legacy file.
 
 ### Deprecations and Removals
 
@@ -58,7 +67,7 @@ If `globalState` already has data, skip migration entirely.
 |------|--------|
 | `projectManager.projectsLocation` setting | Mark deprecated in `package.json` (keep for migration path reading) |
 | `fs.watchFile` on `projects.json` | Remove |
-| `editProjects` command (opens JSON file) | Repurpose to open export dialog, or remove entirely |
+| `editProjects` command (opens JSON file) | Repurpose: trigger `projectManager.exportProjects` instead. Update command title to "Export Projects (formerly Edit)". Remove after one major version. |
 | `getProjectFilePath()` in `extension.ts` | Keep as private helper for migration only |
 | `PathUtils.getFilePathFromAppData()` | Keep for migration, no longer on critical path |
 
@@ -96,6 +105,7 @@ Semantics:
 - `"Work/Frontend"` — nested levels
 - `/` is the separator
 - A project belongs to exactly one group
+- Normalization: trim whitespace, collapse consecutive `/`, strip leading/trailing `/`. Applied on save.
 
 `createProject()` sets `group: ""` by default.
 
@@ -109,13 +119,21 @@ Add `viewAsGroups` alongside existing `viewAsList` and `viewAsTags`:
 | `viewAsTags` | Tag → Projects (existing) |
 | `viewAsGroups` | Group folders → Subgroup folders → Projects (new) |
 
-The view state stored in `globalState` changes from `boolean` to a string enum:
+The view state stored in `globalState` changes from `boolean` (`viewAsList` key) to a string enum (`favoritesViewMode` key):
 
 ```typescript
 type FavoritesViewMode = "list" | "tags" | "groups";
 ```
 
-Backward compatibility: existing `boolean` value `true` maps to `"list"`, `false` maps to `"tags"`.
+Backward compatibility: on first load, read old `viewAsList` boolean and convert (`true` → `"list"`, `false` → `"tags"`), write the new key, delete the old key.
+
+Context keys for `package.json` `when` clauses:
+
+| Old | New | Purpose |
+|-----|-----|---------|
+| `projectManager.viewAsList` (boolean) | `projectManager.favoritesViewMode` (string) | Controls which view mode toggle buttons are visible |
+
+All existing `when` clauses like `"when": "projectManager.viewAsList"` must be updated to `"when": "projectManager.favoritesViewMode == 'list'"` etc. A third toggle button for groups is added to the sidebar title area.
 
 ### GroupNode
 
@@ -143,7 +161,7 @@ export class GroupNode extends TreeItem {
   - Add ungrouped projects (`group: ""`) as `ProjectNode` at root level
 
 - **GroupNode call:**
-  - Filter projects whose `group` starts with `element.groupPath`
+  - Filter projects whose `group` exactly equals `element.groupPath` OR starts with `element.groupPath + "/"` (strict path-prefix match to avoid `"Work"` matching `"Workshop"`)
   - Parse next-level segments → create child `GroupNode`s
   - Projects whose `group` exactly matches `element.groupPath` → create `ProjectNode`s
 
@@ -155,6 +173,16 @@ export class GroupNode extends TreeItem {
 | `_projectManager.viewAsGroups#sideBarFavorites` | View as Groups | Switch to group hierarchy view |
 
 `editGroup` uses `InputBox` where user types the group path (e.g. `Work/Frontend`). Empty string moves the project to root level.
+
+### Interaction with Tag Filtering
+
+When `viewAsGroups` is active and `filterByTags` is set:
+
+1. Filter projects by tags first (same logic as existing `viewAsList` + `filterByTags`).
+2. Build the group tree from the filtered project set only.
+3. Empty group folders (all children filtered out) are hidden.
+
+This means tag filtering applies uniformly regardless of view mode.
 
 ### Quick Pick Integration
 
@@ -170,10 +198,10 @@ my-react-app    /Users/me/projects/my-react-app    Work/Frontend
 - `src/sidebar/nodes.ts` — Add `GroupNode`
 - `src/sidebar/storageProvider.ts` — Add `viewAsGroups` rendering logic
 - `src/sidebar/constants.ts` — Add `ViewFavoritesAs.VIEW_AS_GROUPS`
-- `src/storage/storage.ts` — Add `editGroup()`, `getProjectsByGroup()` methods
+- `src/storage/storage.ts` — Add `editGroup()` method (group tree logic stays in `StorageProvider` to avoid duplication)
 - `src/extension.ts` — Register new commands, update view toggle logic
 - `src/quickpick/projectsPicker.ts` — Show group in Quick Pick items
-- `package.json` — Register commands, add menu contributions
+- `package.json` — Register commands, add menu contributions, update `when` clauses to exclude `GroupNodeKind` from project-only context menus
 
 ---
 
@@ -200,7 +228,7 @@ my-react-app    /Users/me/projects/my-react-app    Work/Frontend
 3. Validate format: must be `Project[]`, each item requires at least `name` and `rootPath`.
 4. Prompt user with three options:
    - **Replace** — overwrite all existing projects
-   - **Merge** — merge by name (imported project wins on conflict)
+   - **Merge** — merge by name, case-insensitive (consistent with existing `exists()` / `rename()` behavior; imported project wins on conflict). If the import file itself contains duplicate names (case-insensitive), the last entry wins.
    - **Cancel** — abort
 5. Fill missing fields with defaults (`group: ""`, `tags: []`, `enabled: true`, `paths: []`, `profile: ""`).
 6. Write to `globalState`, refresh tree views.
@@ -266,7 +294,7 @@ Manifest-level strings (command titles) use `%key%` placeholders in `package.jso
 
 | Risk | Mitigation |
 |------|------------|
-| globalState size limit | VS Code globalState has no documented hard limit; project lists are small data |
+| globalState size limit | Typical project lists (hundreds of entries) are well within practical limits; warn if export exceeds 1MB |
 | Settings Sync conflict resolution | VS Code handles globalState merge; last-write-wins is acceptable for project lists |
 | Breaking change for users who rely on `projects.json` file | Migration is automatic; export provides the same file; deprecation warning for `projectsLocation` |
 | Group separator `/` in project names | `/` is only interpreted as separator in the `group` field, not in `name` |
