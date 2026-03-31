@@ -19,6 +19,108 @@ export class ProjectManagerContentProvider implements ContentProvider {
     public provideChangeLog(): ChangeLogItem[] {
         const changeLog: ChangeLogItem[] = [];
 
+        changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "13.1.0", releaseDate: "March 2026" } });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Autodetect VS Code workspaces",
+                id: 334,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Add Tags while saving projects",
+                id: 551,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Collapsible Tags in Tags view",
+                id: 867,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Hide projects without tags in Tags view",
+                id: 874,
+                kind: IssueKind.PR,
+                kudos: "@AlanQtten"
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support symlinks in auto-detection",
+                id: 655,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Support glob patterns in <code>baseFolders</code> setting",
+                id: 309,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.NEW,
+            detail: {
+                message: "Exclude Base Folder from auto-detected projects",
+                id: 828,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.CHANGED,
+            detail: {
+                message: "Add keyboard navigation key binding to README",
+                id: 839,
+                kind: IssueKind.PR,
+                kudos: "@zobweyt"
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.CHANGED,
+            detail: {
+                message: "Update translation/localization references",
+                id: 854,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "Current project not highlighted in sidebar for paths using <code>~</code> or <code>$HOME</code>",
+                id: 892,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({
+            kind: ChangeLogKind.FIXED,
+            detail: {
+                message: "<code>baseFolders</code> setting not working with <code>~</code> in path",
+                id: 663,
+                kind: IssueKind.Issue
+            }
+        });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Security Alert: js-yaml", id: 850, kind: IssueKind.PR, kudos: "dependabot" } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Security Alert: webpack", id: 895, kind: IssueKind.PR, kudos: "dependabot" } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Security Alert: minimatch", id: 900, kind: IssueKind.PR, kudos: "dependabot" } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Security Alert: cross-spawn", id: 904, kind: IssueKind.PR, kudos: "dependabot" } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Security Alert: minimatch", id: 906, kind: IssueKind.PR, kudos: "dependabot" } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Security Alert: flatted", id: 911, kind: IssueKind.PR, kudos: "dependabot" } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Security Alert: picomatch", id: 914, kind: IssueKind.PR, kudos: "dependabot" } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Security Alert: brace-expansion", id: 915, kind: IssueKind.PR, kudos: "dependabot" } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Bump Node.js to v22", id: 910, kind: IssueKind.PR } });
+        changeLog.push({ kind: ChangeLogKind.INTERNAL, detail: { message: "Bump <code>vscode-whats-new</code> to March 2026 release", id: 913, kind: IssueKind.PR } });
+
         changeLog.push({ kind: ChangeLogKind.VERSION, detail: { releaseNumber: "13.0.0", releaseDate: "November 2025" } });
         changeLog.push({
             kind: ChangeLogKind.NEW,
