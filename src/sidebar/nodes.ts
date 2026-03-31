@@ -109,6 +109,19 @@ export class TagNode extends TreeItem {
     }
 }
 
+export class GroupNode extends TreeItem {
+
+    constructor(
+        public readonly label: string,
+        public readonly groupPath: string,
+        public readonly collapsibleState: TreeItemCollapsibleState,
+    ) {
+        super(label, collapsibleState);
+        this.iconPath = ThemeIcons.folder;
+        this.contextValue = "GroupNodeKind";
+    }
+}
+
 export class NoTagNode extends TagNode {
 
     constructor(

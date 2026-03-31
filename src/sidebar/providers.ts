@@ -6,7 +6,7 @@
 import * as vscode from "vscode";
 import { Locators } from "../autodetect/locators";
 import { ProjectStorage } from "../storage/storage";
-import { ProjectNode, TagNode } from "./nodes";
+import { GroupNode, ProjectNode, TagNode } from "./nodes";
 import { AutodetectProvider } from "./autodetectProvider";
 import { StorageProvider } from "./storageProvider";
 import { Container } from "../core/container";
@@ -21,7 +21,7 @@ export class Providers {
     public svnProvider: AutodetectProvider;
     public anyProvider: AutodetectProvider;
 
-    private storageTreeView: vscode.TreeView<ProjectNode | TagNode>;
+    private storageTreeView: vscode.TreeView<ProjectNode | TagNode | GroupNode>;
     private vscodeTreeView: vscode.TreeView<ProjectNode>;
     private gitTreeView: vscode.TreeView<ProjectNode>;
     private mercurialTreeView: vscode.TreeView<ProjectNode>;
@@ -81,7 +81,7 @@ export class Providers {
         );
     }
 
-    private async handleStorageTreeViewExpansionChange(event: vscode.TreeViewExpansionEvent<ProjectNode | TagNode>, state: "expanded" | "collapsed") {
+    private async handleStorageTreeViewExpansionChange(event: vscode.TreeViewExpansionEvent<ProjectNode | TagNode | GroupNode>, state: "expanded" | "collapsed") {
         const element = event.element;
         if (element instanceof TagNode) {
             const behavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");

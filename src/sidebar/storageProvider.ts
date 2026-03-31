@@ -11,7 +11,7 @@ import { PathUtils } from "../utils/path";
 import { isRemotePath } from "../utils/remote";
 import { sortProjects } from "../utils/sorter";
 import { NO_TAGS_DEFINED } from "./constants";
-import { NoTagNode, ProjectNode, TagNode } from "./nodes";
+import { GroupNode, NoTagNode, ProjectNode, TagNode } from "./nodes";
 
 interface ProjectInQuickPick {
     label: string;
@@ -22,12 +22,12 @@ interface ProjectInQuickPick {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ProjectInQuickPickList extends Array<ProjectInQuickPick> { }
 
-export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | TagNode> {
+export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | TagNode | GroupNode> {
 
-    public readonly onDidChangeTreeData: vscode.Event<ProjectNode | TagNode | void>;
+    public readonly onDidChangeTreeData: vscode.Event<ProjectNode | TagNode | GroupNode | void>;
 
     private projectSource: ProjectStorage;
-    private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | TagNode | void> = new vscode.EventEmitter<ProjectNode | void>();
+    private internalOnDidChangeTreeData: vscode.EventEmitter<ProjectNode | TagNode | GroupNode | void> = new vscode.EventEmitter<ProjectNode | GroupNode | void>();
     private static readonly TAGS_EXPANSION_STATE_KEY = "projectsExplorerFavorites.tagsExpansionState";
 
     constructor(projectSource: ProjectStorage) {
@@ -73,16 +73,20 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
         this.internalOnDidChangeTreeData.fire();
     }
 
-    public getTreeItem(element: ProjectNode | TagNode): vscode.TreeItem {
+    public getTreeItem(element: ProjectNode | TagNode | GroupNode): vscode.TreeItem {
         return element;
     }
 
-    public getChildren(element?: ProjectNode | TagNode): Thenable<ProjectNode[] | TagNode[]> {
+    public getChildren(element?: ProjectNode | TagNode | GroupNode): Thenable<(ProjectNode | TagNode | GroupNode)[]> {
 
-        // loop !!!
         return new Promise(resolve => {
 
             if (element) {
+
+                if (element instanceof GroupNode) {
+                    resolve(this.getGroupChildren(element));
+                    return;
+                }
 
                 const nodes: ProjectNode[] = [];
 
@@ -118,16 +122,21 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
             } else { // ROOT
 
-                // no project saved yet, returns [] `empty`...
                 if (this.projectSource.length() === 0) {
                     return resolve([]);
                 }
 
-                // choose the view
-                const viewAsList = Container.context.globalState.get<boolean>("viewAsList", true);
+                const viewMode = Container.context.globalState.get<string>("favoritesViewMode",
+                    Container.context.globalState.get<boolean>("viewAsList", true) ? "list" : "tags");
 
-                // viewAsTags - must have at least one tag otherwise, use `viewAsList`
-                if (!viewAsList) {
+                // viewAsGroups
+                if (viewMode === "groups") {
+                    resolve(this.getGroupRootChildren());
+                    return;
+                }
+
+                // viewAsTags
+                if (viewMode === "tags") {
                     let nodes: TagNode[] = [];
 
                     const tagsCollapseBehavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
@@ -136,13 +145,11 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                         nodes.push(new TagNode(tag, StorageProvider.getTagCollapsibleState(tag, tagsCollapseBehavior)));
                     }
 
-                    // has any, then OK
                     if (nodes.length > 0) {
                         if (this.projectSource.getProjectsByTag('').length !== 0) {
                             nodes.push(new NoTagNode(NO_TAGS_DEFINED, StorageProvider.getTagCollapsibleState(NO_TAGS_DEFINED, tagsCollapseBehavior)));
                         }
 
-                        // should filter ?
                         const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
                         if (filterByTags.length > 0) {
                             nodes = nodes.filter(node => filterByTags.includes(node.label)
@@ -154,8 +161,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                     }
                 }
 
-                // viewAsList OR no Tags
-                // raw list
+                // viewAsList OR no Tags (fallback)
                 const nodes: ProjectNode[] = [];
 
                 let projectsMapped: ProjectInQuickPickList;
@@ -193,6 +199,81 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                 resolve(nodes);
             }
         });
+    }
+
+    private getGroupRootChildren(): (ProjectNode | GroupNode)[] {
+        const projects = this.getFilteredEnabledProjects();
+        return this.buildGroupLevel(projects, "");
+    }
+
+    private getGroupChildren(groupNode: GroupNode): (ProjectNode | GroupNode)[] {
+        const projects = this.getFilteredEnabledProjects();
+        return this.buildGroupLevel(projects, groupNode.groupPath);
+    }
+
+    private getFilteredEnabledProjects(): Array<{ name: string; rootPath: string; profile: string; group: string; tags: string[] }> {
+        const allProjects = this.projectSource.getProjects().filter(p => p.enabled);
+        const filterByTags = Container.context.globalState.get<string[]>("filterByTags", []);
+        if (filterByTags.length === 0) {
+            return allProjects;
+        }
+        return allProjects.filter(p =>
+            p.tags.some(t => filterByTags.includes(t)) ||
+            (filterByTags.includes(NO_TAGS_DEFINED) && p.tags.length === 0)
+        );
+    }
+
+    private buildGroupLevel(
+        projects: Array<{ name: string; rootPath: string; profile: string; group: string; tags: string[] }>,
+        parentPath: string
+    ): (ProjectNode | GroupNode)[] {
+        const projectNodes: ProjectNode[] = [];
+        const childGroupNames = new Set<string>();
+
+        for (const project of projects) {
+            const group: string = project.group || "";
+            const isChild = parentPath === ""
+                ? group === ""
+                : group === parentPath;
+            const isDescendant = parentPath === ""
+                ? group !== ""
+                : group.startsWith(parentPath + "/");
+
+            if (isChild) {
+                projectNodes.push(this.createProjectNode(project));
+            } else if (isDescendant) {
+                const remainder = parentPath === ""
+                    ? group
+                    : group.substring(parentPath.length + 1);
+                childGroupNames.add(remainder.split("/")[0]);
+            }
+        }
+
+        const groupNodes: GroupNode[] = [...childGroupNames].sort().map(name => {
+            const fullPath = parentPath === "" ? name : `${parentPath}/${name}`;
+            return new GroupNode(name, fullPath, vscode.TreeItemCollapsibleState.Expanded);
+        });
+
+        return [...groupNodes, ...projectNodes];
+    }
+
+    private createProjectNode(project: { name: string; rootPath: string; profile: string }): ProjectNode {
+        const prjPath = PathUtils.expandHomePath(project.rootPath);
+        let iconFavorites = "favorites";
+        if (path.extname(prjPath) === ".code-workspace") {
+            iconFavorites = "favorites-workspace";
+        } else if (isRemotePath(prjPath)) {
+            iconFavorites = "favorites-remote";
+        }
+        return new ProjectNode(project.name, vscode.TreeItemCollapsibleState.None,
+            iconFavorites, {
+                name: project.name,
+                path: prjPath
+            }, {
+                command: "_projectManager.open",
+                title: "",
+                arguments: [ prjPath, project.name, project.profile ],
+            });
     }
 
 }
