@@ -146,13 +146,13 @@
 				"command": "_projectManager.viewAsTags#sideBarFavorites",
 				"title": "%projectManager.commands.viewAsTags#sideBarFavorites.title%",
 				"icon": "$(list-tree)",
-				"enablement": "projectManager.viewAsList"
+				"enablement": "projectManager.favoritesViewMode == 'list'"
 			},
 			{
 				"command": "_projectManager.viewAsList#sideBarFavorites",
 				"title": "%projectManager.commands.viewAsList#sideBarFavorites.title%",
 				"icon": "$(list-flat)",
-				"enablement": "!projectManager.viewAsList"
+				"enablement": "projectManager.favoritesViewMode != 'list'"
 			},
 			{
 				"command": "_projectManager.sortBySaved#sideBarFavorites",
@@ -303,11 +303,21 @@
 				"command": "_projectManager.renameProject",
 				"title": "%projectManager.commands.renameProject.title%"
 			},
-			{
-				"command": "_projectManager.editTags",
-				"title": "%projectManager.commands.editTags.title%"
-			},
-			{
+		{
+			"command": "_projectManager.editTags",
+			"title": "%projectManager.commands.editTags.title%"
+		},
+		{
+			"command": "_projectManager.editGroup",
+			"title": "%projectManager.commands.editGroup.title%"
+		},
+		{
+			"command": "_projectManager.viewAsGroups#sideBarFavorites",
+			"title": "%projectManager.commands.viewAsGroups#sideBarFavorites.title%",
+			"icon": "$(type-hierarchy)",
+			"enablement": "projectManager.favoritesViewMode != 'groups'"
+		},
+		{
 				"command": "projectManager.whatsNew",
 				"title": "%projectManager.commands.whatsNew.title%"
 			},
@@ -474,11 +484,19 @@
 					"command": "_projectManager.openFolderWelcome",
 					"when": "false"
 				},
-				{
-					"command": "_projectManager.openSideBar",
-					"when": "false"
-				}
-			],
+			{
+				"command": "_projectManager.openSideBar",
+				"when": "false"
+			},
+			{
+				"command": "_projectManager.editGroup",
+				"when": "false"
+			},
+			{
+				"command": "_projectManager.viewAsGroups#sideBarFavorites",
+				"when": "false"
+			}
+		],
 			"view/title": [
 				{
 					"command": "projectManager.saveProject",
@@ -492,16 +510,21 @@
 				},
 				{
 					"command": "_projectManager.viewAsTags#sideBarFavorites",
-					"when": "view == projectsExplorerFavorites && projectManager.viewAsList",
-					"group": "navigation@12"
+"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode == 'list'",
+				"group": "navigation@12"
 				},
-				{
-					"command": "_projectManager.viewAsList#sideBarFavorites",
-					"when": "view == projectsExplorerFavorites && !projectManager.viewAsList",
-					"group": "navigation@13"
-				},
-				{
-					"command": "projectManager.listFavoriteProjects#sideBarFavorites",
+			{
+				"command": "_projectManager.viewAsList#sideBarFavorites",
+				"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode != 'list'",
+				"group": "navigation@13"
+			},
+			{
+				"command": "_projectManager.viewAsGroups#sideBarFavorites",
+				"when": "view == projectsExplorerFavorites && projectManager.favoritesViewMode != 'groups'",
+				"group": "navigation@14"
+			},
+			{
+				"command": "projectManager.listFavoriteProjects#sideBarFavorites",
 					"when": "view == projectsExplorerFavorites",
 					"group": "navigation@14"
 				},
@@ -642,13 +665,18 @@
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},
-				{
-					"command": "_projectManager.editTags",
-					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
-					"group": "favorites"
-				},
-				{
-					"command": "_projectManager.toggleProjectEnabled",
+			{
+				"command": "_projectManager.editTags",
+				"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
+				"group": "favorites"
+			},
+			{
+				"command": "_projectManager.editGroup",
+				"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
+				"group": "favorites"
+			},
+			{
+				"command": "_projectManager.toggleProjectEnabled",
 					"when": "view == projectsExplorerFavorites && viewItem == ProjectNodeKind",
 					"group": "favorites"
 				},
@@ -675,12 +703,16 @@
 					"command": "_projectManager.viewAsList#sideBarFavorites",
 					"group": "1_projectManager#sideBarFavorites"
 				},
-				{
-					"command": "_projectManager.viewAsTags#sideBarFavorites",
-					"group": "1_projectManager#sideBarFavorites"
-				},
-				{
-					"command": "_projectManager.sortBySaved#sideBarFavorites",
+			{
+				"command": "_projectManager.viewAsTags#sideBarFavorites",
+				"group": "1_projectManager#sideBarFavorites"
+			},
+			{
+				"command": "_projectManager.viewAsGroups#sideBarFavorites",
+				"group": "1_projectManager#sideBarFavorites"
+			},
+			{
+				"command": "_projectManager.sortBySaved#sideBarFavorites",
 					"group": "2_projectManager#sideBarFavorites"
 				},
 				{
@@ -740,11 +772,12 @@
 						"default": false,
 						"description": "%projectManager.configuration.groupList.description%"
 					},
-					"projectManager.projectsLocation": {
-						"type": "string",
-						"default": "",
-						"description": "%projectManager.configuration.projectsLocation.description%"
-					},
+				"projectManager.projectsLocation": {
+					"type": "string",
+					"default": "",
+					"description": "%projectManager.configuration.projectsLocation.description%",
+					"deprecationMessage": "Projects are now stored in synced global state. Use Export/Import commands instead."
+				},
 					"projectManager.cacheProjectsBetweenSessions": {
 						"type": "boolean",
 						"default": true,
