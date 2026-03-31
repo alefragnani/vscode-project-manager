@@ -137,6 +137,7 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                             return {
                                 label: folder.label,
                                 description: folder.description,
+                                detail: folder.group || undefined,
                                 profile: folder.profile,
                                 buttons: showOpenInNewWindowButton ? [ openInNewWindowButton ] : []
                             };
