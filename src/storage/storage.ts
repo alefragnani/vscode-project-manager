@@ -3,20 +3,21 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import fs = require("fs");
+import { Memento, Uri } from "vscode";
 import { PathUtils } from "../utils/path";
 import { isRemotePath } from "../utils/remote";
-import { Uri } from "vscode";
-import { createProject, Project } from "../core/project";
+import { createProject, normalizeGroupPath, Project } from "../core/project";
 import { NO_TAGS_DEFINED } from "../sidebar/constants";
+
+const STORAGE_KEY = "projectManager.projects";
 
 export class ProjectStorage {
 
     private projects: Project[];
-    private filename: string;
+    private globalState: Memento;
 
-    constructor(filename: string) {
-        this.filename = filename;
+    constructor(globalState: Memento) {
+        this.globalState = globalState;
         this.projects = [];
     }
 
@@ -47,6 +48,15 @@ export class ProjectStorage {
         for (const element of this.projects) {
             if (element.name.toLowerCase() === name.toLowerCase()) {
                 element.tags = tags;
+                return;
+            }
+        }
+    }
+
+    public editGroup(name: string, group: string): void {
+        for (const element of this.projects) {
+            if (element.name.toLowerCase() === name.toLowerCase()) {
+                element.group = normalizeGroupPath(group);
                 return;
             }
         }
@@ -115,44 +125,29 @@ export class ProjectStorage {
     }
 
     public load(): string {
-        let items: Array<any> = [];
-
-        // missing file (new install)
-        if (!fs.existsSync(this.filename)) {
-            return "";
-        }
-
         try {
-            items = JSON.parse(fs.readFileSync(this.filename).toString());
-            // OLD v1 format
-            if ((items.length > 0) && (items[ 0 ].label)) {
-                for (const element of items) {
-                    this.projects.push(createProject(element.label, element.description));
-                }
-                // save updated
-                this.save();
-            } else { // NEW v2 format
-                this.projects = (items as Array<Partial<Project>>).map(item => ({
-                    name: "",
-                    rootPath: "",
-                    paths: [],
-                    tags: [],
-                    enabled: true,
-                    profile: "",
-                    group: "",
-                    ...item
-                }));
+            const items = this.globalState.get<Array<Partial<Project>>>(STORAGE_KEY, []);
 
-                this.projects = this.projects.map(project => ({
-                    name: project.name,
-                    rootPath: project.rootPath,
-                    paths: project.paths,
-                    tags: project.tags,
-                    enabled: project.enabled,
-                    profile: project.profile,
-                    group: project.group ?? ""
-                }));
-            }
+            this.projects = items.map(item => ({
+                name: "",
+                rootPath: "",
+                paths: [],
+                tags: [],
+                enabled: true,
+                profile: "",
+                group: "",
+                ...item
+            }));
+
+            this.projects = this.projects.map(project => ({
+                name: project.name,
+                rootPath: project.rootPath,
+                paths: project.paths,
+                tags: project.tags,
+                enabled: project.enabled,
+                profile: project.profile,
+                group: project.group
+            }));
 
             this.updatePaths();
             return "";
@@ -162,8 +157,16 @@ export class ProjectStorage {
         }
     }
 
-    public save() {
-        fs.writeFileSync(this.filename, JSON.stringify(this.projects, null, "\t"));
+    public async save(): Promise<void> {
+        await this.globalState.update(STORAGE_KEY, this.projects);
+    }
+
+    public getProjects(): Project[] {
+        return [...this.projects];
+    }
+
+    public setProjects(projects: Project[]): void {
+        this.projects = projects;
     }
 
     public map(): any {

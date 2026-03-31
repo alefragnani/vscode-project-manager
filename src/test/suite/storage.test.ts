@@ -6,21 +6,16 @@
 import * as assert from "assert";
 import * as path from "path";
 import * as os from "os";
-import fs = require("fs");
 import { Uri } from "vscode";
 import { normalizeGroupPath } from "../../core/project";
 import { ProjectStorage } from "../../storage/storage";
 import { NO_TAGS_DEFINED } from "../../sidebar/constants";
+import { MockMemento } from "./mocks/MockMemento";
 
 suite("ProjectStorage", () => {
 
-    function createTempFilename(prefix: string = "project-manager-storage-"): string {
-        return path.join(os.tmpdir(), `${prefix}${Date.now()}-${Math.random().toString(16).slice(2)}.json`);
-    }
-
     test("push and length track added projects", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         assert.strictEqual(storage.length(), 0);
 
@@ -31,8 +26,7 @@ suite("ProjectStorage", () => {
     });
 
     test("pop removes and returns project by name (case-insensitive)", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("MyProject", "/path/project");
         storage.push("Other", "/path/other");
@@ -48,8 +42,7 @@ suite("ProjectStorage", () => {
     });
 
     test("rename changes project name", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("OldName", "/path/old");
         storage.rename("oldname", "NewName");
@@ -59,8 +52,7 @@ suite("ProjectStorage", () => {
     });
 
     test("updateRootPath and existsWithRootPath are case-insensitive", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("Sample", "/path/one");
         storage.updateRootPath("sample", "/PATH/UPDATED");
@@ -73,8 +65,7 @@ suite("ProjectStorage", () => {
     });
 
     test("toggleEnabled toggles enabled flag and disabled returns list", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("One", "/path/one");
         storage.push("Two", "/path/two");
@@ -93,8 +84,7 @@ suite("ProjectStorage", () => {
     });
 
     test("editTags and getAvailableTags collect unique tags", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("A", "/a");
         storage.push("B", "/b");
@@ -109,14 +99,12 @@ suite("ProjectStorage", () => {
     });
 
     test("getProjectsByTag returns enabled projects matching tag (including no-tag case)", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("WithTag", "/with");
         storage.push("NoTag", "/notag");
 
         storage.editTags("WithTag", [ "tag1" ]);
-        // NoTag keeps empty tags
 
         let result = storage.getProjectsByTag("tag1");
         assert.strictEqual(result.length, 1);
@@ -128,8 +116,7 @@ suite("ProjectStorage", () => {
     });
 
     test("getProjectsByTags returns enabled projects matching any tag and NO_TAGS_DEFINED behavior", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("Frontend", "/fe");
         storage.push("Backend", "/be");
@@ -137,7 +124,6 @@ suite("ProjectStorage", () => {
 
         storage.editTags("Frontend", [ "frontend" ]);
         storage.editTags("Backend", [ "backend" ]);
-        // NoTags has no tags
 
         let result = storage.getProjectsByTags([ "frontend" ]);
         assert.strictEqual(result.length, 1);
@@ -154,8 +140,7 @@ suite("ProjectStorage", () => {
     });
 
     test("map returns only enabled projects with expected shape", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("EnabledProject", "/enabled");
         storage.push("DisabledProject", "/disabled");
@@ -171,18 +156,18 @@ suite("ProjectStorage", () => {
         });
     });
 
-    test("save and load preserve projects in v2 format", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+    test("save and load preserve projects in v2 format", async () => {
+        const memento = new MockMemento();
+        const storage = new ProjectStorage(memento);
 
         storage.push("A", "/path/a");
         storage.push("B", "/path/b");
         storage.editTags("A", [ "x" ]);
         storage.editTags("B", [ "y" ]);
 
-        storage.save();
+        await storage.save();
 
-        const loadedStorage = new ProjectStorage(filename);
+        const loadedStorage = new ProjectStorage(memento);
         const error = loadedStorage.load();
         assert.strictEqual(error, "");
         assert.strictEqual(loadedStorage.length(), 2);
@@ -191,35 +176,10 @@ suite("ProjectStorage", () => {
 
         const tags = loadedStorage.getAvailableTags().sort();
         assert.deepStrictEqual(tags, [ "x", "y" ]);
-
-        fs.unlinkSync(filename);
-    });
-
-    test("load migrates v1 format (label/description) to v2 projects", () => {
-        const filename = createTempFilename();
-        const v1Items = [
-            { label: "V1Project1", description: "/v1/one" },
-            { label: "V1Project2", description: "/v1/two" }
-        ];
-        fs.writeFileSync(filename, JSON.stringify(v1Items, null, "\t"));
-
-        const storage = new ProjectStorage(filename);
-        const error = storage.load();
-        assert.strictEqual(error, "");
-        assert.strictEqual(storage.length(), 2);
-        assert.ok(storage.exists("V1Project1"));
-        assert.ok(storage.exists("V1Project2"));
-
-        const mapped = storage.map();
-        assert.strictEqual(mapped.length, 2);
-        assert.strictEqual(mapped[0].label, "V1Project1");
-
-        fs.unlinkSync(filename);
     });
 
     test("existsRemoteWithRootPath returns matching project for remote URI", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         const remoteRoot = "vscode-remote://ssh-remote+test/home/user/project";
         storage.push("RemoteProject", remoteRoot);
@@ -227,19 +187,17 @@ suite("ProjectStorage", () => {
         const uri = Uri.parse(remoteRoot);
         const found = storage.existsRemoteWithRootPath(uri);
 
-        // Implementation matches by path, not full URI
         assert.ok(found);
         assert.strictEqual(found!.name, "RemoteProject");
     });
 
     test("existsWithRootPath returns expandedHomePath when asked", () => {
-        const filename = createTempFilename();
-        const storage = new ProjectStorage(filename);
+        const storage = new ProjectStorage(new MockMemento());
 
         storage.push("Regular", "/reg");
         storage.push("ExpandsTilde", "~/et");
         storage.push("ExpandsHome", "$home/eh");
-        
+
         const foundTildeExpanded = storage.existsWithRootPath(path.join(os.homedir(), "et"), true);
         assert.ok(foundTildeExpanded);
         assert.strictEqual(foundTildeExpanded!.name, "ExpandsTilde");
@@ -254,11 +212,85 @@ suite("ProjectStorage", () => {
         assert.ok(foundHomeExpanded);
         assert.strictEqual(foundHomeExpanded!.name, "ExpandsHome");
         assert.strictEqual(foundHomeExpanded!.rootPath, path.join(os.homedir(), "eh"));
-        
+
         const foundHome = storage.existsWithRootPath(path.join(os.homedir(), "eh"), false);
         assert.ok(foundHome);
         assert.strictEqual(foundHome!.name, "ExpandsHome");
         assert.strictEqual(foundHome!.rootPath, "$home/eh");
+    });
+
+    test("editGroup updates project group with normalization", () => {
+        const storage = new ProjectStorage(new MockMemento());
+        storage.push("MyProject", "/path/project");
+        storage.editGroup("myproject", "Work/Frontend");
+        const project = storage.existsWithRootPath("/path/project");
+        assert.ok(project);
+        assert.strictEqual(project!.group, "Work/Frontend");
+    });
+
+    test("editGroup normalizes group path", () => {
+        const storage = new ProjectStorage(new MockMemento());
+        storage.push("MyProject", "/path/project");
+        storage.editGroup("myproject", "  /Work//Frontend/ ");
+        const project = storage.existsWithRootPath("/path/project");
+        assert.ok(project);
+        assert.strictEqual(project!.group, "Work/Frontend");
+    });
+
+    test("load with empty globalState returns no error", () => {
+        const storage = new ProjectStorage(new MockMemento());
+        const error = storage.load();
+        assert.strictEqual(error, "");
+        assert.strictEqual(storage.length(), 0);
+    });
+
+    test("load fills missing fields with defaults", async () => {
+        const memento = new MockMemento();
+        await memento.update("projectManager.projects", [
+            { name: "Legacy", rootPath: "/legacy" }
+        ]);
+        const storage = new ProjectStorage(memento);
+        storage.load();
+        assert.strictEqual(storage.length(), 1);
+        const project = storage.existsWithRootPath("/legacy");
+        assert.ok(project);
+        assert.deepStrictEqual(project!.tags, []);
+        assert.strictEqual(project!.group, "");
+        assert.strictEqual(project!.enabled, true);
+    });
+
+    test("save and load round-trip with group", async () => {
+        const memento = new MockMemento();
+        const storage = new ProjectStorage(memento);
+        storage.push("A", "/path/a");
+        storage.editGroup("A", "Work/Frontend");
+        await storage.save();
+
+        const storage2 = new ProjectStorage(memento);
+        storage2.load();
+        const project = storage2.existsWithRootPath("/path/a");
+        assert.ok(project);
+        assert.strictEqual(project!.group, "Work/Frontend");
+    });
+
+    test("getProjects returns a copy of projects array", () => {
+        const storage = new ProjectStorage(new MockMemento());
+        storage.push("A", "/a");
+        const projects = storage.getProjects();
+        assert.strictEqual(projects.length, 1);
+        projects.pop();
+        assert.strictEqual(storage.length(), 1);
+    });
+
+    test("setProjects replaces all projects", async () => {
+        const storage = new ProjectStorage(new MockMemento());
+        storage.push("A", "/a");
+        storage.setProjects([
+            { name: "B", rootPath: "/b", paths: [], tags: [], enabled: true, profile: "", group: "" }
+        ]);
+        assert.strictEqual(storage.length(), 1);
+        assert.ok(storage.exists("B"));
+        assert.strictEqual(storage.exists("A"), false);
     });
 
 });
