@@ -5,7 +5,7 @@
 	"version": "13.0.0",
 	"publisher": "alefragnani",
 	"engines": {
-		"vscode": "^1.74.0"
+		"vscode": "^1.78.0"
 	},
 	"categories": [
 		"Other"
@@ -1165,7 +1165,8 @@
 		"pretest": "npm run compile && npm run lint",
 		"test-compile": "tsc -p ./ && npm run webpack",
 		"just-test": "node ./out/src/test/runTest.js",
-		"test": "npm run test-compile && npm run just-test"
+		"test": "npm run test-compile && npm run just-test",
+		"package": "npx @vscode/vsce package --no-dependencies --skip-license"
 	},
 	"devDependencies": {
 		"@types/mocha": "^10.0.0",
