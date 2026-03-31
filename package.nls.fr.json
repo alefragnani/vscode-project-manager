@@ -4,6 +4,8 @@
     "projectManager.commands.listProjects.title": "Project Manager: Lister les projets à ouvrir",
     "projectManager.commands.listProjectsNewWindow.title": "Project Manager: Lister les projets à ouvrir dans une nouvelle fenêtre",
     "projectManager.commands.editProjects.title": "Project Manager: Éditer les projets",
+    "projectManager.commands.exportProjects.title": "Project Manager: Exporter les projets",
+    "projectManager.commands.importProjects.title": "Project Manager: Importer les projets",
     "projectManager.commands.refreshProjects.title": "Project Manager: Actualiser les projets",
     "projectManager.commands.refreshVSCodeProjects.title": "Project Manager: Actualiser les projets VSCode",
     "projectManager.commands.refreshGitProjects.title": "Project Manager: Actualiser les projets Git",

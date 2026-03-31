@@ -14,6 +14,8 @@
     "projectManager.commands.listProjects.title": "项目管理器: 列出项目以打开",
     "projectManager.commands.listProjectsNewWindow.title": "项目管理器: 列出项目以在新窗口中打开",
     "projectManager.commands.editProjects.title": "项目管理器: 编辑项目",
+    "projectManager.commands.exportProjects.title": "项目管理器: 导出项目",
+    "projectManager.commands.importProjects.title": "项目管理器: 导入项目",
     "projectManager.commands.refreshProjects.title": "项目管理器: 刷新项目",
     "projectManager.commands.refreshVSCodeProjects.title": "项目管理器: 刷新 VSCode 项目",
     "projectManager.commands.refreshGitProjects.title": "项目管理器: 刷新 Git 项目",

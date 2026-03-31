@@ -47,5 +47,12 @@
     "filtered by tags": "filtrováno podle značek",
     "Save the workspace first to save a project": "Chcete-li uložit projekt, nejprve uložte pracovní prostor",
     "Open a folder first to save a project": "Chcete-li uložit projekt, nejprve otevřete složku",
-    "Save Project": "Uložit projekt"
+    "Save Project": "Uložit projekt",
+    "Projects exported successfully.": "Projekty byly úspěšně exportovány.",
+    "Invalid project file format.": "Neplatný formát souboru projektů.",
+    "No valid projects found in file.": "V souboru nebyly nalezeny žádné platné projekty.",
+    "Replace": "Nahradit",
+    "Merge": "Sloučit",
+    "Found {0} projects. How would you like to import?": "Nalezeno projektů: {0}. Jak chcete import provést?",
+    "Imported {0} projects.": "Importováno projektů: {0}."
 }

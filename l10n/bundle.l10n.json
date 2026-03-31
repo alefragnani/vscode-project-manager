@@ -47,5 +47,12 @@
     "filtered by tags": "filtered by tags",
     "Save the workspace first to save a project": "Save the workspace first to save a project",
     "Open a folder first to save a project": "Open a folder first to save a project",
-    "Save Project": "Save Project"
+    "Save Project": "Save Project",
+    "Projects exported successfully.": "Projects exported successfully.",
+    "Invalid project file format.": "Invalid project file format.",
+    "No valid projects found in file.": "No valid projects found in file.",
+    "Replace": "Replace",
+    "Merge": "Merge",
+    "Found {0} projects. How would you like to import?": "Found {0} projects. How would you like to import?",
+    "Imported {0} projects.": "Imported {0} projects."
 }

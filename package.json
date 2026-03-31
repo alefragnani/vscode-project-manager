@@ -133,6 +133,16 @@
 				"icon": "$(edit)"
 			},
 			{
+				"command": "projectManager.exportProjects",
+				"title": "%projectManager.commands.exportProjects.title%",
+				"icon": "$(export)"
+			},
+			{
+				"command": "projectManager.importProjects",
+				"title": "%projectManager.commands.importProjects.title%",
+				"icon": "$(cloud-download)"
+			},
+			{
 				"command": "_projectManager.viewAsTags#sideBarFavorites",
 				"title": "%projectManager.commands.viewAsTags#sideBarFavorites.title%",
 				"icon": "$(list-tree)",

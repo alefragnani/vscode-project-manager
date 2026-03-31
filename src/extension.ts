@@ -23,6 +23,7 @@ import { Container } from "./core/container";
 import { registerWhatsNew } from "./whats-new/commands";
 import { registerSupportProjectManager } from "./commands/supportProjectManager";
 import { registerHelpAndFeedbackView } from "./sidebar/helpAndFeedbackView";
+import { exportProjects, importProjects } from "./commands/exportImport";
 import { registerRevealFileInOS } from "./commands/revealFileInOS";
 import { registerOpenSettings } from "./commands/openSettings";
 import { pickTags } from "./quickpick/tagsPicker";
@@ -124,6 +125,12 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects(true, true));
     locators.registerCommands();
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
+    vscode.commands.registerCommand("projectManager.exportProjects", async () => { await exportProjects(projectStorage); });
+    vscode.commands.registerCommand("projectManager.importProjects", async () => { await importProjects(projectStorage, () => {
+        loadProjectsFile();
+        providerManager.storageProvider.refresh();
+        providerManager.updateTreeViewStorage();
+    }); });
     vscode.commands.registerCommand("projectManager.listProjects", () => listProjects(false));
     vscode.commands.registerCommand("projectManager.listProjectsNewWindow", () => listProjects(true));
     

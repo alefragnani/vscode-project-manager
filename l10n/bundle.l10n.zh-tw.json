@@ -47,5 +47,12 @@
     "filtered by tags": "按標籤過濾",
     "Save the workspace first to save a project": "先保存工作區以保存項目",
     "Open a folder first to save a project": "先打開一個文件夾以保存項目",
-    "Save Project": "儲存專案"
+    "Save Project": "儲存專案",
+    "Projects exported successfully.": "專案已成功匯出。",
+    "Invalid project file format.": "專案檔格式無效。",
+    "No valid projects found in file.": "檔案中找不到有效的專案。",
+    "Replace": "取代",
+    "Merge": "合併",
+    "Found {0} projects. How would you like to import?": "找到 {0} 個專案。要如何匯入？",
+    "Imported {0} projects.": "已匯入 {0} 個專案。"
 }

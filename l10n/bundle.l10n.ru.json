@@ -47,5 +47,12 @@
     "filtered by tags": "отфильтровано по тегам",
     "Save the workspace first to save a project": "Сначала сохраните рабочую область, чтобы сохранить проект",
     "Open a folder first to save a project": "Сначала откройте папку, чтобы сохранить проект",
-    "Save Project": "Сохранить проект"
+    "Save Project": "Сохранить проект",
+    "Projects exported successfully.": "Проекты успешно экспортированы.",
+    "Invalid project file format.": "Неверный формат файла проектов.",
+    "No valid projects found in file.": "В файле не найдено действительных проектов.",
+    "Replace": "Заменить",
+    "Merge": "Объединить",
+    "Found {0} projects. How would you like to import?": "Найдено проектов: {0}. Как выполнить импорт?",
+    "Imported {0} projects.": "Импортировано проектов: {0}."
 }

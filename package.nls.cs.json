@@ -4,6 +4,8 @@
     "projectManager.commands.listProjects.title": "Projektový manažer: seznam projektů k otevření",
     "projectManager.commands.listProjectsNewWindow.title": "Projektový manažer: seznam projektů k otevření v novém okně",
     "projectManager.commands.editProjects.title": "Projektový manažer: editovat projekty",
+    "projectManager.commands.exportProjects.title": "Projektový manažer: exportovat projekty",
+    "projectManager.commands.importProjects.title": "Projektový manažer: importovat projekty",
     "projectManager.commands.refreshProjects.title": "Projektový manažer: aktualizovat projekty",
     "projectManager.commands.refreshVSCodeProjects.title": "Projektový manažer: aktualizovat VSCode projekty",
     "projectManager.commands.refreshGitProjects.title": "Projektový manažer: aktualizovat Git projekty",

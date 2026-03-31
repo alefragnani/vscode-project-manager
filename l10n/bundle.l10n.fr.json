@@ -47,5 +47,12 @@
     "filtered by tags": "filtré par étiquettes",
     "Save the workspace first to save a project": "Sauvegarder d'abord l'espace de travail pour sauvegarder un projet",
     "Open a folder first to save a project": "Ouvrir d'abord un dossier pour enregistrer un projet",
-    "Save Project": "Enregistrer le projet"
+    "Save Project": "Enregistrer le projet",
+    "Projects exported successfully.": "Projets exportés avec succès.",
+    "Invalid project file format.": "Format de fichier de projets non valide.",
+    "No valid projects found in file.": "Aucun projet valide trouvé dans le fichier.",
+    "Replace": "Remplacer",
+    "Merge": "Fusionner",
+    "Found {0} projects. How would you like to import?": "{0} projets trouvés. Comment souhaitez-vous les importer ?",
+    "Imported {0} projects.": "{0} projets importés."
 }
