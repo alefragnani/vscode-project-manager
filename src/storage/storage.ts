@@ -139,6 +139,7 @@ export class ProjectStorage {
                     tags: [],
                     enabled: true,
                     profile: "",
+                    group: "",
                     ...item
                 }));
 
@@ -148,7 +149,8 @@ export class ProjectStorage {
                     paths: project.paths,
                     tags: project.tags,
                     enabled: project.enabled,
-                    profile: project.profile
+                    profile: project.profile,
+                    group: project.group ?? ""
                 }));
             }
 

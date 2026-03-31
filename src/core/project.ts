@@ -10,9 +10,10 @@ export interface Project {
     tags: string[];   // the tags associated to the project
     enabled: boolean; // the project should be displayed in the project list
     profile: string;  // the profile to assign to the project
+    group: string;    // hierarchical group path, "/" separated (e.g. "Work/Frontend")
 }
 
-export function createProject(name: string, rootPath: string): Project {
+export function createProject(name: string, rootPath: string, group: string = ""): Project {
 
     const newProject: Project = {
         name,
@@ -20,7 +21,15 @@ export function createProject(name: string, rootPath: string): Project {
         paths: [],
         tags: [],
         enabled: true,
-        profile: ""
+        profile: "",
+        group
     };
     return newProject;
+}
+
+export function normalizeGroupPath(group: string): string {
+    return group
+        .trim()
+        .replace(/\/+/g, "/")
+        .replace(/^\/|\/$/g, "");
 }

@@ -8,6 +8,7 @@ import * as path from "path";
 import * as os from "os";
 import fs = require("fs");
 import { Uri } from "vscode";
+import { normalizeGroupPath } from "../../core/project";
 import { ProjectStorage } from "../../storage/storage";
 import { NO_TAGS_DEFINED } from "../../sidebar/constants";
 
@@ -260,4 +261,26 @@ suite("ProjectStorage", () => {
         assert.strictEqual(foundHome!.rootPath, "$home/eh");
     });
 
+});
+
+suite("normalizeGroupPath", () => {
+    test("trims whitespace", () => {
+        assert.strictEqual(normalizeGroupPath("  Work  "), "Work");
+    });
+
+    test("collapses consecutive slashes", () => {
+        assert.strictEqual(normalizeGroupPath("Work//Frontend"), "Work/Frontend");
+    });
+
+    test("strips leading and trailing slashes", () => {
+        assert.strictEqual(normalizeGroupPath("/Work/Frontend/"), "Work/Frontend");
+    });
+
+    test("handles empty string", () => {
+        assert.strictEqual(normalizeGroupPath(""), "");
+    });
+
+    test("handles complex case", () => {
+        assert.strictEqual(normalizeGroupPath("  /Work///Frontend/ "), "Work/Frontend");
+    });
 });

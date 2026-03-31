@@ -263,7 +263,8 @@ export class CustomProjectLocator {
                     tags: [],
                     paths: [],
                     enabled: true,
-                    profile: ""
+                    profile: "",
+                    group: ""
                 };
             }
         }
