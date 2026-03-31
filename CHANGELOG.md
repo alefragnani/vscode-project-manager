@@ -1,3 +1,7 @@
+## [13.1.1] - 2026-03-31
+### Internal
+- Failed publishing on open-vsx (issue [#920](https://github.com/alefragnani/vscode-project-manager/issues/920))
+
 ## [13.1.0] - 2026-03-31
 ### Added
 - Autodetect VS Code workspaces (issue [#334](https://github.com/alefragnani/vscode-project-manager/issues/334))
