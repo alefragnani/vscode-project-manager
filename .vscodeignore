@@ -16,3 +16,4 @@ webpack.config.js
 **/.git
 **/.gitmodules
 .devcontainer/
+.nvmrc
