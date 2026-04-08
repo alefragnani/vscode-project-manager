@@ -204,6 +204,11 @@ export async function activate(context: vscode.ExtensionContext) {
             await StorageProvider.resetTagExpansionState();
             providerManager.refreshStorageTreeView();
         }
+
+        if (cfg.affectsConfiguration("projectManager.git.showBranchName")) {
+            providerManager.storageProvider.refresh();
+            providerManager.updateTreeViewStorage();
+        }
     }));
 
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
