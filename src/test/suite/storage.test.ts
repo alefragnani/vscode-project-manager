@@ -226,9 +226,43 @@ suite("ProjectStorage", () => {
         const uri = Uri.parse(remoteRoot);
         const found = storage.existsRemoteWithRootPath(uri);
 
-        // Implementation matches by path, not full URI
         assert.ok(found);
         assert.strictEqual(found!.name, "RemoteProject");
+    });
+
+    test("existsRemoteWithRootPath uses the remote URI authority when matching", () => {
+        const filename = createTempFilename();
+        const storage = new ProjectStorage(filename);
+
+        storage.push("RemoteA", "vscode-remote://ssh-remote+server-A/home/user/project");
+        storage.push("RemoteB", "vscode-remote://ssh-remote+server-B/home/user/project");
+
+        const found = storage.existsRemoteWithRootPath(Uri.parse("vscode-remote://ssh-remote+server-B/home/user/project"));
+
+        assert.ok(found);
+        assert.strictEqual(found!.name, "RemoteB");
+    });
+
+    test("existsRemoteWithRootPath ignores same path on a different remote authority", () => {
+        const filename = createTempFilename();
+        const storage = new ProjectStorage(filename);
+
+        storage.push("RemoteA", "vscode-remote://ssh-remote+server-A/home/user/project");
+
+        const found = storage.existsRemoteWithRootPath(Uri.parse("vscode-remote://ssh-remote+server-B/home/user/project"));
+
+        assert.strictEqual(found, undefined);
+    });
+
+    test("existsRemoteWithRootPath ignores same authority and path on a different URI scheme", () => {
+        const filename = createTempFilename();
+        const storage = new ProjectStorage(filename);
+
+        storage.push("RemoteProject", "vscode-remote://ssh-remote+server/home/user/project");
+
+        const found = storage.existsRemoteWithRootPath(Uri.parse("vscode-vfs://ssh-remote+server/home/user/project"));
+
+        assert.strictEqual(found, undefined);
     });
 
     test("existsWithRootPath returns expandedHomePath when asked", () => {
