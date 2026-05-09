@@ -7,6 +7,8 @@
   <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
+English | [简体中文](README.zh-CN.md)
+
 # What's new in Project Manager 13.1
 
 * Improved **Tags** support
