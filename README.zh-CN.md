@@ -4,7 +4,7 @@
 
 <p align="center">
   <br />
-  <a title="了解更多 Project Manager 信息" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
+  <a title="了解更多 Project Manager 信息" href="https://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
 
 [English](README.md) | 简体中文
@@ -241,7 +241,7 @@ _It just works_
 如果你希望在 **Stable** 和 **Insider** 安装之间_共享_项目，或者将设置存储在不同位置（如云服务），可以为 `projects.json` 指定一个_备用_目录。
 
 ```json
-  "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
+  "projectManager.projectsLocation": "C:\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
 > 你可以在目录路径中使用 `~` 或 `$home`，它们会被替换为你的 HOME 文件夹。
@@ -262,7 +262,7 @@ _It just works_
     "node_modules", 
     "out", 
     "typings", 
-    "test"
+    "test",
     "fork*"
   ],
 ```
