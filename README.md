@@ -4,8 +4,10 @@
 
 <p align="center">
   <br />
-  <a title="Learn more about Project Manager" href="http://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
+  <a title="Learn more about Project Manager" href="https://github.com/alefragnani/vscode-project-manager"><img src="https://raw.githubusercontent.com/alefragnani/vscode-project-manager/master/images/vscode-project-manager-logo-readme.png" alt="Project Manager Logo" width="70%" /></a>
 </p>
+
+English | [简体中文](README.zh-CN.md)
 
 # What's new in Project Manager 13.1
 
@@ -239,7 +241,7 @@ You can choose how your projects are sorted
 If you intend to _share_ projects between  **Stable** and **Insider** installations, or if you store your settings in different locations (cloud services), you can indicate an _alternative_ location (folder path) for the `projects.json` file.
 
 ```json
-    "projectManager.projectsLocation": "C\\Users\\myUser\\AppData\\Roaming\\Code\\User"
+    "projectManager.projectsLocation": "C:\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
 > You can use `~` or `$home` while defining the folder path. It will be replaced by your HOME folder.
@@ -260,7 +262,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
         "node_modules", 
         "out", 
         "typings", 
-        "test"
+        "test",
         "fork*"
     ],
 ```
