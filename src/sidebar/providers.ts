@@ -79,9 +79,11 @@ export class Providers {
                 await this.handleStorageTreeViewExpansionChange(event, "collapsed");
             }),
             // Refresh git branch info when window gains focus and sidebar is visible
-            vscode.window.onDidChangeWindowState(async () => {
-                if (this.storageTreeView.visible) {
+            vscode.window.onDidChangeWindowState(async (state) => {
+                const showGitBranch = vscode.workspace.getConfiguration("projectManager").get<string>("git.showBranchName", "never");
+                if (state.focused && this.storageTreeView.visible && (showGitBranch === "onlyInSideBar" || showGitBranch === "always")) {
                     this.storageProvider.refresh();
+                    this.gitProvider.refresh();
                 }
             }),
         );

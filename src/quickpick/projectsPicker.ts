@@ -138,16 +138,17 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         //
                         const showGitBranchInCommandPalette = workspace.getConfiguration("projectManager").get<string>("git.showBranchName", "never");
                         folders = (<any[]>folders).map(folder => {
-                            let description = folder.description;
+                            let detail: string | undefined;
                             if (showGitBranchInCommandPalette === "onlyInCommandPalette" || showGitBranchInCommandPalette === "always") {
                                 const gitBranch = getGitBranch(PathUtils.expandHomePath(folder.description));
                                 if (gitBranch) {
-                                    description = `${folder.description} | ${gitBranch}`;
+                                    detail = `$(git-branch) ${gitBranch}`;
                                 }
                             }
                             return {
                                 label: folder.label,
-                                description: description,
+                                description: folder.description,
+                                detail: detail,
                                 profile: folder.profile,
                                 buttons: showOpenInNewWindowButton ? [ openInNewWindowButton ] : []
                             };
