@@ -9,6 +9,7 @@ import { ProjectStorage } from "../storage/storage";
 import { ProjectNode, TagNode } from "./nodes";
 import { AutodetectProvider } from "./autodetectProvider";
 import { StorageProvider } from "./storageProvider";
+import { FoldersProvider } from "./foldersProvider";
 import { Container } from "../core/container";
 import { l10n } from "vscode";
 
@@ -20,6 +21,7 @@ export class Providers {
     public mercurialProvider: AutodetectProvider;
     public svnProvider: AutodetectProvider;
     public anyProvider: AutodetectProvider;
+    public foldersProvider: FoldersProvider;
 
     private storageTreeView: vscode.TreeView<ProjectNode | TagNode>;
     private vscodeTreeView: vscode.TreeView<ProjectNode>;
@@ -27,6 +29,7 @@ export class Providers {
     private mercurialTreeView: vscode.TreeView<ProjectNode>;
     private svnTreeView: vscode.TreeView<ProjectNode>;
     private anyTreeView: vscode.TreeView<ProjectNode>;
+    private foldersTreeView: vscode.TreeView<vscode.TreeItem>;
 
     private locators: Locators;
     private projectStorage: ProjectStorage;
@@ -35,6 +38,7 @@ export class Providers {
         this.locators = locators;
         this.projectStorage = storage;
 
+        this.foldersProvider = new FoldersProvider();
         this.storageProvider = new StorageProvider(this.projectStorage);
         this.vscodeProvider = new AutodetectProvider(this.locators.vscLocator);
         this.gitProvider = new AutodetectProvider(this.locators.gitLocator);
@@ -65,6 +69,10 @@ export class Providers {
         this.anyTreeView = vscode.window.createTreeView("projectsExplorerAny", {
             treeDataProvider: this.anyProvider,
             showCollapseAll: false
+        });
+        this.foldersTreeView = vscode.window.createTreeView("projectsExplorerFolders", {
+            treeDataProvider: this.foldersProvider,
+            showCollapseAll: true
         });
 
         this.registerStorageTreeViewListeners();
@@ -100,6 +108,7 @@ export class Providers {
         await this.mercurialProvider.showTreeView();
         await this.svnProvider.showTreeView();
         await this.anyProvider.showTreeView();
+        await this.foldersProvider.showTreeView();
 
         this.updateTreeViewDetails();
     }
@@ -138,5 +147,6 @@ export class Providers {
         this.mercurialTreeView.title = `Mercurial (${this.locators.mercurialLocator.projectList.length})`;
         this.svnTreeView.title = `SVN (${this.locators.svnLocator.projectList.length})`;
         this.anyTreeView.title = `Any (${this.locators.anyLocator.projectList.length})`;
+        this.foldersTreeView.title = "Folders";
     }
 }

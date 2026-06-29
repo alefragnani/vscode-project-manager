@@ -66,6 +66,11 @@
 					"name": "%projectManager.views.favorites.name%"
 				},
 				{
+					"id": "projectsExplorerFolders",
+					"name": "%projectManager.views.folders.name%",
+					"when": "projectManager.canShowTreeViewFolders"
+				},
+				{
 					"id": "projectsExplorerGit",
 					"name": "%projectManager.views.git.name%",
 					"when": "projectManager.canShowTreeViewGit"
@@ -228,6 +233,16 @@
 				"icon": "$(refresh)"
 			},
 			{
+				"command": "projectManager.listFolderProjects#sideBarFolders",
+				"title": "%projectManager.commands.listFolderProjects.sideBarFolders.title%",
+				"icon": "$(search)"
+			},
+			{
+				"command": "projectManager.refreshFolders",
+				"title": "%projectManager.commands.refreshFolders.title%",
+				"icon": "$(refresh)"
+			},
+			{
 				"command": "projectManager.listMercurialProjects#sideBarMercurial",
 				"title": "%projectManager.commands.listMercurialProjects#sideBarMercurial.title%",
 				"icon": "$(search)"
@@ -255,6 +270,10 @@
 			{
 				"command": "projectManager.openSettings#sideBarMercurial",
 				"title": "%projectManager.commands.openSettings#sideBarMercurial.title%"
+			},
+			{
+				"command": "projectManager.openSettings#sideBarFolders",
+				"title": "%projectManager.commands.openSettings#sideBarFolders.title%"
 			},
 			{
 				"command": "_projectManager.open",
@@ -332,6 +351,11 @@
 			{
 				"command": "_projectManager.openSideBar",
 				"title": "%projectManager.commands.openSideBar.title%"
+			},
+			{
+				"command": "_projectManager.openFolderGroupInNewWindow",
+				"title": "%projectManager.commands.openFolderGroupInNewWindow.title%",
+				"icon": "$(link-external)"
 			}
 		],
 		"menus": {
@@ -449,6 +473,10 @@
 					"when": "false"
 				},
 				{
+					"command": "projectManager.refreshFolders",
+					"when": "false"
+				},
+				{
 					"command": "_projectManager.whatsNewContextMenu",
 					"when": "false"
 				},
@@ -466,6 +494,18 @@
 				},
 				{
 					"command": "_projectManager.openSideBar",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.listFolderProjects#sideBarFolders",
+					"when": "false"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarFolders",
+					"when": "false"
+				},
+				{
+					"command": "_projectManager.openFolderGroupInNewWindow",
 					"when": "false"
 				}
 			],
@@ -589,37 +629,57 @@
 					"command": "projectManager.openSettings#sideBarMercurial",
 					"when": "view == projectsExplorerMercurial",
 					"group": "2_projectManager"
+				},
+				{
+					"command": "projectManager.listFolderProjects#sideBarFolders",
+					"when": "view == projectsExplorerFolders",
+					"group": "navigation@10"
+				},
+				{
+					"command": "projectManager.refreshFolders",
+					"when": "view == projectsExplorerFolders",
+					"group": "navigation@11"
+				},
+				{
+					"command": "projectManager.openSettings#sideBarFolders",
+					"when": "view == projectsExplorerFolders",
+					"group": "2_projectManager"
 				}
 			],
 			"view/item/context": [
 				{
+					"command": "_projectManager.openFolderGroupInNewWindow",
+					"when": "view == projectsExplorerFolders && viewItem == FolderNodeKind",
+					"group": "navigation"
+				},
+				{
 					"command": "_projectManager.openInNewWindow",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial|Folders)/ && viewItem == ProjectNodeKind",
 					"group": "inline"
 				},
 				{
 					"command": "_projectManager.open",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial|Folders)/ && viewItem == ProjectNodeKind",
 					"group": "navigation"
 				},
 				{
 					"command": "_projectManager.openInNewWindow",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial|Folders)/ && viewItem == ProjectNodeKind",
 					"group": "navigation"
 				},
 				{
 					"command": "_projectManager.revealInFinder#sideBar",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind && isMac",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial|Folders)/ && viewItem == ProjectNodeKind && isMac",
 					"group": "navigation@2"
 				},
 				{
 					"command": "_projectManager.revealInExplorer#sideBar",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind && isWindows",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial|Folders)/ && viewItem == ProjectNodeKind && isWindows",
 					"group": "navigation@2"
 				},
 				{
 					"command": "_projectManager.revealInFileManager#sideBar",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind && isLinux",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial|Folders)/ && viewItem == ProjectNodeKind && isLinux",
 					"group": "navigation@2"
 				},
 				{
@@ -644,7 +704,7 @@
 				},
 				{
 					"command": "projectManager.addToWorkspace#sideBar",
-					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial)/ && viewItem == ProjectNodeKind",
+					"when": "view =~ /projectsExplorer(Favorites|VSCode|Git|SVN|Any|Mercurial|Folders)/ && viewItem == ProjectNodeKind",
 					"group": "workspace"
 				},
 				{
@@ -844,6 +904,46 @@
 							"%projectManager.configuration.tags.collapseItems.enumDescriptions.startCollapsed%"
 						],
 						"description": "%projectManager.configuration.tags.collapseItems.description%"
+					},
+					"projectManager.folders": {
+						"type": "array",
+						"default": [],
+						"description": "%projectManager.configuration.folders.description%",
+						"items": {
+							"type": "object",
+							"required": [
+								"name",
+								"folder"
+							],
+							"additionalProperties": false,
+							"properties": {
+								"name": {
+									"type": "string",
+									"description": "Display name for this group in the sidebar"
+								},
+								"folder": {
+									"type": "string",
+									"description": "Absolute path of the folder to scan for projects"
+								},
+								"kind": {
+									"type": "string",
+									"enum": [
+										"git",
+										"any",
+										"vscode",
+										"hg",
+										"svn"
+									],
+									"default": "git",
+									"description": "Type of projects to detect (defaults to git)"
+								},
+								"maxDepthRecursion": {
+									"type": "integer",
+									"default": 1,
+									"description": "Max folder depth to scan (defaults to 1)"
+								}
+							}
+						}
 					}
 				}
 			},

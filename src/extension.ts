@@ -34,6 +34,7 @@ import { l10n } from "vscode";
 import { registerWalkthrough } from "./commands/walkthrough";
 import { registerSideBarDecorations } from "./sidebar/decoration";
 import { ProjectNode } from "./sidebar/nodes";
+import type { FolderNode } from "./sidebar/foldersProvider";
 import { Project } from "./core/project";
 
 let locators: Locators;
@@ -99,6 +100,13 @@ export async function activate(context: vscode.ExtensionContext) {
                 () => ({}),  // done
                 () => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
     });
+    vscode.commands.registerCommand("_projectManager.openFolderGroupInNewWindow", (node: FolderNode) => {
+        const uri = buildProjectUri(node.folderPath);
+        vscode.commands.executeCommand("vscode.openFolder", uri, { forceNewWindow: true })
+            .then(
+                () => ({}),
+                () => vscode.window.showInformationMessage(l10n.t("Could not open the project!")));
+    });
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
     vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
@@ -114,6 +122,11 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("projectManager.listSVNProjects#sideBarSVN", () => listAutoDetectedProjects(locators.svnLocator));
     vscode.commands.registerCommand("projectManager.listMercurialProjects#sideBarMercurial", () => listAutoDetectedProjects(locators.mercurialLocator));
     vscode.commands.registerCommand("projectManager.listAnyProjects#sideBarAny", () => listAutoDetectedProjects(locators.anyLocator));
+    vscode.commands.registerCommand("projectManager.listFolderProjects#sideBarFolders", () => listFolderProjects([...providerManager.foldersProvider.locators.values()]));
+    vscode.commands.registerCommand("projectManager.refreshFolders", () => {
+        providerManager.foldersProvider.rebuild(true);
+        providerManager.foldersProvider.showTreeView();
+    });
 
     // new commands (ActivityBar)
     vscode.commands.registerCommand("projectManager.addToWorkspace#sideBar", (node) => addProjectToWorkspace(node));
@@ -184,6 +197,11 @@ export async function activate(context: vscode.ExtensionContext) {
             cfg.affectsConfiguration("projectManager.ignoreProjectsWithinProjects") || 
             cfg.affectsConfiguration("projectManager.supportSymlinksOnBaseFolders")) {
             refreshProjects();
+        }
+
+        if (cfg.affectsConfiguration("projectManager.folders")) {
+            providerManager.foldersProvider.rebuild();
+            providerManager.refreshStorageTreeView();
         }
 
         if (cfg.affectsConfiguration("workbench.iconTheme")) {
@@ -453,6 +471,11 @@ export async function activate(context: vscode.ExtensionContext) {
 
     async function listStorageProjects() {
         const pick = await pickProjects(projectStorage, undefined, true, undefined); 
+        openPickedProject(pick, false, CommandLocation.SideBar);
+    }
+
+    async function listFolderProjects(extraLocators: CustomProjectLocator[]) {
+        const pick = await pickProjects(undefined, locators, true, undefined, extraLocators);
         openPickedProject(pick, false, CommandLocation.SideBar);
     }
 

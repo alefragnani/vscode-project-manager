@@ -30,6 +30,7 @@ export class CustomProjectLocator {
     private baseFolders: string[];
     private excludeBaseFoldersFromResults: boolean;
     private supportedFileExtensions: string[] | null;
+    private fixedBaseFolders: string[] | null = null;
 
     constructor(public kind: string, public displayName: string, public repositoryDetector: RepositoryDetector) {
         this.maxDepth = -1;
@@ -278,10 +279,30 @@ export class CustomProjectLocator {
         let refreshedSomething = false;
         let currentValue = null;
 
-        currentValue = config.get<string[]>(this.kind + ".baseFolders");
-        if (!this.arraysAreEquals(this.baseFolders, currentValue)) {
-            this.baseFolders = currentValue;
+        currentValue = config.get("cacheProjectsBetweenSessions", true);
+        if (this.useCachedProjects !== currentValue) {
+            this.useCachedProjects = currentValue;
             refreshedSomething = true;
+        }
+
+        currentValue = config.get("ignoreProjectsWithinProjects", false);
+        if (this.ignoreProjectsWithinProjects !== currentValue) {
+            this.ignoreProjectsWithinProjects = currentValue;
+            refreshedSomething = true;
+        }
+
+        if (this.fixedBaseFolders !== null) {
+             if (!this.arraysAreEquals(this.baseFolders, this.fixedBaseFolders)) {
+                this.baseFolders = this.fixedBaseFolders.slice();
+                refreshedSomething = true;
+            }
+            return refreshedSomething;
+        } else {
+            currentValue = config.get<string[]>(this.kind + ".baseFolders");
+            if (!this.arraysAreEquals(this.baseFolders, currentValue)) {
+                this.baseFolders = currentValue ?? [];
+                refreshedSomething = true;
+            }
         }
 
         currentValue = config.get<string[]>(this.kind + ".ignoredFolders", []);
@@ -299,18 +320,6 @@ export class CustomProjectLocator {
         currentValue = config.get(this.kind + ".maxDepthRecursion", -1);
         if (this.maxDepth !== currentValue) {
             this.maxDepth = currentValue;
-            refreshedSomething = true;
-        }
-
-        currentValue = config.get("cacheProjectsBetweenSessions", true);
-        if (this.useCachedProjects !== currentValue) {
-            this.useCachedProjects = currentValue;
-            refreshedSomething = true;
-        }
-
-        currentValue = config.get("ignoreProjectsWithinProjects", false);
-        if (this.ignoreProjectsWithinProjects !== currentValue) {
-            this.ignoreProjectsWithinProjects = currentValue;
             refreshedSomething = true;
         }
 
@@ -347,6 +356,25 @@ export class CustomProjectLocator {
             }
         }
         return true;
+    }
+
+    public setFixedBaseFolders(folders: string[], maxDepth?: number): void {
+        this.fixedBaseFolders = folders.slice();
+        if (!this.refreshConfig()) return
+
+        if (maxDepth !== undefined) {
+            this.maxDepth = maxDepth;
+        }
+
+        this.alreadyLocated = false;
+        this.projectList = <AutodetectedProjectList>[];
+        this.initializeCfg();
+    }
+
+    public invalidate(): void {
+        this.alreadyLocated = false;
+        this.projectList = <AutodetectedProjectList>[];
+        this.deleteCacheFile();
     }
 
     public deleteCacheFile() {

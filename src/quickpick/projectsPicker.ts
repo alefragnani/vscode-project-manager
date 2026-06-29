@@ -91,8 +91,7 @@ export interface Picked<T> {
     button: QuickInputButton | undefined
 }
 
-export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, showOpenInNewWindowButton: boolean,
-    locatorToFilter: CustomProjectLocator): Promise<Picked<Project> | undefined> {
+export async function pickProjects(projectStorage: ProjectStorage, locators: Locators, showOpenInNewWindowButton: boolean, locatorToFilter: CustomProjectLocator, extraLocators?: CustomProjectLocator[]): Promise<Picked<Project> | undefined> {
     const disposables: Disposable[] = [];
 
     try {
@@ -121,6 +120,13 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                 })
                 .then((folders) => {
                     return getProjectsFromLocator(folders, locators, locatorToFilter, locators?.anyLocator);
+                })
+                .then((folders) => {
+                    if (!extraLocators) return folders;
+                    return extraLocators.reduce(
+                        (p, loc) => p.then(f => locators.getLocatorProjects(f, loc)),
+                        Promise.resolve([] as any[])
+                    );
                 })
                 .then((folders) => { // sort
                     if ((<any[]>folders).length === 0) {

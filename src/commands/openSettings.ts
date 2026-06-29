@@ -18,4 +18,5 @@ export function registerOpenSettings() {
     Container.context.subscriptions.push(commands.registerCommand("projectManager.openSettings#sideBarGit", () => openSettings("git")));
     Container.context.subscriptions.push(commands.registerCommand("projectManager.openSettings#sideBarAny", () => openSettings("any")));
     Container.context.subscriptions.push(commands.registerCommand("projectManager.openSettings#sideBarMercurial", () => openSettings("hg")));
+    Container.context.subscriptions.push(commands.registerCommand("projectManager.openSettings#sideBarFolders", () => openSettings("folders")));
 }

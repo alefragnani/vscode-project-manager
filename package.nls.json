@@ -20,6 +20,10 @@
     "projectManager.commands.refreshSVNProjects.title": "Project Manager: Refresh SVN Projects",
     "projectManager.commands.refreshAnyProjects.title": "Project Manager: Refresh Any Projects",
     "projectManager.commands.refreshMercurialProjects.title": "Project Manager: Refresh Mercurial Projects",
+    "projectManager.views.folders.name": "Folders",
+    "projectManager.commands.refreshFolders.title": "Project Manager: Refresh Folders",
+    "projectManager.commands.listFolderProjects.sideBarFolders.title": "Project Manager: List Folder Projects",
+    "projectManager.configuration.folders.description": "Define named folder groups shown in the Folders sidebar view. Each group scans its configured path for projects and displays them as a collapsible section.",
     "projectManager.commands.listFavoriteProjects#sideBarFavorites.title": "List Favorite Projects to Open",
     "projectManager.commands.listVSCodeProjects#sideBarVSCode.title": "List VSCode Projects to Open",
     "projectManager.commands.listGitProjects#sideBarGit.title": "List Git Projects to Open",
@@ -32,6 +36,7 @@
     "projectManager.commands.openSettings#sideBarSVN.title": "Open Settings",
     "projectManager.commands.openSettings#sideBarAny.title": "Open Settings",
     "projectManager.commands.openSettings#sideBarMercurial.title": "Open Settings",
+    "projectManager.commands.openSettings#sideBarFolders.title": "Open Settings",
     "projectManager.commands.open.title": "Open",
     "projectManager.commands.openInNewWindow.title": "Open in New Window",
     "projectManager.commands.revealInFinder#sideBar.title": "Reveal in Finder",
@@ -115,5 +120,6 @@
     "projectManager.walkthroughs.exclusiveSideBar.title": "Exclusive Side Bar",
     "projectManager.walkthroughs.exclusiveSideBar.description": "An exclusive Side Bar with everything you need for great productivity.\n[Open Side Bar](command:_projectManager.openSideBar)",
     "projectManager.walkthroughs.workingWithRemotes.title": "Working with Remotes",
-    "projectManager.walkthroughs.workingWithRemotes.description": "The extension support [Remote Development](https://code.visualstudio.com/docs/remote/remote-overview) scenarios, and you may choose how to use it, depending on your needs."
+    "projectManager.walkthroughs.workingWithRemotes.description": "The extension support [Remote Development](https://code.visualstudio.com/docs/remote/remote-overview) scenarios, and you may choose how to use it, depending on your needs.",
+    "projectManager.commands.openFolderGroupInNewWindow.title": "Open in New Window"
 }
