@@ -125,6 +125,38 @@ code {
     gap: 0.45rem;
 }
 
+.nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(27, 28, 32, 0.14);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
+    background: rgba(14, 117, 200, 0.08);
+    border-color: rgba(14, 117, 200, 0.28);
+}
+
+.nav-toggle:focus-visible {
+    outline: 3px solid rgba(14, 117, 200, 0.36);
+    outline-offset: 2px;
+}
+
+.nav-toggle i {
+    font-size: 1rem;
+}
+
 .top-nav a,
 .button,
 .text-link,
@@ -497,16 +529,51 @@ code {
 
 @media (max-width: 1120px) {
     .site-header {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr auto auto;
+        grid-template-areas:
+            "brand toggle actions"
+            "nav nav nav";
         border-radius: var(--radius-xl);
     }
 
-    .top-nav {
-        justify-content: flex-start;
+    .brand {
+        grid-area: brand;
+    }
+
+    .nav-toggle {
+        grid-area: toggle;
+        display: inline-flex;
     }
 
     .header-actions {
+        grid-area: actions;
+        justify-content: flex-end;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    .top-nav {
+        grid-area: nav;
+        display: none;
+        width: 100%;
+        padding-top: 0.25rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.35rem;
         justify-content: flex-start;
+    }
+
+    .site-header.nav-open .top-nav {
+        display: flex;
+    }
+
+    .top-nav a {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .header-actions {
+        justify-content: flex-end;
     }
 
     .feature-grid {
@@ -584,22 +651,10 @@ code {
         grid-template-columns: 1fr;
     }
 
-    .top-nav {
-        overflow-x: auto;
-        padding-bottom: 0.25rem;
-        justify-content: flex-start;
-        flex-wrap: nowrap;
-    }
-
-    .top-nav a {
-        white-space: nowrap;
-    }
-
     .button {
         width: 100%;
     }
 
-    .header-actions,
     .hero-actions,
     .link-row {
         width: 100%;

@@ -21,7 +21,10 @@
                     <!-- <span>for VS Code</span> -->
                 </span>
             </a>
-            <nav class="top-nav" aria-label="Feature navigation">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="top-nav" aria-label="Open menu" title="Open menu">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
+            <nav id="top-nav" class="top-nav" aria-label="Feature navigation">
                 <a href="#favorite-projects">Favorite Projects</a>
                 <a href="#automatic-detection">Automatic detection</a>
                 <a href="#remote-development-ready">Remote Development Ready</a>
@@ -250,5 +253,61 @@
             </div>
         </footer>
     </div>
+    <script>
+        (() => {
+            const header = document.querySelector(".site-header");
+            const navToggle = document.querySelector(".nav-toggle");
+            const topNav = document.querySelector("#top-nav");
+
+            if (!(header instanceof HTMLElement) || !(navToggle instanceof HTMLButtonElement) || !(topNav instanceof HTMLElement)) {
+                return;
+            }
+
+            const mobileQuery = window.matchMedia("(max-width: 1120px)");
+
+            const setExpanded = (expanded) => {
+                navToggle.setAttribute("aria-expanded", String(expanded));
+                header.classList.toggle("nav-open", expanded);
+                navToggle.setAttribute("aria-label", expanded ? "Close menu" : "Open menu");
+                navToggle.setAttribute("title", expanded ? "Close menu" : "Open menu");
+            };
+
+            const closeMenu = () => setExpanded(false);
+
+            navToggle.addEventListener("click", () => {
+                const expanded = navToggle.getAttribute("aria-expanded") === "true";
+                setExpanded(!expanded);
+            });
+
+            topNav.addEventListener("click", (event) => {
+                const target = event.target;
+                if (target instanceof HTMLElement && target.closest("a")) {
+                    closeMenu();
+                }
+            });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    closeMenu();
+                }
+            });
+
+            document.addEventListener("click", (event) => {
+                if (!mobileQuery.matches || !(event.target instanceof Node)) {
+                    return;
+                }
+
+                if (!header.contains(event.target)) {
+                    closeMenu();
+                }
+            });
+
+            mobileQuery.addEventListener("change", () => {
+                if (!mobileQuery.matches) {
+                    closeMenu();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
