@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Project Manager for Visual Studio Code helps you save favorites, auto-detect repositories, organize work with tags, and jump between projects fast.">
+    <title>Project Manager for VS Code</title>
+    <link rel="preconnect" href="https://marketplace.visualstudio.com">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="#top" aria-label="Project Manager home">
+                <img src="images/icon.png" alt="Project Manager icon" class="brand-mark">
+                <span class="brand-copy">
+                    <strong>Project Manager</strong>
+                    <span>for Visual Studio Code</span>
+                </span>
+            </a>
+            <nav class="top-nav" aria-label="Feature navigation">
+                <a href="#save-project">Save Project</a>
+                <a href="#edit-projects">Edit Projects</a>
+                <a href="#list-projects">List Projects</a>
+                <a href="#new-window">New Window</a>
+                <a href="#local-remotes">Local + Remotes</a>
+                <a href="#remote-first">Remote-first</a>
+                <a href="#project-tags">Project Tags</a>
+            </nav>
+            <div class="header-actions">
+                <a class="button button-muted" href="https://github.com/alefragnani/vscode-project-manager">GitHub</a>
+                <a class="button button-primary" href="https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager">Install</a>
+            </div>
+        </header>
+
+        <main id="top">
+            <section class="hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Visual Studio Code Extension</p>
+                    <h1>Keep every project one move away.</h1>
+                    <p class="hero-text">
+                        Project Manager helps you save favorites, auto-detect repositories, tag work by context,
+                        and move between local and remote codebases without losing track of what matters.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager">Get it on Marketplace</a>
+                        <a class="button button-muted" href="https://open-vsx.org/extension/alefragnani/project-manager">Open VSX</a>
+                    </div>
+                    <ul class="hero-points" aria-label="Project Manager highlights">
+                        <li>Save folders and workspaces as favorites</li>
+                        <li>Auto-detect Git, Mercurial, SVN, and VS Code projects</li>
+                        <li>Organize everything with tags, status bar actions, and a dedicated side bar</li>
+                    </ul>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card hero-card-logo">
+                        <img src="images/vscode-project-manager-logo-readme.png" alt="Project Manager logo">
+                    </div>
+                    <div class="hero-card hero-card-shot">
+                        <img src="images/vscode-project-manager-side-bar.png" alt="Project Manager side bar screenshot">
+                    </div>
+                </div>
+            </section>
+
+            <section class="announcement">
+                <p class="eyebrow">What&apos;s new in 13.1</p>
+                <div class="announcement-grid">
+                    <article>
+                        <h2>Modern project switching</h2>
+                        <p>Improved tags, improved auto-detection, and current-project highlighting keep the extension focused on daily navigation.</p>
+                    </article>
+                    <ul>
+                        <li>Profile support</li>
+                        <li>Side Bar current-project highlight</li>
+                        <li>Open VSX publishing</li>
+                        <li>Getting Started walkthrough</li>
+                        <li>Virtual Workspaces and Workspace Trust support</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="feature-index" aria-labelledby="feature-index-title">
+                <div class="section-heading">
+                    <p class="eyebrow">Core features</p>
+                    <h2 id="feature-index-title">The README, turned into a landing page.</h2>
+                </div>
+                <div class="feature-grid">
+                    <article class="feature-card" id="save-project">
+                        <span class="feature-number">01</span>
+                        <h3>Save Project</h3>
+                        <p>Capture the current folder or workspace as a named project at any time, with automatic name suggestions to keep the flow fast.</p>
+                    </article>
+                    <article class="feature-card" id="edit-projects">
+                        <span class="feature-number">02</span>
+                        <h3>Edit Projects</h3>
+                        <p>Open the projects file directly in VS Code and tune project names, paths, tags, enabled state, and profiles without leaving the editor.</p>
+                    </article>
+                    <article class="feature-card" id="list-projects">
+                        <span class="feature-number">03</span>
+                        <h3>List Projects to Open</h3>
+                        <p>Bring up your saved and detected projects in a single picker, then jump straight to the one you need.</p>
+                    </article>
+                    <article class="feature-card" id="new-window">
+                        <span class="feature-number">04</span>
+                        <h3>List Projects in New Window</h3>
+                        <p>Use the dedicated new-window command when you want context separation instead of replacing your current workspace.</p>
+                    </article>
+                    <article class="feature-card" id="local-remotes">
+                        <span class="feature-number">05</span>
+                        <h3>Local + Remotes</h3>
+                        <p>Work locally while keeping SSH, WSL, Containers, and Codespaces favorites accessible with the correct project identity.</p>
+                    </article>
+                    <article class="feature-card" id="remote-first">
+                        <span class="feature-number">06</span>
+                        <h3>Remote-first Workflows</h3>
+                        <p>Run the extension on remote targets when your primary development environment lives there and save remote favorites where they belong.</p>
+                    </article>
+                    <article class="feature-card" id="project-tags">
+                        <span class="feature-number">07</span>
+                        <h3>Project Tags</h3>
+                        <p>Group, filter, and scan projects by tag so favorites stay useful even when your project list grows large.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="spotlight spotlight-reverse">
+                <div class="spotlight-copy">
+                    <p class="eyebrow">Manage your projects</p>
+                    <h2>Save quickly. Edit directly.</h2>
+                    <p>
+                        Project Manager starts with a simple model: any folder or workspace can become a named project.
+                        When you need more control, edit the underlying projects file directly inside VS Code.
+                    </p>
+                    <div class="detail-list">
+                        <div>
+                            <h3>Save Project</h3>
+                            <p>Turn the current folder or workspace into a favorite with a suggested name and a lightweight command-driven flow.</p>
+                        </div>
+                        <div>
+                            <h3>Edit Projects</h3>
+                            <p>Customize names, paths, tags, enabled state, and profiles in the projects file. Home shortcuts like <code>~</code> and <code>$home</code> are supported.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="spotlight-visual stack">
+                    <figure class="media-card tall">
+                        <img src="images/project-manager-save.png" alt="Save Project command screenshot">
+                    </figure>
+                    <figure class="media-card">
+                        <img src="images/project-manager-edit-corrupted-projectsJson.png" alt="Projects JSON validation screenshot">
+                    </figure>
+                </div>
+            </section>
+
+            <section class="spotlight">
+                <div class="spotlight-copy">
+                    <p class="eyebrow">Access patterns</p>
+                    <h2>Open what you need, how you need it.</h2>
+                    <p>
+                        The extension covers both fast switching and deliberate context management. Open projects in the current window,
+                        force a new window, or drive the picker entirely from the keyboard.
+                    </p>
+                    <div class="command-list">
+                        <article>
+                            <h3>Available commands</h3>
+                            <ul>
+                                <li>Save Project</li>
+                                <li>Edit Project</li>
+                                <li>List Projects to Open</li>
+                                <li>List Projects to Open in New Window</li>
+                                <li>Filter Projects by Tag</li>
+                            </ul>
+                        </article>
+                        <article>
+                            <h3>Keyboard focused users</h3>
+                            <p>Use the <code>inProjectManagerList</code> context key to wire Vim-style navigation or other custom movement commands into the picker.</p>
+                        </article>
+                    </div>
+                </div>
+                <div class="spotlight-visual">
+                    <figure class="media-card wide">
+                        <img src="images/project-manager-list-sort-by-name.png" alt="Project list sorted by name screenshot">
+                    </figure>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <div class="section-heading">
+                    <p class="eyebrow">Configuration</p>
+                    <h2>Control sorting, detection, grouping, and display.</h2>
+                </div>
+                <div class="settings-grid">
+                    <article>
+                        <h3>Project list behavior</h3>
+                        <ul>
+                            <li>Sort by saved order, name, path, or recent usage</li>
+                            <li>Group favorites and detected repositories by type</li>
+                            <li>Optionally remove the current project from the list</li>
+                            <li>Show parent folder info for duplicate names</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h3>Detection controls</h3>
+                        <ul>
+                            <li>Search configured base folders or glob patterns</li>
+                            <li>Ignore folders like <code>node_modules</code>, <code>out</code>, or custom matches</li>
+                            <li>Limit recursion depth and ignore nested projects if needed</li>
+                            <li>Cache detected projects between sessions for faster lists</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h3>Status bar and windows</h3>
+                        <ul>
+                            <li>Show the project name in the status bar</li>
+                            <li>Open in a new window from status bar interactions</li>
+                            <li>Choose when an empty window should be reused</li>
+                            <li>Highlight the current project in the side bar</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h3>Tags and storage</h3>
+                        <ul>
+                            <li>Define a shared tag vocabulary such as Personal, Work, or Learning</li>
+                            <li>Control whether tag groups start expanded or collapsed</li>
+                            <li>Store the projects file in a custom location</li>
+                            <li>Use home path shortcuts for portable configuration</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <section class="remotes-section">
+                <div class="section-heading">
+                    <p class="eyebrow">Remote development</p>
+                    <h2>Works locally by default, scales to remote-first setups.</h2>
+                </div>
+                <div class="remotes-grid">
+                    <article>
+                        <h3>Local machine, occasional remotes</h3>
+                        <p>
+                            This is the default path. Install locally and save Containers, SSH targets, WSL projects,
+                            or Codespaces favorites alongside local work. The extension opens the right remote automatically.
+                        </p>
+                    </article>
+                    <article>
+                        <h3>Mostly remote work</h3>
+                        <p>
+                            If your repositories live mainly on remote targets, run the extension there too.
+                            The README recommends setting <code>remote.extensionKind</code> so Project Manager can store and discover projects in the remote environment.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="sidebar-section">
+                <div class="spotlight-copy">
+                    <p class="eyebrow">Side Bar</p>
+                    <h2>A dedicated view for projects and tags.</h2>
+                    <p>
+                        Beyond the quick pick, Project Manager ships a full side bar experience for browsing favorites,
+                        seeing the current project, and filtering work through project tags.
+                    </p>
+                </div>
+                <div class="sidebar-grid">
+                    <figure class="media-card wide">
+                        <img src="images/vscode-project-manager-side-bar.png" alt="Project Manager side bar">
+                    </figure>
+                    <figure class="media-card wide accent-card">
+                        <img src="images/vscode-project-manager-side-bar-tags.gif" alt="Project tags in the side bar">
+                    </figure>
+                </div>
+            </section>
+
+            <section class="support-section">
+                <div class="section-heading">
+                    <p class="eyebrow">Support and install</p>
+                    <h2>Use it, configure it, and help sustain it.</h2>
+                </div>
+                <div class="support-grid">
+                    <article>
+                        <h3>Install and configure</h3>
+                        <p>Use the Visual Studio Code Marketplace to install the extension and the standard VS Code settings UI to tune behavior.</p>
+                        <div class="link-row">
+                            <a class="text-link" href="https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager">Marketplace</a>
+                            <a class="text-link" href="https://code.visualstudio.com/docs/getstarted/settings">VS Code Settings</a>
+                            <a class="text-link" href="https://code.visualstudio.com/docs/editor/extension-gallery">Extension Gallery</a>
+                        </div>
+                    </article>
+                    <article>
+                        <h3>Support the project</h3>
+                        <p>Project Manager is open source again. If it improves your daily workflow, consider supporting its ongoing maintenance.</p>
+                        <div class="link-row">
+                            <a class="text-link" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted">PayPal</a>
+                            <a class="text-link" href="https://github.com/sponsors/alefragnani">GitHub Sponsors</a>
+                            <a class="text-link" href="https://www.patreon.com/alefragnani">Patreon</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div>
+                <strong>Project Manager</strong>
+                <p>Save favorites. Detect repositories. Switch contexts without friction.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/alefragnani/vscode-project-manager">Source</a>
+                <a href="https://open-vsx.org/extension/alefragnani/project-manager">Open VSX</a>
+                <a href="LICENSE.md">GPL-3.0</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
