@@ -456,13 +456,13 @@ code {
 
 .media-card.tall img {
     aspect-ratio: 1 / 1.12;
-    object-fit: cover;
+    object-fit: contain;
     object-position: top;
 }
 
 .media-card.wide img {
     aspect-ratio: 16 / 10;
-    object-fit: cover;
+    object-fit: contain;
     object-position: top;
 }
 
