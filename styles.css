@@ -270,8 +270,7 @@ code {
 .settings-grid li,
 .feature-card p,
 .detail-list p,
-.command-list p,
-.site-footer p {
+.command-list p {
     color: var(--muted);
     font-size: 1.04rem;
     line-height: 1.7;
@@ -291,8 +290,7 @@ code {
 .remotes-grid article,
 .support-grid article,
 .media-card,
-.hero-card,
-.site-footer {
+.hero-card {
     background: var(--surface);
     border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: var(--radius-xl);
@@ -548,10 +546,15 @@ code {
 }
 
 .settings-grid,
-.support-grid,
+/* .support-grid, */
 .remotes-grid,
 .sidebar-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.support-grid {
+    display: grid;
+    gap: 0.75rem;
 }
 
 .text-link,
@@ -560,17 +563,28 @@ code {
     font-weight: 600;
 }
 
+/* ── Site footer ── */
 .site-footer {
+    border-top: 1px solid #e2e8f0;
+    background: #ffffff;
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+.footer-social {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.4rem 1.5rem;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 0.75rem;
 }
-
-.site-footer p {
-    margin: 0.35rem 0 0;
+.footer-social a {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
 }
+.footer-social a:hover { color: #0ea5e9; transform: translateY(-2px); }
+.footer-copy { font-size: 0.8rem; color: #94a3b8; }
 
 @media (max-width: 1120px) {
     .feature-grid {
