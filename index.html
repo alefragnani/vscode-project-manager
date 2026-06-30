@@ -24,11 +24,9 @@
             <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="top-nav" aria-label="Open menu" title="Open menu">
                 <i class="fa-solid fa-bars" aria-hidden="true"></i>
             </button>
-            <nav id="top-nav" class="top-nav" aria-label="Feature navigation">
-                <a href="#favorite-projects">Favorite Projects</a>
-                <a href="#automatic-detection">Automatic detection</a>
-                <a href="#remote-development-ready">Remote Development Ready</a>
-                <a href="#exclusive-side-bar">Exclusive Side Bar</a>
+            <nav id="top-nav" class="top-nav" aria-label="Primary navigation">
+                <a href="#features">Features</a>
+                <a href="#faq">FAQ</a>
                 <a href="#donate"><i class="fa fa-heart" aria-hidden="true"></i> Donate</a>
             </nav>
             <div class="header-actions">
@@ -82,6 +80,35 @@
                         <li>Getting Started walkthrough</li>
                         <li>Virtual Workspaces and Workspace Trust support</li>
                     </ul>
+                </div>
+            </section>
+
+            <section class="feature-index" id="features">
+                <div class="section-heading">
+                    <p class="eyebrow">Features</p>
+                    <h2>Jump to the key capabilities.</h2>
+                </div>
+                <div class="feature-grid">
+                    <a class="feature-card" href="#favorite-projects">
+                        <span class="feature-number">01</span>
+                        <h3>Favorite Projects</h3>
+                        <p>Save your most important folders and workspaces, then reopen them quickly.</p>
+                    </a>
+                    <a class="feature-card" href="#automatic-detection">
+                        <span class="feature-number">02</span>
+                        <h3>Automatic Detection</h3>
+                        <p>Find repositories and VS Code projects across configured base folders.</p>
+                    </a>
+                    <a class="feature-card" href="#remote-development-ready">
+                        <span class="feature-number">03</span>
+                        <h3>Remote Development Ready</h3>
+                        <p>Switch smoothly between local and remote targets with the same flow.</p>
+                    </a>
+                    <a class="feature-card" href="#exclusive-side-bar">
+                        <span class="feature-number">04</span>
+                        <h3>Exclusive Side Bar</h3>
+                        <p>Browse projects, highlight current context, and filter with tags in one place.</p>
+                    </a>
                 </div>
             </section>
 
@@ -213,6 +240,27 @@
                 </div>
             </section>
 
+            <section class="feature-index faq-section" id="faq">
+                <div class="section-heading">
+                    <p class="eyebrow">FAQ</p>
+                    <h2>Quick answers for common questions.</h2>
+                </div>
+                <div class="faq-list">
+                    <details>
+                        <summary>How does Project Manager discover projects?</summary>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                    </details>
+                    <details>
+                        <summary>Can I keep local and remote projects together?</summary>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                    </details>
+                    <details>
+                        <summary>Where are saved favorites stored?</summary>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed odio dui, euismod id ligula porta felis euismod semper.</p>
+                    </details>
+                </div>
+            </section>
+
             <section class="support-section" id="donate">
                 <div class="section-heading">
                     <p class="eyebrow">Donate</p>
@@ -263,7 +311,7 @@
                 return;
             }
 
-            const mobileQuery = window.matchMedia("(max-width: 1120px)");
+            const mobileQuery = window.matchMedia("(max-width: 900px)");
 
             const setExpanded = (expanded) => {
                 navToggle.setAttribute("aria-expanded", String(expanded));
