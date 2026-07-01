@@ -586,9 +586,7 @@ code {
 }
 
 .settings-grid,
-/* .support-grid, */
 .remotes-grid {
-/* .sidebar-grid  */
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -601,7 +599,6 @@ code {
 .text-link,
 .footer-links a {
     color: var(--accent-strong);
-    /* font-weight: 600; */
 }
 
 /* ── Site footer ── */
