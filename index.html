@@ -124,10 +124,10 @@
                             <h3>Save Project</h3>
                             <p>Turn the current folder or workspace into a favorite with a suggested name and a lightweight command-driven flow.</p>
                         </div>
-                        <div>
+                        <!-- <div>
                             <h3>Edit Projects</h3>
                             <p>Customize names, paths, tags, enabled state, and profiles in the projects file. Home shortcuts like <code>~</code> and <code>$home</code> are supported.</p>
-                        </div>
+                        </div> -->
                         <div>
                             <h3>Open from anywhere</h3>
                             <p>Use the project picker to reopen favorites in the current window or a new one, depending on how you want to switch context.</p>
@@ -138,9 +138,9 @@
                     <figure class="media-card">
                         <img src="images/project-manager-save.png" alt="Save Project command screenshot">
                     </figure>
-                    <figure class="media-card">
+                    <!-- <figure class="media-card">
                         <img src="images/project-manager-edit-corrupted-projectsJson.png" alt="Projects JSON validation screenshot">
-                    </figure>
+                    </figure> -->
                 </div>
             </section>
 
@@ -169,9 +169,21 @@
                     </div>
                 </div>
                 <div class="spotlight-visual">
-                    <figure class="media-card">
-                        <img src="images/project-manager-list-sort-by-name.png" alt="Project list sorted by name screenshot">
-                    </figure>
+                        <pre class="json-example"><code><span class="json-punctuation">{</span>
+  <span class="json-key">"projectManager.git.baseFolders"</span><span class="json-punctuation">:</span> <span class="json-punctuation">[</span>
+    <span class="json-string">"~/Sources"</span><span class="json-punctuation">,</span>
+    <span class="json-string">"d:\\MoreProjects\\code-*"</span><span class="json-punctuation">,</span>
+    <span class="json-string">"$home\\personal-coding"</span>
+  <span class="json-punctuation">]</span><span class="json-punctuation">,</span>
+  <span class="json-key">"projectManager.git.ignoredFolders"</span><span class="json-punctuation">:</span> <span class="json-punctuation">[</span>
+    <span class="json-string">"node_modules"</span><span class="json-punctuation">,</span>
+    <span class="json-string">"out"</span><span class="json-punctuation">,</span>
+    <span class="json-string">"typings"</span><span class="json-punctuation">,</span>
+    <span class="json-string">"test"</span><span class="json-punctuation">,</span>
+    <span class="json-string">"fork*"</span>
+  <span class="json-punctuation">]</span><span class="json-punctuation">,</span>
+  <span class="json-key">"projectManager.git.maxDepthRecursion"</span><span class="json-punctuation">:</span> <span class="json-number">4</span>
+<span class="json-punctuation">}</span></code></pre>
                 </div>
             </section>
 
@@ -230,9 +242,9 @@
                     </p>
                 </div>
                 <div class="sidebar-grid">
-                    <figure class="media-card">
+                    <!-- <figure class="media-card">
                         <img src="images/vscode-project-manager-side-bar.png" alt="Project Manager side bar">
-                    </figure>
+                    </figure> -->
                     <figure class="media-card">
                         <img src="images/vscode-project-manager-side-bar-tags.gif" alt="Project tags in the side bar">
                     </figure>
@@ -247,15 +259,23 @@
                 <div class="faq-list">
                     <details>
                         <summary>How does Project Manager discover projects?</summary>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                        <p>It searches for subfolders that match the configured patterns for each kind of project. You can control how deep it searches and which folders should be ignored, keeping a clean and organized list of projects.</p>
                     </details>
                     <details>
                         <summary>Can I keep local and remote projects together?</summary>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                        <p>Yes! You can save any project as a favorite, regardless of its location, whether it's local or remote like WSL, Docker and even GitHub Codespaces.</p>
                     </details>
                     <details>
                         <summary>Where are saved favorites stored?</summary>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed odio dui, euismod id ligula porta felis euismod semper.</p>
+                        <p>Favorites are stored locally on your machine, ensuring quick access and synchronization across your projects. And you can customize the location in case you need to sync them with another device or service.</p>
+                    </details>
+                    <details>
+                        <summary>I have a feature request, bug report, or suggestion.</summary>
+                        <p>If you have a feature request, bug report, or suggestion, please submit it through our <a href="https://github.com/alefragnani/vscode-project-manager/issues" class="text-link">GitHub Issues</a> page. We appreciate your feedback!</p>
+                    </details>
+                    <details>
+                        <summary>I have a question that's not listed here.</summary>
+                        <p>If you have a question that's not covered in the FAQ, feel free to reach out through our support channels at <a href="https://github.com/alefragnani/vscode-project-manager/discussions" class="text-link">GitHub Discussions</a>. We're here to help!</p>
                     </details>
                 </div>
             </section>
@@ -268,7 +288,7 @@
                 <div class="support-grid">
                     <article>
                         <h3>Why support it</h3>
-                        <p>Project Manager is fully open source again and continues to be maintained as a practical daily tool for Visual Studio Code users.</p>
+                        <p>Project Manager is open source and continues to be maintained as a practical daily tool for Visual Studio Code users.</p>
                         <div class="link-row">
                             <a class="text-link" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=EP57F3B6FXKTU&lc=US&item_name=Alessandro%20Fragnani&item_number=vscode%20extensions&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted">PayPal</a>
                             <a class="text-link" href="https://github.com/sponsors/alefragnani">GitHub Sponsors</a>

@@ -329,6 +329,8 @@ code {
 }
 
 .hero-card {
+    border: none;
+    padding: 0;
     overflow: hidden;
 }
 
@@ -337,7 +339,7 @@ code {
     top: 0;
     left: 0;
     width: 72%;
-    padding: 1.2rem;
+    padding: 0;
     transform: rotate(-3deg);
 }
 
@@ -346,7 +348,7 @@ code {
     right: 0;
     bottom: 0;
     width: 82%;
-    padding: 1rem;
+    padding: 0;
 }
 
 .announcement,
@@ -519,7 +521,9 @@ code {
 }
 
 .media-card {
-    padding: 1rem;
+    margin: 0;
+    border: none;
+    padding: 0;
     overflow: hidden;
 }
 
@@ -527,6 +531,42 @@ code {
 .hero-card img {
     width: 100%;
     border-radius: calc(var(--radius-lg) - 8px);
+}
+
+.json-example {
+    margin: 0.9rem 0 0;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    background: #101826;
+    color: #dde6f7;
+    overflow-x: auto;
+}
+
+.json-example code {
+    display: block;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 0.83rem;
+    line-height: 1.55;
+    white-space: pre;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+}
+
+.json-key {
+    color: #7fc9ff;
+}
+
+.json-string {
+    color: #a7f3d0;
+}
+
+.json-number {
+    color: #f8d66d;
+}
+
+.json-punctuation {
+    color: #9aa7bf;
 }
 
 .media-card.tall img {
@@ -547,11 +587,12 @@ code {
 
 .settings-grid,
 /* .support-grid, */
-.remotes-grid,
-.sidebar-grid {
+.remotes-grid {
+/* .sidebar-grid  */
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.sidebar-grid, 
 .support-grid {
     display: grid;
     gap: 0.75rem;
@@ -560,7 +601,7 @@ code {
 .text-link,
 .footer-links a {
     color: var(--accent-strong);
-    font-weight: 600;
+    /* font-weight: 600; */
 }
 
 /* ── Site footer ── */
