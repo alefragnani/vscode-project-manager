@@ -56,7 +56,7 @@
     "projectManager.configuration.removeCurrentProjectFromList.description": "Le projet en cours doit-il être masqué dans la liste des projets disponibles ?",
     "projectManager.configuration.sortList.description": "Liste des projets triés par...(Enregistrement, Nom, Chemin ou Récent)",
     "projectManager.configuration.groupList.description": "Lister les projets regroupés par...(Favoris, VSCode, Git, Mercurial et SVN)",
-    "projectManager.configuration.projectsLocation.description": "Précise un autre emplacement où le fichier `projects.json` est stocké",
+    "projectManager.configuration.projectsLocation.description": "Précise un autre emplacement où le fichier `projects.json` est stocké. Il s’agit d’un paramètre de machine, chaque machine peut donc utiliser son propre emplacement.",
     "projectManager.configuration.vscode.baseFolders.description": "Indique les dossiers ou [modèles globaux](https://code.visualstudio.com/docs/editor/glob-patterns) dans lesquels rechercher des projets VSCode",
     "projectManager.configuration.vscode.ignoredFolders.description": "Indique les dossiers ou [modèles globaux](https://code.visualstudio.com/docs/editor/glob-patterns) à ignorer lors de la recherche de projets",
     "projectManager.configuration.vscode.maxDepthRecursion.description": "Précise la profondeur maximale des dossiers pour la recherche de projets. Toute valeur inférieure à 1 signifie qu'il n'y a pas de limite",

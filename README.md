@@ -244,7 +244,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.projectsLocation": "C:\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
-> You can use `~` or `$home` while defining the folder path. It will be replaced by your HOME folder.
+> You can use `~` or `$home` while defining the folder path. It will be replaced by your HOME folder. This is a machine setting, so each machine can use its own location.
 
 * Automatic Detection of Projects (**Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png), **SVN** ![svn](images/ico_svn.png) and **VSCode** ![vscode](images/ico_file_code.png))
 

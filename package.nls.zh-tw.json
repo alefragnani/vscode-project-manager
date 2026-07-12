@@ -56,7 +56,7 @@
     "projectManager.configuration.removeCurrentProjectFromList.description": "當前項目是否應該隱藏在可用項目列表中？",
     "projectManager.configuration.sortList.description": "按 ... 分類列出項目（已保存、名稱、路徑或最近）。",
     "projectManager.configuration.groupList.description": "按 ... 分組列出項目（收藏夾、VSCode、Git、Mercurial 和 SVN）。",
-    "projectManager.configuration.projectsLocation.description": "指定存儲 `projects.json` 文件的備用位置。",
+    "projectManager.configuration.projectsLocation.description": "指定存儲 `projects.json` 文件的備用位置。這是機器層級設定，因此每台機器都可以使用自己的位置。",
     "projectManager.configuration.vscode.baseFolders.description": "指示用於搜尋 VSCode 專案的資料夾或 [glob 模式](https://code.visualstudio.com/docs/editor/glob-patterns)。",
     "projectManager.configuration.vscode.ignoredFolders.description": "指示在搜尋專案時要忽略的資料夾或 [glob 模式](https://code.visualstudio.com/docs/editor/glob-patterns)。",
     "projectManager.configuration.vscode.maxDepthRecursion.description": "指定搜索項目的文件夾遞歸的最大深度。小於 1 的任何值表示沒有限制。",

@@ -733,6 +733,7 @@
 					"projectManager.projectsLocation": {
 						"type": "string",
 						"default": "",
+						"scope": "machine",
 						"description": "%projectManager.configuration.projectsLocation.description%"
 					},
 					"projectManager.cacheProjectsBetweenSessions": {

@@ -244,7 +244,7 @@ _It just works_
   "projectManager.projectsLocation": "C:\\Users\\myUser\\AppData\\Roaming\\Code\\User"
 ```
 
-> 你可以在目录路径中使用 `~` 或 `$home`，它们会被替换为你的 HOME 文件夹。
+> 你可以在目录路径中使用 `~` 或 `$home`，它们会被替换为你的 HOME 文件夹。这是机器级设置，因此每台机器都可以使用自己的位置。
 
 * 自动检测项目（**Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png), **SVN** ![svn](images/ico_svn.png) 和 **VSCode** ![vscode](images/ico_file_code.png)）
 

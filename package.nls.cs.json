@@ -55,7 +55,7 @@
     "projectManager.configuration.removeCurrentProjectFromList.description": "Měl by se současný projekt skrýt v seznamu dostupných projektů?",
     "projectManager.configuration.sortList.description": "Seznam projektů seřazených podle ... (Uloženo, Jméno, Cesta nebo Poslední)",
     "projectManager.configuration.groupList.description": "Seznam projektů seskupených podle ... (Oblíbené, VSCode, Git, Mercurial a SVN)",
-    "projectManager.configuration.projectsLocation.description": "Označuje alternativní umístění, kde je uložen soubor `projects.json`",
+    "projectManager.configuration.projectsLocation.description": "Označuje alternativní umístění, kde je uložen soubor `projects.json`. Jedná se o nastavení počítače, takže každý počítač může použít vlastní umístění.",
     "projectManager.configuration.vscode.baseFolders.description": "Označuje složky nebo [glob vzory](https://code.visualstudio.com/docs/editor/glob-patterns) pro hledání projektů VSCode",
     "projectManager.configuration.vscode.ignoredFolders.description": "Označuje složky nebo [glob vzory](https://code.visualstudio.com/docs/editor/glob-patterns), které mají být při hledání projektů ignorovány",
     "projectManager.configuration.vscode.maxDepthRecursion.description": "Označuje maximální hloubku rekurze složek při hledání projektů. Jakákoli hodnota pod 1 znamená, že neexistuje žádný limit",
