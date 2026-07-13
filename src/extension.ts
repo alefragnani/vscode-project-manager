@@ -35,6 +35,7 @@ import { registerWalkthrough } from "./commands/walkthrough";
 import { registerSideBarDecorations } from "./sidebar/decoration";
 import { ProjectNode } from "./sidebar/nodes";
 import { Project } from "./core/project";
+import { registerProjectNameWindowTitleVariable, updateProjectNameWindowTitleVariable } from "./utils/windowTitle";
 
 let locators: Locators;
 
@@ -167,6 +168,8 @@ export async function activate(context: vscode.ExtensionContext) {
     // introduce issues.
     const currentProject = showStatusBar(projectStorage, locators);
     Container.currentProject = currentProject;
+    await registerProjectNameWindowTitleVariable();
+    await updateProjectNameWindowTitleVariable(currentProject);
 
     // // new place to register TreeView
     await providerManager.showTreeViewFromAllProviders();
@@ -319,7 +322,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage(l10n.t("Project saved!"));
                 if (!node) {
                     showStatusBar(projectStorage, locators, projectName);
-                    updateCurrentProject();
+                    await updateCurrentProject();
                 }
                 return true;
             } else {
@@ -426,7 +429,7 @@ export async function activate(context: vscode.ExtensionContext) {
         input.show();
     }
 
-    function updateCurrentProject() {
+    async function updateCurrentProject() {
         const workspace0 = vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile :
             vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[ 0 ].uri :
                 undefined;
@@ -439,6 +442,7 @@ export async function activate(context: vscode.ExtensionContext) {
             foundProject = projectStorage.existsWithRootPath(currentProjectPath, true);
         }
         Container.currentProject = foundProject;
+        await updateProjectNameWindowTitleVariable(foundProject);
     }
 
     async function listProjects(forceNewWindow: boolean) {
@@ -529,7 +533,7 @@ export async function activate(context: vscode.ExtensionContext) {
             value: oldName
         };
 
-        vscode.window.showInputBox(ibo).then(newName => {
+        vscode.window.showInputBox(ibo).then(async newName => {
             if (typeof newName === "undefined" || newName === oldName) {
                 return;
             }
@@ -546,6 +550,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 projectStorage.save();
                 vscode.window.showInformationMessage(l10n.t("Project renamed!"));
                 updateStatusBar(oldName, node.command.arguments[0], newName);
+                if (Container.currentProject?.name.toLowerCase() === oldName.toLowerCase()) {
+                    Container.currentProject.name = newName;
+                    await updateProjectNameWindowTitleVariable(Container.currentProject);
+                }
             } else {
                 vscode.window.showErrorMessage(l10n.t("Project already exists!"));
             }
