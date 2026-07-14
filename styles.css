@@ -24,14 +24,26 @@ html {
     scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
 body {
     margin: 0;
     font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
     color: var(--text);
     background:
-        radial-gradient(circle at top left, rgba(14, 117, 200, 0.16), transparent 28%),
-        radial-gradient(circle at top right, rgba(217, 71, 47, 0.14), transparent 30%),
-        linear-gradient(180deg, #fbf6ef 0%, var(--bg) 34%, #f7f1e8 100%);
+        linear-gradient(135deg, #ffffff 0%, #f0f9ff 56%, #f6fff8 100%);
 }
 
 body::before {
@@ -84,6 +96,7 @@ code {
     background: rgba(255, 248, 240, 0.74);
     border: 1px solid rgba(255, 255, 255, 0.65);
     border-radius: 999px;
+    -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
     box-shadow: 0 16px 40px rgba(26, 31, 46, 0.08);
 }
@@ -295,6 +308,7 @@ code {
     border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
 }
 
@@ -496,6 +510,11 @@ code {
     align-items: center;
 }
 
+.spotlight-copy,
+.spotlight-visual {
+    min-width: 0;
+}
+
 .spotlight-reverse {
     grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1fr);
 }
@@ -535,11 +554,16 @@ code {
 
 .json-example {
     margin: 0.9rem 0 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding: 0.9rem 1rem;
     border-radius: 14px;
     background: #101826;
     color: #dde6f7;
     overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .json-example code {
@@ -548,6 +572,8 @@ code {
     font-size: 0.83rem;
     line-height: 1.55;
     white-space: pre;
+    width: max-content;
+    min-width: 100%;
     background: transparent;
     border-radius: 0;
     padding: 0;
@@ -590,7 +616,7 @@ code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.sidebar-grid, 
+.sidebar-grid,
 .support-grid {
     display: grid;
     gap: 0.75rem;
@@ -713,8 +739,9 @@ code {
     }
 
     .site-footer {
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
     }
 }
 
