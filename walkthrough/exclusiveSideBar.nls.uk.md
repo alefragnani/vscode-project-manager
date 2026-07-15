@@ -2,4 +2,4 @@
 
 Ексклюзивна **бічна панель** з різноманітними командами для підвищення вашої продуктивності.
 
-![Бічна панель](../images/vscode-project-manager-side-bar.png)
+![Бічна панель](../docs/images/vscode-project-manager-side-bar.png)

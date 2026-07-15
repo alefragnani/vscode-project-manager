@@ -72,7 +72,7 @@
 
 你可以随时将当前文件夹/工作区保存为一个**项目**，只需输入项目名称。
 
-![Save](images/project-manager-save.png)
+![Save](docs/images/project-manager-save.png)
 
 > 扩展会_自动_为你建议一个名称 :)
  
@@ -116,7 +116,7 @@
 
 > 请确保 JSON 文件格式正确。否则，**Project Manager** 将无法打开它，并会显示如下错误提示。在这种情况下，请使用 `Open File` 按钮进行修复。
 
-![Corrupted](images/project-manager-edit-corrupted-projectsJson.png)
+![Corrupted](docs/images/project-manager-edit-corrupted-projectsJson.png)
 
 ## 访问
 
@@ -198,7 +198,7 @@ _It just works_
   "projectManager.sortList": "Name"
 ```
 
-![List](images/project-manager-list-sort-by-name.png)
+![List](docs/images/project-manager-list-sort-by-name.png)
 
 * 选择项目列表是否按类型分组（**Favorites**、**Git**、**Mercurial**、**SVN** 和 **VS Code**）。
 
@@ -246,7 +246,7 @@ _It just works_
 
 > 你可以在目录路径中使用 `~` 或 `$home`，它们会被替换为你的 HOME 文件夹。
 
-* 自动检测项目（**Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png), **SVN** ![svn](images/ico_svn.png) 和 **VSCode** ![vscode](images/ico_file_code.png)）
+* 自动检测项目（**Git** ![git](docs/images/ico_git_branch.png), **Mercurial** ![git](docs/images/ico_git_branch.png), **SVN** ![svn](docs/images/ico_svn.png) 和 **VSCode** ![vscode](docs/images/ico_file_code.png)）
 
 ```json
   "projectManager.git.baseFolders": [
@@ -350,7 +350,7 @@ _It just works_
 
 **Project Manager** 扩展有自己的 **Side Bar**，提供了多种命令来提升你的效率。
 
-![Side Bar](images/vscode-project-manager-side-bar.png)
+![Side Bar](docs/images/vscode-project-manager-side-bar.png)
 
 ### Project Tags - View and Filter
 
@@ -358,7 +358,7 @@ _It just works_
 
 你可以定义自定义标签（通过 `projectManager.tags` 设置）、为每个项目定义多个**标签**，并根据**标签**筛选项目。
 
-![Side Bar](images/vscode-project-manager-side-bar-tags.gif)
+![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
 
 ## 安装与配置
 

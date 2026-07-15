@@ -8,4 +8,4 @@
 
 ### 命令面板
 
-![列表](../images/project-manager-list-sort-by-name.png)
+![列表](../docs/images/project-manager-list-sort-by-name.png)
