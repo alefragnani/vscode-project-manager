@@ -2,4 +2,4 @@
 
 Вы можете организовывать и категоризировать свои проекты с помощью **тегов**. Фильтруйте проекты по **тегам** и выбирайте активные **теги**, которые наиболее актуальны для вашей работы.
 
-![Organize with Tags](../images/vscode-project-manager-side-bar-tags.gif)
+![Organize with Tags](../docs/images/vscode-project-manager-side-bar-tags.gif)

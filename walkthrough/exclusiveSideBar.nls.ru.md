@@ -2,4 +2,4 @@
 
 Эксклюзивная **боковая панель** с множеством команд для повышения вашей продуктивности.
 
-![Side Bar](../images/vscode-project-manager-side-bar.png)
+![Side Bar](../docs/images/vscode-project-manager-side-bar.png)

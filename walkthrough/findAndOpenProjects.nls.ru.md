@@ -8,4 +8,4 @@
 
 ### Палитра команд
 
-![List](../images/project-manager-list-sort-by-name.png)
+![List](../docs/images/project-manager-list-sort-by-name.png)

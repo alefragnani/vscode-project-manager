@@ -22,6 +22,6 @@ webpack.config.js
 AGENTS.md
 
 # gh-pages
-index.html
-styles.css
-images/project-manager-save-and-list.gif
+docs/index.html
+docs/styles.css
+docs/images/project-manager-save-and-list.gif

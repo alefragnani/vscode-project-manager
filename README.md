@@ -72,7 +72,7 @@ Here are some of the features that **Project Manager** provides:
 
 You can save the current folder/workspace as a **Project** at any time. You just need to type its name. 
 
-![Save](images/project-manager-save.png)
+![Save](docs/images/project-manager-save.png)
 
 > It suggests a name to you _automatically_ :)
  
@@ -116,7 +116,7 @@ For easier customization of your project list, you can edit the `projects.json` 
 
 > Be sure that the JSON file is well-formed. Otherwise, **Project Manager** will not be able to open it, and an error message like this should appear. In this case, you should use the `Open File` button to fix it.
 
-![Corrupted](images/project-manager-edit-corrupted-projectsJson.png)
+![Corrupted](docs/images/project-manager-edit-corrupted-projectsJson.png)
 
 ## Access 
 
@@ -198,7 +198,7 @@ You can choose how your projects are sorted
     "projectManager.sortList": "Name"
 ```
 
-![List](images/project-manager-list-sort-by-name.png)
+![List](docs/images/project-manager-list-sort-by-name.png)
 
 * Choose if the project list must be grouped by its _kind_ (**Favorites**, **Git**, **Mercurial**, **SVN** and **VS Code**).
 
@@ -246,7 +246,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 > You can use `~` or `$home` while defining the folder path. It will be replaced by your HOME folder.
 
-* Automatic Detection of Projects (**Git** ![git](images/ico_git_branch.png), **Mercurial** ![git](images/ico_git_branch.png), **SVN** ![svn](images/ico_svn.png) and **VSCode** ![vscode](images/ico_file_code.png))
+* Automatic Detection of Projects (**Git** ![git](docs/images/ico_git_branch.png), **Mercurial** ![git](docs/images/ico_git_branch.png), **SVN** ![svn](docs/images/ico_svn.png) and **VSCode** ![vscode](docs/images/ico_file_code.png))
 
 ```json
     "projectManager.git.baseFolders": [
@@ -350,7 +350,7 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
 
 The **Project Manager** extension has its own **Side Bar**, with a variety of commands to improve your productivity. 
 
-![Side Bar](images/vscode-project-manager-side-bar.png)
+![Side Bar](docs/images/vscode-project-manager-side-bar.png)
 
 ### Project Tags - View and Filter
 
@@ -358,7 +358,7 @@ Starting in v12.3, you can now organize your Projects with **Tags**.
 
 You can define your custom tags (via `projectManager.tags` setting), define multiple **tags** for each project, and filter the projects baded on their **tags**. 
 
-![Side Bar](images/vscode-project-manager-side-bar-tags.gif)
+![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
 
 ## Installation and Configuration
 

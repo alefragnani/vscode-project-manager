@@ -8,4 +8,4 @@ Les projets peuvent être filtrés par leur nom ou leur chemin.
 
 ### Palette de commandes
 
-![Liste](../images/project-manager-list-sort-by-name.png)
+![Liste](../docs/images/project-manager-list-sort-by-name.png)

@@ -2,7 +2,7 @@
 
 您可以隨時將當前文件夾或工作區另存為**項目**。 您只需輸入其名稱即可。
 
-![Save](../images/project-manager-save.png)
+![Save](../docs/images/project-manager-save.png)
 
 它會作為快捷方式 _自動_ 建議項目名稱和您打開的文件夾/工作空間的名稱。
 
