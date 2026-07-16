@@ -101,7 +101,7 @@ export async function activate(context: vscode.ExtensionContext) {
     });
 
     // register commands (here, because it needs to be used right below if an invalid JSON is present)
-    vscode.commands.registerCommand("projectManager.saveProject", () => saveProject());
+    vscode.commands.registerCommand("projectManager.saveProject", (projectName?: string, projectPath?: string) => saveProject(undefined, projectName, projectPath));
     vscode.commands.registerCommand("projectManager.refreshProjects", () => refreshProjects(true, true));
     locators.registerCommands();
     vscode.commands.registerCommand("projectManager.editProjects", () => editProjects());
@@ -281,11 +281,21 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    async function saveProject(node?: ProjectNode) {
+    async function saveProject(node?: ProjectNode, commandProjectName?: string, commandProjectPath?: string) {
         let wpath: string;
         let rootPath: string;
+        const hasCommandInvocation = commandProjectName !== undefined || commandProjectPath !== undefined;
+        const hasCommandArguments = typeof commandProjectName === "string" && commandProjectName.trim() !== ""
+            && typeof commandProjectPath === "string" && commandProjectPath.trim() !== "";
 
-        if (node) {
+        if (hasCommandInvocation && !hasCommandArguments) {
+            return false;
+        }
+
+        if (hasCommandArguments) {
+            wpath = commandProjectName;
+            rootPath = commandProjectPath;
+        } else if (node) {
             wpath = node.label as string; 
             rootPath = node.command.arguments[0];
         } else {
@@ -323,6 +333,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
                 return true;
             } else {
+                if (hasCommandArguments) {
+                    return false;
+                }
+
                 const optionUpdate = <vscode.MessageItem> {
                     title: l10n.t("Update")
                 };
@@ -356,6 +370,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 return false;
             }
         };
+
+        if (hasCommandArguments) {
+            return saveProjectInternal(wpath);
+        }
 
         const input = vscode.window.createInputBox();
         input.title = l10n.t("Save Project");

@@ -70,7 +70,19 @@ Here are some of the features that **Project Manager** provides:
 
 ### Save Project
 
-You can save the current folder/workspace as a **Project** at any time. You just need to type its name. 
+You can save the current folder/workspace as a **Project** at any time. You just need to type its name.
+
+Extensions can also save a known project without opening the input box by executing `projectManager.saveProject` with both a project name and an absolute project path:
+
+```ts
+await vscode.commands.executeCommand(
+    "projectManager.saveProject",
+    "My remote project",
+    "/workspace/my-remote-project"
+);
+```
+
+When both arguments are omitted, the command keeps its existing interactive behavior. A programmatic call does not overwrite an existing project with the same name.
 
 ![Save](docs/images/project-manager-save.png)
 
