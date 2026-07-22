@@ -73,7 +73,10 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
         this.internalOnDidChangeTreeData.fire();
     }
 
-    public getTreeItem(element: ProjectNode | TagNode): vscode.TreeItem {
+    public async getTreeItem(element: ProjectNode | TagNode): Promise<vscode.TreeItem> {
+        if (element instanceof ProjectNode) {
+            await element.resolveFavicon();
+        }
         return element;
     }
 

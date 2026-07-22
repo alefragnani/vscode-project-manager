@@ -25,7 +25,8 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
         this.internalOnDidChangeTreeData.fire();
     }
 
-    public getTreeItem(element: ProjectNode): vscode.TreeItem {
+    public async getTreeItem(element: ProjectNode): Promise<vscode.TreeItem> {
+        await element.resolveFavicon();
         return element;
     }
 
