@@ -97,7 +97,12 @@ async function findFile(workspaceRoot: string, candidates: readonly string[]): P
 }
 
 export async function resolveProjectFavicon(cwd: string): Promise<string | null> {
-    const workspaceRoot = resolve(cwd.trim());
+    const trimmed = cwd.trim();
+    if (!trimmed) {
+        return null;
+    }
+
+    const workspaceRoot = resolve(trimmed);
     const directMatch = await findFile(workspaceRoot, FAVICON_CANDIDATES);
 
     if (directMatch) {
