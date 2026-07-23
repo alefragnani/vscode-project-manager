@@ -8,6 +8,7 @@ import { CustomProjectLocator } from "../autodetect/abstractLocator";
 import { ProjectNode } from "./nodes";
 import { Container } from "../core/container";
 import { addParentFolderToDuplicates } from "../utils/path";
+import { getGitBranch } from "../utils/git";
 
 export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> {
 
@@ -71,14 +72,29 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
                     });
 
                     const projectsWithParent = addParentFolderToDuplicates(this.projectSource.projectList);
+                    const showGitBranch = vscode.workspace.getConfiguration("projectManager").get<string>("git.showBranchName", "never");
 
                     for (let index = 0; index < projectsWithParent.length; index++) {
                         const dirinfo = projectsWithParent[ index ];
 
+                        let detail = dirinfo.parent;
+                        if (showGitBranch === "always" || showGitBranch === "onlyInSideBar") {
+                            const gitBranch = getGitBranch(dirinfo.path);
+                            if (gitBranch) {
+                                if (detail) {
+                                    // Has parent folder info (duplicates), combine with branch
+                                    detail = `${detail} | ${gitBranch}`;
+                                } else {
+                                    // No parent folder info, show just the branch
+                                    detail = gitBranch;
+                                }
+                            }
+                        }
+
                         lll.push(new ProjectNode(dirinfo.name, vscode.TreeItemCollapsibleState.None,
                             dirinfo.icon, {
                                 name: dirinfo.name,
-                                detail: dirinfo.parent,
+                                detail: detail,
                                 path: dirinfo.path
                             }, {
                                 command: "_projectManager.open",
