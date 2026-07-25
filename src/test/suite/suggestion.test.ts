@@ -43,23 +43,38 @@ suite("Suggestion utils", () => {
         });
         const encoded = buildRemoteProjectPath(uri);
 
-        assert.strictEqual(
-            encoded,
-            "vscode-remote://wsl+ubuntu/home/user/projects/myapp"
-        );
+        // VS Code's Uri.toString percent-encodes '+' in authority as '%2B'
+        // (RFC 3986 reserves '+' for userinfo; both forms parse back to the
+        // same authority). The path component must be unchanged.
+        assert.ok(encoded.startsWith("vscode-remote://"),
+            `expected vscode-remote scheme; got ${encoded}`);
+        assert.ok(encoded.endsWith("/home/user/projects/myapp"),
+            `expected path preserved verbatim; got ${encoded}`);
+
+        // Round-trip: Uri.parse(encoded).authority decodes back to "wsl+ubuntu"
+        const roundTripped = Uri.parse(encoded);
+        assert.strictEqual(roundTripped.authority, "wsl+ubuntu");
+        assert.strictEqual(roundTripped.path, "/home/user/projects/myapp");
     });
 
-    test("buildCodespacesProjectPath percent-encodes the local path segment", () => {
+    test("buildCodespacesProjectPath preserves the local path verbatim", () => {
         // Codespaces branch: localUri is a file: Uri whose .path is decoded.
-        // The resulting vscode-remote://codespaces+NAME/... string must not
-        // contain a raw '#' in the path.
+        // The resulting vscode-remote://codespaces+NAME/... string must
+        // preserve the local path verbatim and round-trip cleanly.
         const localUri = Uri.file("/workspaces/repo/Csharp");
         const encoded = buildCodespacesProjectPath(localUri, "happy-codespace-name");
 
-        assert.strictEqual(
-            encoded,
-            "vscode-remote://codespaces+happy-codespace-name/workspaces/repo/Csharp"
-        );
+        // Uri.toString percent-encodes '+' in authority as '%2B'; the path
+        // component must be preserved verbatim.
+        assert.ok(encoded.startsWith("vscode-remote://"),
+            `expected vscode-remote scheme; got ${encoded}`);
+        assert.ok(encoded.endsWith("/workspaces/repo/Csharp"),
+            `expected local path preserved verbatim; got ${encoded}`);
+
+        // Round-trip: authority decodes back to "codespaces+happy-codespace-name"
+        const roundTripped = Uri.parse(encoded);
+        assert.strictEqual(roundTripped.authority, "codespaces+happy-codespace-name");
+        assert.strictEqual(roundTripped.path, "/workspaces/repo/Csharp");
     });
 
     test("buildCodespacesProjectPath encodes # when the local path contains it", () => {
