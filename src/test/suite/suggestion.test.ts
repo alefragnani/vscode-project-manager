@@ -59,9 +59,11 @@ suite("Suggestion utils", () => {
 
     test("buildCodespacesProjectPath preserves the local path verbatim", () => {
         // Codespaces branch: localUri is a file: Uri whose .path is decoded.
-        // The resulting vscode-remote://codespaces+NAME/... string must
-        // preserve the local path verbatim and round-trip cleanly.
-        const localUri = Uri.file("/workspaces/repo/Csharp");
+        // Use Uri.parse with an explicit file:// URI to avoid Uri.file()'s
+        // platform-specific path normalization (Windows drive letters etc.)
+        // — the production code receives a Uri object from VS Code, not a
+        // bare filesystem string.
+        const localUri = Uri.parse("file:///workspaces/repo/Csharp");
         const encoded = buildCodespacesProjectPath(localUri, "happy-codespace-name");
 
         // Uri.toString percent-encodes '+' in authority as '%2B'; the path
@@ -78,7 +80,13 @@ suite("Suggestion utils", () => {
     });
 
     test("buildCodespacesProjectPath encodes # when the local path contains it", () => {
-        const localUri = Uri.file("/workspaces/repo/C#");
+        // Build the local Uri via Uri.from so '#' stays in the path component
+        // (Uri.parse("file:///x/C#") would itself drop '#' as a fragment
+        // delimiter, which is the very bug being fixed).
+        const localUri = Uri.from({
+            scheme: "file",
+            path: "/workspaces/repo/C#"
+        });
         const encoded = buildCodespacesProjectPath(localUri, "happy-codespace-name");
 
         assert.ok(!encoded.includes("C#"),
