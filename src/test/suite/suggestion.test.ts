@@ -28,11 +28,14 @@ suite("Suggestion utils", () => {
         assert.ok(encoded.includes("C"),
             `encoded form must still contain 'C' segment; got ${encoded}`);
 
-        // Round-trip: parsing the encoded form must yield a Uri whose fsPath
-        // still ends with C#/ (the original path is preserved).
+        // Round-trip: parsing the encoded form must yield a Uri whose .path
+        // still ends with C#/ (the original path is preserved). Use .path
+        // (always forward slashes) rather than .fsPath, which on Windows
+        // converts '/' to '\\' regardless of scheme and would mask the
+        // underlying round-trip semantics being asserted here.
         const roundTripped = Uri.parse(encoded);
-        assert.ok(roundTripped.fsPath.endsWith("C#/"),
-            `round-tripped fsPath must end with 'C#/'; got ${roundTripped.fsPath}`);
+        assert.ok(roundTripped.path.endsWith("C#/"),
+            `round-tripped path must end with 'C#/'; got ${roundTripped.path}`);
     });
 
     test("buildRemoteProjectPath preserves a normal path without reserved characters", () => {
