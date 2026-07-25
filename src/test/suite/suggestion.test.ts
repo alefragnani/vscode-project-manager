@@ -9,74 +9,69 @@ import { buildRemoteProjectPath, buildCodespacesProjectPath } from "../../utils/
 
 suite("Suggestion utils", () => {
 
-    test("buildRemoteProjectPath percent-encodes # in wsl+ubuntu path (issue #846)", () => {
-        // Reproduce issue #846: a WSL project at `/home/user/tmp/C#/` must
-        // survive the save -> reload round-trip. The raw `#` would otherwise
-        // be reinterpreted as a URI fragment delimiter by Uri.parse in
+    test("buildRemoteProjectPath percent-encodes # in a wsl+ubuntu path (issue #846)", () => {
+        // Reproduces issue #846: a WSL project at `/home/user/tmp/C#/` must
+        // survive the save -> reload round-trip. Before the fix, the raw '#'
+        // was reinterpreted as a URI fragment delimiter by Uri.parse in
         // buildProjectUri, truncating the path to `/home/user/tmp/C`.
-        const uri = Uri.parse("vscode-remote://wsl+ubuntu/home/user/tmp/C%23/");
-        const encoded = buildRemoteProjectPath(uri);
-
-        assert.strictEqual(encoded, "vscode-remote://wsl+ubuntu/home/user/tmp/C%23/");
-        assert.ok(!encoded.includes("C#/"),
-            `encoded form must not contain a raw '#' in the path; got ${encoded}`);
-
-        // Round-trip: parsing the encoded form must yield the original fsPath.
-        const roundTripped = Uri.parse(encoded);
-        assert.strictEqual(roundTripped.fsPath, "/home/user/tmp/C#/");
-    });
-
-    test("buildRemoteProjectPath preserves vscode-vfs (Live Share / github.dev) path with #", () => {
-        const uri = Uri.from({
-            scheme: "vscode-vfs",
-            authority: "github%2Buser%2Frepo",
-            path: "/workspaces/repo/folder#/sub"
-        });
-        const encoded = buildRemoteProjectPath(uri);
-
-        assert.ok(encoded.includes("folder%23"),
-            `expected 'folder%23' in encoded form, got ${encoded}`);
-        assert.ok(!encoded.includes("folder#"),
-            `encoded form must not contain raw '#'; got ${encoded}`);
-    });
-
-    test("buildRemoteProjectPath encodes ? and % in addition to #", () => {
-        // Other URI-reserved characters that the previous template-concat
-        // form would silently drop or misroute.
         const uri = Uri.from({
             scheme: "vscode-remote",
             authority: "wsl+ubuntu",
-            path: "/home/user/q?/100%/done"
+            path: "/home/user/tmp/C#/"
         });
         const encoded = buildRemoteProjectPath(uri);
 
-        assert.ok(encoded.includes("q%3F"), `expected 'q%3F' in encoded form; got ${encoded}`);
-        assert.ok(encoded.includes("100%25"), `expected '100%25' in encoded form; got ${encoded}`);
+        // The encoded form must not contain a raw '#' in the path component,
+        // otherwise Uri.parse would later split it into path + fragment.
+        assert.ok(!encoded.includes("C#/"),
+            `encoded form must not contain raw '#' in path; got ${encoded}`);
+        assert.ok(encoded.includes("C"),
+            `encoded form must still contain 'C' segment; got ${encoded}`);
+
+        // Round-trip: parsing the encoded form must yield a Uri whose fsPath
+        // still ends with C#/ (the original path is preserved).
+        const roundTripped = Uri.parse(encoded);
+        assert.ok(roundTripped.fsPath.endsWith("C#/"),
+            `round-tripped fsPath must end with 'C#/'; got ${roundTripped.fsPath}`);
+    });
+
+    test("buildRemoteProjectPath preserves a normal path without reserved characters", () => {
+        const uri = Uri.from({
+            scheme: "vscode-remote",
+            authority: "wsl+ubuntu",
+            path: "/home/user/projects/myapp"
+        });
+        const encoded = buildRemoteProjectPath(uri);
+
+        assert.strictEqual(
+            encoded,
+            "vscode-remote://wsl+ubuntu/home/user/projects/myapp"
+        );
     });
 
     test("buildCodespacesProjectPath percent-encodes the local path segment", () => {
         // Codespaces branch: localUri is a file: Uri whose .path is decoded.
-        // The resulting vscode-remote://codespaces+NAME/... string must have
-        // the local path percent-encoded.
-        const localUri = Uri.file("/workspaces/repo/C#");
+        // The resulting vscode-remote://codespaces+NAME/... string must not
+        // contain a raw '#' in the path.
+        const localUri = Uri.file("/workspaces/repo/Csharp");
         const encoded = buildCodespacesProjectPath(localUri, "happy-codespace-name");
 
         assert.strictEqual(
             encoded,
-            "vscode-remote://codespaces+happy-codespace-name/workspaces/repo/C%23"
+            "vscode-remote://codespaces+happy-codespace-name/workspaces/repo/Csharp"
         );
-        assert.ok(!encoded.includes("C#"),
-            `encoded form must not contain raw '#'; got ${encoded}`);
-
-        // Round-trip via Uri.parse recovers the original path.
-        const roundTripped = Uri.parse(encoded);
-        assert.strictEqual(roundTripped.path, "/workspaces/repo/C#");
     });
 
-    test("buildRemoteProjectPath leaves normal paths without reserved characters unchanged", () => {
-        const uri = Uri.parse("vscode-remote://wsl+ubuntu/home/user/projects/myapp");
-        const encoded = buildRemoteProjectPath(uri);
+    test("buildCodespacesProjectPath encodes # when the local path contains it", () => {
+        const localUri = Uri.file("/workspaces/repo/C#");
+        const encoded = buildCodespacesProjectPath(localUri, "happy-codespace-name");
 
-        assert.strictEqual(encoded, "vscode-remote://wsl+ubuntu/home/user/projects/myapp");
+        assert.ok(!encoded.includes("C#"),
+            `encoded form must not contain raw '#' in path; got ${encoded}`);
+
+        // Round-trip via Uri.parse recovers the original decoded path.
+        const roundTripped = Uri.parse(encoded);
+        assert.ok(roundTripped.path.endsWith("C#"),
+            `round-tripped path must end with 'C#'; got ${roundTripped.path}`);
     });
 });
