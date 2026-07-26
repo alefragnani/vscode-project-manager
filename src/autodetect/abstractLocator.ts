@@ -105,13 +105,16 @@ export class CustomProjectLocator {
         
         if (fs.existsSync(cacheFile)) {
             try {
-                this.projectList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
-                if (!this.cachedFileIsValid(this.projectList)) {
+                const cachedProjectList: AutodetectedProjectList =
+                    JSON.parse(fs.readFileSync(cacheFile, "utf8"));
+                if (!this.cachedFileIsValid(cachedProjectList)) {
                     this.deleteCacheFile();
                     return;
                 }
-                this.locatedPaths = new Set<string>(
-                    this.projectList.map(project => project.fullPath.toLocaleLowerCase()));
+                // A cache file written before overlapping base folders were de-duplicated may
+                // already contain repeated projects, so rebuild the list through `addToList`.
+                this.clearProjectList();
+                cachedProjectList.forEach(project => this.addToList(project));
                 this.alreadyLocated = true;
             } catch (error) {
                 this.deleteCacheFile();

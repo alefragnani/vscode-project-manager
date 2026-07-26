@@ -80,4 +80,31 @@ suite("CustomProjectLocator", () => {
 
         assert.deepStrictEqual(located, [ project ]);
     });
+
+    test("drops duplicates already present in the cache file", async () => {
+        const foo = path.join(testRoot, "foo");
+        const project = createGitRepo(foo, "a-project");
+
+        const config = workspace.getConfiguration("projectManager");
+        await config.update("git.baseFolders", [ foo ], ConfigurationTarget.Global);
+        await config.update("git.maxDepthRecursion", -1, ConfigurationTarget.Global);
+
+        // A cache file written before duplicates were filtered out.
+        const seeder = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([ ".git" ]));
+        const cacheFile = seeder[ "getCacheFile" ]();
+        const duplicated = [
+            { name: "a-project", fullPath: project, icon: "$(git-branch)" },
+            { name: "a-project", fullPath: project, icon: "$(git-branch)" }
+        ];
+        fs.writeFileSync(cacheFile, JSON.stringify(duplicated, null, "\t"), { encoding: "utf8" });
+
+        const locator = new CustomProjectLocator("git", "Git", new GitRepositoryDetector([ ".git" ]));
+        try {
+            assert.strictEqual(locator.isAlreadyLocated(), true);
+            const located = await locator.locateProjects();
+            assert.deepStrictEqual(located.map(item => item.fullPath), [ project ]);
+        } finally {
+            locator.deleteCacheFile();
+        }
+    });
 });
