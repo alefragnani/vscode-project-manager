@@ -332,28 +332,24 @@ export async function activate(context: vscode.ExtensionContext) {
 
                 const option = await vscode.window.showInformationMessage(l10n.t("Project already exists!"), optionUpdate, optionCancel);
 
-                // nothing selected or canceled
-                if (typeof option === "undefined" || option.title === l10n.t("Cancel")) {
+                // Only proceed when the user explicitly chose "Update".
+                // Cancel/close (option === undefined) bypasses any field access.
+                if (option?.title !== optionUpdate.title) {
                     return false;
                 }
-
-                if (option.title === l10n.t("Update")) {
-                    Container.stack.push(projectName);
-                    context.globalState.update("recent", Container.stack.toString());
-                    projectStorage.updateRootPath(projectName, rootPath);
-                    if (tagsToSave) {
-                        projectStorage.editTags(projectName, tagsToSave);
-                    }
-                    projectStorage.save();
-                    providerManager.updateTreeViewStorage();
-                    vscode.window.showInformationMessage(l10n.t("Project saved!"));
-                    if (!node) {
-                        showStatusBar(projectStorage, locators, projectName);
-                    }
-                    return true;
+                Container.stack.push(projectName);
+                context.globalState.update("recent", Container.stack.toString());
+                projectStorage.updateRootPath(projectName, rootPath);
+                if (tagsToSave) {
+                    projectStorage.editTags(projectName, tagsToSave);
                 }
-
-                return false;
+                projectStorage.save();
+                providerManager.updateTreeViewStorage();
+                vscode.window.showInformationMessage(l10n.t("Project saved!"));
+                if (!node) {
+                    showStatusBar(projectStorage, locators, projectName);
+                }
+                return true;
             }
         };
 
