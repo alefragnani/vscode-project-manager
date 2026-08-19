@@ -1130,7 +1130,7 @@
 		"@types/vscode": "^1.78.0",
 		"@typescript-eslint/eslint-plugin": "^6.21.0",
 		"@typescript-eslint/parser": "^6.21.0",
-		"@vscode/test-electron": "^2.5.2",
+		"@vscode/test-electron": "^3.1.0",
 		"eslint": "^8.1.0",
 		"eslint-config-vscode-ext": "^1.1.0",
 		"mocha": "^11.1.0",
