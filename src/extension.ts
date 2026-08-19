@@ -81,7 +81,35 @@ export async function activate(context: vscode.ExtensionContext) {
     const hideGitWelcome = context.globalState.get<boolean>("hideGitWelcome", false);
     vscode.commands.executeCommand("setContext", "projectManager.hiddenGitWelcome", hideGitWelcome);
 
-    vscode.commands.registerCommand("_projectManager.open", async (projectPath: string, projectName: string, profile: string) => {
+    let lastClickTime = 0;
+    let lastClickedProject = "";
+
+    vscode.commands.registerCommand("_projectManager.open", async (arg1: any, arg2: string, arg3: string) => {
+        let projectPath: string;
+        let profile: string;
+
+        const isDirectClick = typeof arg1 === "string";
+
+        if (!isDirectClick && arg1 && arg1.command && arg1.command.arguments) {
+            projectPath = arg1.command.arguments[0];
+            profile = arg1.command.arguments[2];
+        } else {
+            projectPath = arg1;
+            profile = arg3;
+        }
+
+        const requireDoubleClick = vscode.workspace.getConfiguration("projectManager").get<boolean>("treeview.doubleClick", false);
+        
+        if (requireDoubleClick && isDirectClick) {
+            const now = Date.now();
+            if (now - lastClickTime > 500 || lastClickedProject !== projectPath) {
+                lastClickTime = now;
+                lastClickedProject = projectPath;
+                return;
+            }
+            lastClickTime = 0;
+            lastClickedProject = "";
+        }
         const uri = buildProjectUri(projectPath);
         if (!await canSwitchOnActiveWindow(CommandLocation.SideBar)) {
             return;
