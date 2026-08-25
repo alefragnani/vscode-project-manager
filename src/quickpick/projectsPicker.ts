@@ -14,6 +14,7 @@ import { ProjectStorage } from "../storage/storage";
 import { PathUtils } from "../utils/path";
 import { isRemotePath } from "../utils/remote";
 import { buildProjectUri } from "../utils/uri";
+import { getGitBranch } from "../utils/git";
 import { CommandLocation, ConfirmSwitchOnActiveWindowMode, OpenInCurrentWindowIfEmptyMode } from "../core/constants";
 
 function getProjects(itemsSorted: any[]): Promise<any[]> {
@@ -135,10 +136,19 @@ export async function pickProjects(projectStorage: ProjectStorage, locators: Loc
                         commands.executeCommand("setContext", "inProjectManagerList", true);
 
                         //
+                        const showGitBranchInCommandPalette = workspace.getConfiguration("projectManager").get<string>("git.showBranchName", "never");
                         folders = (<any[]>folders).map(folder => {
+                            let detail: string | undefined;
+                            if (showGitBranchInCommandPalette === "onlyInCommandPalette" || showGitBranchInCommandPalette === "always") {
+                                const gitBranch = getGitBranch(PathUtils.expandHomePath(folder.description));
+                                if (gitBranch) {
+                                    detail = `$(git-branch) ${gitBranch}`;
+                                }
+                            }
                             return {
                                 label: folder.label,
                                 description: folder.description,
+                                detail: detail,
                                 profile: folder.profile,
                                 buttons: showOpenInNewWindowButton ? [ openInNewWindowButton ] : []
                             };
