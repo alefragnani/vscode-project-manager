@@ -356,7 +356,7 @@ The **Project Manager** extension has its own **Side Bar**, with a variety of co
 
 Starting in v12.3, you can now organize your Projects with **Tags**. 
 
-You can define your custom tags (via `projectManager.tags` setting), define multiple **tags** for each project, and filter the projects baded on their **tags**. 
+You can define your custom tags (via `projectManager.tags` setting), define multiple **tags** for each project, and filter the projects based on their **tags**. 
 
 ![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
 
