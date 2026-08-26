@@ -26,7 +26,33 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
             undefined;
     const currentProjectPath = workspace0 ? workspace0.fsPath : undefined;
 
-    if (!showStatusConfig || !currentProjectPath) { return; }
+    if (!currentProjectPath) { return; }
+
+    let foundProject: Project;
+    if (!projectName) {
+        if (isRemoteUri(workspace0)) {
+            foundProject = projectStorage.existsRemoteWithRootPath(workspace0);
+        } else {
+            foundProject = projectStorage.existsWithRootPath(currentProjectPath, true);
+            if (!foundProject) {
+                foundProject = locators.vscLocator.existsWithRootPath(currentProjectPath);
+            }
+            if (!foundProject) {
+                foundProject = locators.gitLocator.existsWithRootPath(currentProjectPath);
+            }
+            if (!foundProject) {
+                foundProject = locators.mercurialLocator.existsWithRootPath(currentProjectPath);
+            }
+            if (!foundProject) {
+                foundProject = locators.svnLocator.existsWithRootPath(currentProjectPath);
+            }
+            if (!foundProject) {
+                foundProject = locators.anyLocator.existsWithRootPath(currentProjectPath);
+            }
+        }
+    }
+
+    if (!showStatusConfig) { return foundProject; }
 
     if (!statusItem) {
         statusItem = window.createStatusBarItem("projectManager.statusBar", StatusBarAlignment.Left);
@@ -42,34 +68,12 @@ export function showStatusBar(projectStorage: ProjectStorage, locators: Locators
         statusItem.command = "projectManager.listProjects";
     }
 
-    // if we have a projectName, we don't need to search.
     if (projectName) {
         statusItem.text += projectName;
         statusItem.show();
         return undefined;
     }
 
-    let foundProject: Project;
-    if (isRemoteUri(workspace0)) {
-        foundProject = projectStorage.existsRemoteWithRootPath(workspace0);
-    } else {
-        foundProject = projectStorage.existsWithRootPath(currentProjectPath, true);
-        if (!foundProject) {
-            foundProject = locators.vscLocator.existsWithRootPath(currentProjectPath);
-        }
-        if (!foundProject) {
-            foundProject = locators.gitLocator.existsWithRootPath(currentProjectPath);
-        }
-        if (!foundProject) {
-            foundProject = locators.mercurialLocator.existsWithRootPath(currentProjectPath);
-        }
-        if (!foundProject) {
-            foundProject = locators.svnLocator.existsWithRootPath(currentProjectPath);
-        }
-        if (!foundProject) {
-            foundProject = locators.anyLocator.existsWithRootPath(currentProjectPath);
-        }
-    }
     if (foundProject) {
         statusItem.text += foundProject.name;
         statusItem.show();
