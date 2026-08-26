@@ -5,8 +5,9 @@
 
 import { Command, IconPath, MarkdownString, ThemeColor, ThemeIcon, TreeItem, TreeItemCollapsibleState, Uri } from "vscode";
 import { ThemeIcons } from "vscode-ext-codicons";
+import { resolveProjectFavicon } from "../utils/favicon";
 import { currentIconThemeHasFolderIcon, getProjectIcon, getIconDetailsFromProjectPath } from "../utils/icons";
-import { REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "../utils/remote";
+import { isRemotePath, REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "../utils/remote";
 
 export interface ProjectPreview {
     name: string;
@@ -15,6 +16,8 @@ export interface ProjectPreview {
 }
 
 export class ProjectNode extends TreeItem {
+
+    private faviconResolved = false;
 
     constructor(
         public readonly label: string,
@@ -41,6 +44,23 @@ export class ProjectNode extends TreeItem {
         this.tooltip = new MarkdownString(
             `${label}\n\n_${preview.path}_\n\n${tooltipIcon.icon} ${tooltipIcon.title}`, true);
         this.description = preview.detail;
+    }
+
+    public async resolveFavicon(): Promise<void> {
+        if (this.faviconResolved || !this.icon || isRemotePath(this.preview.path) || this.preview.path.toLowerCase().endsWith(".code-workspace")) {
+            return;
+        }
+
+        this.faviconResolved = true;
+
+        try {
+            const faviconPath = await resolveProjectFavicon(this.preview.path);
+            if (faviconPath) {
+                this.iconPath = Uri.file(faviconPath);
+            }
+        } catch {
+            // keep the existing project type icon when the project cannot be read.
+        }
     }
 
     private getIconPath(icon: string, projectPath: string): string | IconPath {
