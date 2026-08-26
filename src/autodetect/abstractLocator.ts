@@ -22,6 +22,7 @@ export interface AutodetectedProjectList extends Array<AutodetectedProjectInfo> 
 export class CustomProjectLocator {
 
     public projectList: AutodetectedProjectList = <AutodetectedProjectList> [];
+    private locatedPaths: Set<string> = new Set<string>();
     private maxDepth: number;
     private ignoredFolders: string[];
     private useCachedProjects: boolean;
@@ -87,6 +88,7 @@ export class CustomProjectLocator {
 
     private clearProjectList() {
         this.projectList = [];
+        this.locatedPaths.clear();
     }
 
     private cachedFileIsValid(projectList: AutodetectedProjectList): boolean {
@@ -103,11 +105,16 @@ export class CustomProjectLocator {
         
         if (fs.existsSync(cacheFile)) {
             try {
-                this.projectList = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
-                if (!this.cachedFileIsValid(this.projectList)) {
+                const cachedProjectList: AutodetectedProjectList =
+                    JSON.parse(fs.readFileSync(cacheFile, "utf8"));
+                if (!this.cachedFileIsValid(cachedProjectList)) {
                     this.deleteCacheFile();
                     return;
                 }
+                // A cache file written before overlapping base folders were de-duplicated may
+                // already contain repeated projects, so rebuild the list through `addToList`.
+                this.clearProjectList();
+                cachedProjectList.forEach(project => this.addToList(project));
                 this.alreadyLocated = true;
             } catch (error) {
                 this.deleteCacheFile();
@@ -192,6 +199,13 @@ export class CustomProjectLocator {
     }
 
     private addToList(projectInfo: AutodetectedProjectInfo) {
+        // Base folders may overlap (e.g. `~/projects` and `~/projects/work`), which makes
+        // the same project be found by more than one walk. Keep only the first occurrence.
+        if (this.locatedPaths.has(projectInfo.fullPath.toLocaleLowerCase())) {
+            return;
+        }
+
+        this.locatedPaths.add(projectInfo.fullPath.toLocaleLowerCase());
         this.projectList.push(projectInfo);
     }
 
