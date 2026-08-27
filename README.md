@@ -56,33 +56,6 @@ Here are some of the features that **Project Manager** provides:
 * A **Status Bar** which identifies the current project
 * A dedicated **Side Bar**
 
-# Extension API
-
-Other extensions can consume **Project Manager** through its public API. The public contract is defined in `/api/api.d.ts`, which is intentionally standalone, MIT-licensed, and does not depend on the extension internals. Consumers can retrieve the extension instance with `vscode.extensions.getExtension("alefragnani.project-manager")`, call `activate()`, and then use the methods that the extension exposes.
-
-```ts
-import * as vscode from "vscode";
-
-async function useProjectManagerApi() {
-    const extension = vscode.extensions.getExtension("alefragnani.project-manager");
-    if (!extension) {
-        throw new Error("Project Manager is not installed.");
-    }
-
-    const api = await extension.activate();
-
-    await api.saveProject("My Project", "/path/to/project", ["work"], "Default");
-
-    const favorites = await api.getFavoriteProjects();
-    const allProjects = await api.getAllProjects();
-
-    console.log(favorites);
-    console.log(allProjects);
-}
-```
-
-The API exposes a small project model with `name`, `rootPath`, `tags`, `profile`, and `enabled`, and includes methods such as `saveProject`, `getFavoriteProjects`, `getGitProjects`, `getMercurialProjects`, `getSVNProjects`, `getAnyProjects`, and `getAllProjects`.
-
 # Features
 
 ## Available Commands
@@ -399,6 +372,34 @@ Starting in v12.3, you can now organize your Projects with **Tags**.
 You can define your custom tags (via `projectManager.tags` setting), define multiple **tags** for each project, and filter the projects based on their **tags**. 
 
 ![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
+
+## Extension API
+
+If you are an extension developer and would like to interact with the **Project Manager** extension, you can use its public API. 
+
+First, you must add an `extensionDependencies` entry in your `package.json` file:
+
+```json
+  "extensionDependencies": [
+    "alefragnani.project-manager"
+  ],
+```
+
+Then, retrieve the extension instance with `vscode.extensions.getExtension("alefragnani.project-manager")` in your source code, to be able to use the methods that the extension exposes.
+
+```ts
+import { ProjectManagerPublicApi } from './api/projectManager/api';
+
+async function useProjectManagerApi() {
+    const projectManagerApi = <ProjectManagerPublicApi>vscode.extensions.getExtension('alefragnani.project-manager')?.exports;
+
+    await projectManagerApi.saveProject("My Project", "/path/to/project", ["work"], "Default");
+}
+```
+
+The contract is defined at [/api/api.d.ts](/api/api.d.ts).
+
+> More details on [VS Code Extension API reference](https://code.visualstudio.com/api/references/vscode-api#extensions)
 
 ## Installation and Configuration
 
