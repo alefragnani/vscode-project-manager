@@ -59,7 +59,11 @@ Manual validation checklist:
 ## Project Structure and Key Files
 
 ```
+api/
+├── api.d.ts              # Public API contract: standalone ambient interfaces/types, no runtime code
+
 src/
+├── api/                  # Public API implementation that implements the contract
 ├── autodetect/           # Project auto-detection logic (Git, SVN, Mercurial, VS Code)
 ├── commands/             # Command implementations
 ├── core/                 # Core domain models and constants
@@ -182,5 +186,7 @@ Before committing:
 
 1. Add/update commands and keep `package.json` contributions synchronized.
 2. Update settings and ensure configuration handling reacts to changes.
-3. Update localization keys in `package.nls*.json` when adding user-facing text.
-4. Verify remote and local path behavior when touching project URI logic.
+3. When exposing a public extension API, keep the root-level `/api/api.d.ts` file standalone and portable: no imports from the extension code, no runtime logic, and an MIT header so it remains importable independent of the extension's own license.
+4. Keep the `package.json` `api` declaration aligned with the exported contract and version, and return the public API from `activate()`.
+5. Update localization keys in `package.nls*.json` when adding user-facing text.
+6. Verify remote and local path behavior when touching project URI logic.

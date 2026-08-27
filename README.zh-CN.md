@@ -360,6 +360,34 @@ _It just works_
 
 ![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
 
+## 扩展 API
+
+如果你是扩展开发者，并希望与 **Project Manager** 扩展进行交互，可以使用它的公开 API。
+
+首先，你必须在 `package.json` 文件中添加 `extensionDependencies` 条目：
+
+```json
+  "extensionDependencies": [
+    "alefragnani.project-manager"
+  ],
+```
+
+然后，在源代码中通过 `vscode.extensions.getExtension("alefragnani.project-manager")` 获取扩展实例，以便使用它公开的方法。
+
+```ts
+import { ProjectManagerPublicApi } from './api/projectManager/api';
+
+async function useProjectManagerApi() {
+    const projectManagerApi = <ProjectManagerPublicApi>vscode.extensions.getExtension('alefragnani.project-manager')?.exports;
+
+    await projectManagerApi.saveProject("My Project", "/path/to/project", ["work"], "Default");
+}
+```
+
+契约定义在 [/api/api.d.ts](/api/api.d.ts)。
+
+> 更多详情请参阅 [VS Code 扩展 API 参考](https://code.visualstudio.com/api/references/vscode-api#extensions)
+
 ## 安装与配置
 
 你可以参考官方文档来：
@@ -369,4 +397,4 @@ _It just works_
 
 # 许可证
 
-[GPL-3.0](LICENSE.md) &copy; Alessandro Fragnani
+[GPL-3.0 with VS Code Extension Host API Exception](LICENSE.md) &copy; Alessandro Fragnani

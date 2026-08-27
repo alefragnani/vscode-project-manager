@@ -141,10 +141,10 @@ export class Providers {
 
     public updateTreeViewDetails() {
         this.updateTreeViewStorage();
-        this.vscodeTreeView.title = `VSCode (${this.locators.vscLocator.projectList.length})`;
-        this.gitTreeView.title = `Git (${this.locators.gitLocator.projectList.length})`;
-        this.mercurialTreeView.title = `Mercurial (${this.locators.mercurialLocator.projectList.length})`;
-        this.svnTreeView.title = `SVN (${this.locators.svnLocator.projectList.length})`;
-        this.anyTreeView.title = `Any (${this.locators.anyLocator.projectList.length})`;
+        this.vscodeTreeView.title = `VSCode (${this.locators.vscLocator.getProjectList().length})`;
+        this.gitTreeView.title = `Git (${this.locators.gitLocator.getProjectList().length})`;
+        this.mercurialTreeView.title = `Mercurial (${this.locators.mercurialLocator.getProjectList().length})`;
+        this.svnTreeView.title = `SVN (${this.locators.svnLocator.getProjectList().length})`;
+        this.anyTreeView.title = `Any (${this.locators.anyLocator.getProjectList().length})`;
     }
 }

@@ -35,6 +35,7 @@ import { registerWalkthrough } from "./commands/walkthrough";
 import { registerSideBarDecorations } from "./sidebar/decoration";
 import { ProjectNode } from "./sidebar/nodes";
 import { Project } from "./core/project";
+import { ProjectManagerApiImpl } from "./api/apiImpl";
 
 let locators: Locators;
 
@@ -50,6 +51,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // load the projects
     locators = new Locators();
     const projectStorage: ProjectStorage = new ProjectStorage(getProjectFilePath());
+    const api = new ProjectManagerApiImpl(projectStorage, locators);
 
     const providerManager: Providers = new Providers(locators, projectStorage);
     locators.setProviderManager(providerManager);
@@ -606,6 +608,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
             
     }
+
+    return api;
 }
 
 export function deactivate() {

@@ -672,3 +672,7 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
+
+Additional permission under GNU GPL version 3 section 7
+
+As a special exception to the GNU General Public License version 3 ("GPLv3"), the copyright holders of this project give you permission to link, reference, or otherwise interact with this extension through the VS Code Extension Host API(`vscode.extensions.getExtension`). You may distribute a combined work or an independent extension that communicates with this extension through that interface without the GPLv3 copyleft requirements applying to the consuming extension.

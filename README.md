@@ -373,6 +373,34 @@ You can define your custom tags (via `projectManager.tags` setting), define mult
 
 ![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
 
+## Extension API
+
+If you are an extension developer and would like to interact with the **Project Manager** extension, you can use its public API. 
+
+First, you must add an `extensionDependencies` entry in your `package.json` file:
+
+```json
+  "extensionDependencies": [
+    "alefragnani.project-manager"
+  ],
+```
+
+Then, retrieve the extension instance with `vscode.extensions.getExtension("alefragnani.project-manager")` in your source code, to be able to use the methods that the extension exposes.
+
+```ts
+import { ProjectManagerPublicApi } from './api/projectManager/api';
+
+async function useProjectManagerApi() {
+    const projectManagerApi = <ProjectManagerPublicApi>vscode.extensions.getExtension('alefragnani.project-manager')?.exports;
+
+    await projectManagerApi.saveProject("My Project", "/path/to/project", ["work"], "Default");
+}
+```
+
+The contract is defined at [/api/api.d.ts](/api/api.d.ts).
+
+> More details on [VS Code Extension API reference](https://code.visualstudio.com/api/references/vscode-api#extensions)
+
 ## Installation and Configuration
 
 You should follow the official documentation to:
@@ -382,4 +410,4 @@ You should follow the official documentation to:
 
 # License
 
-[GPL-3.0](LICENSE.md) &copy; Alessandro Fragnani
+[GPL-3.0 with VS Code Extension Host API Exception](LICENSE.md) &copy; Alessandro Fragnani

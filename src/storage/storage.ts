@@ -20,9 +20,20 @@ export class ProjectStorage {
         this.projects = [];
     }
 
-    public push(name: string, rootPath: string): void {
-        this.projects.push(createProject(name, rootPath));
+    public push(name: string, rootPath: string, tags: string[] = [], profile: string = ""): void {
+        const project = createProject(name, rootPath);
+        project.tags = [ ...tags ];
+        project.profile = profile;
+        this.projects.push(project);
         return;
+    }
+
+    public getProjects(): Project[] {
+        return this.projects.map(project => ({
+            ...project,
+            paths: [ ...project.paths ],
+            tags: [ ...project.tags ]
+        }));
     }
 
     public pop(name: string): Project {
