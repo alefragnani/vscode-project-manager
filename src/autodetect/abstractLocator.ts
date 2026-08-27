@@ -21,7 +21,7 @@ export interface AutodetectedProjectList extends Array<AutodetectedProjectInfo> 
 
 export class CustomProjectLocator {
 
-    public projectList: AutodetectedProjectList = <AutodetectedProjectList> [];
+    private projectList: AutodetectedProjectList = <AutodetectedProjectList> [];
     private maxDepth: number;
     private ignoredFolders: string[];
     private useCachedProjects: boolean;
@@ -77,6 +77,10 @@ export class CustomProjectLocator {
 
     public isAlreadyLocated(): boolean {
         return this.alreadyLocated;
+    }
+
+    public getProjectList(): AutodetectedProjectList {
+        return this.projectList.map(project => ({ ...project }));
     }
 
     private updateCacheFile(): void {

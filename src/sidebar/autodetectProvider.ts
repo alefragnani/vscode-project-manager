@@ -56,9 +56,9 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
                 // Locators (VSCode/Git/Mercurial/SVN)
                 // this.projectSource.initializeCfg(this.projectSource.kind);
 
-                if (this.projectSource.projectList.length > 0) {
-
-                    this.projectSource.projectList.sort((n1, n2) => {
+                const projectList = this.projectSource.getProjectList();
+                if (projectList.length > 0) {
+                    projectList.sort((n1, n2) => {
                         if (n1.name.toLowerCase() > n2.name.toLowerCase()) {
                             return 1;
                         }
@@ -70,7 +70,7 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
                         return 0;
                     });
 
-                    const projectsWithParent = addParentFolderToDuplicates(this.projectSource.projectList);
+                    const projectsWithParent = addParentFolderToDuplicates(projectList);
 
                     for (let index = 0; index < projectsWithParent.length; index++) {
                         const dirinfo = projectsWithParent[ index ];
@@ -101,13 +101,14 @@ export class AutodetectProvider implements vscode.TreeDataProvider<ProjectNode> 
             await this.projectSource.locateProjects();
         }
 
+        const projectList = this.projectSource.getProjectList();
         if (this.projectSource.displayName === "Git") {
             const hideGitWelcome = Container.context.globalState.get<boolean>("hideGitWelcome", false);
             vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName,
-                this.projectSource.projectList.length > 0 || !hideGitWelcome);
+                projectList.length > 0 || !hideGitWelcome);
         } else {
             vscode.commands.executeCommand("setContext", "projectManager.canShowTreeView" + this.projectSource.displayName,
-                this.projectSource.projectList.length > 0);
+                projectList.length > 0);
         }
         return;
     }

@@ -8,6 +8,7 @@ import * as assert from 'assert';
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
+import { ProjectManagerPublicApi } from '../../../api/api';
 
 const timeout = async (ms = 200) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -25,8 +26,29 @@ suite('Extension Test Suite', () => {
     });
 
     test('Activation test', async () => {
-        await extension.activate();
+        const api = await extension.activate() as ProjectManagerPublicApi;
         assert.equal(extension.isActive, true);
+        assert.ok(api);
+    });
+
+    test('Public API saves and reads favorite projects', async () => {
+        const api = await extension.activate() as ProjectManagerPublicApi;
+        const name = `API test ${Date.now()}`;
+
+        await api.saveProject(name, '/tmp/project-manager-api-test', [ 'api' ], 'api-profile');
+
+        const favorites = await api.getFavoriteProjects();
+        const savedProject = favorites.find(project => project.name === name);
+        assert.ok(savedProject);
+        assert.deepStrictEqual(savedProject, {
+            name,
+            rootPath: '/tmp/project-manager-api-test',
+            tags: [ 'api' ],
+            profile: 'api-profile',
+            enabled: true
+        });
+        assert.ok((await api.getAllProjects()).some(project => project.name === name));
+        await assert.rejects(api.saveProject(name, '/tmp/other-project'));
     });
 
     test('Extension loads in VSCode and is active', async () => {
