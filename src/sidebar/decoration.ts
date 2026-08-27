@@ -11,7 +11,7 @@ export function registerSideBarDecorations() {
         provideFileDecoration: (uri) => {
             if (uri.scheme !== 'projectManager-view') return undefined;
 
-            if (uri.path === Container.currentProject.rootPath) {
+            if (Container.currentProject && uri.path === Container.currentProject.rootPath) {
                 return {
                     badge: '✔',
                     color: new ThemeColor('projectManager.sideBar.currentProjectHighlightForeground')

@@ -10,6 +10,7 @@ import { ProjectStorage } from "../storage/storage";
 import { PathUtils } from "../utils/path";
 import { isRemotePath } from "../utils/remote";
 import { sortProjects } from "../utils/sorter";
+import { getGitBranch } from "../utils/git";
 import { NO_TAGS_DEFINED } from "./constants";
 import { NoTagNode, ProjectNode, TagNode } from "./nodes";
 
@@ -94,6 +95,8 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
                 projectsMapped = sortProjects(projectsMapped);
 
+                const showGitBranch = vscode.workspace.getConfiguration("projectManager").get<string>("git.showBranchName", "never");
+
                 for (let index = 0; index < projectsMapped.length; index++) {
                     const prj: ProjectInQuickPick = projectsMapped[ index ];
 
@@ -103,14 +106,19 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                     } else if (isRemotePath(prj.description)) {
                         iconFavorites = "favorites-remote";
                     }
+
+                    const projectPath = PathUtils.expandHomePath(prj.description);
+                    const gitBranch = (showGitBranch === "always" || showGitBranch === "onlyInSideBar") ? getGitBranch(projectPath) : undefined;
+
                     nodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
                         iconFavorites, {
                             name: prj.label,
-                            path: PathUtils.expandHomePath(prj.description)
+                            path: projectPath,
+                            detail: gitBranch
                         }, {
                             command: "_projectManager.open",
                             title: "",
-                            arguments: [ PathUtils.expandHomePath(prj.description), prj.label, prj.profile ],
+                            arguments: [ projectPath, prj.label, prj.profile ],
                         }));
                 }
 
@@ -169,6 +177,8 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
 
                 projectsMapped = sortProjects(projectsMapped);
 
+                const showGitBranch = vscode.workspace.getConfiguration("projectManager").get<string>("git.showBranchName", "never");
+
                 for (let index = 0; index < projectsMapped.length; index++) {
                     const prj: ProjectInQuickPick = projectsMapped[ index ];
 
@@ -178,15 +188,20 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                     } else if (isRemotePath(prj.description)) {
                         iconFavorites = "favorites-remote";
                     }
+
+                    const projectPath = PathUtils.expandHomePath(prj.description);
+                    const gitBranch = (showGitBranch === "always" || showGitBranch === "onlyInSideBar") ? getGitBranch(projectPath) : undefined;
+
                     nodes.push(new ProjectNode(prj.label, vscode.TreeItemCollapsibleState.None,
                         iconFavorites, {
                             name: prj.label,
-                            path: PathUtils.expandHomePath(prj.description)
+                            path: projectPath,
+                            detail: gitBranch
                         },
                         {
                             command: "_projectManager.open",
                             title: "",
-                            arguments: [ PathUtils.expandHomePath(prj.description), prj.label, prj.profile ],
+                            arguments: [ projectPath, prj.label, prj.profile ],
                         }));
                 }
 

@@ -364,6 +364,19 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.tags.collapseItems": "startExpanded"
 ```
 
+* Show the current Git branch name for projects (`"never"` by default)
+
+```json
+    "projectManager.git.showBranchName": "never"
+```
+
+Supported values:
+- `"never"`: Never display the Git branch name
+- `"onlyInSideBar"`: Display the Git branch name only in the Side Bar
+- `"onlyInCommandPalette"`: Display the Git branch name only in the Command Palette
+- `"always"`: Display the Git branch name in all locations
+
+
 ## Available Colors
 
 * Choose the foreground color to highlight the current project in the Side Bar
@@ -383,7 +396,7 @@ The **Project Manager** extension has its own **Side Bar**, with a variety of co
 
 Starting in v12.3, you can now organize your Projects with **Tags**. 
 
-You can define your custom tags (via `projectManager.tags` setting), define multiple **tags** for each project, and filter the projects baded on their **tags**. 
+You can define your custom tags (via `projectManager.tags` setting), define multiple **tags** for each project, and filter the projects based on their **tags**. 
 
 ![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
 
