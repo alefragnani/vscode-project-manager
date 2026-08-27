@@ -369,4 +369,4 @@ _It just works_
 
 # 许可证
 
-[GPL-3.0](LICENSE.md) &copy; Alessandro Fragnani
+[GPL-3.0 with VS Code Extension Host API Exception](LICENSE.md) &copy; Alessandro Fragnani

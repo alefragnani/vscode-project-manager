@@ -369,4 +369,4 @@ You should follow the official documentation to:
 
 # License
 
-[GPL-3.0](LICENSE.md) &copy; Alessandro Fragnani
+[GPL-3.0 with VS Code Extension Host API Exception](LICENSE.md) &copy; Alessandro Fragnani
