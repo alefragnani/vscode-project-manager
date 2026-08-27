@@ -56,33 +56,6 @@
 * 通过 **Status Bar** 标识当前项目
 * 提供专用 **Side Bar**
 
-# 扩展 API
-
-其他扩展也可以通过 **Project Manager** 的公开 API 访问它的能力。公开契约定义在 `/api/api.d.ts`，它被设计为独立于扩展内部实现的声明文件，并采用 MIT 许可证，因此消费方可以在不引入内部模块的情况下使用这些类型。扩展作者可以通过 `vscode.extensions.getExtension("alefragnani.project-manager")` 获取扩展实例，并在 `activate()` 后调用它暴露的方法。
-
-```ts
-import * as vscode from "vscode";
-
-async function useProjectManagerApi() {
-    const extension = vscode.extensions.getExtension("alefragnani.project-manager");
-    if (!extension) {
-        throw new Error("Project Manager is not installed.");
-    }
-
-    const api = await extension.activate();
-
-    await api.saveProject("My Project", "/path/to/project", ["work"], "Default");
-
-    const favorites = await api.getFavoriteProjects();
-    const allProjects = await api.getAllProjects();
-
-    console.log(favorites);
-    console.log(allProjects);
-}
-```
-
-该 API 暴露一个简化的项目模型，包含 `name`、`rootPath`、`tags`、`profile` 和 `enabled`，并提供 `saveProject`、`getFavoriteProjects`、`getGitProjects`、`getMercurialProjects`、`getSVNProjects`、`getAnyProjects` 和 `getAllProjects` 等方法。
-
 # 功能
 
 ## 可用命令
@@ -386,6 +359,34 @@ _It just works_
 你可以定义自定义标签（通过 `projectManager.tags` 设置）、为每个项目定义多个**标签**，并根据**标签**筛选项目。
 
 ![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
+
+## 扩展 API
+
+如果你是扩展开发者，并希望与 **Project Manager** 扩展进行交互，可以使用它的公开 API。
+
+首先，你必须在 `package.json` 文件中添加 `extensionDependencies` 条目：
+
+```json
+  "extensionDependencies": [
+    "alefragnani.project-manager"
+  ],
+```
+
+然后，在源代码中通过 `vscode.extensions.getExtension("alefragnani.project-manager")` 获取扩展实例，以便使用它公开的方法。
+
+```ts
+import { ProjectManagerPublicApi } from './api/projectManager/api';
+
+async function useProjectManagerApi() {
+    const projectManagerApi = <ProjectManagerPublicApi>vscode.extensions.getExtension('alefragnani.project-manager')?.exports;
+
+    await projectManagerApi.saveProject("My Project", "/path/to/project", ["work"], "Default");
+}
+```
+
+契约定义在 [/api/api.d.ts](/api/api.d.ts)。
+
+> 更多详情请参阅 [VS Code 扩展 API 参考](https://code.visualstudio.com/api/references/vscode-api#extensions)
 
 ## 安装与配置
 
