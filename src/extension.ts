@@ -208,8 +208,6 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     }));
 
-    return api;
-
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
 
         vscode.window.withProgress({
@@ -605,6 +603,8 @@ export async function activate(context: vscode.ExtensionContext) {
         }
             
     }
+
+    return api;
 }
 
 export function deactivate() {
