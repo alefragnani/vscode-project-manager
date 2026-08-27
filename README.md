@@ -56,6 +56,33 @@ Here are some of the features that **Project Manager** provides:
 * A **Status Bar** which identifies the current project
 * A dedicated **Side Bar**
 
+# Extension API
+
+Other extensions can consume **Project Manager** through its public API. The public contract is defined in `/api/api.d.ts`, which is intentionally standalone, MIT-licensed, and does not depend on the extension internals. Consumers can retrieve the extension instance with `vscode.extensions.getExtension("alefragnani.project-manager")`, call `activate()`, and then use the methods that the extension exposes.
+
+```ts
+import * as vscode from "vscode";
+
+async function useProjectManagerApi() {
+    const extension = vscode.extensions.getExtension("alefragnani.project-manager");
+    if (!extension) {
+        throw new Error("Project Manager is not installed.");
+    }
+
+    const api = await extension.activate();
+
+    await api.saveProject("My Project", "/path/to/project", ["work"], "Default");
+
+    const favorites = await api.getFavoriteProjects();
+    const allProjects = await api.getAllProjects();
+
+    console.log(favorites);
+    console.log(allProjects);
+}
+```
+
+The API exposes a small project model with `name`, `rootPath`, `tags`, `profile`, and `enabled`, and includes methods such as `saveProject`, `getFavoriteProjects`, `getGitProjects`, `getMercurialProjects`, `getSVNProjects`, `getAnyProjects`, and `getAllProjects`.
+
 # Features
 
 ## Available Commands

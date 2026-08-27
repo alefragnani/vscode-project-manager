@@ -56,6 +56,33 @@
 * 通过 **Status Bar** 标识当前项目
 * 提供专用 **Side Bar**
 
+# 扩展 API
+
+其他扩展也可以通过 **Project Manager** 的公开 API 访问它的能力。公开契约定义在 `/api/api.d.ts`，它被设计为独立于扩展内部实现的声明文件，并采用 MIT 许可证，因此消费方可以在不引入内部模块的情况下使用这些类型。扩展作者可以通过 `vscode.extensions.getExtension("alefragnani.project-manager")` 获取扩展实例，并在 `activate()` 后调用它暴露的方法。
+
+```ts
+import * as vscode from "vscode";
+
+async function useProjectManagerApi() {
+    const extension = vscode.extensions.getExtension("alefragnani.project-manager");
+    if (!extension) {
+        throw new Error("Project Manager is not installed.");
+    }
+
+    const api = await extension.activate();
+
+    await api.saveProject("My Project", "/path/to/project", ["work"], "Default");
+
+    const favorites = await api.getFavoriteProjects();
+    const allProjects = await api.getAllProjects();
+
+    console.log(favorites);
+    console.log(allProjects);
+}
+```
+
+该 API 暴露一个简化的项目模型，包含 `name`、`rootPath`、`tags`、`profile` 和 `enabled`，并提供 `saveProject`、`getFavoriteProjects`、`getGitProjects`、`getMercurialProjects`、`getSVNProjects`、`getAnyProjects` 和 `getAllProjects` 等方法。
+
 # 功能
 
 ## 可用命令
