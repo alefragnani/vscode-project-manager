@@ -36,21 +36,23 @@ suite('Extension Test Suite', () => {
     test('Public API saves and reads favorite projects', async () => {
         const api = await extension.activate() as ProjectManagerPublicApi;
         const name = `API test ${Date.now()}`;
+        const rootPath = path.join(os.tmpdir(), 'project-manager-api-test');
+        const otherRootPath = path.join(os.tmpdir(), 'other-project');
 
-        await api.saveProject(name, '/tmp/project-manager-api-test', [ 'api' ], 'api-profile');
+        await api.saveProject(name, rootPath, [ 'api' ], 'api-profile');
 
         const favorites = await api.getFavoriteProjects();
         const savedProject = favorites.find(project => project.name === name);
         assert.ok(savedProject);
         assert.deepStrictEqual(savedProject, {
             name,
-            rootPath: '/tmp/project-manager-api-test',
+            rootPath,
             tags: [ 'api' ],
             profile: 'api-profile',
             enabled: true
         });
         assert.ok((await api.getAllProjects()).some(project => project.name === name));
-        await assert.rejects(api.saveProject(name, '/tmp/other-project'));
+        await assert.rejects(api.saveProject(name, otherRootPath));
     });
 
     test('Extension loads in VSCode and is active', async () => {
