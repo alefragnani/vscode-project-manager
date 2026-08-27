@@ -104,8 +104,11 @@ All "get" methods return a public `Project` shape: `{ name, rootPath, tags, prof
    compilation (`include`/`files`) and in webpack's module resolution if needed, since it now
    lives outside `src/`. Adjust `include` paths as necessary.
 
-8. **Docs**: Add brief note in `.github/copilot-instructions.md` or a new `api/README.md`
-   only if needed for discoverability (skip unless requested).
+8. **Docs**: Update `.github/copilot-instructions.md` to document the public API contract and
+   root-level `/api/api.d.ts` design, including the `Project Structure and Key Files` section
+   showing the new `/api/` folder; also add a short API section to `README.md` and
+   `README.zh-CN.md` with a small consumer sample showing how extension authors can obtain and
+   use the API (`vscode.extensions.getExtension("alefragnani.project-manager")` + `activate()`).
 
 ## Validation
 
