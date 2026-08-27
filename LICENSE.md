@@ -675,4 +675,4 @@ Public License instead of this License.  But first, please read
 
 Additional permission under GNU GPL version 3 section 7
 
-As a special exception to the GNU General Public License version 3 ("GPLv3"),the copyright holders of this project give you permission to link, reference,or otherwise interact with this extension through the VS Code Extension Host API(`vscode.extensions.getExtension`). You may distribute a combined work or anindependent extension that communicates with this extension through that interface without the GPLv3 copyleft requirements applying to the consuming extension.
+As a special exception to the GNU General Public License version 3 ("GPLv3"), the copyright holders of this project give you permission to link, reference, or otherwise interact with this extension through the VS Code Extension Host API(`vscode.extensions.getExtension`). You may distribute a combined work or an independent extension that communicates with this extension through that interface without the GPLv3 copyleft requirements applying to the consuming extension.
