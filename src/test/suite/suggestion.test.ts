@@ -100,4 +100,31 @@ suite("Suggestion utils", () => {
         assert.ok(roundTripped.path.endsWith("C#"),
             `round-tripped path must end with 'C#'; got ${roundTripped.path}`);
     });
+    test("buildRemoteProjectPath percent-encodes ? and % in the path", () => {
+        const uri = Uri.from({
+            scheme: "vscode-remote",
+            authority: "wsl+ubuntu",
+            path: "/home/user/tmp/has?mark/percent%/"
+        });
+
+        const encoded = buildRemoteProjectPath(uri);
+        assert.ok(encoded.includes("has%3Fmark"), `expected '?' to be encoded; got ${encoded}`);
+        assert.ok(encoded.includes("percent%25"), `expected '%' to be encoded; got ${encoded}`);
+
+        const roundTripped = Uri.parse(encoded);
+        assert.strictEqual(roundTripped.path, "/home/user/tmp/has?mark/percent%/");
+    });
+
+    test("buildRemoteProjectPath round-trips a vscode-vfs URI with # in the path", () => {
+        const uri = Uri.from({
+            scheme: "vscode-vfs",
+            authority: "ssh-remote+server",
+            path: "/home/user/tmp/C#/"
+        });
+
+        const encoded = buildRemoteProjectPath(uri);
+        const roundTripped = Uri.parse(encoded);
+        assert.ok(roundTripped.path.endsWith("C#/"),
+            `round-tripped path must end with 'C#/'; got ${roundTripped.path}`);
+    });
 });
