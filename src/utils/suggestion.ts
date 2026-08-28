@@ -3,9 +3,35 @@
 *  Licensed under the GPLv3 License. See License.md in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { commands, l10n, window, workspace } from "vscode";
+import { commands, l10n, Uri, window, workspace } from "vscode";
 import path = require("path");
 import { isRunningOnCodespaces } from "./remote";
+
+/**
+ * Build a percent-encoded URI string from a remote VS Code Uri.
+ *
+ * Use this instead of manual `${scheme}://${authority}${path}` template
+ * concatenation: that form interpolates the *decoded* `path` and therefore
+ * loses any `#` (and other URI-reserved characters) as the URI is reparsed
+ * downstream via `Uri.parse`, where `#` becomes the fragment delimiter.
+ * See issue #846.
+ */
+export function buildRemoteProjectPath(uri: Uri): string {
+    return uri.toString();
+}
+
+/**
+ * Build a `vscode-remote://codespaces+NAME/...` URI string from a local
+ * folder Uri + the Codespace name. Uses `Uri.from` so the local path is
+ * percent-encoded on the way out (mirrors `buildRemoteProjectPath`).
+ */
+export function buildCodespacesProjectPath(localUri: Uri, codespaceName: string): string {
+    return Uri.from({
+        scheme: "vscode-remote",
+        authority: `codespaces+${codespaceName}`,
+        path: localUri.path
+    }).toString();
+}
 
 export interface ProjectDetails {
     path: string;
@@ -30,7 +56,7 @@ export async function getProjectDetails(): Promise<ProjectDetails> {
 
         if (workspace.workspaceFile.scheme === "vscode-remote") {
             return {
-                path: `${workspace.workspaceFile.scheme}://${workspace.workspaceFile.authority}${workspace.workspaceFile.path}`,
+                path: buildRemoteProjectPath(workspace.workspaceFile),
                 name: path.basename(workspace.workspaceFile.fsPath, ".code-workspace")
             };
         }
@@ -47,7 +73,7 @@ export async function getProjectDetails(): Promise<ProjectDetails> {
             const info = await commands.executeCommand<{ name: string } | undefined>('github.codespaces.getCurrentCodespace');
             if (info) {
                 return {
-                    path: `vscode-remote://codespaces+${info.name}${workspace.workspaceFolders[ 0 ].uri.fsPath}`,
+                    path: buildCodespacesProjectPath(workspace.workspaceFolders[ 0 ].uri, info.name),
                     name: path.basename(workspace.workspaceFolders[ 0 ].uri.fsPath)
                 };
             }
@@ -61,14 +87,14 @@ export async function getProjectDetails(): Promise<ProjectDetails> {
 
     if (workspace.workspaceFolders[ 0 ].uri.scheme === "vscode-remote") {
         return {
-            path: `${workspace.workspaceFolders[ 0 ].uri.scheme}://${workspace.workspaceFolders[ 0 ].uri.authority}${workspace.workspaceFolders[ 0 ].uri.path}`,
+            path: buildRemoteProjectPath(workspace.workspaceFolders[ 0 ].uri),
             name: path.basename(workspace.workspaceFolders[ 0 ].uri.fsPath)
         };
     }
 
     if (workspace.workspaceFolders[ 0 ].uri.scheme === "vscode-vfs") {
         return {
-            path: `${workspace.workspaceFolders[ 0 ].uri.scheme}://${workspace.workspaceFolders[ 0 ].uri.authority}${workspace.workspaceFolders[ 0 ].uri.path}`,
+            path: buildRemoteProjectPath(workspace.workspaceFolders[ 0 ].uri),
             name: path.basename(workspace.workspaceFolders[ 0 ].uri.fsPath)
         };
     }
