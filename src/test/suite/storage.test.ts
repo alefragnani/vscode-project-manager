@@ -214,6 +214,25 @@ suite("ProjectStorage", () => {
         assert.strictEqual(mapped[0].label, "V1Project1");
 
         fs.unlinkSync(filename);
+
+    test("load backs up a corrupt projects file before reporting the error", () => {
+        const filename = createTempFilename("project-manager-storage-corrupt-");
+        fs.writeFileSync(filename, "{ this is not valid json ]");
+        const storage = new ProjectStorage(filename);
+
+        const error = storage.load();
+
+        assert.notStrictEqual(error, "", "load should report the parse error");
+        const backup = fs
+            .readdirSync(path.dirname(filename))
+            .find((file) => file.startsWith(path.basename(filename) + ".corrupt-") && file.endsWith(".bak"));
+        assert.ok(backup, "a timestamped backup of the corrupt file must exist");
+        assert.strictEqual(
+            fs.readFileSync(path.join(path.dirname(filename), backup!), "utf-8"),
+            "{ this is not valid json ]",
+            "backup must preserve the original corrupt content"
+        );
+    });
     });
 
     test("existsRemoteWithRootPath returns matching project for remote URI", () => {
