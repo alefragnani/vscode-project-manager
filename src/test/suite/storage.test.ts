@@ -215,6 +215,8 @@ suite("ProjectStorage", () => {
 
         fs.unlinkSync(filename);
 
+    });
+    
     test("load backs up a corrupt projects file before reporting the error", () => {
         const filename = createTempFilename("project-manager-storage-corrupt-");
         fs.writeFileSync(filename, "{ this is not valid json ]");
@@ -232,7 +234,6 @@ suite("ProjectStorage", () => {
             "{ this is not valid json ]",
             "backup must preserve the original corrupt content"
         );
-    });
     });
 
     test("existsRemoteWithRootPath returns matching project for remote URI", () => {
