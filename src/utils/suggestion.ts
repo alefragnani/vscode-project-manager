@@ -5,7 +5,7 @@
 
 import { commands, l10n, Uri, window, workspace } from "vscode";
 import path = require("path");
-import { isRunningOnCodespaces } from "./remote";
+import { isRemoteUri, isRunningOnCodespaces } from "./remote";
 
 /**
  * Build a percent-encoded URI string from a remote VS Code Uri.
@@ -54,7 +54,7 @@ export async function getProjectDetails(): Promise<ProjectDetails> {
             };
         }
 
-        if (workspace.workspaceFile.scheme === "vscode-remote") {
+        if (isRemoteUri(workspace.workspaceFile)) {
             return {
                 path: buildRemoteProjectPath(workspace.workspaceFile),
                 name: path.basename(workspace.workspaceFile.fsPath, ".code-workspace")
@@ -85,14 +85,7 @@ export async function getProjectDetails(): Promise<ProjectDetails> {
         };
     }
 
-    if (workspace.workspaceFolders[ 0 ].uri.scheme === "vscode-remote") {
-        return {
-            path: buildRemoteProjectPath(workspace.workspaceFolders[ 0 ].uri),
-            name: path.basename(workspace.workspaceFolders[ 0 ].uri.fsPath)
-        };
-    }
-
-    if (workspace.workspaceFolders[ 0 ].uri.scheme === "vscode-vfs") {
+    if (isRemoteUri(workspace.workspaceFolders[ 0 ].uri)) {
         return {
             path: buildRemoteProjectPath(workspace.workspaceFolders[ 0 ].uri),
             name: path.basename(workspace.workspaceFolders[ 0 ].uri.fsPath)
