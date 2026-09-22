@@ -15,7 +15,7 @@ export const isMacOS = process.platform === "darwin";
 export function isRemotePath(projectPath: string): boolean {
     return projectPath.startsWith(REMOTE_PREFIX)
         || projectPath.startsWith(VIRTUAL_WORKSPACE_PREFIX)
-        || projectPath.startsWith(OVERLEAF_WORKSHOP_PREFIX);
+        || projectPath.startsWith(`${OVERLEAF_WORKSHOP_PREFIX}://`);
 }
 
 export function isRemoteUri(uri: Uri): boolean {
