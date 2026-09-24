@@ -99,7 +99,7 @@
     "projectManager.configuration.git.showBranchName.enumDescriptions.onlyInCommandPalette": "Відображати назву гілки Git лише в палітрі команд",
     "projectManager.configuration.git.showBranchName.enumDescriptions.always": "Відображати назву гілки Git у всіх місцях",
     "projectManager.configuration.tags.description": "Вказує список тегів, які можна використовувати для організації проєктів",
-    "projectManager.configuration.tags.collapseItems.description": "Керує тим, як групи тегів у поданні ""Улюблені"" розгортаються або згортаються за замовчуванням та чи запам'ятовується їхній стан.",
+    "projectManager.configuration.tags.collapseItems.description": "Керує тим, як групи тегів у поданні \"Улюблені\" розгортаються або згортаються за замовчуванням та чи запам'ятовується їхній стан.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysExpanded": "Групи тегів завжди розгорнуті.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.alwaysCollapsed": "Групи тегів завжди згорнуті.",
     "projectManager.configuration.tags.collapseItems.enumDescriptions.startExpanded": "Групи тегів спочатку розгорнуті, але запам'ятовують останній стан розгортання/згортання.",
