@@ -18,6 +18,30 @@ export const homeDir = os.homedir();
 export const HOME_PATH_VARIABLE = "$home";
 export const HOME_PATH_TILDE = "~";
 
+export function getLinuxConfigFilePath(file: string, channelPath: string, homePath: string, xdgConfigHome?: string): string {
+    const configHome = xdgConfigHome || path.join(homePath, ".config");
+    return path.join(configHome, channelPath, "User", file);
+}
+
+function ensureParentDirectory(filePath: string): void {
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+}
+
+function migrateFile(sourcePath: string, targetPath: string): boolean {
+    if (!fs.existsSync(sourcePath) || fs.existsSync(targetPath)) {
+        return false;
+    }
+
+    try {
+        ensureParentDirectory(targetPath);
+        fs.copyFileSync(sourcePath, targetPath);
+        return true;
+    } catch (error) {
+        console.warn(`Could not migrate ${sourcePath} to ${targetPath}:`, error);
+        return false;
+    }
+}
+
 // Contains recommended global storage path if provided by current version of VS Code. 
 let extensionStoragePath = "";
 
@@ -166,13 +190,15 @@ export class PathUtils {
         if (process.env.VSCODE_PORTABLE) {
             appdata = process.env.VSCODE_PORTABLE;
             newFile = path.join(appdata, channelPath, "User", file);
+        } else if (process.platform === "linux") {
+            const legacyFile = path.join("/var/local", channelPath, "User", file);
+            newFile = getLinuxConfigFilePath(file, channelPath, homeDir, process.env.XDG_CONFIG_HOME);
+
+            // Keep existing favorites available when moving away from the old, usually unwritable path.
+            migrateFile(legacyFile, newFile);
         } else {
             appdata = process.env.APPDATA || (process.platform === "darwin" ? process.env.HOME + "/Library/Application Support" : "/var/local");
             newFile = path.join(appdata, channelPath, "User", file);
-            // in linux, it may not work with /var/local, then try to use /home/myuser/.config
-            if ((process.platform === "linux") && (!fs.existsSync(newFile))) {
-                newFile = path.join(homeDir, ".config/", channelPath, "User", file);
-            }
         }
         // If we are on a new version of VS Code, use the specified
         // global extension storage path unless a file exists in 
@@ -181,6 +207,10 @@ export class PathUtils {
             if (!fs.existsSync(newFile)) {
                 newFile = path.join(extensionStoragePath, file);
             }
+        }
+
+        if (!fs.existsSync(newFile)) {
+            ensureParentDirectory(newFile);
         }
         return newFile;
     }
