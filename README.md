@@ -349,6 +349,17 @@ Supported values:
 - `"onlyInCommandPalette"`: Display the Git branch name only in the Command Palette
 - `"always"`: Display the Git branch name in all locations
 
+* Display [Git worktrees](https://git-scm.com/docs/git-worktree) under the repository they belong to, in the **Git** view (`"expanded"` by default)
+
+```json
+    "projectManager.git.groupWorktrees": "expanded"
+```
+
+Supported values:
+- `"expanded"`: Display worktrees under their repository, which starts expanded
+- `"collapsed"`: Display worktrees under their repository, which starts collapsed
+- `"never"`: Display worktrees as regular projects, alongside the repositories
+
 
 ## Available Colors
 
