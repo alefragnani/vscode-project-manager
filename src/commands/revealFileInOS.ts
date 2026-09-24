@@ -14,6 +14,7 @@ async function revealFileInOS(node: ProjectNode) {
     if (isRemotePath(node.command.arguments[ 0 ])) {
         const revealApp = isWindows ? "Explorer" : isMacOS ? "Finder" : "File Manager";
         window.showErrorMessage(l10n.t("Remote projects can't be revealed in {0}", revealApp));
+        return;
     }
 
     commands.executeCommand("revealFileInOS", Uri.file(node.command.arguments[ 0 ]));

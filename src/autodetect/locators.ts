@@ -128,7 +128,11 @@ export class Locators implements Disposable {
                     if (!isRemotePath(value.description)) { return value; }
 
                     const uriElement = Uri.parse(value.description);
-                    if (uriElement.path !== workspace0.path) {
+                    if (uriElement.scheme !== workspace0.scheme
+                        || uriElement.authority !== workspace0.authority
+                        || uriElement.path !== workspace0.path
+                        || uriElement.query !== workspace0.query
+                        || uriElement.fragment !== workspace0.fragment) {
                         return value;
                     }
                 });

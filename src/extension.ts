@@ -17,7 +17,7 @@ import { StorageProvider } from "./sidebar/storageProvider";
 import { showStatusBar, updateStatusBar } from "./statusbar/statusBar";
 import { getProjectDetails } from "./utils/suggestion";
 import { CommandLocation, PROJECTS_FILE } from "./core/constants";
-import { isMacOS, isRemoteUri, isWindows } from "./utils/remote";
+import { isMacOS, isRemotePath, isRemoteUri, isWindows } from "./utils/remote";
 import { buildProjectUri } from "./utils/uri";
 import { Container } from "./core/container";
 import { registerWhatsNew } from "./whats-new/commands";
@@ -498,12 +498,12 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     function addProjectPathToWorkspace(projectPath: string) {
-        if (path.extname(projectPath) === ".code-workspace") {
+        if (!isRemotePath(projectPath) && path.extname(projectPath) === ".code-workspace") {
             vscode.window.showWarningMessage(l10n.t("You can't add a Workspace to another Workspace."));
             return;
         }
         vscode.workspace.updateWorkspaceFolders(vscode.workspace.workspaceFolders ? 
-            vscode.workspace.workspaceFolders.length : 0, null, { uri: vscode.Uri.file(projectPath)});
+            vscode.workspace.workspaceFolders.length : 0, null, { uri: buildProjectUri(projectPath)});
     }
 
     async function addProjectToWorkspace(node: ProjectNode) {

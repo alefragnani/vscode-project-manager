@@ -6,7 +6,7 @@
 import { Command, IconPath, MarkdownString, ThemeColor, ThemeIcon, TreeItem, TreeItemCollapsibleState, Uri } from "vscode";
 import { ThemeIcons } from "vscode-ext-codicons";
 import { currentIconThemeHasFolderIcon, getProjectIcon, getIconDetailsFromProjectPath } from "../utils/icons";
-import { REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "../utils/remote";
+import { OVERLEAF_WORKSHOP_PREFIX, REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "../utils/remote";
 
 export interface ProjectPreview {
     name: string;
@@ -84,7 +84,8 @@ export class ProjectNode extends TreeItem {
                     if (projectPath.startsWith(`${REMOTE_PREFIX}://wsl`)) {
                         return ThemeIcons.terminal_linux;
                     }
-                    if (projectPath.startsWith(`${VIRTUAL_WORKSPACE_PREFIX}://`)) {
+                    if (projectPath.startsWith(`${VIRTUAL_WORKSPACE_PREFIX}://`)
+                        || projectPath.startsWith(`${OVERLEAF_WORKSHOP_PREFIX}://`)) {
                         return ThemeIcons.remote;
                     }
                     return ThemeIcons.remote_explorer;
