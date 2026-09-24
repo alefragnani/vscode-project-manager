@@ -894,6 +894,21 @@
 						"type": "integer",
 						"default": 4,
 						"description": "%projectManager.configuration.git.maxDepthRecursion.description%"
+					},
+					"projectManager.git.groupWorktrees": {
+						"type": "string",
+						"enum": [
+							"expanded",
+							"collapsed",
+							"never"
+						],
+						"enumDescriptions": [
+							"%projectManager.configuration.git.groupWorktrees.enumDescriptions.expanded%",
+							"%projectManager.configuration.git.groupWorktrees.enumDescriptions.collapsed%",
+							"%projectManager.configuration.git.groupWorktrees.enumDescriptions.never%"
+						],
+						"default": "expanded",
+						"description": "%projectManager.configuration.git.groupWorktrees.description%"
 					}
 				}
 			},
