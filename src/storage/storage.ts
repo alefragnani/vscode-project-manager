@@ -167,7 +167,25 @@ export class ProjectStorage {
             return "";
         } catch (error) {
             console.log(error);
+            this.backupCorruptFile();
             return error.toString();
+        }
+    }
+
+    /**
+     * Keeps a timestamped copy of a projects.json that failed to parse, so a
+     * later `save()` (triggered by the user adding or editing projects in the
+     * same session) cannot destroy the original content, which may still be
+     * recoverable by hand.
+     */
+    private backupCorruptFile() {
+        try {
+            if (!fs.existsSync(this.filename)) {
+                return;
+            }
+            fs.copyFileSync(this.filename, `${this.filename}.corrupt-${Date.now()}.bak`);
+        } catch (backupError) {
+            console.log(backupError);
         }
     }
 
