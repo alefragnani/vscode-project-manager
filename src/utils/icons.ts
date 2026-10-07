@@ -7,7 +7,7 @@ import path = require("path");
 import { IconPath, Uri, workspace } from "vscode";
 import { codicons } from "vscode-ext-codicons";
 import { Container } from "../core/container";
-import { isRemoteUri, REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "./remote";
+import { isRemoteUri, OVERLEAF_WORKSHOP_PREFIX, REMOTE_PREFIX, VIRTUAL_WORKSPACE_PREFIX } from "./remote";
 
 export function currentIconThemeHasFolderIcon(): boolean {
     const currentIconTheme = workspace.getConfiguration("workbench").get<string>("iconTheme", "");
@@ -84,7 +84,8 @@ export function getIconDetailsFromProjectPath(projectPath: string): TooltipIconI
             title: "WSL"
         };
     }
-    if (projectPath.startsWith(`${VIRTUAL_WORKSPACE_PREFIX}://`)) {
+    if (projectPath.startsWith(`${VIRTUAL_WORKSPACE_PREFIX}://`)
+        || projectPath.startsWith(`${OVERLEAF_WORKSHOP_PREFIX}://`)) {
         return {
             icon: codicons.remote,
             title: "Virtual Workspace"

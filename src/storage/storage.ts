@@ -115,7 +115,11 @@ export class ProjectStorage {
             if (!isRemotePath(element.rootPath)) { continue; }
 
             const uriElement = Uri.parse(element.rootPath);
-            if (uriElement.scheme === uri.scheme && uriElement.authority === uri.authority && uriElement.path === uri.path) {
+            if (uriElement.scheme === uri.scheme
+                && uriElement.authority === uri.authority
+                && uriElement.path === uri.path
+                && uriElement.query === uri.query
+                && uriElement.fragment === uri.fragment) {
                 return element;
             }
         }

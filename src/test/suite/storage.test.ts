@@ -265,6 +265,18 @@ suite("ProjectStorage", () => {
         assert.strictEqual(found, undefined);
     });
 
+    test("existsRemoteWithRootPath distinguishes Overleaf projects by query", () => {
+        const filename = createTempFilename();
+        const storage = new ProjectStorage(filename);
+
+        storage.push("PaperA", "overleaf-workshop://www.overleaf.com/Paper?user=user-1&project=project-A");
+
+        const found = storage.existsRemoteWithRootPath(Uri.parse(
+            "overleaf-workshop://www.overleaf.com/Paper?user=user-1&project=project-B"));
+
+        assert.strictEqual(found, undefined);
+    });
+
     test("existsWithRootPath returns expandedHomePath when asked", () => {
         const filename = createTempFilename();
         const storage = new ProjectStorage(filename);
