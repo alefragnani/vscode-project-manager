@@ -277,7 +277,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
 
                 if (option.title === l10n.t("Yes, edit manually")) {
-                    projectStorage.push("Project Name", "Root Path");
+                    // Seed an empty projects file rather than two placeholder rows
+                    // whose literal strings (\"Project Name\", \"Root Path\") would
+                    // otherwise leak into the tree view as a real saved project.
+                    projectStorage.push("", "");
                     projectStorage.save();
                     providerManager.updateTreeViewStorage();
                     vscode.commands.executeCommand("projectManager.editProjects");
