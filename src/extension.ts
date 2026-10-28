@@ -14,7 +14,7 @@ import { PathUtils } from "./utils/path";
 import { Providers } from "./sidebar/providers";
 import { StorageProvider } from "./sidebar/storageProvider";
 
-import { showStatusBar, updateStatusBar } from "./statusbar/statusBar";
+import { detectCurrentProject, showStatusBar, updateStatusBar } from "./statusbar/statusBar";
 import { getProjectDetails } from "./utils/suggestion";
 import { CommandLocation, PROJECTS_FILE } from "./core/constants";
 import { isMacOS, isRemoteUri, isWindows } from "./utils/remote";
@@ -36,6 +36,7 @@ import { registerSideBarDecorations } from "./sidebar/decoration";
 import { ProjectNode } from "./sidebar/nodes";
 import { Project } from "./core/project";
 import { ProjectManagerApiImpl } from "./api/apiImpl";
+import { registerProjectNameWindowTitleVariable, updateProjectNameWindowTitleVariable } from "./utils/windowTitle";
 
 let locators: Locators;
 
@@ -162,13 +163,14 @@ export async function activate(context: vscode.ExtensionContext) {
 
     loadProjectsFile();
 
-    // TODO: Extract the detection of the current project from `showStatusBar`, and optimize how it works.
-    // Evaluate if it is really necessary to get the `Project` instance, or if just the root path is enough.
-    // Up until then, the call to `showStatusBar` (and the assignment to `Container.currentProject`)
+    // The detection of the current project (and the assignment to `Container.currentProject`)
     // intentionally happens *before* `providerManager.showTreeViewFromAllProviders()`, and changing this order may
     // introduce issues.
-    const currentProject = showStatusBar(projectStorage, locators);
+    const currentProject = detectCurrentProject(projectStorage, locators);
     Container.currentProject = currentProject;
+    showStatusBar(projectStorage, locators);
+    await registerProjectNameWindowTitleVariable();
+    await updateProjectNameWindowTitleVariable(currentProject);
 
     // // new place to register TreeView
     await providerManager.showTreeViewFromAllProviders();
@@ -326,7 +328,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 vscode.window.showInformationMessage(l10n.t("Project saved!"));
                 if (!node) {
                     showStatusBar(projectStorage, locators, projectName);
-                    updateCurrentProject();
+                    await updateCurrentProject();
                 }
                 return true;
             } else {
@@ -433,7 +435,7 @@ export async function activate(context: vscode.ExtensionContext) {
         input.show();
     }
 
-    function updateCurrentProject() {
+    async function updateCurrentProject() {
         const workspace0 = vscode.workspace.workspaceFile ? vscode.workspace.workspaceFile :
             vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[ 0 ].uri :
                 undefined;
@@ -446,6 +448,7 @@ export async function activate(context: vscode.ExtensionContext) {
             foundProject = projectStorage.existsWithRootPath(currentProjectPath, true);
         }
         Container.currentProject = foundProject;
+        await updateProjectNameWindowTitleVariable(foundProject);
     }
 
     async function listProjects(forceNewWindow: boolean) {
@@ -536,7 +539,7 @@ export async function activate(context: vscode.ExtensionContext) {
             value: oldName
         };
 
-        vscode.window.showInputBox(ibo).then(newName => {
+        vscode.window.showInputBox(ibo).then(async newName => {
             if (typeof newName === "undefined" || newName === oldName) {
                 return;
             }
@@ -553,6 +556,10 @@ export async function activate(context: vscode.ExtensionContext) {
                 projectStorage.save();
                 vscode.window.showInformationMessage(l10n.t("Project renamed!"));
                 updateStatusBar(oldName, node.command.arguments[0], newName);
+                if (Container.currentProject?.name.toLowerCase() === oldName.toLowerCase()) {
+                    Container.currentProject.name = newName;
+                    await updateProjectNameWindowTitleVariable(Container.currentProject);
+                }
             } else {
                 vscode.window.showErrorMessage(l10n.t("Project already exists!"));
             }
