@@ -91,6 +91,16 @@ suite("ProjectStorage", () => {
         assert.strictEqual(storage.disabled()!.length, 0);
     });
 
+    test("addTag appends a new tag and reports whether the project changed", () => {
+        const storage = new ProjectStorage(createTempFilename());
+        storage.push("Project", "/path/project", [ "first" ]);
+
+        assert.strictEqual(storage.addTag("project", "/path/project", undefined, "second"), true);
+        assert.strictEqual(storage.addTag("Project", "/path/project", undefined, "second"), false);
+        assert.strictEqual(storage.addTag("Missing", "/path/project", undefined, "second"), false);
+        assert.deepStrictEqual(storage.getProjects()[ 0 ].tags, [ "first", "second" ]);
+    });
+
     test("editTags and getAvailableTags collect unique tags", () => {
         const filename = createTempFilename();
         const storage = new ProjectStorage(filename);

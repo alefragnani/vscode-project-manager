@@ -371,6 +371,8 @@ Starting in v12.3, you can now organize your Projects with **Tags**.
 
 You can define your custom tags (via `projectManager.tags` setting), define multiple **tags** for each project, and filter the projects based on their **tags**. 
 
+In the **Favorites** view, while viewing as tags, you can also drag a project and drop it on a tag to add that tag to the project. Its other tags are kept.
+
 ![Side Bar](docs/images/vscode-project-manager-side-bar-tags.gif)
 
 ## Extension API

@@ -119,7 +119,7 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                             command: "_projectManager.open",
                             title: "",
                             arguments: [ projectPath, prj.label, prj.profile ],
-                        }));
+                        }, element.label));
                 }
 
                 resolve(nodes);
@@ -139,7 +139,10 @@ export class StorageProvider implements vscode.TreeDataProvider<ProjectNode | Ta
                     let nodes: TagNode[] = [];
 
                     const tagsCollapseBehavior = vscode.workspace.getConfiguration("projectManager").get<string>("tags.collapseItems", "startExpanded");
-                    const tags = this.projectSource.getAvailableTags().sort();
+                    // Tags configured but not used by any project are listed too, so they can be drop targets
+                    const configuredTags = vscode.workspace.getConfiguration("projectManager").get<string[]>("tags", [])
+                        .filter(tag => tag.length > 0 && tag !== NO_TAGS_DEFINED);
+                    const tags = [ ...new Set([ ...this.projectSource.getAvailableTags(), ...configuredTags ]) ].sort();
                     for (const tag of tags) {
                         nodes.push(new TagNode(tag, StorageProvider.getTagCollapsibleState(tag, tagsCollapseBehavior)));
                     }
