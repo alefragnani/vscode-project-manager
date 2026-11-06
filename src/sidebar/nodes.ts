@@ -21,7 +21,8 @@ export class ProjectNode extends TreeItem {
         public readonly collapsibleState: TreeItemCollapsibleState,
         public readonly icon: string | undefined,
         public readonly preview: ProjectPreview,
-        public readonly command?: Command
+        public readonly command?: Command,
+        public readonly parentTag?: string
     ) {
         super(label, collapsibleState);
 

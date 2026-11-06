@@ -63,6 +63,21 @@ export class ProjectStorage {
         }
     }
 
+    // Projects may share a name or path, so match on name, path and source tag to find the dragged one
+    public addTag(name: string, rootPath: string, sourceTag: string | undefined, tag: string): boolean {
+        const project = this.projects.find(element =>
+            element.name.toLowerCase() === name.toLowerCase()
+            && PathUtils.expandHomePath(element.rootPath).toLowerCase() === rootPath.toLowerCase()
+            && (sourceTag === undefined || (sourceTag === "" ? element.tags.length === 0 : element.tags.includes(sourceTag))));
+
+        if (!project || project.tags.includes(tag)) {
+            return false;
+        }
+
+        project.tags = [ ...project.tags, tag ];
+        return true;
+    }
+
     public toggleEnabled(name: string): boolean | undefined {
         for (const element of this.projects) {
             if (element.name.toLowerCase() === name.toLowerCase()) {
