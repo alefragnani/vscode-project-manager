@@ -1159,7 +1159,7 @@
 	},
 	"dependencies": {
 		"glob": "^10.5.0",
-		"minimatch": "^10.2.4",
+		"minimatch": "^11.0.1",
 		"vscode-ext-codicons": "^1.4.0",
 		"vscode-ext-help-and-feedback-view": "^1.0.1",
 		"walker": "^1.0.7"
