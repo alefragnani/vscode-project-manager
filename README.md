@@ -298,6 +298,14 @@ If you intend to _share_ projects between  **Stable** and **Insider** installati
     "projectManager.showProjectNameInStatusBar": true
 ```
 
+* Display the Project Name in the Window Title (VS Code 1.93 and newer)
+
+Project Manager exposes the `${projectName}` variable for use in the built-in `window.title` setting.
+
+```json
+    "window.title": "${projectName}${separator}${activeEditorShort}"
+```
+
 * Open projects in _New Window_ when clicking in status bar (`false` by default)
 
 ```json 
