@@ -211,6 +211,10 @@ export async function activate(context: vscode.ExtensionContext) {
             providerManager.storageProvider.refresh();
             providerManager.updateTreeViewStorage();
         }
+
+        if (cfg.affectsConfiguration("projectManager.git.groupWorktrees")) {
+            providerManager.gitProvider.refresh();
+        }
     }));
 
     function refreshProjects(showMessage?: boolean, forceRefresh?: boolean) {
